@@ -73,6 +73,8 @@ jobs:
       - name: SFTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_STAGE_SERVER }}
-          username: ${{ secrets.FTP_STAGE_USER }}
+          server: gvam1164.siteground.biz
+          username: nina@irec.wherewego.org
           password: ${{ secrets.FTP_STAGE_PASSWORD }}
+          server-dir: public_html/
+          port: 21
