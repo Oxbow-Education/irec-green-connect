@@ -79,9 +79,6 @@ jobs:
           ftp-server: ${{ secrets.FTP_STAGE_SERVER }}
           ftp-username: ${{ secrets.FTP_STAGE_USER }}
           ftp-password: ${{ secrets.FTP_STAGE_PASSWORD }}
-          # The directory that will be uploaded. Anything that is not in this folder will not be uploaded.
-          local-dir: /
-          # TODO: Remove dry run when finalized
           git-ftp-args: --dry-run
           debug: true
 
