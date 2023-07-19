@@ -1,0 +1,85 @@
+name: Staging Deployment
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  # Database Backup
+  backup:
+    runs-on: ubuntu-latest
+    name: Create Database Backup
+    env:
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSHPASS: ${{ secrets.SSH_PASSPHRASE }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+    steps:
+      # 1. Create a run timestamp output with id=time name=date
+      - name: Get date timestamp
+        id: time
+        run: echo "::set-output name=date::$(date '+%Y-%m-%d_%H-%M-%S')"
+
+      # 2. Configure SSH Access on GH CI to the staging machine
+      - name: Configure SSH Access
+        # Creates an ssh config file with the key/host/port/user
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port $SSH_PORT
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+            LogLevel INFO
+          END
+
+      # 3. Create the $SSH_ASKPASS with a script that just echoes $SSHPASS value
+      # to negate asking for the passphrase during ssh connection
+      - name: Create SSH_ASKPASS
+        run: |
+          cat > /tmp/ssh-askpass-script <<EOL
+          #!/bin/bash
+          echo $SSHPASS
+          EOL
+          chmod +x /tmp/ssh-askpass-script
+
+      # 4. Sets display to :0.0 and uses setsid to ensure that ssh will use
+      # $SSH_ASKPASS value. Connects to the staging defined in the hosts file and runs mysqldump.
+      - name: Run mysqldump via SSH
+        run: |
+          DISPLAY=":0.0" SSH_ASKPASS="/tmp/ssh-askpass-script" setsid ssh staging mysqldump --skip-add-drop-table --skip-extended-insert -u ${{ secrets.DB_STAGE_USER }} -p${{ secrets.DB_STAGE_PASSWORD }} ${{ secrets.DB_STAGE_NAME }} > backup-${{ steps.time.outputs.date }}.sql
+
+      # 5. Save the copied backup as an artifact
+      - name: Archive Database Backup
+        uses: actions/upload-artifact@v2
+        with:
+          name: backup-${{ steps.time.outputs.date }}
+          path: backup-${{ steps.time.outputs.date }}.sql
+
+  # FTP Deploy
+  deploy:
+    runs-on: ubuntu-latest
+    # Only attempt to deploy the files if the mysql server has backed up
+    needs: backup
+    name: Deploy via FTP
+    steps:
+      # 1. Checkout the Repository up to 20 commit history
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 20
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        with:
+          ftp-server: ${{ secrets.FTP_STAGE_SERVER }}
+          ftp-username: ${{ secrets.FTP_STAGE_USER }}
+          ftp-password: ${{ secrets.FTP_STAGE_PASSWORD }}
+          # The directory that will be uploaded. Anything that is not in this folder will not be uploaded.
+          local-dir: public
+          # TODO: Remove dry run when finalized
+          git-ftp-args: --dry-run
