@@ -83,3 +83,5 @@ jobs:
           local-dir: public_html
           # TODO: Remove dry run when finalized
           git-ftp-args: --dry-run
+          debug: true
+
