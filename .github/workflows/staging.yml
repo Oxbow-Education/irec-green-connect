@@ -85,6 +85,6 @@ jobs:
           # The directory that will be uploaded. Anything that is not in this folder will not be uploaded.
           local-dir: ./
           # TODO: Remove dry run when finalized
-          git-ftp-args: --dry-run
+          # git-ftp-args: --dry-run
           debug: true
 
