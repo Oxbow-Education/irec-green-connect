@@ -63,6 +63,7 @@ jobs:
 
   # FTP Deploy
   deploy:
+    name: 🚀 Deploy via FTP
     runs-on: ubuntu-latest
 
     steps:
@@ -70,9 +71,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SFTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          ftp-server: ${{ secrets.FTP_STAGE_SERVER }}
-          ftp-username: ${{ secrets.FTP_STAGE_USER }}
-          ftp-password: ${{ secrets.FTP_STAGE_PASSWORD }}
-          local-dir: ./ 
+          server: ${{ secrets.FTP_STAGE_SERVER }}
+          username: ${{ secrets.FTP_STAGE_USER }}
+          password: ${{ secrets.FTP_STAGE_PASSWORD }}
