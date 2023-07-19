@@ -70,10 +70,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SFTP Deploy
-        uses: ncipollo/release-action@v1
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
-          artifacts: './'  # Replace 'public' with the directory containing your files
-          host: ${{ secrets.FTP_STAGE_SERVER }}
-          username: ${{ secrets.FTP_STAGE_USER }}
-          password: ${{ secrets.FTP_STAGE_PASSWORD }}
-          remote_path: /public_html  # Replace with the path on the server where you want to upload files
+          ftp-server: ${{ secrets.FTP_STAGE_SERVER }}
+          ftp-username: ${{ secrets.FTP_STAGE_USER }}
+          ftp-password: ${{ secrets.FTP_STAGE_PASSWORD }}
+          local-dir: ./ 
