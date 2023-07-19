@@ -73,6 +73,14 @@ jobs:
         with:
           fetch-depth: 20
 
+      - name: Check Repository
+        run: |
+          ls -la
+          git status
+
+      - name: Check Current Directory
+        run: pwd
+
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
@@ -81,4 +89,3 @@ jobs:
           ftp-password: ${{ secrets.FTP_STAGE_PASSWORD }}
           git-ftp-args: --dry-run
           debug: true
-
