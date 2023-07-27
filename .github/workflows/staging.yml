@@ -75,6 +75,6 @@ jobs:
         with:
           server: gvam1164.siteground.biz
           username: nina@irec.wherewego.org
-          password: N1N4_ftp
+          password: ${{ secrets.FTP_STAGE_PASSWORD }}
           server-dir: irec.wherewego.org/public_html/
           port: 21
