@@ -105,6 +105,10 @@ function handle_upload_resources($request)
 	try {
 
 		$response_data = $request->get_json_params();
+		$response_email_subject = 'Response Data';
+		$response_email_body = var_export($response_data, true);
+		wp_mail('nina@wherewego.org', $response_email_subject, $response_email_body);
+
 		foreach ($response_data as $item) {
 
 			// Extract the necessary data from the "row_data" field
@@ -169,6 +173,11 @@ function handle_upload_resources($request)
 			update_post_meta($post_id, 'url_text', $url_text);
 		}
 	} catch (Exception $e) {
+		// Sending email with the error message
+		$error_email_subject = 'Error Handling Upload Resources';
+		$error_email_body = 'Error Message: ' . $e->getMessage();
+		wp_mail('your-email@example.com', $error_email_subject, $error_email_body);
+
 		return json_encode(array('error' => $e->getMessage()));
 	}
 
