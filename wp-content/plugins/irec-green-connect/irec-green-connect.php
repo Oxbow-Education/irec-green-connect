@@ -105,9 +105,6 @@ function handle_upload_resources($request)
 	try {
 
 		$response_data = $request->get_json_params();
-		$response_email_subject = 'Response Data';
-		$response_email_body = var_export($response_data, true);
-		wp_mail('nina@wherewego.org', $response_email_subject, $response_email_body);
 
 		foreach ($response_data as $item) {
 
@@ -133,7 +130,7 @@ function handle_upload_resources($request)
 			$post_data = array(
 				'post_title'   => $title,
 				'post_type'    => 'post',
-				'post_status'  => 'draft'
+				'post_status'  => 'publish'
 			);
 
 			// Insert the post into the database
