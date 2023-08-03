@@ -128,7 +128,7 @@ function handle_upload_resources($request)
 			// Create an array of post data
 			$post_data = array(
 				'post_title'   => $title,
-				'post_type'    => 'posts',
+				'post_type'    => 'post',
 				'post_status'  => 'draft'
 			);
 
