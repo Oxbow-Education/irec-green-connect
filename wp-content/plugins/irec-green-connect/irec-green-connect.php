@@ -138,24 +138,24 @@ function handle_upload_resources($request)
 
 			$worker_tags = array();
 			if ($worker_tag_1 == 'True') {
-				array_push($worker_tags, $worker_tag_1);
+				array_push($worker_tags, 'Tag 1');
 			}
 			if ($worker_tag_2 == 'True') {
-				array_push($worker_tags, $worker_tag_2);
+				array_push($worker_tags, 'Tag 2');
 			}
 			if ($worker_tag_3 == 'True') {
-				array_push($worker_tags, $worker_tag_3);
+				array_push($worker_tags, 'Tag 3');
 			}
 
 			$org_tags = array();
 			if ($org_tag_1 == 'True') {
-				array_push($org_tags, $org_tag_1);
+				array_push($org_tags, 'Tag 1');
 			}
 			if ($org_tag_2 == 'True') {
-				array_push($org_tags, $org_tag_2);
+				array_push($org_tags, 'Tag 2');
 			}
 			if ($org_tag_3 == 'True') {
-				array_push($org_tags, $org_tag_3);
+				array_push($org_tags, 'Tag 3');
 			}
 
 
