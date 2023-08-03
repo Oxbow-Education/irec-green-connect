@@ -1,4 +1,4 @@
-/*! elementor - v3.14.0 - 26-06-2023 */
+/*! elementor - v3.15.0 - 02-08-2023 */
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["kit-library"],{
 
 /***/ "../app/modules/kit-library/assets/js/components/badge.scss":
@@ -663,7 +663,7 @@ function ConnectDialog(props) {
     },
     approveButtonColor: "primary",
     approveButtonRef: approveButtonRef,
-    dismissButtonText: __('Cancel', 'elementor-pro'),
+    dismissButtonText: __('Cancel', 'elementor'),
     dismissButtonOnClick: function dismissButtonOnClick() {
       return props.onClose();
     },
@@ -712,7 +712,7 @@ function EnvatoPromotion(props) {
     });
   };
   return /*#__PURE__*/_react.default.createElement(_appUi.Text, {
-    className: "e-kit-library-bottom-promotion",
+    className: "e-kit-library-promotion",
     variant: "xl"
   }, __('Looking for more Kits?', 'elementor'), " ", ' ', /*#__PURE__*/_react.default.createElement(_appUi.Button, {
     variant: "underlined",
@@ -3323,7 +3323,7 @@ function IndexHeader(props) {
   var buttons = (0, _react.useMemo)(function () {
     return [{
       id: 'info',
-      text: __('Info', 'elementor-pro'),
+      text: __('Info', 'elementor'),
       hideText: true,
       icon: 'eicon-info-circle-o',
       onClick: function onClick() {
@@ -3332,7 +3332,7 @@ function IndexHeader(props) {
       }
     }, {
       id: 'refetch',
-      text: __('Refetch', 'elementor-pro'),
+      text: __('Refetch', 'elementor'),
       hideText: true,
       icon: "eicon-sync ".concat(props.isFetching ? 'eicon-animation-spin' : ''),
       onClick: function onClick() {
@@ -3341,7 +3341,7 @@ function IndexHeader(props) {
       }
     }, {
       id: 'import',
-      text: __('Import', 'elementor-pro'),
+      text: __('Import', 'elementor'),
       hideText: true,
       icon: 'eicon-upload-circle-o',
       elRef: importRef,
@@ -3661,10 +3661,10 @@ function Index(props) {
     className: "e-kit-library__index-layout-container"
   }, /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
     container: true,
-    className: "e-kit-library__index-layout-top-area"
+    className: "e-kit-library__index-layout-heading"
   }, /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
     item: true,
-    className: "e-kit-library__index-layout-top-area-search"
+    className: "e-kit-library__index-layout-heading-search"
   }, /*#__PURE__*/_react.default.createElement(_searchInput.default
   // eslint-disable-next-line @wordpress/i18n-ellipsis
   , {
@@ -3685,7 +3685,7 @@ function Index(props) {
     onRemoveTag: unselectTaxonomy
   })), /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
     item: true,
-    className: "e-kit-library__index-layout-top-area-sort"
+    className: "e-kit-library__index-layout-heading-sort"
   }, /*#__PURE__*/_react.default.createElement(_sortSelect.default, {
     options: [{
       label: __('Featured', 'elementor'),
@@ -3726,10 +3726,10 @@ function Index(props) {
     className: "e-kit-library__index-layout-main"
   }, /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, isLoading && /*#__PURE__*/_react.default.createElement(_pageLoader.default, null), isError && /*#__PURE__*/_react.default.createElement(_errorScreen.default, {
     title: __('Something went wrong.', 'elementor'),
-    description: __('Nothing to worry about, use 🔄 on the top right to try again. If the problem continues, head over to the Help Center.', 'elementor'),
+    description: __('Nothing to worry about, use 🔄 on the top corner to try again. If the problem continues, head over to the Help Center.', 'elementor'),
     button: {
       text: __('Learn More', 'elementor'),
-      url: 'http://go.elementor.com/app-kit-library-error/',
+      url: 'https://go.elementor.com/app-kit-library-error/',
       target: '_blank'
     }
   }), isSuccess && 0 < data.length && queryParams.ready && /*#__PURE__*/_react.default.createElement(_kitList.default, {
@@ -4286,8 +4286,8 @@ var breakpoints = [{
   value: 'tablet',
   label: __('Tablet', 'elementor'),
   style: {
-    marginTop: '30px',
-    marginBottom: '30px',
+    marginBlockStart: '30px',
+    marginBlockEnd: '30px',
     width: '768px',
     height: '1024px'
   }
@@ -4295,8 +4295,8 @@ var breakpoints = [{
   value: 'mobile',
   label: __('Mobile', 'elementor'),
   style: {
-    marginTop: '30px',
-    marginBottom: '30px',
+    marginBlockStart: '30px',
+    marginBlockEnd: '30px',
     width: '375px',
     height: '667px'
   }
@@ -4478,4 +4478,4 @@ exports["default"] = _default;
 /***/ })
 
 }]);
-//# sourceMappingURL=kit-library.3dff2fd14c0324c37675.bundle.js.map
+//# sourceMappingURL=kit-library.61bec15242b147d7ac1b.bundle.js.map

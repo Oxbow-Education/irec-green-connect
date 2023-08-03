@@ -1,4 +1,4 @@
-/*! elementor - v3.14.0 - 26-06-2023 */
+/*! elementor - v3.15.0 - 02-08-2023 */
 "use strict";
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["video"],{
 
@@ -68,10 +68,6 @@ class Video extends elementorModules.frontend.handlers.Base {
   async animateVideo() {
     const lightbox = await elementorFrontend.utils.lightbox;
     lightbox.setEntranceAnimation(this.getCurrentDeviceSetting('lightbox_content_animation'));
-  }
-  async handleAspectRatio() {
-    const lightbox = await elementorFrontend.utils.lightbox;
-    lightbox.setVideoAspectRatio(this.getElementSettings('aspect_ratio'));
   }
   async hideLightbox() {
     const lightbox = await elementorFrontend.utils.lightbox;
@@ -185,10 +181,6 @@ class Video extends elementorModules.frontend.handlers.Base {
     const isLightBoxEnabled = this.getElementSettings('lightbox');
     if ('lightbox' === propertyName && !isLightBoxEnabled) {
       this.hideLightbox();
-      return;
-    }
-    if ('aspect_ratio' === propertyName && isLightBoxEnabled) {
-      this.handleAspectRatio();
     }
   }
 }
@@ -197,4 +189,4 @@ exports["default"] = Video;
 /***/ })
 
 }]);
-//# sourceMappingURL=video.82d55b692da440a65954.bundle.js.map
+//# sourceMappingURL=video.f00844f0d2d047b71867.bundle.js.map
