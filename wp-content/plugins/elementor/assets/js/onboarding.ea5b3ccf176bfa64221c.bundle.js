@@ -1,4 +1,4 @@
-/*! elementor - v3.14.0 - 26-06-2023 */
+/*! elementor - v3.15.0 - 02-08-2023 */
 "use strict";
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["onboarding"],{
 
@@ -716,7 +716,7 @@ function Layout(props) {
     goProButtonRef = (0, _react.useRef)(),
     createAccountButton = {
       id: 'create-account',
-      text: __('Create Account', 'elementor-pro'),
+      text: __('Create Account', 'elementor'),
       hideText: false,
       elRef: (0, _react.useRef)(),
       url: elementorAppConfig.onboarding.urls.signUp + elementorAppConfig.onboarding.utms.connectTopBar,
@@ -737,7 +737,7 @@ function Layout(props) {
   if (state.isLibraryConnected) {
     headerButtons.push({
       id: 'my-elementor',
-      text: __('My Elementor', 'elementor-pro'),
+      text: __('My Elementor', 'elementor'),
       hideText: false,
       icon: 'eicon-user-circle-o',
       url: 'https://my.elementor.com/websites/?utm_source=onboarding-wizard&utm_medium=wp-dash&utm_campaign=my-account&utm_content=top-bar&utm_term=' + elementorAppConfig.onboarding.onboardingVersion,
@@ -2376,4 +2376,4 @@ Connect.propTypes = {
 /***/ })
 
 }]);
-//# sourceMappingURL=onboarding.2da315965610a6ac2448.bundle.js.map
+//# sourceMappingURL=onboarding.ea5b3ccf176bfa64221c.bundle.js.map
