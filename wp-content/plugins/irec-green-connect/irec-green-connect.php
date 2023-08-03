@@ -102,27 +102,80 @@ add_action('rest_api_init', 'custom_upload_resources_endpoint');
 
 function handle_upload_resources($request)
 {
-	// This function will handle the incoming POST request data
+	try {
 
-	// Perform any necessary actions with the uploaded data
-	// For example, you can access the uploaded data like this:
-	$params = $request->get_params();
-	// $params will contain the POST data sent to the endpoint
+		$response_data = $request->get_json_params();
+		foreach ($response_data as $item) {
 
-	// For example, if the uploaded data is an image, you can save it to the media library
-	// using WordPress functions like wp_handle_upload()
+			// Extract the necessary data from the "row_data" field
+			$title = $item['row_data']['Title Sentence'];
+			$organization_name = $item['row_data']['Organization Name'];
+			$longer_description = $item['row_data']['Longer Description'];
+			$url_text = $item['row_data']['URL Text'];
+			$url = $item['row_data']['URL'];
+			$worker_user = $item['row_data']['Worker User'];
+			$org_user_type_1 = $item['row_data']['Org User Type 1'];
+			$org_user_type_2 = $item['row_data']['Org User Type 2'];
+			$org_user_type_3 = $item['row_data']['Org User Type 3'];
+			$org_user_type_4 = $item['row_data']['Org User Type 4'];
+			$worker_tag_1 = $item['row_data']['Resouce for Worker Tag 1'];
+			$worker_tag_2 = $item['row_data']['Resouce for Worker Tag 2'];
+			$worker_tag_3 = $item['row_data']['Resouce for Worker Tag 3'];
+			$org_tag_1 = $item['row_data']['Resouce for Org Tag 1'];
+			$org_tag_2 = $item['row_data']['Resouce for Org Tag 2'];
+			$org_tag_3 = $item['row_data']['Resouce for Org Tag 3'];
 
-	// Return a response to the client
-	// Replace 'success' and 'message' with appropriate responses
-	$response = array(
-		'status' => 'success',
-		'message' => 'Resource uploaded successfully.',
-		'data' => $params, // You can return any data you want here
-	);
+			// Create an array of post data
+			$post_data = array(
+				'post_title'   => $title,
+				'post_type'    => 'posts',
+				'post_status'  => 'draft'
+			);
 
-	// Convert the response array to JSON and return it
-	return rest_ensure_response($response);
+			// Insert the post into the database
+			$post_id = wp_insert_post($post_data);
+
+			$worker_tags = array();
+			if ($worker_tag_1 == 'True') {
+				array_push($worker_tags, $worker_tag_1);
+			}
+			if ($worker_tag_2 == 'True') {
+				array_push($worker_tags, $worker_tag_2);
+			}
+			if ($worker_tag_3 == 'True') {
+				array_push($worker_tags, $worker_tag_3);
+			}
+
+			$org_tags = array();
+			if ($org_tag_1 == 'True') {
+				array_push($org_tags, $org_tag_1);
+			}
+			if ($org_tag_2 == 'True') {
+				array_push($org_tags, $org_tag_2);
+			}
+			if ($org_tag_3 == 'True') {
+				array_push($org_tags, $org_tag_3);
+			}
+
+
+			// Set the custom fields
+			update_post_meta($post_id, 'organization_name', $organization_name);
+			update_post_meta($post_id, 'is_internal_resource', FALSE);
+			// update_post_meta($post_id, 'who_is_it_for', '');
+			update_post_meta($post_id, 'worker_tags', $worker_tags);
+			update_post_meta($post_id, 'organization_tags', $org_tags);
+			update_post_meta($post_id, 'short_description', $longer_description);
+			update_post_meta($post_id, 'url', $url);
+			update_post_meta($post_id, 'url_text', $url_text);
+		}
+	} catch (Exception $e) {
+		return json_encode(array('error' => $e->getMessage()));
+	}
+
+	return json_encode(array('message' => 'Success!'));
 }
+
+
 // Add custom top-level menu item to the Dashboard side nav
 // Add custom submenu page to the Posts menu
 function add_upload_external_resources_submenu()
