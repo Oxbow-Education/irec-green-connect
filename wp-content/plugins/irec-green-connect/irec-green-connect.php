@@ -82,3 +82,6 @@ function run_irec_green_connect()
 	$plugin->run();
 }
 run_irec_green_connect();
+
+
+require __DIR__ . '/index.php';
