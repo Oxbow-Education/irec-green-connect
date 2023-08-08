@@ -2,3 +2,113 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+.facet-buttons,
+.load-more-wrapper,
+.resources-wrapper {
+  background-color: #236489;
+  color: #ffffff;
+  padding: 1rem 4rem;
+  margin: 0;
+}
+
+.facet-button,
+.resource-tag,
+#load-more-button {
+  border: 2px solid #00aeb3;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 0.75rem;
+}
+
+.facet-button.active,
+.facet-button:hover,
+.resource-tag,
+#load-more-button:hover {
+  background-color: #00aeb3;
+}
+
+.external-resource-button,
+.external-resource-button:hover {
+  border: none;
+  margin: 0 0.625rem 0.625rem 0;
+  padding: 0;
+}
+
+.external-resource-button,
+.read-more-button {
+  color: #d7a650;
+}
+
+.external-resource-button:hover,
+.read-more-button:hover {
+  background-color: #ffffff;
+  color: #00aeb3;
+}
+
+.resource-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.external-resource-tile {
+  grid-row: span 1;
+  height: 9.75rem;
+}
+
+.internal-resource-tile {
+  grid-row: span 2;
+  height: 21.5rem;
+}
+
+.read-more-button {
+  border: none;
+  width: fit-content;
+}
+
+.resource-description {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.resource-tag {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.resource-tile {
+  background-color: #ffffff;
+  border-radius: 0.625rem;
+  color: #363636;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 19.5rem;
+}
+
+.resource-tile-text {
+  padding: 0.625rem;
+}
+
+.resource-title {
+  display: block;
+  font-size: 1.125rem;
+  margin: 0 0 0.5rem 0;
+  max-height: 2.7rem;
+  max-width: 19.5rem;
+  overflow: hidden;
+  whitespace: wrap;
+}
+
+.resources-wrapper {
+  display: grid;
+  grid-auto-rows: 9.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  grid-gap: 2rem 0;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}

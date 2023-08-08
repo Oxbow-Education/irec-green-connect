@@ -21,7 +21,7 @@ if (isset($_GET['filter_tag'])) {
     array(
       'key' => 'worker_tags',
       'value' => sanitize_text_field($_GET['filter_tag']),
-      'compare' => '=',
+      'compare' => 'LIKE',
     ),
   );
 }
@@ -79,8 +79,6 @@ $query = new WP_Query($args);
         }
       });
     }
-
-
 
     $(document).on('click', '#load-more-button', function() {
       loadMorePosts();

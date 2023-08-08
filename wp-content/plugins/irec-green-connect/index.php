@@ -1,7 +1,7 @@
 <?php
-// You can treat this like a funcitons.php file
+// You can treat this like a functions.php file
 
-// We might want to make two of these -- one for Workers and one for 
+// We might want to make two of these -- one for Workers and one for
 // Contractors/Organizations.
 
 // This one is set up to work for workers
@@ -11,6 +11,12 @@ function filtered_resources_shortcode()
 }
 add_shortcode('filter_resources', 'filtered_resources_shortcode');
 
+// connect css stylesheet
+function enqueue_custom_assets() {
+  wp_enqueue_style('dashicons');
+  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 
 // AJAX handler for loading more posts
 add_action('wp_ajax_load_more_posts', 'load_more_posts_callback');
