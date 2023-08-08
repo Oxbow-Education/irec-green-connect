@@ -18,8 +18,10 @@
       </div>
   </div>
   <div class="right">
-    <button class="resource-button-container read-more-button">
-      Read More
-    </button>
+    <a href="<?php echo get_the_permalink($post_id); ?>">
+      <button class="resource-button-container read-more-button">
+        Read More
+      </button>
+    </a>
   </div>
 </div>
