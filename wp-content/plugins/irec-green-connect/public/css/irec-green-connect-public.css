@@ -41,9 +41,14 @@
 }
 
 .external-resource-button:hover,
-.read-more-button:hover {
+.external-resource-button:focus,
+.read-more-button:hover,
+.read-more-button:focus {
   background-color: #ffffff;
+  border: none;
   color: #00aeb3;
+  outline: none;
+  text-decoration: none;
 }
 
 .resource-button-container {
