@@ -19,9 +19,7 @@
       <?php echo $post_text ?>
     </p>
   </div>
-  <!-- <div class="resource-button-container"> -->
-    <button class="external-resource-button">
-      <span class="dashicons dashicons-plus-alt2"></span>
-    </button>
-  <!-- </div> -->
+  <button class="external-resource-button">
+    <span class="dashicons dashicons-plus-alt2"></span>
+  </button>
 </div>

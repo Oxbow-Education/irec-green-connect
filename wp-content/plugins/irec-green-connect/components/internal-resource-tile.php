@@ -15,7 +15,7 @@
             <?php endforeach;
           } ?>
         </div>
-        <p class="resource-description clamp-2">
+        <p class="resource-description">
           <?php get_post_meta($postId, 'short_description', true); ?>
         </p>
       </div>

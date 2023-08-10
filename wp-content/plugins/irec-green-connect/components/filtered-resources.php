@@ -56,8 +56,6 @@ $query = new WP_Query($args);
 
       loading = true;
 
-      // TODO: is the console error coming from this? will append work for the masonry layout as a grid?
-
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
@@ -67,10 +65,12 @@ $query = new WP_Query($args);
           tag: $('.facet-buttons .active').data('tag'),
         },
         success: function(response) {
-          console.log(response)
-          $('.resources-wrapper').after(response);
-          $('.resources-wrapper:first').append($('.resources-wrapper:last .resource-tile'));
-          $('.resources-wrapper:last').remove();
+          const addToExisting = document.getElementsByClassName('resources-wrapper').length > 0;
+          $('.load-more-wrapper').before(response);
+          if (addToExisting) {
+            $('.resources-wrapper:first').append($('.resources-wrapper:last .resource-tile'));
+            $('.resources-wrapper:last').remove();
+          }
 
           page++;
           loading = false;
