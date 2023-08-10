@@ -86,11 +86,6 @@
   width: fit-content;
 }
 
-.resource-button-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .resource-description {
   font-size: 0.875rem;
   margin: 0;
