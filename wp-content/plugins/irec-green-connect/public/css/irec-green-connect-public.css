@@ -30,9 +30,12 @@
 
 .external-resource-button,
 .external-resource-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
   border: none;
-  margin: 0 0.625rem 0.625rem 0;
+  bottom: 0.625rem;
   padding: 0;
+  position: absolute;
+  right: 0.625rem;
 }
 
 .external-resource-button,
@@ -44,7 +47,7 @@
 .external-resource-button:focus,
 .read-more-button:hover,
 .read-more-button:focus {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.5);
   border: none;
   color: #00aeb3;
   outline: none;
@@ -58,9 +61,14 @@
   text-decoration: none;
 }
 
-.resource-button-container {
-  display: flex;
-  justify-content: flex-end;
+.clamp-2 {
+  display: -webkit-box;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  whitespace: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .external-resource-tile {
@@ -76,6 +84,11 @@
 .read-more-button {
   border: none;
   width: fit-content;
+}
+
+.resource-button-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .resource-description {
@@ -96,6 +109,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .resource-tile-text {
@@ -104,14 +118,7 @@
 
 .resource-title {
   font-size: 1.125rem;
-  display: -webkit-box;
-  line-clamp: 2;
   margin: 0 0 0.5rem 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  whitespace: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
 }
 
 .resource-tile .attachment-post-thumbnail {
@@ -147,6 +154,6 @@
 
 @media only screen and (min-width: 1200px) {
   .resources-wrapper {
-    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
   }
 }
