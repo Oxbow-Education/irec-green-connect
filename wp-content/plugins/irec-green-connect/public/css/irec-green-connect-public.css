@@ -19,13 +19,16 @@
   border-radius: 0;
   color: #ffffff;
   font-size: 0.75rem;
+  outline: none;
 }
 
 .facet-button.active,
 .facet-button:hover,
+.facet-button:focus,
 .resource-tag,
 #load-more-button:hover {
   background-color: #00aeb3;
+  outline: none;
 }
 
 .external-resource-button,
@@ -69,6 +72,23 @@
   whitespace: wrap;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+#clear-tags-button,
+#clear-tags-button:active,
+#clear-tags-button:focus {
+  background-color: #236489;
+  border: 2px solid transparent;
+  color: #ffffff;
+  font-size: 0.75rem;
+  outline: none;
+}
+
+#clear-tags-button:hover {
+  background-color: #00aeb3;
+  border: 2px solid #00aeb3;
+  border-radius: 0;
+  outline: none;
 }
 
 .external-resource-tile {
