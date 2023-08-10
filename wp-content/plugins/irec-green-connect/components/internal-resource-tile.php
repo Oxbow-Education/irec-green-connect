@@ -7,7 +7,7 @@
   <div>
     <?php the_post_thumbnail(); ?>
       <div class="resource-tile-text">
-      <h5 class="resource-title"><?php the_title(); ?></h5>
+      <h5 class="resource-title clamp-2"><?php the_title(); ?></h5>
         <div>
           <?php if (is_array($tag_array)) {
             foreach ($tag_array as $tag) : ?>
@@ -15,7 +15,7 @@
             <?php endforeach;
           } ?>
         </div>
-        <p class="resource-description">
+        <p class="resource-description clamp-2">
           <?php get_post_meta($postId, 'short_description', true); ?>
         </p>
       </div>
