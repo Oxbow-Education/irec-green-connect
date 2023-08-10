@@ -85,14 +85,26 @@ $query = new WP_Query($args);
       });
     }
 
+    // this doesn't always load the same first page yet, needs fix
+    $(document).on('click', '#clear-tags-button', () => {
+      page = 0;
+      $('.resources-wrapper').remove();
+      $('.facet-buttons .facet-button').removeClass('active');
+      loadMorePosts();
+    })
+
     $(document).on('click', '#load-more-button', function() {
       loadMorePosts();
     });
 
-    // Facet buttons filtering
+    // Facet buttons filtering (cannot multi-select currently)
     $('.facet-buttons .facet-button').on('click', function() {
-      $('.facet-buttons .facet-button').removeClass('active');
-      $(this).addClass('active');
+      if (this.className.includes('active')) {
+        $(this).removeClass('active')
+      } else {
+        $('.facet-buttons .facet-button').removeClass('active');
+        $(this).addClass('active')
+      }
       page = 0;
 
       $('.resources-wrapper').remove();
