@@ -24,7 +24,9 @@ $tags = array_values(array_unique($tags));
 ?>
 <!-- Facet buttons -->
 <div class="facet-buttons">
+  <h4>Filter By</h4>
   <?php foreach ($tags as $tag) : ?>
     <button class="facet-button" data-tag="<?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
+  <button id="clear-tags-button">Clear Filters</button>
 </div>
