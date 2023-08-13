@@ -21,7 +21,7 @@ if (isset($_GET['filter_tag'])) {
     array(
       'key' => 'worker_tags',
       'value' => sanitize_text_field($_GET['filter_tag']),
-      'compare' => '=',
+      'compare' => 'LIKE',
     ),
   );
 }
@@ -65,8 +65,13 @@ $query = new WP_Query($args);
           tag: $('.facet-buttons .active').data('tag'),
         },
         success: function(response) {
-          console.log(response)
+          const addToExisting = document.getElementsByClassName('resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
+          if (addToExisting) {
+            $('.resources-wrapper:first').append($('.resources-wrapper:last .resource-tile'));
+            $('.resources-wrapper:last').remove();
+          }
+
           page++;
           loading = false;
 
@@ -80,16 +85,26 @@ $query = new WP_Query($args);
       });
     }
 
-
+    // this doesn't always load the same first page yet, needs fix
+    $(document).on('click', '#clear-tags-button', () => {
+      page = 0;
+      $('.resources-wrapper').remove();
+      $('.facet-buttons .facet-button').removeClass('active');
+      loadMorePosts();
+    })
 
     $(document).on('click', '#load-more-button', function() {
       loadMorePosts();
     });
 
-    // Facet buttons filtering
+    // Facet buttons filtering (cannot multi-select currently)
     $('.facet-buttons .facet-button').on('click', function() {
-      $('.facet-buttons .facet-button').removeClass('active');
-      $(this).addClass('active');
+      if (this.className.includes('active')) {
+        $(this).removeClass('active')
+      } else {
+        $('.facet-buttons .facet-button').removeClass('active');
+        $(this).addClass('active')
+      }
       page = 0;
 
       $('.resources-wrapper').remove();
