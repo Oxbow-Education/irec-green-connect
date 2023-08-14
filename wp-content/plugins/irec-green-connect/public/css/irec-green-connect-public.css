@@ -203,3 +203,7 @@ h4 {
   padding: 0rem 0 4rem;
   max-width: 1000px;
 }
+
+.hidden {
+  display: none;
+}
