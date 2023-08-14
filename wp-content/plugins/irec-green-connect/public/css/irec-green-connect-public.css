@@ -3,6 +3,16 @@
  * included in this file.
  */
 
+* {
+  font-family: 'proxima-nova';
+}
+
+h1,
+h3,
+h3,
+h4 {
+  font-weight: bold;
+}
 .facet-buttons,
 .load-more-wrapper,
 .resources-wrapper {
@@ -104,6 +114,7 @@
 .read-more-button {
   border: none;
   width: fit-content;
+  font-weight: bold;
 }
 
 .resource-description {
@@ -171,4 +182,24 @@
   .resources-wrapper {
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
   }
+}
+
+.top-resources-grid-container {
+  background-color: #236489;
+}
+.top-resources-grid-container h2 {
+  color: white;
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+  padding: 4rem 0 2rem;
+}
+.top-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  grid-gap: 2rem;
+  color: #ffffff;
+  margin: 0 auto;
+  padding: 0rem 0 4rem;
+  max-width: 1000px;
 }
