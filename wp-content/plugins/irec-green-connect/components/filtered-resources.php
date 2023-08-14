@@ -3,8 +3,6 @@
 $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = 10;
 $offset = ($page_number - 1) * $posts_per_page;
-// Facet buttons query to get all possible values for 'worker_tags'
-include __DIR__ . '/facet-buttons.php';
 ?>
 
 <?php
@@ -28,7 +26,35 @@ if (isset($_GET['filter_tag'])) {
 
 $query = new WP_Query($args);
 
+
+$top_resources_args = array(
+  'post_type'      => 'post',
+  'posts_per_page' => 3,
+  'meta_query'     => array(
+    'relation' => 'AND',
+    array(
+      'key'     => 'is_top_resource',
+      'value'   => true,
+      'compare' => '=',
+      'type'    => 'BOOLEAN', // Adjust the type if needed
+    ),
+    array(
+      'key'     => 'who_is_this_for',
+      'value'   => 'Workers',
+      'compare' => 'LIKE',
+    ),
+  ),
+);
+
+$top_resources_query = new WP_Query($top_resources_args);
+
 ?>
+<?php
+require __DIR__ . '/top-resources.php';
+include __DIR__ . '/facet-buttons.php';
+
+?>
+
 <div class="filter-wrapper">
   <?php require __DIR__ . '/resources-loop-grid.php'; ?>
 </div>
