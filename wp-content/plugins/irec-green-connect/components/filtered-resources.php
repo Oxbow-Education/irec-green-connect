@@ -26,10 +26,11 @@ if (isset($_GET['filter_tag'])) {
 
 $query = new WP_Query($args);
 
-
 $top_resources_args = array(
   'post_type'      => 'post',
   'posts_per_page' => 3,
+  'orderby'        => 'date',  // Sort by post date
+  'order'          => 'DESC',  // Sort in descending order (most recent first)
   'meta_query'     => array(
     'relation' => 'AND',
     array(
@@ -45,6 +46,7 @@ $top_resources_args = array(
     ),
   ),
 );
+
 
 $top_resources_query = new WP_Query($top_resources_args);
 
