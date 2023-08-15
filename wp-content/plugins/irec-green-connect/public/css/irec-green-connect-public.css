@@ -7,6 +7,16 @@
   font-family: 'proxima-nova';
 }
 
+main {
+  background-color: #236489;
+  display: flex;
+  justify-content: center;
+}
+
+.page-content {
+  max-width: 1000px;
+}
+
 h1,
 h3,
 h3,
@@ -18,7 +28,7 @@ h4 {
 .resources-wrapper {
   background-color: #236489;
   color: #ffffff;
-  padding: 1rem 4rem;
+  padding-bottom: 2rem;
   margin: 0;
 }
 
@@ -30,6 +40,7 @@ h4 {
   color: #ffffff;
   font-size: 0.75rem;
   outline: none;
+  margin-top: 1rem;
 }
 
 .facet-button.active,
@@ -178,15 +189,6 @@ h4 {
   }
 }
 
-@media only screen and (min-width: 1200px) {
-  .resources-wrapper {
-    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
-  }
-}
-
-.top-resources-grid-container {
-  background-color: #236489;
-}
 .top-resources-grid-container h2 {
   color: white;
   font-size: 45px;
@@ -201,7 +203,6 @@ h4 {
   color: #ffffff;
   margin: 0 auto;
   padding: 0rem 0 4rem;
-  max-width: 1000px;
 }
 
 .hidden {
