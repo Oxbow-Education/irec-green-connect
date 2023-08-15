@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.15.0 - 31-07-2023 */
+/*! elementor-pro - v3.15.0 - 09-08-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["table-of-contents"],{
 
@@ -11,10 +11,12 @@
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+var _dompurify = _interopRequireDefault(__webpack_require__(/*! dompurify */ "../node_modules/dompurify/dist/purify.js"));
 class TOCHandler extends elementorModules.frontend.handlers.Base {
   getDefaultSettings() {
     const elementSettings = this.getElementSettings(),
@@ -58,7 +60,7 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
 
     // If there is a custom container defined by the user, use it as the headings-scan container
     if (elementSettings.container) {
-      return jQuery(elementSettings.container);
+      return jQuery(_dompurify.default.sanitize(elementSettings.container));
     }
 
     // Get the document wrapper element in which the TOC is located
@@ -404,4 +406,4 @@ exports["default"] = TOCHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=table-of-contents.99cfd4713b3327d9b782.bundle.js.map
+//# sourceMappingURL=table-of-contents.a6bbe930b65f39ccb74b.bundle.js.map
