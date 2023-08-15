@@ -13,10 +13,6 @@ main {
   justify-content: center;
 }
 
-.page-content {
-  max-width: 1000px;
-}
-
 h1,
 h3,
 h3,
@@ -30,6 +26,8 @@ h4 {
   color: #ffffff;
   padding-bottom: 2rem;
   margin: 0;
+  margin: 0 auto;
+  max-width: 1000px;
 }
 
 .facet-button,
@@ -170,6 +168,7 @@ h4 {
   grid-auto-rows: 9.75rem;
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   grid-gap: 2rem;
+  max-width: 1000px;
 }
 
 .right {
@@ -187,6 +186,11 @@ h4 {
   .resources-wrapper {
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   }
+}
+
+.top-resources-grid-container {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .top-resources-grid-container h2 {
