@@ -48,7 +48,6 @@ $top_resources_args = array(
   ),
 );
 
-
 $top_resources_query = new WP_Query($top_resources_args);
 
 ?>
@@ -152,7 +151,6 @@ include __DIR__ . '/facet-buttons.php';
       });
     }
 
-    // this doesn't always load the same first page yet, needs fix
     $(document).on('click', '#clear-tags-button', () => {
       page = 0;
       $('.resources-wrapper').remove();
@@ -161,9 +159,16 @@ include __DIR__ . '/facet-buttons.php';
     })
 
     $(document).on('click', '#load-more-button', function() {
-      console.log('click')
       loadMorePosts();
     });
+
+    $(document).on('click', '.external-resource-button', function() {
+      const resource_id = $(this).attr('data-tag');
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`)
+      const theResourceBg = $(`div.external-resource-modal[data-tag="modal-${resource_id}-bg"]`)
+      theResource.addClass('active')
+      theResourceBg.addClass('active')
+    })
 
     // Facet buttons filtering (cannot multi-select currently)
     $('.facet-buttons .facet-button').on('click', function() {
