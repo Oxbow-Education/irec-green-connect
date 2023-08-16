@@ -25,7 +25,6 @@ h4 {
   padding-bottom: 2rem;
   margin: 0;
   margin: 0 auto;
-  max-width: 1000px;
 }
 
 .facet-button,
@@ -36,7 +35,6 @@ h4 {
   color: #ffffff;
   font-size: 0.75rem;
   outline: none;
-  margin-top: 1rem;
 }
 
 .facet-button.active,
@@ -54,13 +52,21 @@ h4 {
   border: none;
   bottom: 0.625rem;
   padding: 0;
-  position: absolute;
   right: 0.625rem;
 }
 
 .external-resource-button,
-.read-more-button {
+.read-more-button,
+a.read-more-button {
   color: #d7a650;
+  position: absolute;
+}
+
+.read-more-button,
+a.read-more-button {
+  bottom: 0;
+  padding: 0.625rem 0.75rem;
+  right: 0;
 }
 
 .external-resource-button:hover,
@@ -69,6 +75,7 @@ h4 {
 .read-more-button:focus {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
+  border-radius: 0.625rem;
   color: #00aeb3;
   outline: none;
   text-decoration: none;
@@ -91,6 +98,16 @@ h4 {
   -webkit-line-clamp: 2;
 }
 
+.clamp-4 {
+  display: -webkit-box;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  whitespace: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
 #clear-tags-button,
 #clear-tags-button:active,
 #clear-tags-button:focus {
@@ -108,11 +125,80 @@ h4 {
   outline: none;
 }
 
+#filter-by {
+  margin-bottom: 1rem;
+}
+
+button.close-modal-btn {
+  background-color: #ffffff;
+  border: none;
+  float: right;
+  padding-top: 1rem;
+}
+
+.close-modal-btn > svg * {
+  background-color: #ffffff;
+  fill: #d7a650;
+}
+
+.close-modal-btn > svg *,
+.close-modal-btn:focus {
+  background-color: #ffffff;
+  outline: none;
+}
+
+.close-modal-btn:hover > svg *,
+.close-modal-btn:hover {
+  background-color: #ffffff;
+  fill: #00aeb3;
+}
+
 .external-resource-modal {
+  background-color: #ffffff;
+  color: #777777;
+  display: none;
+  left: 50%;
+  max-height: 80vh;
+  overflow: auto;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
   z-index: 99;
-  background-color: red;
-  width: 200px;
-  height: 200px;
+}
+
+.external-resource-modal.active,
+.external-resource-modal-bg.active {
+  display: block;
+}
+
+.external-resource-modal h5 {
+  color: #385275;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.external-resource-modal p {
+  font-size: 18px;
+  padding-top: 1rem;
+}
+
+.external-resource-modal a {
+  color: #d7a650;
+  font-size: 22px;
+  text-decoration: underline;
+}
+
+.external-resource-modal-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  height: 100vh;
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  z-index: 98;
 }
 
 .external-resource-tile {
@@ -123,6 +209,10 @@ h4 {
 .internal-resource-tile {
   grid-row: span 2;
   height: 21.5rem;
+}
+
+.modal-content {
+  padding: 4rem;
 }
 
 .read-more-button {
@@ -169,33 +259,52 @@ h4 {
 }
 
 .resources-wrapper {
-  display: grid;
   grid-auto-rows: 9.75rem;
-  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-  grid-gap: 2rem;
+}
+
+.facet-buttons,
+.load-more-wrapper,
+.resources-wrapper,
+.top-resources-grid {
+  margin: 0 2rem;
   max-width: 1000px;
 }
 
-.right {
-  display: flex;
-  justify-content: flex-end;
+.resources-wrapper,
+.top-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  grid-gap: 2rem;
+  margin: 0 2rem;
 }
 
 @media only screen and (min-width: 600px) {
-  .resources-wrapper {
+  .resources-wrapper,
+  .top-resources-grid {
     grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+  }
+  .facet-buttons,
+  .load-more-wrapper,
+  .resources-wrapper,
+  .top-resources-grid {
+    margin: 0 4rem;
   }
 }
 
 @media only screen and (min-width: 1000px) {
-  .resources-wrapper {
+  .resources-wrapper,
+  .top-resources-grid {
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   }
 }
 
-.top-resources-grid-container {
-  max-width: 1000px;
-  margin: 0 auto;
+@media only screen and (min-width: 1140px) {
+  .facet-buttons,
+  .load-more-wrapper,
+  .resources-wrapper,
+  .top-resources-grid {
+    margin: 0 auto;
+  }
 }
 
 .top-resources-grid-container h2 {
@@ -205,15 +314,22 @@ h4 {
   text-align: center;
   padding: 4rem 0 2rem;
 }
+
 .top-resources-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  grid-gap: 2rem;
   color: #ffffff;
-  margin: 0 auto;
   padding: 0rem 0 4rem;
 }
 
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .external-resource-modal {
+    width: 80%;
+  }
+
+  .modal-content {
+    padding: 2rem;
+  }
 }
