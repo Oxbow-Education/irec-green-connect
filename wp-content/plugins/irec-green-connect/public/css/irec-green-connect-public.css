@@ -108,14 +108,24 @@ h4 {
   outline: none;
 }
 
+button.close-modal-btn {
+  border: none;
+  float: right;
+  padding-top: 1rem;
+}
+
+button.close-modal-btn:hover {
+  background-color: #ffffff;
+  color: #00aeb3;
+}
+
 .external-resource-modal {
   background-color: #ffffff;
   color: #777777;
   display: none;
-  height: 350px;
   left: 50%;
+  max-height: 80vh;
   overflow: auto;
-  padding: 4rem;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -146,11 +156,10 @@ h4 {
 }
 
 .external-resource-modal-bg {
-  background-color: #142334aa;
+  background-color: rgba(0, 0, 0, 0.4);
   display: none;
   height: 100vh;
   left: 50%;
-  opacity: 30%;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -166,6 +175,10 @@ h4 {
 .internal-resource-tile {
   grid-row: span 2;
   height: 21.5rem;
+}
+
+.modal-content {
+  padding: 4rem;
 }
 
 .read-more-button {
