@@ -109,14 +109,27 @@ h4 {
 }
 
 button.close-modal-btn {
+  background-color: #ffffff;
   border: none;
   float: right;
   padding-top: 1rem;
 }
 
-button.close-modal-btn:hover {
+.close-modal-btn > svg * {
   background-color: #ffffff;
-  color: #00aeb3;
+  fill: #d7a650;
+}
+
+.close-modal-btn > svg *,
+.close-modal-btn:focus {
+  background-color: #ffffff;
+  outline: none;
+}
+
+.close-modal-btn:hover > svg *,
+.close-modal-btn:hover {
+  background-color: #ffffff;
+  fill: #00aeb3;
 }
 
 .external-resource-modal {
