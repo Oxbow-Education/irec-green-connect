@@ -48,14 +48,12 @@ $top_resources_args = array(
   ),
 );
 
-
 $top_resources_query = new WP_Query($top_resources_args);
 
 ?>
 <?php
 require __DIR__ . '/top-resources.php';
 include __DIR__ . '/facet-buttons.php';
-
 ?>
 
 <div class="filter-wrapper">
@@ -105,7 +103,6 @@ include __DIR__ . '/facet-buttons.php';
 
       if (loading) return;
 
-
       loading = true;
 
       const newPage = page + 1;
@@ -153,20 +150,40 @@ include __DIR__ . '/facet-buttons.php';
       });
     }
 
-    // this doesn't always load the same first page yet, needs fix
-    $(document).on('click', '#clear-tags-button', () => {
-      page = 0;
-      $('.resources-wrapper').remove();
-      $('.facet-buttons .facet-button').removeClass('active');
-      loadMorePosts();
-    })
-
+    // LOAD MORE BTN
     $(document).on('click', '#load-more-button', function() {
-      console.log('click')
       loadMorePosts();
     });
 
-    // Facet buttons filtering (cannot multi-select currently)
+    // EXTERNAL RESOURCE MODAL
+    // open
+    $('.external-resource-button').on('click', function() {
+      const resource_id = $(this).attr('data-tag');
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`)
+      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resource_id}-bg"]`)
+      theResource.addClass('active')
+      theResourceBg.addClass('active')
+    })
+    // close (btn or bg click)
+    $('button.close-modal-btn').on('click', function() {
+      const resourceId = $(this).attr('data-tag');
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${resourceId}"]`)
+      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resourceId}-bg"]`)
+      theResource.removeClass('active')
+      theResourceBg.removeClass('active')
+    })
+    $('div.external-resource-modal-bg').on('click', function() {
+      const dataTag = $(this).attr('data-tag');
+      const dataTagArr = dataTag.split('-')
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${dataTagArr[1]}"]`)
+      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`)
+      theResource.removeClass('active')
+      theResourceBg.removeClass('active')
+    })
+
+    // FACET BTNS (tag filters)
+    // TODO: Should multi-select
+    // Assign individual tags
     $('.facet-buttons .facet-button').on('click', function() {
       if (this.className.includes('active')) {
         $(this).removeClass('active')
@@ -180,6 +197,13 @@ include __DIR__ . '/facet-buttons.php';
 
       loadMorePosts();
     });
+    // Clear all tags
+    $(document).on('click', '#clear-tags-button', () => {
+      page = 0;
+      $('.resources-wrapper').remove();
+      $('.facet-buttons .facet-button').removeClass('active');
+      loadMorePosts();
+    })
 
     setPageStateBasedOnQueryParams()
   });
