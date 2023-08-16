@@ -43,7 +43,7 @@ class Module extends Module_Base {
 			'title' => esc_html__( 'Taxonomy Filter', 'elementor-pro' ),
 			'description' => sprintf(
 				esc_html__( 'Taxonomy Filter is a powerful tool that enables users to easily filter and sort their posts and product categories. %1$sLearn More%2$s', 'elementor-pro' ),
-				'<a href="http://go.elementor.com/widget-taxonomy-filter" target="_blank">',
+				'<a href="https://go.elementor.com/wp-dash-taxonomy-filter/" target="_blank">',
 				'</a>'
 			),
 			'release_status' => Manager::RELEASE_STATUS_ALPHA,
