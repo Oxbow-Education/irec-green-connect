@@ -25,7 +25,6 @@ h4 {
   padding-bottom: 2rem;
   margin: 0;
   margin: 0 auto;
-  max-width: 1000px;
 }
 
 .facet-button,
@@ -238,11 +237,23 @@ button.close-modal-btn {
 }
 
 .resources-wrapper {
-  display: grid;
   grid-auto-rows: 9.75rem;
+}
+
+.facet-buttons,
+.load-more-wrapper,
+.resources-wrapper,
+.top-resources-grid {
+  margin: 0 2rem;
+  max-width: 1000px;
+}
+
+.resources-wrapper,
+.top-resources-grid {
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   grid-gap: 2rem;
-  max-width: 1000px;
+  margin: 0 2rem;
 }
 
 .right {
@@ -251,20 +262,32 @@ button.close-modal-btn {
 }
 
 @media only screen and (min-width: 600px) {
-  .resources-wrapper {
+  .resources-wrapper,
+  .top-resources-grid {
     grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+  }
+  .facet-buttons,
+  .load-more-wrapper,
+  .resources-wrapper,
+  .top-resources-grid {
+    margin: 0 4rem;
   }
 }
 
 @media only screen and (min-width: 1000px) {
-  .resources-wrapper {
+  .resources-wrapper,
+  .top-resources-grid {
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   }
 }
 
-.top-resources-grid-container {
-  max-width: 1000px;
-  margin: 0 auto;
+@media only screen and (min-width: 1140px) {
+  .facet-buttons,
+  .load-more-wrapper,
+  .resources-wrapper,
+  .top-resources-grid {
+    margin: 0 auto;
+  }
 }
 
 .top-resources-grid-container h2 {
@@ -274,15 +297,26 @@ button.close-modal-btn {
   text-align: center;
   padding: 4rem 0 2rem;
 }
+
 .top-resources-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  grid-gap: 2rem;
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); */
+  /* grid-gap: 2rem; */
   color: #ffffff;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 0rem 0 4rem;
 }
 
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .external-resource-modal {
+    width: 80%;
+  }
+
+  .modal-content {
+    padding: 2rem;
+  }
 }
