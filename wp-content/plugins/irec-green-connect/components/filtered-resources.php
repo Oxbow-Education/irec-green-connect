@@ -157,7 +157,7 @@ include __DIR__ . '/facet-buttons.php';
 
     // EXTERNAL RESOURCE MODAL
     // open
-    $('.external-resource-button').on('click', function() {
+    $(document).on('click', '.external-resource-button', function() {
       const resource_id = $(this).attr('data-tag');
       const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`)
       const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resource_id}-bg"]`)
@@ -165,14 +165,14 @@ include __DIR__ . '/facet-buttons.php';
       theResourceBg.addClass('active')
     })
     // close (btn or bg click)
-    $('button.close-modal-btn').on('click', function() {
+    $(document).on('click', 'button.close-modal-btn', function() {
       const resourceId = $(this).attr('data-tag');
       const theResource = $(`div.external-resource-modal[data-tag="modal-${resourceId}"]`)
       const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resourceId}-bg"]`)
       theResource.removeClass('active')
       theResourceBg.removeClass('active')
     })
-    $('div.external-resource-modal-bg').on('click', function() {
+    $(document).on('click', 'div.external-resource-modal-bg', function() {
       const dataTag = $(this).attr('data-tag');
       const dataTagArr = dataTag.split('-')
       const theResource = $(`div.external-resource-modal[data-tag="modal-${dataTagArr[1]}"]`)
@@ -184,7 +184,7 @@ include __DIR__ . '/facet-buttons.php';
     // FACET BTNS (tag filters)
     // TODO: Should multi-select
     // Assign individual tags
-    $('.facet-buttons .facet-button').on('click', function() {
+    $(document).on('click','.facet-buttons .facet-button', function() {
       if (this.className.includes('active')) {
         $(this).removeClass('active')
       } else {
