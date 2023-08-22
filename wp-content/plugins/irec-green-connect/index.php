@@ -22,8 +22,6 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 add_action('wp_ajax_load_more_posts', 'load_more_posts_callback');
 add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts_callback');
 
-// TODO: do i need to add an action for the shortcode to work on reload? why? same with tags?
-
 function load_more_posts_callback()
 {
   $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
@@ -36,20 +34,18 @@ function load_more_posts_callback()
     'offset' => $offset,
   );
 
-  if (isset($_POST['tag']) && is_array($_POST['tag'])) { // ['Tag 1', 'Tag 2'], []
-    // $tags = array_map('sanitize_text_field', $_POST['tag']);
+  if (isset($_POST['tag']) && is_array($_POST['tag'])) {
+    $tags = array_map('sanitize_text_field', $_POST['tag']);
 
     $meta_query_array = array('relation' => 'OR');
-    foreach($_POST['tag'] as $value) {
+    foreach($tags as $value) {
       $meta_query_array[] = array(
           'key'     => 'worker_tags',
           'value'   => $value,
           'compare' => 'LIKE',
       );
-  }
-
+    }
     $args['meta_query'] = $meta_query_array;
-    // echo '<script>console.log(`PHP error: ' . print_r($args) . '")</script>';
   }
 
   $query = new WP_Query($args);
