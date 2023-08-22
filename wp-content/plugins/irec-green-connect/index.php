@@ -36,14 +36,20 @@ function load_more_posts_callback()
     'offset' => $offset,
   );
 
-  if (isset($_POST['tag'])) {
-    $args['meta_query'] = array(
-      array(
-        'key' => 'worker_tags',
-        'value' => sanitize_text_field($_POST['tag']),
-        'compare' => 'LIKE',
-      ),
-    );
+  if (isset($_POST['tag']) && is_array($_POST['tag'])) { // ['Tag 1', 'Tag 2'], []
+    // $tags = array_map('sanitize_text_field', $_POST['tag']);
+
+    $meta_query_array = array('relation' => 'OR');
+    foreach($_POST['tag'] as $value) {
+      $meta_query_array[] = array(
+          'key'     => 'worker_tags',
+          'value'   => $value,
+          'compare' => 'LIKE',
+      );
+  }
+
+    $args['meta_query'] = $meta_query_array;
+    // echo '<script>console.log(`PHP error: ' . print_r($args) . '")</script>';
   }
 
   $query = new WP_Query($args);
