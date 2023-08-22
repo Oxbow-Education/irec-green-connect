@@ -54,6 +54,7 @@ $top_resources_query = new WP_Query($top_resources_args);
 <?php
 require __DIR__ . '/top-resources.php';
 include __DIR__ . '/facet-buttons.php';
+echo '<hr>';
 ?>
 
 <div class="filter-wrapper">
@@ -68,6 +69,13 @@ include __DIR__ . '/facet-buttons.php';
 
   <button id="load-more-button" class="<?php echo $loadMoreClass; ?>">Load More</button>
 
+</div>
+
+<!-- temp footer -->
+<hr>
+<div class="temp-footer wrapper">
+  <p>Still need support?</p>
+  <h2>Contact us at <a href = "mailto: info@irecusa.org">info@irecusa.org</a></h2>
 </div>
 
 <!-- We need to keep this javascript in the same file because it's using php variables -->
