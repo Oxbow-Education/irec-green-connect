@@ -78,10 +78,14 @@ include __DIR__ . '/facet-buttons.php';
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
 
-    const setPageQueryParams = (newPage, tag) => {
+    const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
       newParams.set('paged', newPage);
-      newParams.set('tag', tag);
+      if (tags.length) {
+        tags.forEach(tag => {
+          newParams.append('tag[]', tag);
+        })
+      }
 
       // Create a new URL with the updated query parameters
       const newUrl = `${window.location.pathname}?${newParams.toString()}`;
@@ -106,17 +110,24 @@ include __DIR__ . '/facet-buttons.php';
       loading = true;
 
       const newPage = page + 1;
-      const tag = $('.facet-buttons .active').data('tag')
+      // need to deal with multiple tags not just one
+      const tags = [];
+      $('.facet-buttons .active').each(function() {
+        const tag = $(this).data('tag');
+        tags.push(tag);
+      })
+      console.log(tags)
 
-      setPageQueryParams(newPage, tag)
-
+      setPageQueryParams(newPage, tags)
+      
+      // needs to be able to handle multiple tags
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
         data: {
           action: 'load_more_posts',
           page: newPage,
-          tag
+          tag: tags
         },
         success: function(response) {
           console.log({
@@ -182,13 +193,11 @@ include __DIR__ . '/facet-buttons.php';
     })
 
     // FACET BTNS (tag filters)
-    // TODO: Should multi-select
-    // Assign individual tags
     $(document).on('click','.facet-buttons .facet-button', function() {
+
       if (this.className.includes('active')) {
         $(this).removeClass('active')
       } else {
-        $('.facet-buttons .facet-button').removeClass('active');
         $(this).addClass('active')
       }
       page = 0;

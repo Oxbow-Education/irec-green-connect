@@ -38,11 +38,16 @@ h4 {
 }
 
 .facet-button.active,
+.facet-button.active:focus,
 .facet-button:hover,
-.facet-button:focus,
 .resource-tag,
 #load-more-button:hover {
   background-color: #00aeb3;
+  outline: none;
+}
+
+.facet-button:focus {
+  background-color: #236489;
   outline: none;
 }
 
@@ -186,7 +191,8 @@ button.close-modal-btn {
 .external-resource-modal a {
   color: #d7a650;
   font-size: 22px;
-  text-decoration: underline;
+  font-weight: bold;
+  text-decoration: underline !important;
 }
 
 .external-resource-modal-bg {
