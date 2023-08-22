@@ -78,6 +78,7 @@ include __DIR__ . '/facet-buttons.php';
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
 
+    // still needs work for if the page is refreshed while there are chosen tag params
     const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
       newParams.set('paged', newPage);
@@ -126,7 +127,6 @@ include __DIR__ . '/facet-buttons.php';
 
       setPageQueryParams(newPage, tags)
       
-      // needs to be able to handle multiple tags
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
@@ -136,9 +136,9 @@ include __DIR__ . '/facet-buttons.php';
           tag: tags
         },
         success: function(response) {
-          console.log({
-            response
-          })
+          // console.log({
+          //   response
+          // })
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
