@@ -81,10 +81,17 @@ include __DIR__ . '/facet-buttons.php';
     const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
       newParams.set('paged', newPage);
-      if (tags.length) {
-        tags.forEach(tag => {
-          newParams.append('tag[]', tag);
-        })
+      
+      const currentTags = newParams.getAll('tag[]');
+      if (JSON.stringify(currentTags) !== JSON.stringify(tags)) {
+        newParams.delete('tag[]');
+
+        // Append new 'tag' parameters if tags array is not empty
+        if (tags.length) {
+          tags.forEach(tag => {
+            newParams.append('tag[]', tag);
+          });
+        }
       }
 
       // Create a new URL with the updated query parameters
@@ -116,7 +123,6 @@ include __DIR__ . '/facet-buttons.php';
         const tag = $(this).data('tag');
         tags.push(tag);
       })
-      console.log(tags)
 
       setPageQueryParams(newPage, tags)
       
