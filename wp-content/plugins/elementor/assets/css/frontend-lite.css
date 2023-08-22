@@ -487,8 +487,11 @@
   /* text-decoration: none; */
 }
 .elementor hr {
-  margin: 0;
-  background-color: transparent;
+  height: 1px;
+  margin: 0 auto 3rem;
+  max-width: 1000px;
+  background-color: #ffffff55;
+  border: none;
 }
 .elementor img {
   height: auto;

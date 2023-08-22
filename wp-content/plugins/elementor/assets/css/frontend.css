@@ -488,7 +488,8 @@
   /* text-decoration: none; */
 }
 .elementor hr {
-  margin: 0;
+  margin: 0 4rem;
+  max-width: 1000px
   background-color: transparent;
 }
 .elementor img {
