@@ -54,6 +54,7 @@ $top_resources_query = new WP_Query($top_resources_args);
 <?php
 require __DIR__ . '/top-resources.php';
 include __DIR__ . '/facet-buttons.php';
+echo '<hr>';
 ?>
 
 <div class="filter-wrapper">
@@ -70,6 +71,13 @@ include __DIR__ . '/facet-buttons.php';
 
 </div>
 
+<!-- temp footer -->
+<hr>
+<div class="temp-footer wrapper">
+  <p>Still need support?</p>
+  <h2>Contact us at <a href = "mailto: info@irecusa.org">info@irecusa.org</a></h2>
+</div>
+
 <!-- We need to keep this javascript in the same file because it's using php variables -->
 <script>
   jQuery(document).ready(function($) {
@@ -78,10 +86,22 @@ include __DIR__ . '/facet-buttons.php';
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
 
-    const setPageQueryParams = (newPage, tag) => {
+    // still needs work for if the page is refreshed while there are chosen tag params
+    const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
       newParams.set('paged', newPage);
-      newParams.set('tag', tag);
+      
+      const currentTags = newParams.getAll('tag[]');
+      if (JSON.stringify(currentTags) !== JSON.stringify(tags)) {
+        newParams.delete('tag[]');
+
+        // Append new 'tag' parameters if tags array is not empty
+        if (tags.length) {
+          tags.forEach(tag => {
+            newParams.append('tag[]', tag);
+          });
+        }
+      }
 
       // Create a new URL with the updated query parameters
       const newUrl = `${window.location.pathname}?${newParams.toString()}`;
@@ -106,22 +126,27 @@ include __DIR__ . '/facet-buttons.php';
       loading = true;
 
       const newPage = page + 1;
-      const tag = $('.facet-buttons .active').data('tag')
+      // need to deal with multiple tags not just one
+      const tags = [];
+      $('.facet-buttons .active').each(function() {
+        const tag = $(this).data('tag');
+        tags.push(tag);
+      })
 
-      setPageQueryParams(newPage, tag)
-
+      setPageQueryParams(newPage, tags)
+      
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
         data: {
           action: 'load_more_posts',
           page: newPage,
-          tag
+          tag: tags
         },
         success: function(response) {
-          console.log({
-            response
-          })
+          // console.log({
+          //   response
+          // })
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
@@ -157,7 +182,7 @@ include __DIR__ . '/facet-buttons.php';
 
     // EXTERNAL RESOURCE MODAL
     // open
-    $('.external-resource-button').on('click', function() {
+    $(document).on('click', '.external-resource-button', function() {
       const resource_id = $(this).attr('data-tag');
       const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`)
       const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resource_id}-bg"]`)
@@ -165,14 +190,14 @@ include __DIR__ . '/facet-buttons.php';
       theResourceBg.addClass('active')
     })
     // close (btn or bg click)
-    $('button.close-modal-btn').on('click', function() {
+    $(document).on('click', 'button.close-modal-btn', function() {
       const resourceId = $(this).attr('data-tag');
       const theResource = $(`div.external-resource-modal[data-tag="modal-${resourceId}"]`)
       const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resourceId}-bg"]`)
       theResource.removeClass('active')
       theResourceBg.removeClass('active')
     })
-    $('div.external-resource-modal-bg').on('click', function() {
+    $(document).on('click', 'div.external-resource-modal-bg', function() {
       const dataTag = $(this).attr('data-tag');
       const dataTagArr = dataTag.split('-')
       const theResource = $(`div.external-resource-modal[data-tag="modal-${dataTagArr[1]}"]`)
@@ -182,13 +207,11 @@ include __DIR__ . '/facet-buttons.php';
     })
 
     // FACET BTNS (tag filters)
-    // TODO: Should multi-select
-    // Assign individual tags
-    $('.facet-buttons .facet-button').on('click', function() {
+    $(document).on('click','.facet-buttons .facet-button', function() {
+
       if (this.className.includes('active')) {
         $(this).removeClass('active')
       } else {
-        $('.facet-buttons .facet-button').removeClass('active');
         $(this).addClass('active')
       }
       page = 0;
