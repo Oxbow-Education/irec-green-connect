@@ -19,10 +19,11 @@ h4 {
 }
 .facet-buttons,
 .load-more-wrapper,
-.resources-wrapper {
+.resources-wrapper,
+.wrapper {
   background-color: #236489;
   color: #ffffff;
-  padding-bottom: 2rem;
+  padding-bottom: 3em;
   margin: 0;
   margin: 0 auto;
 }
@@ -38,11 +39,16 @@ h4 {
 }
 
 .facet-button.active,
+.facet-button.active:focus,
 .facet-button:hover,
-.facet-button:focus,
 .resource-tag,
 #load-more-button:hover {
   background-color: #00aeb3;
+  outline: none;
+}
+
+.facet-button:focus {
+  background-color: #236489;
   outline: none;
 }
 
@@ -186,7 +192,23 @@ button.close-modal-btn {
 .external-resource-modal a {
   color: #d7a650;
   font-size: 22px;
-  text-decoration: underline;
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+
+.temp-footer {
+  padding-bottom: 4rem;
+}
+.temp-footer p {
+  font-size: 22px;
+  font-weight: bold;
+}
+.temp-footer h2 {
+  font-size: 65px;
+}
+.temp-footer a {
+  color: #d7a650;
+  text-decoration: none;
 }
 
 .external-resource-modal-bg {
@@ -265,7 +287,8 @@ button.close-modal-btn {
 .facet-buttons,
 .load-more-wrapper,
 .resources-wrapper,
-.top-resources-grid {
+.top-resources-grid,
+.wrapper {
   margin: 0 2rem;
   max-width: 1000px;
 }
@@ -286,7 +309,8 @@ button.close-modal-btn {
   .facet-buttons,
   .load-more-wrapper,
   .resources-wrapper,
-  .top-resources-grid {
+  .top-resources-grid,
+  .wrapper {
     margin: 0 4rem;
   }
 }
@@ -302,7 +326,8 @@ button.close-modal-btn {
   .facet-buttons,
   .load-more-wrapper,
   .resources-wrapper,
-  .top-resources-grid {
+  .top-resources-grid,
+  .wrapper {
     margin: 0 auto;
   }
 }
