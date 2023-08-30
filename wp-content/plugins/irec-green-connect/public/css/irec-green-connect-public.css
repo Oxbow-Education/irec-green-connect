@@ -233,6 +233,10 @@ button.close-modal-btn {
   height: 21.5rem;
 }
 
+/* .internal-resource-tile .post-thumbnail img {
+  height: 50%;
+} */
+
 .modal-content {
   padding: 4rem;
 }
@@ -252,6 +256,11 @@ button.close-modal-btn {
   display: inline-block;
   padding: 0.2rem 0.75rem;
   margin-bottom: 0.3rem;
+}
+
+.resource-tag.org-tag {
+  background-color: #a1d165;
+  border: #a1d165 2px solid;
 }
 
 .resource-tile {
@@ -274,10 +283,11 @@ button.close-modal-btn {
 }
 
 .resource-tile .attachment-post-thumbnail {
-  height: 50%;
+  height: 172px;
   object-fit: cover;
   object-position: top;
   width: 100%;
+  border-radius: 0.625rem 0.625rem 0 0;
 }
 
 .resources-wrapper {
@@ -330,6 +340,10 @@ button.close-modal-btn {
   .wrapper {
     margin: 0 auto;
   }
+}
+
+.single-resource-tags {
+  padding-left: 4rem;
 }
 
 .top-resources-grid-container h2 {
