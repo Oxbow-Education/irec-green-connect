@@ -7,7 +7,7 @@
   </button>
   <div class="modal-content">
     <h5><?php the_title(); ?></h5>
-    <p><?php the_content(); ?></p>
+    <p><?php echo get_post_meta($post_id, 'long_description', true); ?></p>
     <p><a target="_blank" href="<?php echo get_post_meta($post_id, 'url', true); ?>"><?php echo get_post_meta($post_id, 'url_text', true); ?></a></p>
   </div>
 </div>
