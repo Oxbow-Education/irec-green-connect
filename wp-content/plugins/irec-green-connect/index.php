@@ -5,11 +5,16 @@
 // Contractors/Organizations.
 
 // This one is set up to work for workers
-function filtered_resources_shortcode()
-{
+function filtered_resources_shortcode() {
   include __DIR__ . '/components/filtered-resources.php';
 }
 add_shortcode('filter_resources', 'filtered_resources_shortcode');
+
+
+function single_post_tags_shortcode() {
+  include __DIR__ . '/components/single-post-tags.php';
+}
+add_shortcode('single_post_tags', 'single_post_tags_shortcode');
 
 // connect css stylesheet
 function enqueue_custom_assets() {
