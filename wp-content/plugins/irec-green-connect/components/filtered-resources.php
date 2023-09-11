@@ -81,11 +81,11 @@ echo '<hr>';
 <!-- We need to keep this javascript in the same file because it's using php variables -->
 <script>
   jQuery(document).ready(function($) {
-
     let page = <?php echo esc_js($page_number); ?>;
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
 
+    // TODO: use resourceId param to open external resource modal
     // still needs work for if the page is refreshed while there are chosen tag params
     const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
@@ -189,6 +189,7 @@ echo '<hr>';
       theResource.addClass('active');
       theResourceBg.addClass('active');
       let permalink = `${window.location.pathname.replace(/\/$/, '')}?resource=${resource_id}`
+      // TODO: adds URL to browser, but does not direct a user correctly if they use the URL
       window.history.pushState({ path: permalink }, '', permalink);
     })
     // close (btn or bg click)
