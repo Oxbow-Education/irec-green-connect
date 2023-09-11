@@ -81,11 +81,11 @@ echo '<hr>';
 <!-- We need to keep this javascript in the same file because it's using php variables -->
 <script>
   jQuery(document).ready(function($) {
-
     let page = <?php echo esc_js($page_number); ?>;
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
 
+    // TODO: use resourceId param to open external resource modal
     // still needs work for if the page is refreshed while there are chosen tag params
     const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
@@ -184,35 +184,40 @@ echo '<hr>';
     // open
     $(document).on('click', '.external-resource-button', function() {
       const resource_id = $(this).attr('data-tag');
-      const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`)
-      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resource_id}-bg"]`)
-      theResource.addClass('active')
-      theResourceBg.addClass('active')
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`);
+      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resource_id}-bg"]`);
+      theResource.addClass('active');
+      theResourceBg.addClass('active');
+      let permalink = `${window.location.pathname.replace(/\/$/, '')}?resource=${resource_id}`
+      // TODO: adds URL to browser, but does not direct a user correctly if they use the URL
+      window.history.pushState({ path: permalink }, '', permalink);
     })
     // close (btn or bg click)
     $(document).on('click', 'button.close-modal-btn', function() {
       const resourceId = $(this).attr('data-tag');
-      const theResource = $(`div.external-resource-modal[data-tag="modal-${resourceId}"]`)
-      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resourceId}-bg"]`)
-      theResource.removeClass('active')
-      theResourceBg.removeClass('active')
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${resourceId}"]`);
+      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resourceId}-bg"]`);
+      theResource.removeClass('active');
+      theResourceBg.removeClass('active');
+      window.history.back();
     })
     $(document).on('click', 'div.external-resource-modal-bg', function() {
       const dataTag = $(this).attr('data-tag');
-      const dataTagArr = dataTag.split('-')
-      const theResource = $(`div.external-resource-modal[data-tag="modal-${dataTagArr[1]}"]`)
-      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`)
-      theResource.removeClass('active')
-      theResourceBg.removeClass('active')
+      const dataTagArr = dataTag.split('-');
+      const theResource = $(`div.external-resource-modal[data-tag="modal-${dataTagArr[1]}"]`);
+      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`);
+      theResource.removeClass('active');
+      theResourceBg.removeClass('active');
+      window.history.back();
     })
 
     // FACET BTNS (tag filters)
     $(document).on('click','.facet-buttons .facet-button', function() {
 
       if (this.className.includes('active')) {
-        $(this).removeClass('active')
+        $(this).removeClass('active');
       } else {
-        $(this).addClass('active')
+        $(this).addClass('active');
       }
       page = 0;
 
@@ -228,6 +233,6 @@ echo '<hr>';
       loadMorePosts();
     })
 
-    setPageStateBasedOnQueryParams()
+    setPageStateBasedOnQueryParams();
   });
 </script>
