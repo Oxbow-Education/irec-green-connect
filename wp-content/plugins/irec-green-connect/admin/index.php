@@ -51,50 +51,50 @@ function handle_upload_resources($request)
       $post_id = wp_insert_post($post_data);
 
       $worker_tags = array();
-      if (isset($worker_tag_1)) {
+      if (boolval($worker_tag_1)) {
         array_push($worker_tags, 'Tag 1');
       }
-      if (isset($worker_tag_2)) {
+      if (boolval($worker_tag_2)) {
         array_push($worker_tags, 'Tag 2');
       }
-      if (isset($worker_tag_3)) {
+      if (boolval($worker_tag_3)) {
         array_push($worker_tags, 'Tag 3');
       }
 
       $org_tags = array();
-      if (isset($org_tag_1)) {
+      if (boolval($org_tag_1)) {
         array_push($org_tags, 'Tag 1');
       }
-      if (isset($org_tag_2)) {
+      if (boolval($org_tag_2)) {
         array_push($org_tags, 'Tag 2');
       }
-      if (isset($org_tag_3)) {
+      if (boolval($org_tag_3)) {
         array_push($org_tags, 'Tag 3');
       }
 
 
       $who_is_it_for = array();
-      if (isset($worker_user)) {
+      if (boolval($worker_user)) {
         array_push($who_is_it_for, 'Worker User');
       }
-      if (isset($org_user_type_1)) {
+      if (boolval($org_user_type_1)) {
         array_push($who_is_it_for, 'Org User Type 1');
       }
-      if (isset($org_user_type_2)) {
+      if (boolval($org_user_type_2)) {
         array_push($who_is_it_for, 'Org User Type 2');
       }
 
-      if (isset($org_user_type_3)) {
+      if (boolval($org_user_type_3)) {
         array_push($who_is_it_for, 'Org User Type 3');
       }
-      if (isset($org_user_type_4)) {
+      if (boolval($org_user_type_4)) {
         array_push($who_is_it_for, 'Org User Type 4');
       }
 
 
 
       // Set the custom fields
-      update_post_meta($post_id, 'organization_name', $worker_tag_1);
+      update_post_meta($post_id, 'organization_name', $organization_name);
       update_post_meta($post_id, 'is_internal_resource', false);
       update_post_meta($post_id, 'who_is_this_for', $who_is_it_for);
       update_post_meta($post_id, 'worker_tags', $worker_tags);
