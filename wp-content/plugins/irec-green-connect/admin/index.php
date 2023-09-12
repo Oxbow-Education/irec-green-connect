@@ -18,13 +18,15 @@ function handle_upload_resources($request)
   try {
 
     $response_data = $request->get_json_params();
+    wp_mail('nina@wherewego.org', 'Debugging the upload', var_dump($response_data));
 
     foreach ($response_data as $item) {
 
       // Extract the necessary data from the "row_data" field
       $title = $item['row_data']['Title Sentence'];
       $organization_name = $item['row_data']['Organization Name'];
-      $longer_description = $item['row_data']['Longer Description'];
+      $long_description = $item['row_data']['Long Description'];
+      $short_description = $item['row_data']['Short Description'];
       $url_text = $item['row_data']['URL Text'];
       $url = $item['row_data']['URL'];
       $worker_user = $item['row_data']['Worker User'];
@@ -72,13 +74,31 @@ function handle_upload_resources($request)
       }
 
 
+      $who_is_it_for = array();
+      if ($worker_user) {
+        array_push($who_is_it_for, 'Worker User');
+      }
+      if ($org_user_type_1) {
+        array_push($who_is_it_for, 'Org User Type 1');
+      }
+      if ($org_user_type_2) {
+        array_push($who_is_it_for, 'Org User Type 2');
+      }
+
+      if ($org_user_type_3) {
+        array_push($who_is_it_for, 'Org User Type 3');
+      }
+      if ($org_user_type_4) {
+        array_push($who_is_it_for, 'Org User Type 4');
+      }
       // Set the custom fields
       update_post_meta($post_id, 'organization_name', $organization_name);
       update_post_meta($post_id, 'is_internal_resource', FALSE);
-      // update_post_meta($post_id, 'who_is_it_for', '');
+      update_post_meta($post_id, 'who_is_it_for', $who_is_it_for);
       update_post_meta($post_id, 'worker_tags', $worker_tags);
       update_post_meta($post_id, 'organization_tags', $org_tags);
-      update_post_meta($post_id, 'short_description', $longer_description);
+      update_post_meta($post_id, 'short_description', $short_description);
+      update_post_meta($post_id, 'long_description', $long_description);
       update_post_meta($post_id, 'url', $url);
       update_post_meta($post_id, 'url_text', $url_text);
     }
