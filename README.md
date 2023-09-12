@@ -56,7 +56,14 @@ Download and install the LocalWP desktop app from [LocalWP's official website](h
 - To access the WordPress admin panel, go to `/wp-admin` in the URL and log in using your admin credentials.
 
 
-## Step 12: Start Development
+
+## Step 12: Important information about database syncing
+
+- Development on wordpress sites is highly dependent on database content. Anytime you edit the site using the WordPress CMS interface, you are making database changes. In order for us to all have an update version of the latest database, we have to sync this data between each developer and the staging site. 
+
+- To do this, we us a plugin called [WP Synchro](https://wpsynchro.com/). Before you start development, make sure to meet with the code owner (Nina) to set up the synchronization process.
+
+## Step 13: Start Development
 
 - You can now start working on the project by making changes to the codebase located in the `users/<name>/Local Sites/irec-green-connect/app/public` directory.
 
