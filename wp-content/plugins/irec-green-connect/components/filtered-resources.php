@@ -42,7 +42,7 @@ $top_resources_args = array(
     ),
     array(
       'key'     => 'who_is_this_for',
-      'value'   => 'Workers',
+      'value'   => 'Worker',
       'compare' => 'LIKE',
     ),
   ),
@@ -75,7 +75,7 @@ echo '<hr>';
 <hr>
 <div class="temp-footer wrapper">
   <p>Still need support?</p>
-  <h2>Contact us at <a href = "mailto: info@irecusa.org">info@irecusa.org</a></h2>
+  <h2>Contact us at <a href="mailto: info@irecusa.org">info@irecusa.org</a></h2>
 </div>
 
 <!-- We need to keep this javascript in the same file because it's using php variables -->
@@ -90,7 +90,7 @@ echo '<hr>';
     const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
       newParams.set('paged', newPage);
-      
+
       const currentTags = newParams.getAll('tag[]');
       if (JSON.stringify(currentTags) !== JSON.stringify(tags)) {
         newParams.delete('tag[]');
@@ -134,7 +134,7 @@ echo '<hr>';
       })
 
       setPageQueryParams(newPage, tags)
-      
+
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
@@ -190,7 +190,9 @@ echo '<hr>';
       theResourceBg.addClass('active');
       let permalink = `${window.location.pathname.replace(/\/$/, '')}?resource=${resource_id}`
       // TODO: adds URL to browser, but does not direct a user correctly if they use the URL
-      window.history.pushState({ path: permalink }, '', permalink);
+      window.history.pushState({
+        path: permalink
+      }, '', permalink);
     })
     // close (btn or bg click)
     $(document).on('click', 'button.close-modal-btn', function() {
@@ -212,7 +214,7 @@ echo '<hr>';
     })
 
     // FACET BTNS (tag filters)
-    $(document).on('click','.facet-buttons .facet-button', function() {
+    $(document).on('click', '.facet-buttons .facet-button', function() {
 
       if (this.className.includes('active')) {
         $(this).removeClass('active');

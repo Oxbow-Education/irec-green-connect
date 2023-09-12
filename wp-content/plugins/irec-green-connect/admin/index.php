@@ -97,8 +97,12 @@ function handle_upload_resources($request)
       update_post_meta($post_id, 'organization_name', $organization_name);
       update_post_meta($post_id, 'is_internal_resource', false);
       update_post_meta($post_id, 'who_is_this_for', $who_is_it_for);
-      update_post_meta($post_id, 'worker_tags', $worker_tags);
-      update_post_meta($post_id, 'organization_tags', $org_tags);
+      if (count($worker_tags) > 0) {
+        update_post_meta($post_id, 'worker_tags', $worker_tags);
+      }
+      if (count($org_tags) > 0) {
+        update_post_meta($post_id, 'organization_tags', $org_tags);
+      }
       update_post_meta($post_id, 'short_description', $short_description);
       update_post_meta($post_id, 'long_description', $long_description);
       update_post_meta($post_id, 'url', $url);
