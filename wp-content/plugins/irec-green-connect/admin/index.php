@@ -94,7 +94,7 @@ function handle_upload_resources($request)
 
 
       // Set the custom fields
-      update_post_meta($post_id, 'organization_name', $organization_name);
+      update_post_meta($post_id, 'organization_name', $worker_tag_1);
       update_post_meta($post_id, 'is_internal_resource', false);
       update_post_meta($post_id, 'who_is_this_for', $who_is_it_for);
       update_post_meta($post_id, 'worker_tags', $worker_tags);
