@@ -52,43 +52,43 @@ function handle_upload_resources($request)
       $post_id = wp_insert_post($post_data);
 
       $worker_tags = array();
-      if ($worker_tag_1 == 'True') {
+      if (isset($worker_tag_1)) {
         array_push($worker_tags, 'Tag 1');
       }
-      if ($worker_tag_2 == 'True') {
+      if (isset($worker_tag_2)) {
         array_push($worker_tags, 'Tag 2');
       }
-      if ($worker_tag_3 == 'True') {
+      if (isset($worker_tag_3)) {
         array_push($worker_tags, 'Tag 3');
       }
 
       $org_tags = array();
-      if ($org_tag_1 == 'True') {
+      if (isset($org_tag_1)) {
         array_push($org_tags, 'Tag 1');
       }
-      if ($org_tag_2 == 'True') {
+      if (isset($org_tag_2)) {
         array_push($org_tags, 'Tag 2');
       }
-      if ($org_tag_3 == 'True') {
+      if (isset($org_tag_3)) {
         array_push($org_tags, 'Tag 3');
       }
 
 
       $who_is_it_for = array();
-      if ($worker_user) {
+      if (isset($worker_user)) {
         array_push($who_is_it_for, 'Worker User');
       }
-      if ($org_user_type_1) {
+      if (isset($org_user_type_1)) {
         array_push($who_is_it_for, 'Org User Type 1');
       }
-      if ($org_user_type_2) {
+      if (isset($org_user_type_2)) {
         array_push($who_is_it_for, 'Org User Type 2');
       }
 
-      if ($org_user_type_3) {
+      if (isset($org_user_type_3)) {
         array_push($who_is_it_for, 'Org User Type 3');
       }
-      if ($org_user_type_4) {
+      if (isset($org_user_type_4)) {
         array_push($who_is_it_for, 'Org User Type 4');
       }
       // Set the custom fields
