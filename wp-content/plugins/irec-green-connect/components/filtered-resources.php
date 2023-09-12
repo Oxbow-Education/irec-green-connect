@@ -183,33 +183,22 @@ echo '<hr>';
     // EXTERNAL RESOURCE MODAL
     // open
     $(document).on('click', '.external-resource-button', function() {
-      const resource_id = $(this).attr('data-tag');
-      const theResource = $(`div.external-resource-modal[data-tag="modal-${resource_id}"]`);
-      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resource_id}-bg"]`);
-      theResource.addClass('active');
-      theResourceBg.addClass('active');
-      let permalink = `${window.location.pathname.replace(/\/$/, '')}?resource=${resource_id}`
-      // TODO: adds URL to browser, but does not direct a user correctly if they use the URL
+      const dataTag = $(this).attr('data-tag');
+      $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
+      $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
+      // add resource query param
+      let permalink = `${window.location.pathname}?resource=${dataTag}`
       window.history.pushState({ path: permalink }, '', permalink);
     })
     // close (btn or bg click)
-    $(document).on('click', 'button.close-modal-btn', function() {
-      const resourceId = $(this).attr('data-tag');
-      const theResource = $(`div.external-resource-modal[data-tag="modal-${resourceId}"]`);
-      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="modal-${resourceId}-bg"]`);
-      theResource.removeClass('active');
-      theResourceBg.removeClass('active');
-      window.history.back();
-    })
-    $(document).on('click', 'div.external-resource-modal-bg', function() {
+    $(document).on('click', 'div.external-resource-modal-bg, button.close-modal-btn', function() {
       const dataTag = $(this).attr('data-tag');
-      const dataTagArr = dataTag.split('-');
-      const theResource = $(`div.external-resource-modal[data-tag="modal-${dataTagArr[1]}"]`);
-      const theResourceBg = $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`);
-      theResource.removeClass('active');
-      theResourceBg.removeClass('active');
-      window.history.back();
-    })
+      $(`div.external-resource-modal[data-tag="${dataTag}"]`).removeClass('active');
+      $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).removeClass('active');
+      // remove resource query param, don't reload page
+      const updatedURL = window.location.href.replace(/[?&]resource=\d+/, '');
+      history.replaceState({}, document.title, updatedURL);
+    });
 
     // FACET BTNS (tag filters)
     $(document).on('click','.facet-buttons .facet-button', function() {
