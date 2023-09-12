@@ -97,9 +97,9 @@ function handle_upload_resources($request)
       // Set the custom fields
       update_post_meta($post_id, 'organization_name', $organization_name);
       update_post_meta($post_id, 'is_internal_resource', false);
-      update_post_meta($post_id, 'who_is_it_for', array('Worker User'));
-      update_post_meta($post_id, 'worker_tags', $worker_tags);
-      update_post_meta($post_id, 'organization_tags', $org_tags);
+      update_post_meta($post_id, 'who_is_this_for', array('Worker User'));
+      update_post_meta($post_id, 'worker_tags', array('Tag 1'));
+      update_post_meta($post_id, 'organization_tags', array('Tag 2'));
       update_post_meta($post_id, 'short_description', $short_description);
       update_post_meta($post_id, 'long_description', $long_description);
       update_post_meta($post_id, 'url', $url);
