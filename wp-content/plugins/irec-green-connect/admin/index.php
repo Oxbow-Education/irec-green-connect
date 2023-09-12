@@ -33,12 +33,12 @@ function handle_upload_resources($request)
       $org_user_type_2 = $item['row_data']['Org User Type 2'];
       $org_user_type_3 = $item['row_data']['Org User Type 3'];
       $org_user_type_4 = $item['row_data']['Org User Type 4'];
-      $worker_tag_1 = $item['row_data']['Resouce for Worker Tag 1'];
-      $worker_tag_2 = $item['row_data']['Resouce for Worker Tag 2'];
-      $worker_tag_3 = $item['row_data']['Resouce for Worker Tag 3'];
-      $org_tag_1 = $item['row_data']['Resouce for Org Tag 1'];
-      $org_tag_2 = $item['row_data']['Resouce for Org Tag 2'];
-      $org_tag_3 = $item['row_data']['Resouce for Org Tag 3'];
+      $worker_tag_1 = $item['row_data']['Resource for Worker Tag 1'];
+      $worker_tag_2 = $item['row_data']['Resource for Worker Tag 2'];
+      $worker_tag_3 = $item['row_data']['Resource for Worker Tag 3'];
+      $org_tag_1 = $item['row_data']['Resource for Org Tag 1'];
+      $org_tag_2 = $item['row_data']['Resource for Org Tag 2'];
+      $org_tag_3 = $item['row_data']['Resource for Org Tag 3'];
 
       // Create an array of post data
       $post_data = array(
@@ -92,14 +92,13 @@ function handle_upload_resources($request)
       }
 
 
-      wp_mail('nina@wherewego.org', 'Debugging the upload', $worker_tags);
 
       // Set the custom fields
       update_post_meta($post_id, 'organization_name', $organization_name);
       update_post_meta($post_id, 'is_internal_resource', false);
-      update_post_meta($post_id, 'who_is_this_for', array('Worker User'));
-      update_post_meta($post_id, 'worker_tags', array('Tag 1'));
-      update_post_meta($post_id, 'organization_tags', array('Tag 2'));
+      update_post_meta($post_id, 'who_is_this_for', $who_is_it_for);
+      update_post_meta($post_id, 'worker_tags', $worker_tags);
+      update_post_meta($post_id, 'organization_tags', $org_tags);
       update_post_meta($post_id, 'short_description', $short_description);
       update_post_meta($post_id, 'long_description', $long_description);
       update_post_meta($post_id, 'url', $url);
