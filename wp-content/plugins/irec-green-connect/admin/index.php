@@ -18,7 +18,6 @@ function handle_upload_resources($request)
   try {
 
     $response_data = $request->get_json_params();
-    wp_mail('nina@wherewego.org', 'Debugging the upload', var_dump($response_data));
 
     foreach ($response_data as $item) {
 
@@ -34,12 +33,12 @@ function handle_upload_resources($request)
       $org_user_type_2 = $item['row_data']['Org User Type 2'];
       $org_user_type_3 = $item['row_data']['Org User Type 3'];
       $org_user_type_4 = $item['row_data']['Org User Type 4'];
-      $worker_tag_1 = $item['row_data']['Resouce for Worker Tag 1'];
-      $worker_tag_2 = $item['row_data']['Resouce for Worker Tag 2'];
-      $worker_tag_3 = $item['row_data']['Resouce for Worker Tag 3'];
-      $org_tag_1 = $item['row_data']['Resouce for Org Tag 1'];
-      $org_tag_2 = $item['row_data']['Resouce for Org Tag 2'];
-      $org_tag_3 = $item['row_data']['Resouce for Org Tag 3'];
+      $worker_tag_1 = $item['row_data']['Resource for Worker Tag 1'];
+      $worker_tag_2 = $item['row_data']['Resource for Worker Tag 2'];
+      $worker_tag_3 = $item['row_data']['Resource for Worker Tag 3'];
+      $org_tag_1 = $item['row_data']['Resource for Org Tag 1'];
+      $org_tag_2 = $item['row_data']['Resource for Org Tag 2'];
+      $org_tag_3 = $item['row_data']['Resource for Org Tag 3'];
 
       // Create an array of post data
       $post_data = array(
@@ -52,49 +51,52 @@ function handle_upload_resources($request)
       $post_id = wp_insert_post($post_data);
 
       $worker_tags = array();
-      if (isset($worker_tag_1)) {
+      if (boolval($worker_tag_1)) {
         array_push($worker_tags, 'Tag 1');
       }
-      if (isset($worker_tag_2)) {
+      if (boolval($worker_tag_2)) {
         array_push($worker_tags, 'Tag 2');
       }
-      if (isset($worker_tag_3)) {
+      if (boolval($worker_tag_3)) {
         array_push($worker_tags, 'Tag 3');
       }
 
       $org_tags = array();
-      if (isset($org_tag_1)) {
+      if (boolval($org_tag_1)) {
         array_push($org_tags, 'Tag 1');
       }
-      if (isset($org_tag_2)) {
+      if (boolval($org_tag_2)) {
         array_push($org_tags, 'Tag 2');
       }
-      if (isset($org_tag_3)) {
+      if (boolval($org_tag_3)) {
         array_push($org_tags, 'Tag 3');
       }
 
 
       $who_is_it_for = array();
-      if (isset($worker_user)) {
+      if (boolval($worker_user)) {
         array_push($who_is_it_for, 'Worker User');
       }
-      if (isset($org_user_type_1)) {
+      if (boolval($org_user_type_1)) {
         array_push($who_is_it_for, 'Org User Type 1');
       }
-      if (isset($org_user_type_2)) {
+      if (boolval($org_user_type_2)) {
         array_push($who_is_it_for, 'Org User Type 2');
       }
 
-      if (isset($org_user_type_3)) {
+      if (boolval($org_user_type_3)) {
         array_push($who_is_it_for, 'Org User Type 3');
       }
-      if (isset($org_user_type_4)) {
+      if (boolval($org_user_type_4)) {
         array_push($who_is_it_for, 'Org User Type 4');
       }
+
+
+
       // Set the custom fields
       update_post_meta($post_id, 'organization_name', $organization_name);
-      update_post_meta($post_id, 'is_internal_resource', FALSE);
-      update_post_meta($post_id, 'who_is_it_for', $who_is_it_for);
+      update_post_meta($post_id, 'is_internal_resource', false);
+      update_post_meta($post_id, 'who_is_this_for', $who_is_it_for);
       update_post_meta($post_id, 'worker_tags', $worker_tags);
       update_post_meta($post_id, 'organization_tags', $org_tags);
       update_post_meta($post_id, 'short_description', $short_description);
