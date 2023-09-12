@@ -18,7 +18,6 @@ function handle_upload_resources($request)
   try {
 
     $response_data = $request->get_json_params();
-    wp_mail('nina@wherewego.org', 'Debugging the upload', var_dump($response_data));
 
     foreach ($response_data as $item) {
 
@@ -91,10 +90,14 @@ function handle_upload_resources($request)
       if (isset($org_user_type_4)) {
         array_push($who_is_it_for, 'Org User Type 4');
       }
+
+
+      wp_mail('nina@wherewego.org', 'Debugging the upload', $worker_tags);
+
       // Set the custom fields
       update_post_meta($post_id, 'organization_name', $organization_name);
-      update_post_meta($post_id, 'is_internal_resource', FALSE);
-      update_post_meta($post_id, 'who_is_it_for', $who_is_it_for);
+      update_post_meta($post_id, 'is_internal_resource', false);
+      update_post_meta($post_id, 'who_is_it_for', array('Worker User'));
       update_post_meta($post_id, 'worker_tags', $worker_tags);
       update_post_meta($post_id, 'organization_tags', $org_tags);
       update_post_meta($post_id, 'short_description', $short_description);
