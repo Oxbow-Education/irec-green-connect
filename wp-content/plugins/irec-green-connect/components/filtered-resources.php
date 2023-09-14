@@ -6,11 +6,23 @@ $offset = 0;
 ?>
 
 <?php
-// Load first posts
+// Load first posts - filter for worker users w/ worker tags
 $args = array(
   'post_type' => 'post',
-  'posts_per_page' => $posts_per_page,
-  'offset' => $offset,
+  'posts_per_page' => -1,
+  'meta_query' => array(
+      'relation' => 'AND',
+      array(
+          'key' => 'who_is_this_for',
+          'value' => 'Worker User',
+          'compare' => 'LIKE',
+      ),
+      array(
+          'key' => 'worker_tags',
+          'value' => '',
+          'compare' => '!='
+      ),
+  ),
 );
 
 // The code does not currently set the filter_tag url param, but it should
