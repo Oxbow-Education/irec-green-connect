@@ -1,6 +1,6 @@
 <?php
-  $postId = get_the_ID();
-  $tag_array = get_post_meta($postId, 'worker_tags', true);
+  $post_id = get_the_ID();
+  $tag_array = get_post_meta($post_id, 'worker_tags', true);
 ?>
 
 <div class="internal-resource-tile resource-tile">
@@ -17,7 +17,7 @@
         } ?>
       </div>
       <p class="resource-description clamp-4">
-        <?php echo get_post_meta($postId, 'short_description', true); ?>
+        <?php echo get_post_meta($post_id, 'short_description', true); ?>
       </p>
     </div>
   </div>
