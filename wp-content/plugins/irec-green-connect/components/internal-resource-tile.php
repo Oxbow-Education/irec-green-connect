@@ -1,5 +1,5 @@
 <?php
-$post_id = get_the_ID();
+  $post_id = get_the_ID();
   $tag_array = get_post_meta($post_id, 'worker_tags', true);
 ?>
 
