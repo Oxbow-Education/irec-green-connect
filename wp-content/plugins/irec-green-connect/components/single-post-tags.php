@@ -10,7 +10,7 @@
     // who is this for tag - currently lighter blue
     if (is_array($who_for_tag_array)) {
       foreach ($who_for_tag_array as $who_for_tag) : ?>
-        <div class="resource-tag"><?php echo $who_for_tag ?></div>
+        <div class="resource-tag <?php if ($who_for_tag != "Worker User") echo "org-tag"; ?>"><?php echo $who_for_tag ?></div>
       <?php endforeach;
     }
     // worker tags if they exist - currently lighter blue

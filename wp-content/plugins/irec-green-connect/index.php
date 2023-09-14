@@ -37,6 +37,19 @@ function load_more_posts_callback()
     'post_type' => 'post',
     'posts_per_page' => $posts_per_page,
     'offset' => $offset,
+    'meta_query' => array(
+      'relation' => 'AND', // Both conditions must be met
+      array(
+          'key' => 'who_is_this_for',
+          'value' => 'Worker User',
+          'compare' => 'LIKE', // Match "Worker User" in the multi-select field
+      ),
+      array(
+          'key' => 'worker_tags',
+          'value' => '', // Check if the field has any value (not empty)
+          'compare' => '!='  // Not equal to empty string
+      ),
+  ),
   );
 
   if (isset($_POST['tag']) && is_array($_POST['tag'])) {
