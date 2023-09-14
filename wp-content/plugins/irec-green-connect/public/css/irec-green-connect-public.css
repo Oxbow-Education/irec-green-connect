@@ -233,12 +233,12 @@ button.close-modal-btn {
   height: 21.5rem;
 }
 
-/* .internal-resource-tile .post-thumbnail img {
-  height: 50%;
-} */
-
 .modal-content {
   padding: 4rem;
+}
+
+.modal-title {
+  padding-bottom: 1rem;
 }
 
 .read-more-button {
