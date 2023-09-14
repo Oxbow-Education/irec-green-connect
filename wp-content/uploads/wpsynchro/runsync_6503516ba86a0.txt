@@ -597,3 +597,286 @@ Array
     [1] => RENAME TABLE `wpsyntmp_6503516dc8993` TO `wp_e_notes_users_relations`
 )
 
+[2023-09-14 18:31:29.930983] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:29.942180] [INFO] Ending migration loop - with remaining time: 26.627245187759
+[2023-09-14 18:31:30.047094] [INFO] Starting migration loop - With allotted time: 26.900932073593 seconds
+[2023-09-14 18:31:30.047370] [INFO] Starting finalize - Remaining time: 26.900641918182
+[2023-09-14 18:31:30.048423] [INFO] Starting database finalize with remaining time: 26.899589061737
+[2023-09-14 18:31:30.048471] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_submissions`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc89a6` TO `wp_e_submissions`
+)
+
+[2023-09-14 18:31:30.306089] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:30.322681] [INFO] Ending migration loop - with remaining time: 26.625355958939
+[2023-09-14 18:31:30.443531] [INFO] Starting migration loop - With allotted time: 26.887290000916 seconds
+[2023-09-14 18:31:30.443765] [INFO] Starting finalize - Remaining time: 26.887047052383
+[2023-09-14 18:31:30.444784] [INFO] Starting database finalize with remaining time: 26.886029005051
+[2023-09-14 18:31:30.444835] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_submissions_actions_log`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc89ce` TO `wp_e_submissions_actions_log`
+)
+
+[2023-09-14 18:31:30.700529] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:30.717279] [INFO] Ending migration loop - with remaining time: 26.613557100296
+[2023-09-14 18:31:30.834841] [INFO] Starting migration loop - With allotted time: 26.890609025955 seconds
+[2023-09-14 18:31:30.835092] [INFO] Starting finalize - Remaining time: 26.890347003937
+[2023-09-14 18:31:30.836133] [INFO] Starting database finalize with remaining time: 26.889305830002
+[2023-09-14 18:31:30.836177] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_submissions_values`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc89ee` TO `wp_e_submissions_values`
+)
+
+[2023-09-14 18:31:31.103726] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:31.121390] [INFO] Ending migration loop - with remaining time: 26.604061841965
+[2023-09-14 18:31:31.227927] [INFO] Starting migration loop - With allotted time: 26.901892900467 seconds
+[2023-09-14 18:31:31.228177] [INFO] Starting finalize - Remaining time: 26.901633024216
+[2023-09-14 18:31:31.229076] [INFO] Starting database finalize with remaining time: 26.900733947754
+[2023-09-14 18:31:31.229120] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_links`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc89fc` TO `wp_links`
+)
+
+[2023-09-14 18:31:31.484611] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:31.495807] [INFO] Ending migration loop - with remaining time: 26.6340239048
+[2023-09-14 18:31:31.606077] [INFO] Starting migration loop - With allotted time: 26.895885944366 seconds
+[2023-09-14 18:31:31.606295] [INFO] Starting finalize - Remaining time: 26.895659923553
+[2023-09-14 18:31:31.607301] [INFO] Starting database finalize with remaining time: 26.894652843475
+[2023-09-14 18:31:31.607342] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_current_process`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a0c` TO `wp_local_sync_current_process`
+)
+
+[2023-09-14 18:31:31.873669] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:31.880809] [INFO] Ending migration loop - with remaining time: 26.621155023575
+[2023-09-14 18:31:31.974480] [INFO] Starting migration loop - With allotted time: 26.910755872726 seconds
+[2023-09-14 18:31:31.974727] [INFO] Starting finalize - Remaining time: 26.910499811172
+[2023-09-14 18:31:31.975650] [INFO] Starting database finalize with remaining time: 26.909574985504
+[2023-09-14 18:31:31.975695] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_delete_list`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a1a` TO `wp_local_sync_delete_list`
+)
+
+[2023-09-14 18:31:32.225326] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:32.236815] [INFO] Ending migration loop - with remaining time: 26.648423910141
+[2023-09-14 18:31:32.356440] [INFO] Starting migration loop - With allotted time: 26.889940977097 seconds
+[2023-09-14 18:31:32.356649] [INFO] Starting finalize - Remaining time: 26.889723062515
+[2023-09-14 18:31:32.357584] [INFO] Starting database finalize with remaining time: 26.888787984848
+[2023-09-14 18:31:32.357625] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_inc_exc_contents`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a25` TO `wp_local_sync_inc_exc_contents`
+)
+
+[2023-09-14 18:31:32.616835] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:32.631482] [INFO] Ending migration loop - with remaining time: 26.614915132523
+[2023-09-14 18:31:32.744276] [INFO] Starting migration loop - With allotted time: 26.894818067551 seconds
+[2023-09-14 18:31:32.744498] [INFO] Starting finalize - Remaining time: 26.894585847855
+[2023-09-14 18:31:32.745419] [INFO] Starting database finalize with remaining time: 26.893664836884
+[2023-09-14 18:31:32.745457] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_local_site_files`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a34` TO `wp_local_sync_local_site_files`
+)
+
+[2023-09-14 18:31:33.005459] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:33.017315] [INFO] Ending migration loop - with remaining time: 26.621788978577
+[2023-09-14 18:31:33.140104] [INFO] Starting migration loop - With allotted time: 26.883693933487 seconds
+[2023-09-14 18:31:33.140349] [INFO] Starting finalize - Remaining time: 26.883436918259
+[2023-09-14 18:31:33.141454] [INFO] Starting database finalize with remaining time: 26.882337808609
+[2023-09-14 18:31:33.141524] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_local_site_new_attachments`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a41` TO `wp_local_sync_local_site_new_attachments`
+)
+
+[2023-09-14 18:31:33.412953] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:33.428568] [INFO] Ending migration loop - with remaining time: 26.595234870911
+[2023-09-14 18:31:33.545401] [INFO] Starting migration loop - With allotted time: 26.890151023865 seconds
+[2023-09-14 18:31:33.545621] [INFO] Starting finalize - Remaining time: 26.88992190361
+[2023-09-14 18:31:33.546561] [INFO] Starting database finalize with remaining time: 26.888983011246
+[2023-09-14 18:31:33.546597] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_options`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a4d` TO `wp_local_sync_options`
+)
+
+[2023-09-14 18:31:33.802351] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:33.822554] [INFO] Ending migration loop - with remaining time: 26.613015890121
+[2023-09-14 18:31:33.948809] [INFO] Starting migration loop - With allotted time: 26.88721203804 seconds
+[2023-09-14 18:31:33.949033] [INFO] Starting finalize - Remaining time: 26.886974811554
+[2023-09-14 18:31:33.949992] [INFO] Starting database finalize with remaining time: 26.886015892029
+[2023-09-14 18:31:33.950037] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_processed_iterator`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a56` TO `wp_local_sync_processed_iterator`
+)
+
+[2023-09-14 18:31:34.185772] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:34.192926] [INFO] Ending migration loop - with remaining time: 26.643090009689
+[2023-09-14 18:31:34.305519] [INFO] Starting migration loop - With allotted time: 26.895792007446 seconds
+[2023-09-14 18:31:34.305793] [INFO] Starting finalize - Remaining time: 26.895509958267
+[2023-09-14 18:31:34.306668] [INFO] Starting database finalize with remaining time: 26.894634008408
+[2023-09-14 18:31:34.306714] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_postmeta`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a71` TO `wp_postmeta`
+)
+
+[2023-09-14 18:31:34.568666] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:34.582791] [INFO] Ending migration loop - with remaining time: 26.618522882462
+[2023-09-14 18:31:34.712062] [INFO] Starting migration loop - With allotted time: 26.886086940765 seconds
+[2023-09-14 18:31:34.712282] [INFO] Starting finalize - Remaining time: 26.885856866837
+[2023-09-14 18:31:34.713201] [INFO] Starting database finalize with remaining time: 26.884938001633
+[2023-09-14 18:31:34.713241] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_posts`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a7f` TO `wp_posts`
+)
+
+[2023-09-14 18:31:34.969180] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:34.981930] [INFO] Ending migration loop - with remaining time: 26.616225004196
+[2023-09-14 18:31:35.098621] [INFO] Starting migration loop - With allotted time: 26.890877008438 seconds
+[2023-09-14 18:31:35.098805] [INFO] Starting finalize - Remaining time: 26.890686988831
+[2023-09-14 18:31:35.099797] [INFO] Starting database finalize with remaining time: 26.889696121216
+[2023-09-14 18:31:35.099856] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_term_relationships`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a99` TO `wp_term_relationships`
+)
+
+[2023-09-14 18:31:35.350241] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:35.361930] [INFO] Ending migration loop - with remaining time: 26.627579927444
+[2023-09-14 18:31:35.484379] [INFO] Starting migration loop - With allotted time: 26.889008998871 seconds
+[2023-09-14 18:31:35.484645] [INFO] Starting finalize - Remaining time: 26.888731002808
+[2023-09-14 18:31:35.485649] [INFO] Starting database finalize with remaining time: 26.887727975845
+[2023-09-14 18:31:35.485706] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_term_taxonomy`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8aa5` TO `wp_term_taxonomy`
+)
+
+[2023-09-14 18:31:35.738268] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:35.754028] [INFO] Ending migration loop - with remaining time: 26.619374036789
+[2023-09-14 18:31:35.878495] [INFO] Starting migration loop - With allotted time: 26.885698795319 seconds
+[2023-09-14 18:31:35.878726] [INFO] Starting finalize - Remaining time: 26.885456800461
+[2023-09-14 18:31:35.879692] [INFO] Starting database finalize with remaining time: 26.884492874146
+[2023-09-14 18:31:35.879736] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_termmeta`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8ab6` TO `wp_termmeta`
+)
+
+[2023-09-14 18:31:36.134721] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:36.141885] [INFO] Ending migration loop - with remaining time: 26.62230181694
+[2023-09-14 18:31:36.236685] [INFO] Starting migration loop - With allotted time: 26.909430027008 seconds
+[2023-09-14 18:31:36.236932] [INFO] Starting finalize - Remaining time: 26.90917301178
+[2023-09-14 18:31:36.237944] [INFO] Starting database finalize with remaining time: 26.908159971237
+[2023-09-14 18:31:36.238000] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_terms`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8ac3` TO `wp_terms`
+)
+
+[2023-09-14 18:31:36.522394] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:36.542983] [INFO] Ending migration loop - with remaining time: 26.603153944016
+[2023-09-14 18:31:36.672717] [INFO] Starting migration loop - With allotted time: 26.878900051117 seconds
+[2023-09-14 18:31:36.673019] [INFO] Starting finalize - Remaining time: 26.878584861755
+[2023-09-14 18:31:36.674217] [INFO] Starting database finalize with remaining time: 26.877390861511
+[2023-09-14 18:31:36.674287] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_users`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8adf` TO `wp_users`
+)
+
+[2023-09-14 18:31:36.933370] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:36.943004] [INFO] Ending migration loop - with remaining time: 26.60860991478
+[2023-09-14 18:31:37.054933] [INFO] Starting migration loop - With allotted time: 26.893619060516 seconds
+[2023-09-14 18:31:37.055189] [INFO] Starting finalize - Remaining time: 26.893348932266
+[2023-09-14 18:31:37.056206] [INFO] Starting database finalize with remaining time: 26.892332077026
+[2023-09-14 18:31:37.056248] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_usermeta`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8ad1` TO `wp_usermeta`
+)
+
+[2023-09-14 18:31:37.341992] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:37.361696] [INFO] Ending migration loop - with remaining time: 26.586855888367
+[2023-09-14 18:31:37.481016] [INFO] Starting migration loop - With allotted time: 26.892075061798 seconds
+[2023-09-14 18:31:37.481265] [INFO] Starting finalize - Remaining time: 26.891816139221
+[2023-09-14 18:31:37.482228] [INFO] Starting database finalize with remaining time: 26.89085316658
+[2023-09-14 18:31:37.482273] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_options`
+    [1] => RENAME TABLE `wpsyntmp_6503516dc8a62` TO `wp_options`
+)
+
+[2023-09-14 18:31:37.738821] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:37.760987] [INFO] Ending migration loop - with remaining time: 26.612119197845
+[2023-09-14 18:31:37.885047] [INFO] Starting migration loop - With allotted time: 26.883972167969 seconds
+[2023-09-14 18:31:37.885295] [INFO] Starting finalize - Remaining time: 26.883713006973
+[2023-09-14 18:31:37.886265] [INFO] Starting database finalize with remaining time: 26.882742166519
+[2023-09-14 18:31:37.886688] [DEBUG] Retrieving new masterdata from target
+[2023-09-14 18:31:37.886879] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-09-14 18:31:38.145731] [DEBUG] Retrieving new masterdata completed
+[2023-09-14 18:31:38.145932] [DEBUG] No excess temp tables to delete
+[2023-09-14 18:31:38.155369] [INFO] Ending migration loop - with remaining time: 26.6136469841
+[2023-09-14 18:31:38.260610] [INFO] Starting migration loop - With allotted time: 26.903382062912 seconds
+[2023-09-14 18:31:38.260860] [INFO] Starting finalize - Remaining time: 26.903118848801
+[2023-09-14 18:31:38.261890] [INFO] Starting database finalize with remaining time: 26.902090072632
+[2023-09-14 18:31:38.262145] [DEBUG] Retrieving new masterdata from target
+[2023-09-14 18:31:38.262237] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-09-14 18:31:38.522347] [DEBUG] Retrieving new masterdata completed
+[2023-09-14 18:31:38.530449] [INFO] Ending migration loop - with remaining time: 26.633544921875
+[2023-09-14 18:31:38.649798] [INFO] Starting migration loop - With allotted time: 26.889325141907 seconds
+[2023-09-14 18:31:38.650029] [INFO] Starting finalize - Remaining time: 26.889086008072
+[2023-09-14 18:31:38.650064] [INFO] Completed finalize - remaining time: 26.889050006866
+[2023-09-14 18:31:38.650092] [INFO] Execute last actions on target - remaining time: 26.889022111893
+[2023-09-14 18:31:38.903075] [INFO] Completed last actions on target - remaining time: 26.636057138443
+[2023-09-14 18:31:38.922147] [INFO] Ending migration loop - with remaining time: 26.616986036301
