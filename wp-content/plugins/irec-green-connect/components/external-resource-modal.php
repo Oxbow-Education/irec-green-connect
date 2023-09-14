@@ -21,7 +21,14 @@
     </svg>
   </button>
   <div class="modal-content">
-    <h5><?php the_title(); ?></h5>
+    <h5 class="modal-title"><?php the_title(); ?></h5>
+    <div>
+      <?php if (is_array($tag_array)) {
+        foreach ($tag_array as $tag) : ?>
+          <div class="resource-tag"><?php echo $tag ?></div>
+        <?php endforeach;
+      } ?>
+    </div>
     <p><?php echo get_post_meta($post_id, 'long_description', true); ?></p>
     <p><a target="_blank" href="<?php echo get_post_meta($post_id, 'url', true); ?>"><?php echo get_post_meta($post_id, 'url_text', true); ?></a></p>
   </div>
