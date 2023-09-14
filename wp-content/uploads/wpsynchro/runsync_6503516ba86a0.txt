@@ -1,0 +1,167 @@
+[2023-09-14 18:31:07.984164] [INFO] Starting migration loop - With allotted time: 26.904054880142 seconds
+[2023-09-14 18:31:07.984892] [INFO] Initating with remote and local host with remaining time:26.903319835663
+[2023-09-14 18:31:07.990229] [DEBUG] Calling initate service for destination: local
+[2023-09-14 18:31:08.087845] [DEBUG] Got initiate token: 61a01eb0fb88bef8fd4035488afb604264f27caa6d2fd528f76045f37c96c068
+[2023-09-14 18:31:08.087943] [DEBUG] Calling initate service for destination: remote
+[2023-09-14 18:31:08.972869] [DEBUG] Got initiate token: 972d7d65057f2700b142b54a1315bdb4232ff4019c98e2d339624570e7cbf586
+[2023-09-14 18:31:08.974051] [INFO] Initation completed on: 0.9894711971283 seconds
+[2023-09-14 18:31:08.979896] [INFO] Ending migration loop - with remaining time: 25.908329963684
+[2023-09-14 18:31:09.096940] [INFO] Starting migration loop - With allotted time: 26.896281957626 seconds
+[2023-09-14 18:31:09.097473] [INFO] Getting masterdata from source and target with remaining time:26.895746946335
+[2023-09-14 18:31:09.097946] [DEBUG] Calling masterdata service on: http://irec-green-connect.local/ with intent to user as 'source'
+[2023-09-14 18:31:09.267537] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-09-14 18:31:09.557504] [INFO] Completed masterdata on: 0.46000504493713 seconds
+[2023-09-14 18:31:09.585242] [INFO] Ending migration loop - with remaining time: 26.407996892929
+[2023-09-14 18:31:09.713930] [INFO] Starting migration loop - With allotted time: 26.883285999298 seconds
+[2023-09-14 18:31:09.720268] [INFO] Ending migration loop - with remaining time: 26.876939058304
+[2023-09-14 18:31:09.819925] [INFO] Starting migration loop - With allotted time: 26.905613899231 seconds
+[2023-09-14 18:31:09.820831] [INFO] Starting database migration loop with remaining time: 26.904700994492
+[2023-09-14 18:31:09.820927] [DEBUG] Search/replaces:
+
+Array
+(
+    [0] => stdClass Object
+        (
+            [to] => http://irec.wherewego.org
+            [from] => http://irec-green-connect.local
+        )
+
+    [1] => stdClass Object
+        (
+            [to] => http://irec.wherewego.org
+            [from] => https://irec-green-connect.local
+        )
+
+    [2] => stdClass Object
+        (
+            [to] => http:\/\/irec.wherewego.org
+            [from] => http:\/\/irec-green-connect.local
+        )
+
+    [3] => stdClass Object
+        (
+            [to] => http:\/\/irec.wherewego.org
+            [from] => https:\/\/irec-green-connect.local
+        )
+
+    [4] => stdClass Object
+        (
+            [to] => http%3A%2F%2Firec.wherewego.org
+            [from] => http%3A%2F%2Firec-green-connect.local
+        )
+
+    [5] => stdClass Object
+        (
+            [to] => http%3A%2F%2Firec.wherewego.org
+            [from] => https%3A%2F%2Firec-green-connect.local
+        )
+
+    [6] => stdClass Object
+        (
+            [to] => /home/customer/www/irec.wherewego.org/public_html
+            [from] => /Users/persisrandolph/Local Sites/irec-green-connect/app/public
+        )
+
+)
+
+[2023-09-14 18:31:10.711327] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:10.711496] [INFO] New table is started: wp_commentmeta and setting new default rows per sync: 500
+[2023-09-14 18:31:10.712177] [DEBUG] Getting data from local DB with SQL query: select * from `wp_commentmeta` where `meta_id` > 0 order by `meta_id`  limit 500
+[2023-09-14 18:31:10.712237] [INFO] Marking table: wp_commentmeta as completed
+[2023-09-14 18:31:10.712303] [DEBUG] Lastrun in : 0.00076198577880859 seconds - rows throttle: 525 and remaining time: 26.013221979141
+[2023-09-14 18:31:10.712363] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 0 / 14,047
+[2023-09-14 18:31:10.718884] [INFO] New table is started: wp_comments and setting new default rows per sync: 500
+[2023-09-14 18:31:10.719307] [DEBUG] Getting data from local DB with SQL query: select * from `wp_comments` where `comment_ID` > 0 order by `comment_ID`  limit 500
+[2023-09-14 18:31:10.719347] [INFO] Marking table: wp_comments as completed
+[2023-09-14 18:31:10.719434] [DEBUG] Lastrun in : 0.00048995018005371 seconds - rows throttle: 525 and remaining time: 26.00609087944
+[2023-09-14 18:31:10.719486] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 0 / 14,047
+[2023-09-14 18:31:10.728069] [INFO] New table is started: wp_e_events and setting new default rows per sync: 500
+[2023-09-14 18:31:10.728619] [DEBUG] Getting data from local DB with SQL query: select * from `wp_e_events` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:10.728654] [INFO] Marking table: wp_e_events as completed
+[2023-09-14 18:31:10.728705] [DEBUG] Lastrun in : 0.00055694580078125 seconds - rows throttle: 525 and remaining time: 25.996819972992
+[2023-09-14 18:31:10.728761] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 0 / 14,047
+[2023-09-14 18:31:10.734084] [INFO] New table is started: wp_e_notes and setting new default rows per sync: 500
+[2023-09-14 18:31:10.734890] [DEBUG] Getting data from local DB with SQL query: select * from `wp_e_notes` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:10.734940] [INFO] Marking table: wp_e_notes as completed
+[2023-09-14 18:31:10.734983] [DEBUG] Lastrun in : 0.00078606605529785 seconds - rows throttle: 525 and remaining time: 25.990541934967
+[2023-09-14 18:31:10.735038] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 0 / 14,047
+[2023-09-14 18:31:10.741336] [INFO] New table is started: wp_e_notes_users_relations and setting new default rows per sync: 500
+[2023-09-14 18:31:10.742833] [DEBUG] Getting data from local DB with SQL query: select * from `wp_e_notes_users_relations` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:10.742898] [INFO] Marking table: wp_e_notes_users_relations as completed
+[2023-09-14 18:31:10.742942] [DEBUG] Lastrun in : 0.001507043838501 seconds - rows throttle: 525 and remaining time: 25.982583045959
+[2023-09-14 18:31:10.743000] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 0 / 14,047
+[2023-09-14 18:31:10.749621] [INFO] New table is started: wp_e_submissions and setting new default rows per sync: 244
+[2023-09-14 18:31:10.750653] [DEBUG] Getting data from local DB with SQL query: select * from `wp_e_submissions` where `id` > 0 order by `id`  limit 244
+[2023-09-14 18:31:10.750707] [INFO] Marking table: wp_e_submissions as completed
+[2023-09-14 18:31:10.990298] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:10.990505] [DEBUG] Lastrun in : 0.24080491065979 seconds - rows throttle: 257 and remaining time: 25.735020875931
+[2023-09-14 18:31:10.990593] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 4 / 14,047
+[2023-09-14 18:31:11.002611] [INFO] New table is started: wp_e_submissions_actions_log and setting new default rows per sync: 244
+[2023-09-14 18:31:11.003290] [DEBUG] Getting data from local DB with SQL query: select * from `wp_e_submissions_actions_log` where `id` > 0 order by `id`  limit 244
+[2023-09-14 18:31:11.003363] [INFO] Marking table: wp_e_submissions_actions_log as completed
+[2023-09-14 18:31:11.279849] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:11.280263] [DEBUG] Lastrun in : 0.27751588821411 seconds - rows throttle: 257 and remaining time: 25.445266962051
+[2023-09-14 18:31:11.280439] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 8 / 14,047
+[2023-09-14 18:31:11.306502] [INFO] New table is started: wp_e_submissions_values and setting new default rows per sync: 500
+[2023-09-14 18:31:11.308325] [DEBUG] Getting data from local DB with SQL query: select * from `wp_e_submissions_values` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:11.308429] [INFO] Marking table: wp_e_submissions_values as completed
+[2023-09-14 18:31:11.629992] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:11.630153] [DEBUG] Lastrun in : 0.323490858078 seconds - rows throttle: 525 and remaining time: 25.095371961594
+[2023-09-14 18:31:11.630216] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 28 / 14,047
+[2023-09-14 18:31:11.637609] [INFO] New table is started: wp_links and setting new default rows per sync: 500
+[2023-09-14 18:31:11.638433] [DEBUG] Getting data from local DB with SQL query: select * from `wp_links` where `link_id` > 0 order by `link_id`  limit 500
+[2023-09-14 18:31:11.638551] [INFO] Marking table: wp_links as completed
+[2023-09-14 18:31:11.638654] [DEBUG] Lastrun in : 0.00091719627380371 seconds - rows throttle: 525 and remaining time: 25.086870908737
+[2023-09-14 18:31:11.638734] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 28 / 14,047
+[2023-09-14 18:31:11.647569] [INFO] New table is started: wp_local_sync_current_process and setting new default rows per sync: 500
+[2023-09-14 18:31:11.648304] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_current_process` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:11.648352] [INFO] Marking table: wp_local_sync_current_process as completed
+[2023-09-14 18:31:11.648390] [DEBUG] Lastrun in : 0.00070500373840332 seconds - rows throttle: 525 and remaining time: 25.077133893967
+[2023-09-14 18:31:11.648454] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 28 / 14,047
+[2023-09-14 18:31:11.655937] [INFO] New table is started: wp_local_sync_delete_list and setting new default rows per sync: 500
+[2023-09-14 18:31:11.656759] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_delete_list` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:11.656842] [INFO] Marking table: wp_local_sync_delete_list as completed
+[2023-09-14 18:31:11.656900] [DEBUG] Lastrun in : 0.00082206726074219 seconds - rows throttle: 525 and remaining time: 25.068624973297
+[2023-09-14 18:31:11.656988] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 28 / 14,047
+[2023-09-14 18:31:11.666792] [INFO] New table is started: wp_local_sync_inc_exc_contents and setting new default rows per sync: 500
+[2023-09-14 18:31:11.667562] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_inc_exc_contents` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:11.667623] [INFO] Marking table: wp_local_sync_inc_exc_contents as completed
+[2023-09-14 18:31:11.918161] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:11.918573] [DEBUG] Lastrun in : 0.25165390968323 seconds - rows throttle: 525 and remaining time: 24.80695605278
+[2023-09-14 18:31:11.918992] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 108 / 14,047
+[2023-09-14 18:31:11.933926] [INFO] New table is started: wp_local_sync_local_site_files and setting new default rows per sync: 500
+[2023-09-14 18:31:11.934516] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_local_site_files` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:11.934564] [INFO] Marking table: wp_local_sync_local_site_files as completed
+[2023-09-14 18:31:11.934605] [DEBUG] Lastrun in : 0.00058913230895996 seconds - rows throttle: 525 and remaining time: 24.79092001915
+[2023-09-14 18:31:11.934659] [INFO] Database progress update: Data: 0.0MB / 32.3MB - Rows: 108 / 14,047
+[2023-09-14 18:31:11.943328] [INFO] New table is started: wp_local_sync_local_site_new_attachments and setting new default rows per sync: 500
+[2023-09-14 18:31:11.944278] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_local_site_new_attachments` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:11.944324] [INFO] Marking table: wp_local_sync_local_site_new_attachments as completed
+[2023-09-14 18:31:12.215307] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:12.216081] [DEBUG] Lastrun in : 0.27261805534363 seconds - rows throttle: 525 and remaining time: 24.509449005127
+[2023-09-14 18:31:12.216644] [INFO] Database progress update: Data: 0.3MB / 32.3MB - Rows: 178 / 14,047
+[2023-09-14 18:31:12.236983] [INFO] New table is started: wp_local_sync_options and setting new default rows per sync: 500
+[2023-09-14 18:31:12.237636] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_options` limit 0,500
+[2023-09-14 18:31:12.237760] [INFO] Marking table: wp_local_sync_options as completed
+[2023-09-14 18:31:12.500424] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:12.500537] [DEBUG] Lastrun in : 0.26329779624939 seconds - rows throttle: 525 and remaining time: 24.224987983704
+[2023-09-14 18:31:12.500591] [INFO] Database progress update: Data: 0.3MB / 32.3MB - Rows: 198 / 14,047
+[2023-09-14 18:31:12.539556] [INFO] New table is started: wp_local_sync_processed_iterator and setting new default rows per sync: 500
+[2023-09-14 18:31:12.544533] [DEBUG] Getting data from local DB with SQL query: select * from `wp_local_sync_processed_iterator` where `id` > 0 order by `id`  limit 500
+[2023-09-14 18:31:12.544640] [INFO] Marking table: wp_local_sync_processed_iterator as completed
+[2023-09-14 18:31:12.544688] [DEBUG] Lastrun in : 0.0049700736999512 seconds - rows throttle: 525 and remaining time: 24.180835962296
+[2023-09-14 18:31:12.544758] [INFO] Database progress update: Data: 0.3MB / 32.3MB - Rows: 198 / 14,047
+[2023-09-14 18:31:12.578242] [INFO] New table is started: wp_options and setting new default rows per sync: 74
+[2023-09-14 18:31:12.579036] [DEBUG] Getting data from local DB with SQL query: select * from `wp_options` where `option_id` > 0 order by `option_id`  limit 74
+[2023-09-14 18:31:12.831891] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:12.832104] [DEBUG] Lastrun in : 0.25368905067444 seconds - rows throttle: 78 and remaining time: 23.893428087234
+[2023-09-14 18:31:12.832202] [INFO] Database progress update: Data: 0.3MB / 32.3MB - Rows: 272 / 14,047
+[2023-09-14 18:31:12.846762] [DEBUG] Getting data from local DB with SQL query: select * from `wp_options` where `option_id` > 76 order by `option_id`  limit 78
+[2023-09-14 18:31:13.313183] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:13.313596] [DEBUG] Lastrun in : 0.47396612167358 seconds - rows throttle: 82 and remaining time: 23.411933898926
+[2023-09-14 18:31:13.313973] [INFO] Database progress update: Data: 0.6MB / 32.3MB - Rows: 350 / 14,047
+[2023-09-14 18:31:13.334779] [DEBUG] Getting data from local DB with SQL query: select * from `wp_options` where `option_id` > 222 order by `option_id`  limit 82
+[2023-09-14 18:31:13.613007] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 238
+[2023-09-14 18:31:13.613643] [DEBUG] Lastrun in : 0.2794017791748 seconds - rows throttle: 87 and remaining time: 23.111886024475
+[2023-09-14 18:31:13.613933] [INFO] Database progress update: Data: 1.0MB / 32.3MB - Rows: 432 / 14,047
+[2023-09-14 18:31:13.646623] [DEBUG] Getting data from local DB with SQL query: select * from `wp_options` where `option_id` > 1306 order by `option_id`  limit 87
