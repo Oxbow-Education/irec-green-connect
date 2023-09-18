@@ -13,7 +13,6 @@ use WPSynchro\Transport\TransferAccessKey;
  */
 class GetFiles extends WPSynchroService
 {
-
     public function service()
     {
         // Get transfer object, so we can get data

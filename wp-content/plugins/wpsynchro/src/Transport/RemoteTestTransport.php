@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\Transport;
 
 /**
@@ -7,9 +8,7 @@ namespace WPSynchro\Transport;
  */
 class RemoteTestTransport implements RemoteConnection
 {
-
     public $shallreturn = null;
-
     public function remotePOST()
     {
         return $this->shallreturn;
@@ -17,31 +16,25 @@ class RemoteTestTransport implements RemoteConnection
 
     public function init()
     {
-        
     }
 
     public function setUrl($url)
     {
-        
     }
 
     public function setDataObject($object)
     {
-        
     }
 
     public function setSendDataAsJSON()
     {
-        
     }
 
     public function setMaxRequestSize($maxsize)
     {
-        
     }
 
     public function addFiledata(\WPSynchro\Transport\TransferFile $file)
     {
-        
     }
 }

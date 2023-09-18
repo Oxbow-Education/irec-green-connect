@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\Utilities\Actions;
 
 use WPSynchro\Utilities\Actions\Action;
@@ -10,7 +11,6 @@ use WPSynchro\Transport\TransferToken;
  */
 class ClearCurrentTransfer implements Action
 {
-
     /**
      * Initialize
      * @since 1.6.0

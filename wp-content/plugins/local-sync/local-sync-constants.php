@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(error_reporting() & ~E_DEPRECATED);
 class Local_Sync_Constants{
 	public function __construct(){
 	}
@@ -74,7 +75,7 @@ class Local_Sync_Constants{
 	}
 
 	public function versions(){
-		$this->define( 'LOCAL_SYNC_VERSION', '1.1.4' );
+		$this->define( 'LOCAL_SYNC_VERSION', '1.1.5' );
 		$this->define( 'LOCAL_SYNC_DATABASE_VERSION', '1.0' );
 	}
 

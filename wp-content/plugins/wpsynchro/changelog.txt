@@ -1,3 +1,15 @@
+= 1.10.0 =
+ * Improvement: Support for WP 6.3
+ * Improvement: Bump PHP support to minimum 7.0, instead of 5.6. Like WP core did at long last.
+ * Improvement: Support for PHP 8.2 without deprecation notices
+ * Improvement: Bump MariaDB version support to minimum 10.0, from 5.5
+ * Improvement: Added WordPress nonces to all actions for added security
+ * Improvement: Support for restrictive CSP header (Content Security Policy)
+ * Improvement: Handle when remote site redirects to another location, such as WPML redirecting to a specific language subdir
+ * Improvement: Handle when migrating database from MySQL 8 with collation utf8mb4_0900_ai_ci to an older version MySQL server
+ * Improvement: Improve search/replace in very large serialized data, to prevent out of memory errors and vastly improved performance
+ * Improvement: Optimize the way database migration was done to better handle large datasets in rows
+
 = 1.9.1 =
  * Bump support for WP 6.2
  * Improvement: API now flushes data before returning

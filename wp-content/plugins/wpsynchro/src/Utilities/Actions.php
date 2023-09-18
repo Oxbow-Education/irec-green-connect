@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\Utilities;
 
 use WPSynchro\Utilities\Actions\EmailOnSyncSuccess;
@@ -11,7 +12,6 @@ use WPSynchro\Utilities\Actions\ClearCachesOnSuccess;
  */
 class Actions
 {
-
     /**
      *  Load all the actions
      *  @since 1.6.0
@@ -32,7 +32,7 @@ class Actions
 
         // Load success email action
         (new EmailOnSyncSuccess())->init();
-                
+
         // Load failure email action
         (new EmailOnSyncFailure())->init();
     }

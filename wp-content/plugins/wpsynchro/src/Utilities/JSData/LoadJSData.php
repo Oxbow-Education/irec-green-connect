@@ -7,10 +7,8 @@
 
 namespace WPSynchro\Utilities\JSData;
 
-
 class LoadJSData
 {
-
     /**
      *  Load the standard JS data that we use one multiple pages
      */
