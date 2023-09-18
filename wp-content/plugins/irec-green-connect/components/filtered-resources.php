@@ -3,13 +3,15 @@
 $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = $page_number * 10;
 $offset = 0;
+
+echo ' page: ' . $page_number; 
 ?>
 
 <?php
 // Load first posts - filter for worker users w/ worker tags
 $args = array(
   'post_type' => 'post',
-  'posts_per_page' => -1,
+  'posts_per_page' => $posts_per_page,
   'meta_query' => array(
       'relation' => 'AND',
       array(
@@ -23,6 +25,8 @@ $args = array(
           'compare' => '!='
       ),
   ),
+  'orderby' => 'title', // Sort by title
+  'order' => 'ASC', // Ascending order (A to Z)
 );
 
 // The code does not currently set the filter_tag url param, but it should
@@ -65,8 +69,8 @@ $top_resources_query = new WP_Query($top_resources_args);
 ?>
 <?php
 require __DIR__ . '/top-resources.php';
-include __DIR__ . '/facet-buttons.php';
 echo '<hr>';
+include __DIR__ . '/facet-buttons.php';
 ?>
 
 <div class="filter-wrapper">
@@ -84,8 +88,7 @@ echo '<hr>';
 </div>
 
 <!-- temp footer -->
-<hr>
-<div class="temp-footer wrapper">
+<div id="contact-us-container" class="wrapper">
   <p>Still need support?</p>
   <h2>Contact us at <a href="mailto: info@irecusa.org">info@irecusa.org</a></h2>
 </div>
@@ -147,6 +150,7 @@ echo '<hr>';
 
       setPageQueryParams(newPage, tags)
 
+      console.log({newPage});
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
@@ -156,9 +160,9 @@ echo '<hr>';
           tag: tags
         },
         success: function(response) {
-          // console.log({
-          //   response
-          // })
+          console.log({
+            response
+          })
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
