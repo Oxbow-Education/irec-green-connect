@@ -23,8 +23,10 @@ wp-config.php
 # # Example themes
 # /wp-content/themes/twenty*/
 
-# # Example plugin
-# /wp-content/plugins/hello.php
+# # Exclude all plugin files
+/wp-content/plugins/
+# # Exclude ours
+!/wp-content/plugins/irec-green-connect
 
 # # Uploads
 # /wp-content/uploads/
