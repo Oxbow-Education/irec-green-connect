@@ -71,7 +71,7 @@ a.read-more-button {
 .read-more-button,
 a.read-more-button {
   bottom: 0;
-  padding: 0.625rem 0.75rem;
+  padding: 1.25rem;
   right: 0;
 }
 
@@ -104,16 +104,6 @@ a.read-more-button {
   -webkit-line-clamp: 2;
 }
 
-.clamp-4 {
-  display: -webkit-box;
-  line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  whitespace: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-}
-
 #clear-tags-button,
 #clear-tags-button:active,
 #clear-tags-button:focus {
@@ -133,6 +123,7 @@ a.read-more-button {
 
 #filter-by {
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 button.close-modal-btn {
@@ -196,17 +187,17 @@ button.close-modal-btn {
   text-decoration: underline !important;
 }
 
-.temp-footer {
+#contact-us-container {
   padding-bottom: 4rem;
 }
-.temp-footer p {
+#contact-us-container p {
   font-size: 22px;
   font-weight: bold;
 }
-.temp-footer h2 {
-  font-size: 65px;
+#contact-us-container h2 {
+  font-size: 32px;
 }
-.temp-footer a {
+#contact-us-container a {
   color: #d7a650;
   text-decoration: none;
 }
@@ -225,12 +216,14 @@ button.close-modal-btn {
 
 .external-resource-tile {
   grid-row: span 1;
-  height: 9.75rem;
+  /* height: 9.75rem; */
+  height: 11rem;
 }
 
 .internal-resource-tile {
   grid-row: span 2;
-  height: 21.5rem;
+  /* height: 21.5rem; */
+  height: 24rem;
 }
 
 .modal-content {
@@ -273,12 +266,17 @@ button.close-modal-btn {
   position: relative;
 }
 
+.internal-resource-tile .resource-tile-text {
+  padding: 0.825rem 1.25rem 1.25rem 1.25rem;
+}
+
 .resource-tile-text {
-  padding: 0.625rem;
+  padding: 1.25rem;
 }
 
 .resource-title {
   font-size: 1.125rem;
+  font-weight: 600;
   margin: 0 0 0.5rem 0;
 }
 
@@ -291,7 +289,7 @@ button.close-modal-btn {
 }
 
 .resources-wrapper {
-  grid-auto-rows: 9.75rem;
+  grid-auto-rows: 11rem;
 }
 
 .facet-buttons,
@@ -323,6 +321,9 @@ button.close-modal-btn {
   .wrapper {
     margin: 0 4rem;
   }
+  #contact-us-container h2 {
+    font-size: 65px;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
@@ -351,7 +352,7 @@ button.close-modal-btn {
   font-size: 45px;
   font-weight: bold;
   text-align: center;
-  padding: 4rem 0 2rem;
+  padding: 4rem 0 3rem;
 }
 
 .top-resources-grid {
