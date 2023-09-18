@@ -5,7 +5,6 @@
 
 <div class="internal-resource-tile resource-tile">
   <div>
-    <!-- nothing because it might cause issues later, noticing if the short_description is longer, the thumbnail also gets larger, add a max height for the thumbnail? -->
     <?php the_post_thumbnail(); ?>
     <div class="resource-tile-text">
     <h5 class="resource-title clamp-2"><?php the_title(); ?></h5>
@@ -16,7 +15,7 @@
           <?php endforeach;
         } ?>
       </div>
-      <p class="resource-description clamp-4">
+      <p class="resource-description clamp-2">
         <?php echo get_post_meta($post_id, 'short_description', true); ?>
       </p>
     </div>
