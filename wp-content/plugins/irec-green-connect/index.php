@@ -49,14 +49,16 @@ function load_more_posts_callback()
           'value' => '', // Check if the field has any value (not empty)
           'compare' => '!='  // Not equal to empty string
       ),
-  ),
+    ),
+    'orderby' => 'title', // Sort by title
+    'order' => 'ASC', // Ascending order (A to Z)
   );
 
   if (isset($_POST['tag']) && is_array($_POST['tag'])) {
     $tags = array_map('sanitize_text_field', $_POST['tag']);
 
     $meta_query_array = array('relation' => 'OR');
-    foreach($tags as $value) {
+    foreach ($tags as $value) {
       $meta_query_array[] = array(
           'key'     => 'worker_tags',
           'value'   => $value,
@@ -71,6 +73,7 @@ function load_more_posts_callback()
 
   wp_die();
 }
+
 
 // ALLOW SVG
 add_filter( 'wp_check_filetype_and_ext', function($data, $file, $filename, $mimes) {
