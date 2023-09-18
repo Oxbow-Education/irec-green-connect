@@ -45,7 +45,7 @@ class PluginConfiguration
      */
     public function setUsageReportingSetting($usage_reporting_enabled)
     {
-        if($usage_reporting_enabled) {
+        if ($usage_reporting_enabled) {
             update_option('wpsynchro_usage_reporting_selection', 'true', false);
         } else {
             update_option('wpsynchro_usage_reporting_selection', 'false', false);
@@ -241,7 +241,7 @@ class PluginConfiguration
     {
         static $instance = false;
         if (!$instance) {
-            $instance = new self;
+            $instance = new self();
         }
 
         return $instance;

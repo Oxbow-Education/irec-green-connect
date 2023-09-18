@@ -373,3 +373,11 @@ button.close-modal-btn {
     padding: 2rem;
   }
 }
+
+hr {
+  height: 1px;
+  margin: 0 auto 3rem;
+  max-width: 1000px;
+  background-color: #ffffff55;
+  border: none;
+}

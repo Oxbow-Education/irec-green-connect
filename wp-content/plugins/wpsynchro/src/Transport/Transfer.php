@@ -9,7 +9,6 @@ namespace WPSynchro\Transport;
  */
 class Transfer
 {
-
     public $boundary = "";
     public $should_deflate = false;
     public $should_encrypt = false;
@@ -22,7 +21,7 @@ class Transfer
     // Constants
     const APPROX_OVERHEAD_PER_FILE = 500;
 
-    function __construct()
+    public function __construct()
     {
         $this->boundary = "----" . bin2hex(openssl_random_pseudo_bytes(16));
         $this->dataobject = new \stdClass();
@@ -76,7 +75,7 @@ class Transfer
         $duplicate_transferfile->data = $file->data;
 
         $this->files[] = $duplicate_transferfile;
-        $this->requestsize += strlen($file->data) + self::APPROX_OVERHEAD_PER_FILE;
+        $this->requestsize += strlen($file->data ?? '') + self::APPROX_OVERHEAD_PER_FILE;
     }
 
     public function getDataString()
@@ -112,7 +111,6 @@ class Transfer
         $data .= $this->boundary;
 
         foreach ($this->files as $file) {
-
             $data .= "--FILEMETA--KEY" . $file->key;
             $data .= "--ENDFILEMETA--";
 

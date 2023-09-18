@@ -27,6 +27,7 @@ class ClientSyncDatabase extends WPSynchroService
         $result->warnings = [];
         $result->debugs = [];
         $result->data = null;
+        $result->has_more_rows_in_table = true;
 
         // Extract parameters
         if (isset($body->type)) {
@@ -41,50 +42,22 @@ class ClientSyncDatabase extends WPSynchroService
             return $returnresult->echoDataFromServiceAndExit();
         }
 
-        if (isset($body->table)) {
-            $table = $body->table;
-        } else {
-            $table = '';
-        }
-        if (isset($body->last_primary_key)) {
-            $last_primary_key = $body->last_primary_key;
-        } else {
-            $last_primary_key = 0;
-        }
-        if (isset($body->primary_key_column)) {
-            $primary_key_column = $body->primary_key_column;
-        } else {
-            $primary_key_column = "";
-        }
-        if (isset($body->binary_columns)) {
-            $binary_columns = $body->binary_columns;
-        } else {
-            $binary_columns = [];
-        }
-        if (isset($body->completed_rows)) {
-            $completed_rows = $body->completed_rows;
-        } else {
-            $completed_rows = 0;
-        }
-        if (isset($body->max_rows)) {
-            $max_rows = $body->max_rows;
-        } else {
-            $max_rows = 0;
-        }
-        if (isset($body->sql_inserts)) {
-            $sql_inserts = $body->sql_inserts;
-        } else {
-            $sql_inserts = [];
-        }
+        $table = $body->table ?? '';
+        $last_primary_key = $body->last_primary_key ?? '';
+        $primary_key_column = $body->primary_key_column ?? '';
+        $completed_rows = $body->completed_rows ?? 0;
+        $max_response_size = $body->max_response_size ?? 1000000;
+        $default_rows_per_request = $body->default_rows_per_request ?? 10000;
+        $column_names = $body->column_names ?? [];
+
+        $sql_inserts = $body->sql_inserts ?? [];
+
 
         if ($type == "pull") {
-            // Get data
-            if (strlen($primary_key_column) > 0) {
-                $sql_stmt = 'select * from `' . $table . '` where `' . $primary_key_column . '` > ' . $last_primary_key . ' order by `' . $primary_key_column . '`  limit ' . intval($max_rows);
-            } else {
-                $sql_stmt = 'select * from `' . $table . '` limit ' . $completed_rows . ',' . intval($max_rows);
-            }
-            $result->data = $wpdb->get_results($sql_stmt);
+            $database_helper_functions = new DatabaseHelperFunctions();
+            $data_result_from_db = $database_helper_functions->getDataFromDB($table, $column_names, $primary_key_column, $last_primary_key, $completed_rows, $max_response_size, $default_rows_per_request);
+            $result->data = $data_result_from_db->data;
+            $result->has_more_rows_in_table = $data_result_from_db->has_more_rows_in_table;
         } elseif ($type == "push") {
             $wpdb->query("SET FOREIGN_KEY_CHECKS=0;");
             // If multiple sql inserts

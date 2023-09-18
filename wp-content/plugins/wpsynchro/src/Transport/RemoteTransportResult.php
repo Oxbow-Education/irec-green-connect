@@ -2,6 +2,9 @@
 
 namespace WPSynchro\Transport;
 
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
+
 /**
  * Class for handling result of transport
  * @since 1.3.0
@@ -25,6 +28,16 @@ class RemoteTransportResult
     public $debugs = [];
     // Success or not
     public $success = false;
+    // Dependencies
+    private $logger;
+
+    /**
+     *  Constructor
+     */
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger ?? FileLogger::getInstance();
+    }
 
     public function getBody()
     {
@@ -78,26 +91,23 @@ class RemoteTransportResult
 
     public function writeMessagesToLog()
     {
-        global $wpsynchro_container;
-        $logger = $wpsynchro_container->get("class.Logger");
-
         foreach ($this->errors as $errortext) {
-            $logger->log("ERROR", $errortext);
+            $this->logger->log("ERROR", $errortext);
         }
         $this->errors = [];
 
         foreach ($this->warnings as $warningtext) {
-            $logger->log("WARNING", $warningtext);
+            $this->logger->log("WARNING", $warningtext);
         }
         $this->warnings = [];
 
         foreach ($this->infos as $infolog) {
-            $logger->log("INFO", $infolog);
+            $this->logger->log("INFO", $infolog);
         }
         $this->infos = [];
 
         foreach ($this->debugs as $debuglog) {
-            $logger->log("DEBUG", $debuglog);
+            $this->logger->log("DEBUG", $debuglog);
         }
         $this->debugs = [];
     }
@@ -121,7 +131,6 @@ class RemoteTransportResult
                 $this->debugs[] = print_r($this->response_object, true);
             }
         } else {
-
             // Check statuscode
             $this->statuscode = wp_remote_retrieve_response_code($this->response_object);
 

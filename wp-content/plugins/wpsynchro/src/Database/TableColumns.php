@@ -8,7 +8,6 @@ namespace WPSynchro\Database;
  */
 class TableColumns
 {
-
     public $string = [];
     public $numeric = [];
     public $bit = [];
@@ -43,5 +42,10 @@ class TableColumns
     public function isGenerated($column)
     {
         return isset($this->generated[$column]);
+    }
+
+    public function getAllColumnNames()
+    {
+        return array_merge($this->string, $this->numeric, $this->bit, $this->binary, $this->unknown, $this->generated);
     }
 }

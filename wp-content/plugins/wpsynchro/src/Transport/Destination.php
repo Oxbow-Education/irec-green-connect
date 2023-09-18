@@ -2,8 +2,9 @@
 
 namespace WPSynchro\Transport;
 
-use WPSynchro\Migration;
-use WPSynchro\Job;
+use WPSynchro\Migration\Migration;
+use WPSynchro\Migration\Job;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 
 /**
@@ -31,8 +32,7 @@ class Destination
         $this->destination = $destination;
         if ($this->destination !== self::OTHER) {
             // Get migration
-            global $wpsynchro_container;
-            $sync_controller = $wpsynchro_container->get("class.MigrationController");
+            $sync_controller = MigrationController::getInstance();
             if ($sync_controller->migration instanceof Migration) {
                 $this->setMigration($sync_controller->migration);
                 $this->setJob($sync_controller->job);

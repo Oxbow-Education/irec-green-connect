@@ -594,6 +594,17 @@ class Local_Sync_Restore_Op
 				continue; // Skip it if it's a comment
 			}
 
+			if (strpos($line, "'itsec_online_files_hashes',") > 0) {
+				continue; // Skip it if it's itsec_online_files_hashes value
+			}
+
+			if (strpos($line, "'_transient_dirsize_cache',") > 0) {
+				continue; // Skip it if it's _transient_dirsize_cache value
+			}
+
+			if (strpos($line, "'limit_login_logged',") > 0) {
+				continue; // Skip it if it's limit_login_logged value
+			}
 			$current_query .= $line;
 
 			// If it does not have a semicolon at the end, then it's not the end of the query
@@ -742,6 +753,7 @@ class Local_Sync_Restore_Op
 		}
 
 		if( stripos($haystack, "insert into") !== false 
+			&& ( !empty($from) && !empty($fromURL) && !empty($fromURL['host']) )
 			&& stripos($haystack, $fromURL['host']) !== false ){
 			$match = explode(",'", $haystack);
 

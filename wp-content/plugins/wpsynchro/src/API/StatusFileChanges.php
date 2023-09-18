@@ -3,7 +3,7 @@
 namespace WPSynchro\API;
 
 use WPSynchro\Files\SyncList;
-use WPSynchro\Job;
+use WPSynchro\Migration\Job;
 
 /**
  * Class for handling to get file changes for current sync
@@ -13,7 +13,6 @@ use WPSynchro\Job;
  */
 class StatusFileChanges extends WPSynchroService
 {
-
     public function service()
     {
     }

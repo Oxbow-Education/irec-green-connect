@@ -91,6 +91,11 @@ class LoadAPI
             ],
             'wpsynchro_frontend_download_log' => [
                 'check_permission' => function ($token) {
+                    // Check nonce
+                    $nonce = $_REQUEST['nonce'] ?? '';
+                    if (!wp_verify_nonce($nonce, 'wpsynchro_download_log')) {
+                        return false;
+                    }
                     return current_user_can('manage_options');
                 },
                 'class' => '\WPSynchro\API\DownloadLog',
@@ -128,6 +133,12 @@ class LoadAPI
                     $obj = new StatusFileChanges();
                     $obj->acceptFileChanges();
                 },
+            ],
+            'wpsynchro_save_migration' => [
+                'check_permission' => function ($token) {
+                    return current_user_can('manage_options');
+                },
+                'class' => '\WPSynchro\API\SaveMigration',
             ],
         ];
     }
@@ -167,6 +178,7 @@ class LoadAPI
                         $permission_check_result = $this->permissionCheck($token);
                     }
                     if ($permission_check_result != true) {
+                        echo "<div class='notice wpsynchro-notice notice-error'><p>" . __('You do not have access to this service or security token is no longer valid - Go back and try again.', 'wpsynchro') . '</p></div>';
                         http_response_code(401);
                         die();
                     }
@@ -180,7 +192,11 @@ class LoadAPI
                     $obj->service();
                 }
 
-                ob_flush();
+                // Flushy flushy
+                $ob_levels = ob_get_level();
+                for ($i = 0; $i < $ob_levels; $i++) {
+                    ob_end_flush();
+                }
                 flush();
 
                 die();
