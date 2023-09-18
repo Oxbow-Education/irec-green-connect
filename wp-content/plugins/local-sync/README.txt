@@ -3,8 +3,8 @@ Contributors: localsync, dark-prince
 Donate link: https://revmakx.com
 Tags: clone, migrate, wp duplicate, wpduplicate, copy site, local sync, local site, dev site, duplicate site, duplicator, cloning, migration, simple cloning, easiest cloning, free cloning
 Requires at least: 3.0.1
-Tested up to: 6.2.2
-Stable tag: 1.1.4
+Tested up to: 6.3.1
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,14 @@ Yes, you can clone the live site to the WP site on your local desktop server.
 Visit <a href="https://docs.localsync.io">https://docs.localsync.io</a> for the documentation.
 
 == Changelog ==
+= 1.1.5 =
+*Release Date - 01 Sep 2023*
+
+* Fix : PHP v8.2.0 fixes.
+
+* Improvement : Tested upto WP 6.3.1.
+* Improvement : WPMerge DB tables are excluded by default.
+
 = 1.1.4 =
 *Release Date - 23 Jun 2023*
 

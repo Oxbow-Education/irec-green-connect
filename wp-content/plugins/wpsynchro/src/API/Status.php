@@ -12,7 +12,6 @@ use WPSynchro\Status\MigrateStatus;
  */
 class Status extends WPSynchroService
 {
-
     public function service()
     {
         // Extract parameters

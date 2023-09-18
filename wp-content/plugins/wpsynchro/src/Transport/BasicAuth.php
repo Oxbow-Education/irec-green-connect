@@ -9,7 +9,6 @@ namespace WPSynchro\Transport;
  */
 class BasicAuth
 {
-
     /**
      * Check header for signs of basic auth
      * @since 1.7.1

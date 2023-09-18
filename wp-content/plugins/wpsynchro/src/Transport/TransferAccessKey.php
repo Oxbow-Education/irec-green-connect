@@ -8,7 +8,6 @@ namespace WPSynchro\Transport;
  */
 class TransferAccessKey
 {
-
     /**
      * Return this migration access key
      * @since 1.0.0

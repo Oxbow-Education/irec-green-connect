@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\Transport;
 
 use WPSynchro\Transport\TransferAccessKey;
@@ -10,16 +11,11 @@ use WPSynchro\Transport\TransferAccessKey;
  */
 class ReturnResult
 {
-
     public $httpstatus = 200;
     public $transfer;
-
     public function init()
     {
-        global $wpsynchro_container;
-
-        $commonfunctions = $wpsynchro_container->get('class.CommonFunctions');
-        $this->transfer = $wpsynchro_container->get('class.Transfer');
+        $this->transfer = new Transfer();
         $this->transfer->setShouldEncrypt(true);
         $this->transfer->setShouldDeflate(true);
         $this->transfer->setEncryptionKey(TransferAccessKey::getAccessKey());

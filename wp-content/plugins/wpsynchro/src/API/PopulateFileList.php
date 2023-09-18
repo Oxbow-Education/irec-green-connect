@@ -15,8 +15,10 @@ use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\Files\FileHelperFunctions;
 use WPSynchro\Transport\TransferFile;
 use WPSynchro\Utilities\ErrorHandler\CustomPHPErrorHandler;
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Transport\ReturnResult;
+use WPSynchro\Transport\Transfer;
+use WPSynchro\Utilities\SyncTimerList;
 
 class PopulateFileList extends WPSynchroService
 {
@@ -46,8 +48,7 @@ class PopulateFileList extends WPSynchroService
         $this->errorhandler->instant_callable = [$this, "addLog"];
 
         // Init timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get("class.SyncTimerList");
+        $this->timer = SyncTimerList::getInstance();
         $this->timer->init();
 
         // Common functions
@@ -56,9 +57,8 @@ class PopulateFileList extends WPSynchroService
 
     public function service()
     {
-        global $wpsynchro_container;
         // Get transfer object, so we can get data
-        $transfer = $wpsynchro_container->get("class.Transfer");
+        $transfer = new Transfer();
         $transfer->setEncryptionKey(TransferAccessKey::getAccessKey());
         $transfer->populateFromString($this->getRequestBody());
         $body = $transfer->getDataObject();
@@ -225,7 +225,7 @@ class PopulateFileList extends WPSynchroService
                 $pathname = $fileinfo->getPathname();
                 $this->state->current_dir_state->current_path = $pathname;
 
-                if(!$fileinfo->isReadable()) {
+                if (!$fileinfo->isReadable()) {
                     continue;
                 }
 
@@ -279,9 +279,6 @@ class PopulateFileList extends WPSynchroService
      */
     public function getPathIterator($path)
     {
-        if (!file_exists($path)) {
-            $path = \utf8_decode($path);
-        }
         try {
             $dir_iterator = new \DirectoryIterator($path);
             $filter_iterator = new PopulateFileListFilterIterator($dir_iterator);
@@ -340,16 +337,7 @@ class PopulateFileList extends WPSynchroService
         $fileobj_list = [];
         foreach ($paths as $path) {
             $path = $this->common->fixPath($path);
-            $found = true;
-            if (!file_exists($path)) {
-                // Try with utf8_decode
-                $found = false;
-                if (file_exists(utf8_decode($path))) {
-                    $path = utf8_decode($path);
-                    $found = true;
-                }
-            }
-            if ($found) {
+            if (file_exists($path)) {
                 $fileobj_list[] = $this->getFileObject($path, (is_dir($path) ? 0 : filesize($path)), is_dir($path));
                 $this->debugs[] = "All files preset - Found path: " . $path;
                 $this->state->files_found++;
@@ -418,7 +406,14 @@ class PopulateFileList extends WPSynchroService
             }
 
             // Add value part
-            $insert_value_part_arr[] = $wpdb->prepare("(%s,%s,%d,%d,%d)", utf8_encode($path->source_file), $path->hash, ($path->is_dir ? 0 : 1), $path->is_dir, $path->size);
+            $insert_value_part_arr[] = $wpdb->prepare(
+                "(%s,%s,%d,%d,%d)",
+                $path->source_file,
+                $path->hash,
+                ($path->is_dir ? 0 : 1),
+                $path->is_dir,
+                $path->size
+            );
         }
         if ($insert_counter > 0) {
             $wpdb->query($insert_query_part . " " . implode(",", $insert_value_part_arr));

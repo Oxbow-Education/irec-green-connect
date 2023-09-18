@@ -21,6 +21,7 @@
 	global $local_sync_profiling_start;
 	$local_sync_profiling_start = time();
 
+	error_reporting(error_reporting() & ~E_DEPRECATED);
 	include_once(dirname(__FILE__) . '/wp-modified-functions.php');
 	include_once(dirname(__FILE__) . '/wp-tc-config.php');
 	if(file_exists(dirname(__FILE__) . '/local-sync-env-parameters.php')){
@@ -64,7 +65,7 @@
 	function local_sync_fatal_error_hadler_bridge($return = null) {
 		$last_error = error_get_last();
 
-		if(!empty($last_error)){
+		if(!empty($last_error) && !empty($last_error['type']) && $last_error['type'] != 8192){
 			local_sync_log($last_error, "--------last_error--------");
 		}
 

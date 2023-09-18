@@ -2,8 +2,11 @@
 
 namespace WPSynchro\Database;
 
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Transport\RemoteTransport;
+use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling database migration
@@ -11,38 +14,33 @@ use WPSynchro\Transport\RemoteTransport;
  */
 class DatabaseSync
 {
+    // Constants
+    const TMP_TABLE_PREFIX = 'wpsyntmp_';
     // Data objects
     public $job = null;
     public $migration = null;
-    public $logger = null;
-    // Table prefix
-    public $table_prefix = '';
     // Timers and limits
     public $timer = null;
-    // PHP/MySQL limits
-    public $max_allowed_packet_length = 0;
-    public $max_post_request_length = 0;
-    public $memory_limit = 0;
     public $max_time_per_sync = 0;
-    public $max_response_length = 0;
-    // Search/replaces
-    public $searchreplaces = [];
-    public $searchreplace_count = 0;
     // Using mysqli/mysql
     public $use_mysqli = false;
+    // Throttling
+    public $has_backed_off_because_of_memory = false;
+    // Dependencies
+    public $logger;
+    public $serialized_string_handler;
 
     /**
      * Constructor
      * @since 1.0.0
      */
-    public function __construct()
+    public function __construct(LoggerInterface $logger = null)
     {
         if (function_exists('mysqli_connect')) {
             $this->use_mysqli = true;
         }
-
-        global $wpsynchro_container;
-        $this->logger = $wpsynchro_container->get('class.Logger');
+        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->serialized_string_handler = new SerializedStringHandler();
     }
 
     /**
@@ -52,18 +50,12 @@ class DatabaseSync
     public function runDatabaseSync(&$migration, &$job)
     {
         // Start timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get('class.SyncTimerList');
+        $this->timer = SyncTimerList::getInstance();
 
         $this->migration = &$migration;
         $this->job = &$job;
 
         $this->logger->log('INFO', 'Starting database migration loop with remaining time: ' . $this->timer->getRemainingSyncTime());
-
-        // Get common library
-        global $wpsynchro_container;
-        $commonfunctions = $wpsynchro_container->get('class.CommonFunctions');
-        $this->table_prefix = $commonfunctions->getDBTempTableName();
 
         // Prepare sync data
         $this->prepareSyncData();
@@ -75,10 +67,11 @@ class DatabaseSync
 
         // Now, do some work
         $lastrun_time = 2;
+
         while ($this->timer->shouldContinueWithLastrunTime($lastrun_time)) {
             $nomorework = true;
             foreach ($this->job->from_dbmasterdata as &$table) {
-                if (isset($table->is_completed)) {
+                if ($table->is_completed) {
                     $table->rows = $table->completed_rows;
                 } else {
                     // Pre processing throttling stuff
@@ -102,7 +95,7 @@ class DatabaseSync
                     // Throttling
                     $lastrun_time = $this->timer->getElapsedTimeToNow($lastrun_timer);
                     $this->handlePostProcessingThrottling($lastrun_time);
-                    $this->logger->log('DEBUG', 'Lastrun in : ' . $lastrun_time . ' seconds - rows throttle: ' . $this->job->db_rows_per_sync . ' and remaining time: ' . $this->timer->getRemainingSyncTime());
+                    $this->logger->log('DEBUG', 'Lastrun in : ' . $lastrun_time . ' seconds - response size throttle: ' . $this->job->db_throttle_table_response_size . ' and remaining time: ' . $this->timer->getRemainingSyncTime());
                     // Break out to test if we have time for more
                     break;
                 }
@@ -136,60 +129,6 @@ class DatabaseSync
             $this->max_time_per_sync = 10;
         }
 
-        /**
-         *  Check the search/replace's
-         */
-
-        // Get search replaces from migration
-        $this->searchreplaces = $this->migration->searchreplaces;
-
-        // Add system search/replaces
-        $this->searchreplaces = array_merge($this->searchreplaces, $this->job->db_system_search_replaces);
-
-        // Ignore all search/replaces - Only used for testing purposes
-        if ($this->migration->ignore_all_search_replaces) {
-            $this->searchreplaces = [];
-        }
-
-        // Clear duplicates from search/replaces
-        $this->searchreplaces = $this->removeDuplicatesFromSearchReplaces($this->searchreplaces);
-
-        // Get Count and log the search/replaces used in sync
-        $this->searchreplace_count = count($this->searchreplaces);
-        $this->logger->log('DEBUG', 'Search/replaces:', $this->searchreplaces);
-
-        // Remove tables from dbdata, if not all tables should be synced
-        if ($this->migration->include_all_database_tables === false) {
-            $onlyinclude = $this->migration->only_include_database_table_names;
-            $newdbdata = [];
-            foreach ($this->job->from_dbmasterdata as $table) {
-                if (in_array($table->name, $onlyinclude)) {
-                    $newdbdata[] = $table;
-                }
-            }
-            $this->job->from_dbmasterdata = $newdbdata;
-        }
-
-        // Check if any of the tables are actually views, to be handled in a special way
-        $views = [];
-        $this->job->from_dbmasterdata = array_filter($this->job->from_dbmasterdata, function ($table_obj) use (&$views) {
-            if ($table_obj->is_view) {
-                $views[] = $table_obj;
-                return false;
-            }
-            return true;
-        });
-        $this->job->db_views_to_be_synced = $views;
-
-        // Set max length limits for POST requests and Max allowed packet to MySQL - Determined from the smallest on the clients - And subtract 1000 bytes for safety distance
-        $this->max_allowed_packet_length = min($this->job->from_max_allowed_packet_size, $this->job->to_max_allowed_packet_size);
-        $this->max_post_request_length = min($this->job->from_max_post_size, $this->job->to_max_post_size) * 0.9;
-        $this->memory_limit = (min($this->job->from_memory_limit, $this->job->to_memory_limit) - memory_get_peak_usage()) * 0.7;
-
-        // Set max allowed packet to smallest of all these numbers
-        $this->max_allowed_packet_length = min($this->max_allowed_packet_length, $this->max_post_request_length, $this->memory_limit) * 0.8;
-        $this->job->db_max_allowed_packet = $this->max_allowed_packet_length;
-
         // Check if first run
         if (!$this->job->db_first_run_setup) {
             $this->createTablesOnRemoteDatabase();
@@ -206,22 +145,9 @@ class DatabaseSync
         // If table is different than last time this ran
         if ($table->name != $this->job->db_throttle_table) {
             $this->job->db_throttle_table = $table->name;
-            $this->job->db_rows_per_sync = $this->job->db_rows_per_sync_default;
+            $this->job->db_throttle_table_response_size = $this->job->db_response_size_wanted_default;
 
-            // Check if table rows will get to big, so we have to start lower
-            if (($this->job->db_rows_per_sync * $table->row_avg_bytes) > $this->job->db_response_size_wanted_default) {
-                $this->job->db_rows_per_sync = floor($this->job->db_response_size_wanted_default / $table->row_avg_bytes);
-                if ($this->job->db_rows_per_sync < 10) {
-                    $this->job->db_rows_per_sync = 10;
-                }
-            }
-
-            // Check if new table has blobs, so lets start with a lower rows per sync, because they can be big
-            if (count($table->column_types->binary) > 0) {
-                $this->job->db_rows_per_sync = 20;
-            }
-
-            $this->logger->log('INFO', 'New table is started: ' . sanitize_text_field($table->name) . ' and setting new default rows per sync: ' . $this->job->db_rows_per_sync);
+            $this->logger->log('INFO', 'New table is started: ' . sanitize_text_field($table->name) . ' and setting new max response size: ' . $this->job->db_throttle_table_response_size);
         }
     }
 
@@ -234,30 +160,35 @@ class DatabaseSync
     {
         // Check if we are too close to max memory (aka handling too large datasets and risking outofmemory) - One time thing per run
         $current_peak = memory_get_peak_usage();
-        static $has_backed_off = false;
-        if (!$has_backed_off && $current_peak > $this->memory_limit) {
+
+        if (!$this->has_backed_off_because_of_memory && $current_peak > $this->job->masterdata_max_memory_limit_bytes) {
             // Back off a bit
-            $has_backed_off = true;
-            $new_row_limit = floor($this->job->db_rows_per_sync * 0.70);
-            $this->logger->log('WARNING', 'Hit memory peak - Current peak: ' . $current_peak . ' and memory limit: ' . $this->memory_limit . ' - Backing off from: ' . $this->job->db_rows_per_sync . ' rows to: ' . $new_row_limit . ' rows');
-            $this->job->db_rows_per_sync = $new_row_limit;
+            $this->has_backed_off_because_of_memory = true;
+            $new_response_limit = floor($this->job->db_throttle_table_response_size * 0.70);
+            $this->logger->log('WARNING', 'Hit memory peak - Current peak: ' . $current_peak . ' and memory limit: ' . $this->job->masterdata_max_memory_limit_bytes . ' - Backing off from: ' . $this->job->db_throttle_table_response_size . ' rows to: ' . $new_response_limit . ' rows');
+            $this->job->db_throttle_table_response_size = $new_response_limit;
             return;
         }
 
         // Check that last return response size in bytes does not exceed the max limit
         if ($this->job->db_last_response_length > 0 && $this->job->db_last_response_length > $this->job->db_response_size_wanted_max) {
             // Back off
-            $this->job->db_rows_per_sync = intval($this->job->db_rows_per_sync * 0.80);
+            $this->job->db_throttle_table_response_size = intval($this->job->db_throttle_table_response_size * 0.80);
             return;
         }
 
         // Throttle rows per sync
         if ($lastrun_time < $this->max_time_per_sync) {
             // Scale up
-            $this->job->db_rows_per_sync = ceil($this->job->db_rows_per_sync * 1.05);
+            $this->job->db_throttle_table_response_size = ceil($this->job->db_throttle_table_response_size * 1.05);
         } else {
             // Back off
-            $this->job->db_rows_per_sync = ceil($this->job->db_rows_per_sync * 0.90);
+            $this->job->db_throttle_table_response_size = ceil($this->job->db_throttle_table_response_size * 0.90);
+        }
+
+        // Make sure the response size never gets above the max
+        if ($this->job->db_throttle_table_response_size > $this->job->db_response_size_wanted_max) {
+            $this->job->db_throttle_table_response_size = $this->job->db_response_size_wanted_max;
         }
     }
 
@@ -267,25 +198,30 @@ class DatabaseSync
      */
     private function sendDataToRemoteService(&$table)
     {
-        global $wpdb;
         if ($this->migration == null) {
             return 0;
         }
 
-        // Get data from server (to be send to remote)
-        if (strlen($table->primary_key_column) > 0) {
-            $sql_stmt = 'select * from `' . $table->name . '` where `' . $table->primary_key_column . '` > ' . $table->last_primary_key . ' order by `' . $table->primary_key_column . '`  limit ' . intval($this->job->db_rows_per_sync);
-        } else {
-            $sql_stmt = 'select * from `' . $table->name . '` limit ' . $table->completed_rows . ',' . intval($this->job->db_rows_per_sync);
+        $calculated_inital_rows_per_request = floor($this->job->db_response_size_wanted_default / $table->row_avg_bytes);
+        if ($calculated_inital_rows_per_request < 2) {
+            $calculated_inital_rows_per_request = 2;
         }
 
-        $data = $wpdb->get_results($sql_stmt);
-        $this->logger->log('DEBUG', 'Getting data from local DB with SQL query: ' . $sql_stmt);
+        $database_helper_functions = new DatabaseHelperFunctions();
+        $data_result_from_db = $database_helper_functions->getDataFromDB(
+            $table->name,
+            $table->getColumnNames(),
+            $table->primary_key_column,
+            $table->last_primary_key,
+            $table->completed_rows,
+            $this->job->db_throttle_table_response_size,
+            $calculated_inital_rows_per_request
+        );
 
-        $rows_fetched = count($data);
+        $rows_fetched = count($data_result_from_db->data);
 
-        // If rows fetched less than max rows, than mark table as completed
-        if ($rows_fetched < $this->job->db_rows_per_sync) {
+        // If there is no more rows, mark it as completed
+        if (!$data_result_from_db->has_more_rows_in_table) {
             $this->logger->log('INFO', 'Marking table: ' . $table->name . ' as completed');
             $table->is_completed = true;
         }
@@ -293,7 +229,7 @@ class DatabaseSync
         // Generate SQL queries from data
         $sql_inserts = [];
         if ($rows_fetched > 0) {
-            $sql_inserts = $this->generateSQLInserts($table, $data, $this->max_allowed_packet_length);
+            $sql_inserts = $this->generateSQLInserts($table, $data_result_from_db->data, $this->job->masterdata_max_sql_packet_bytes);
         } else {
             return 0;
         }
@@ -320,8 +256,7 @@ class DatabaseSync
     public function callRemoteClientDBService(&$body, $to_or_from = 'to')
     {
         // Start timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get('class.SyncTimerList');
+        $this->timer = SyncTimerList::getInstance();
 
         // Set destination
         if ($to_or_from == "to") {
@@ -347,7 +282,7 @@ class DatabaseSync
 
             // Check for returning data
             if (isset($result_body->data)) {
-                return $result_body->data;
+                return $result_body;
             }
         } else {
             $this->job->errors[] = __('Database migration failed with error, which means we can not continue the migration.', 'wpsynchro');
@@ -366,14 +301,20 @@ class DatabaseSync
             return 0;
         }
 
+        $calculated_inital_rows_per_request = floor($this->job->db_response_size_wanted_default / $table->row_avg_bytes);
+        if ($calculated_inital_rows_per_request < 2) {
+            $calculated_inital_rows_per_request = 2;
+        }
+
         $body = new \stdClass();
         $body->table = $table->name;
         $body->last_primary_key = $table->last_primary_key;
         $body->primary_key_column = $table->primary_key_column;
-        $body->binary_columns = $table->column_types->binary;
         $body->completed_rows = $table->completed_rows;
-        $body->max_rows = $this->job->db_rows_per_sync;
+        $body->max_response_size = $this->job->db_throttle_table_response_size;
         $body->type = $this->migration->type;
+        $body->default_rows_per_request = $calculated_inital_rows_per_request;
+        $body->column_names = $table->getColumnNames();
 
         // Call remote service
         $this->logger->log('DEBUG', 'Getting data from remote DB with data: ' . json_encode($body));
@@ -384,22 +325,23 @@ class DatabaseSync
             return 0;
         }
 
-        if (is_array($remote_result)) {
-            $rows_fetched = count($remote_result);
+        if (is_array($remote_result->data)) {
+            $rows_fetched = count($remote_result->data);
         } else {
             $rows_fetched = 0;
         }
+        $this->logger->log('DEBUG', 'Got rows: ' . $rows_fetched);
 
-        if ($rows_fetched < $this->job->db_rows_per_sync) {
+        if (!$remote_result->has_more_rows_in_table) {
             $this->logger->log('INFO', 'Marking table: ' . $table->name . ' as completed');
             $table->is_completed = true;
         }
 
         // Insert statements
         if ($rows_fetched > 0) {
-            $sql_inserts = $this->generateSQLInserts($table, $remote_result, $this->max_allowed_packet_length);
+            $sql_inserts = $this->generateSQLInserts($table, $remote_result->data, $this->job->masterdata_max_sql_packet_bytes);
             $wpdb->query('SET FOREIGN_KEY_CHECKS=0;');
-            foreach ($sql_inserts as &$sql_insert) {
+            foreach ($sql_inserts as $sql_insert) {
                 $wpdb->query($sql_insert);
                 $wpdb->flush();
             }
@@ -459,7 +401,7 @@ class DatabaseSync
                 } elseif ($table->column_types->isString($col)) {
                     // Handle string values
                     if ($col != 'guid') {
-                        $val = $this->handleSearchReplace($val);
+                        $this->handleSearchReplace($val);
                     }
                     $temp_insert_add .= "'" . $this->escape($val) . "',";
                 } elseif ($table->column_types->isNumeric($col)) {
@@ -471,7 +413,7 @@ class DatabaseSync
                     }
                 } elseif ($table->column_types->isBinary($col)) {
                     // Handle binary values
-                    $available_memory = $this->memory_limit - memory_get_usage();
+                    $available_memory = $this->job->masterdata_max_memory_limit_bytes;
                     $val_length = strlen($val);
                     $expected_length = $val_length * 2;
                     if ($expected_length > $available_memory) {
@@ -552,75 +494,20 @@ class DatabaseSync
     }
 
     /**
-     * Handle search/replace in data
+     * Handle in-data search/replace
      * @since 1.2.0
      */
-    public function handleSearchReplace($data)
+    public function handleSearchReplace(&$data)
     {
         // Check data type
         if (is_serialized($data)) {
-            // Handle search/replace in serialized data
-
-            preg_match_all('/s:([0-9]+):"/', $data, $m, PREG_OFFSET_CAPTURE);
-            $modifications_needed = [];
-            foreach ($m[0] as $i => $notused) {
-                $strlen = $m[1][$i][0];
-                if ($strlen == 0) {
-                    // If no length, no replace needed
-                    continue;
-                }
-                // Setup variables
-                $part_start = $m[0][$i][1];
-                $desc_part_length = strlen($m[0][$i][0]);
-                $part_string_start = $part_start + $desc_part_length;
-
-                // Get current string
-                $actual_string = substr($data, $part_string_start, $strlen);
-
-                // Check if any replaces needs done
-                $replaces_done = false;
-                $actual_string_replaced = $actual_string;
-                foreach ($this->searchreplaces as $replaces) {
-                    $replaces_actually_done = 0;
-                    $actual_string_replaced = str_replace($replaces->from, $replaces->to, $actual_string_replaced, $replaces_actually_done);
-                    if ($replaces_actually_done > 0) {
-                        $replaces_done = true;
-                    }
-                }
-
-                // Record changes needed
-                if ($replaces_done) {
-                    $actual_string_length = strlen($actual_string);
-                    $actual_string_chars = strlen((string) $actual_string_length);
-                    $actual_string_replaced_length = strlen($actual_string_replaced);
-                    $actual_string_replaced_chars = strlen((string) $actual_string_replaced_length);
-
-                    $modification = new \stdClass();
-                    $modification->part_start = $part_start;
-                    $modification->part_length = $desc_part_length + $strlen;
-                    $modification->new_string = $actual_string_replaced;
-                    $modification->new_string_length = $actual_string_replaced_length;
-                    $modification->placement_diff = ($actual_string_replaced_length - $actual_string_length) + ($actual_string_replaced_chars - $actual_string_chars);
-                    $modifications_needed[] = $modification;
-                }
-            }
-
-            // Handle modifications needed
-            $offset = 0;
-            foreach ($modifications_needed as $mod) {
-                $newstring = 's:' . $mod->new_string_length . ':"' . $mod->new_string;
-                $data = substr_replace($data, $newstring, ($mod->part_start + $offset), $mod->part_length);
-                // Adjust for the former changes
-                $offset = $offset + $mod->placement_diff;
-            }
+            $this->serialized_string_handler->searchReplaceSerialized($data, $this->job->db_search_replaces);
         } else {
             // Its just plain data, so simple fixy fixy
-            foreach ($this->searchreplaces as $replaces) {
+            foreach ($this->job->db_search_replaces as $replaces) {
                 $data = str_replace($replaces->from, $replaces->to, $data);
             }
         }
-
-        return $data;
     }
 
     /**
@@ -640,12 +527,12 @@ class DatabaseSync
         // Create the temp tables (and drop them if already exists)
         foreach ($this->job->from_dbmasterdata as &$table) {
             // If table contains prefix, just move on
-            if (strpos($table->name, $this->table_prefix) === 0) {
+            if (strpos($table->name, self::TMP_TABLE_PREFIX) === 0) {
                 continue;
             }
 
             if (!isset($table->temp_name) || strlen($table->temp_name) == 0) {
-                $table->temp_name = $this->table_prefix . uniqid();
+                $table->temp_name = self::TMP_TABLE_PREFIX . uniqid();
             }
 
             $create_table = str_replace('`' . $table->name . '`', '`' . $table->temp_name . '`', $table->create_table);
@@ -661,7 +548,7 @@ class DatabaseSync
                 if (strpos($table->create_table, '`' . $inside_table->name . '`') > -1) {
                     // If not yet given a temp name, set that first
                     if (!isset($inside_table->temp_name) || strlen($inside_table->temp_name) == 0) {
-                        $inside_table->temp_name = $this->table_prefix . uniqid();
+                        $inside_table->temp_name = self::TMP_TABLE_PREFIX . uniqid();
                     }
                     // Replace in create statement, so inside tables new temp name is there instead
                     $create_table = str_replace('`' . $inside_table->name . '`', '`' . $inside_table->temp_name . '`', $create_table);
@@ -714,6 +601,14 @@ class DatabaseSync
         $create = preg_replace_callback("/KEY\s`(\S+)`/", function () {
             return 'KEY `' . uniqid() . '`';
         }, $create);
+
+        // utf8mb4_0900_ai_ci collation is only from mysql 8
+        if (stripos($create, 'utf8mb4_0900_ai_ci') !== false) {
+            // utf8mb4_0900_ai_ci is only for MySQL 8
+            if (version_compare($to_db_version, '8', '<')) {
+                $create = str_replace("utf8mb4_0900_ai_ci", "utf8mb4_unicode_520_ci", $create);
+            }
+        }
 
         // Changes according to MySQL version
         if (version_compare($to_db_version, '5.5', '>=') && version_compare($to_db_version, '5.6', '<')) {  // MySQL
@@ -793,23 +688,5 @@ class DatabaseSync
 
         $this->logger->log('INFO', 'Database progress update: ' . $database_progress_description);
         $this->job->database_progress_description = $database_progress_description;
-    }
-
-    /**
-     *  Clear duplicates for search/replaces
-     *  @since 1.7.2
-     */
-    public function removeDuplicatesFromSearchReplaces($search_replaces)
-    {
-        $new_search_replaces = [];
-        $search_replace_hashes = [];
-        foreach ($search_replaces as $search_replace) {
-            $hash = md5($search_replace->to . '-' . $search_replace->from);
-            if ($search_replace->to != $search_replace->from && !isset($search_replace_hashes[$hash])) {
-                $new_search_replaces[] = $search_replace;
-            }
-            $search_replace_hashes[$hash] = true;
-        }
-        return $new_search_replaces;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\Masterdata;
 
 use WPSynchro\Transport\Destination;
@@ -11,12 +12,16 @@ use WPSynchro\Transport\RemoteTransport;
 class MasterdataRetrieval
 {
     public $data_to_retrieve = [];
+
     // Request security (optional)
     public $token = null;
     public $encryption_key = null;
+
     // Data retrieved
     public $data = [];
 
+    // Dependencies
+    private $destination;
     public function __construct(Destination $destination)
     {
         $this->destination = $destination;

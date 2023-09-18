@@ -9,18 +9,30 @@ namespace WPSynchro\Finalize;
 
 use WPSynchro\Files\SyncList;
 use WPSynchro\Database\DatabaseFinalize;
-use WPSynchro\MigrationFactory;
+use WPSynchro\Files\FinalizeFiles;
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Transport\RemoteTransport;
+use WPSynchro\Utilities\SyncTimerList;
 
 class FinalizeSync
 {
-
     // Base data
     private $job = null;
     private $migration = null;
-    private $target_migration = null;
+    // Dependencies
+    private $logger;
     public $timer = null;
+
+    /**
+     *  Constructor
+     */
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->timer = SyncTimerList::getInstance();
+    }
 
     /**
      *  Run finalize method
@@ -28,17 +40,10 @@ class FinalizeSync
      */
     public function runFinalize(&$migration, &$job)
     {
-        // Timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get("class.SyncTimerList");
-
         $this->migration = &$migration;
         $this->job = &$job;
 
-        // Init logging
-        global $wpsynchro_container;
-        $logger = $wpsynchro_container->get("class.Logger");
-        $logger->log("INFO", "Starting finalize - Remaining time: " . $this->timer->getRemainingSyncTime());
+        $this->logger->log("INFO", "Starting finalize - Remaining time: " . $this->timer->getRemainingSyncTime());
 
         $this->job->finalize_progress = 10;
 
@@ -85,14 +90,13 @@ class FinalizeSync
 
         $this->job->finalize_progress = 100;
 
-        $logger->log("INFO", "Completed finalize - remaining time: " . $this->timer->getRemainingSyncTime());
+        $this->logger->log("INFO", "Completed finalize - remaining time: " . $this->timer->getRemainingSyncTime());
 
         if ($this->job->finalize_files_completed && $this->job->finalize_db_completed) {
-
             // Execute last actions on target
-            $logger->log("INFO", "Execute last actions on target - remaining time: " . $this->timer->getRemainingSyncTime());
+            $this->logger->log("INFO", "Execute last actions on target - remaining time: " . $this->timer->getRemainingSyncTime());
             $this->finalizeActionsOnTarget();
-            $logger->log("INFO", "Completed last actions on target - remaining time: " . $this->timer->getRemainingSyncTime());
+            $this->logger->log("INFO", "Completed last actions on target - remaining time: " . $this->timer->getRemainingSyncTime());
 
             // Update progress
             $this->job->finalize_progress = 100;
@@ -113,13 +117,10 @@ class FinalizeSync
      */
     private function finalizefiles()
     {
-
-        global $wpsynchro_container;
-
         $sync_list = new SyncList();
         $sync_list->init($this->migration, $this->job);
 
-        $finalize_files_handler = $wpsynchro_container->get("class.FinalizeFiles");
+        $finalize_files_handler = new FinalizeFiles();
         $finalize_files_handler->init($sync_list, $this->migration, $this->job);
 
         $finalize_files_handler->finalizeFiles();

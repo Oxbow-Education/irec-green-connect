@@ -7,11 +7,10 @@
 
 namespace WPSynchro\Utilities\JSData;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 
 class PageHeaderData
 {
-
     /**
      *  Load the JS data for page headers
      */

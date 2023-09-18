@@ -11,7 +11,7 @@
  * Plugin Name:       WP Duplicate - WordPress Migration Plugin
  * Plugin URI:        https://localsync.io
  * Description:       Easily migrate your WordPress Site from one host to another.
- * Version:           1.1.4
+ * Version:           1.1.5
  * Author:            Revmakx
  * Author URI:        https://revmakx.com
  * License:           GPL-2.0+
@@ -24,6 +24,7 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+error_reporting(error_reporting() & ~E_DEPRECATED);
 
 require plugin_dir_path( __FILE__ ) . 'local-sync-constants.php';
 $constants = new Local_Sync_Constants();
