@@ -6,6 +6,7 @@ use WPSynchro\API\LoadAPI;
 use WPSynchro\Utilities\Upgrade\DatabaseUpgrade;
 use WPSynchro\Updater\PluginUpdater;
 use WPSynchro\CLI\WPCLICommand;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\Compatibility\MUPluginHandler;
 use WPSynchro\Utilities\JSData\DeactivatePluginData;
 use WPSynchro\Utilities\JSData\LoadJSData;
@@ -35,16 +36,13 @@ class WPSynchroBootstrap
      */
     public function run()
     {
-        // Initialize service controller
-        $this->loadServiceController();
-
         // Check database need update
         if (is_admin()) {
             DatabaseUpgrade::checkDBVersion();
         }
 
         // Load WP CLI command, if WP CLI request
-        if (defined('WP_CLI') && WP_CLI && \WPSynchro\CommonFunctions::isPremiumVersion()) {
+        if (defined('WP_CLI') && WP_CLI && \WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
             \WP_CLI::add_command('wpsynchro', new WPCLICommand());
         }
 
@@ -53,10 +51,9 @@ class WPSynchroBootstrap
 
         // Only load backend stuff when needed
         if (is_admin()) {
-            if (\WPSynchro\CommonFunctions::isPremiumVersion()) {
+            if (\WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
                 // Check licensing for wp-admin calls, and only if pro version
-                global $wpsynchro_container;
-                $licensing = $wpsynchro_container->get('class.Licensing');
+                $licensing = new Licensing();
                 $licensing->verifyLicense();
 
                 // Check for updates
@@ -71,15 +68,6 @@ class WPSynchroBootstrap
             $muplugin_handler = new MUPluginHandler();
             $muplugin_handler->checkNeedsUpdate();
         }
-    }
-
-    /**
-     *  Load service controller
-     *  @since 1.0.0
-     */
-    private function loadServiceController()
-    {
-        ServiceController::init();
     }
 
     /**
@@ -152,7 +140,7 @@ class WPSynchroBootstrap
                 add_submenu_page('wpsynchro_menu', __('Logs', 'wpsynchro'), __('Logs', 'wpsynchro'), 'manage_options', 'wpsynchro_log', [new \WPSynchro\Pages\AdminLog(), 'render']);
                 add_submenu_page('wpsynchro_menu', __('Setup', 'wpsynchro'), __('Setup', 'wpsynchro'), 'manage_options', 'wpsynchro_setup', [__NAMESPACE__ . '\\Pages\AdminSetup', 'render']);
                 add_submenu_page('wpsynchro_menu', __('Support', 'wpsynchro'), __('Support', 'wpsynchro'), 'manage_options', 'wpsynchro_support', [__NAMESPACE__ . '\\Pages\AdminSupport', 'render']);
-                if (\WPSynchro\CommonFunctions::isPremiumVersion()) {
+                if (\WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
                     add_submenu_page('wpsynchro_menu', __('Licensing', 'wpsynchro'), __('Licensing', 'wpsynchro'), 'manage_options', 'wpsynchro_licensing', [__NAMESPACE__ . '\\Pages\AdminLicensing', 'render']);
                 }
                 add_submenu_page('wpsynchro_menu', __('Changelog', 'wpsynchro'), __('Changelog', 'wpsynchro'), 'manage_options', 'wpsynchro_changelog', [__NAMESPACE__ . '\\Pages\AdminChangelog', 'render']);
@@ -177,7 +165,8 @@ class WPSynchroBootstrap
             function ($hook) {
                 if (strpos($hook, 'wpsynchro') > -1) {
                     $commonfunctions = new CommonFunctions();
-                    wp_enqueue_script('wpsynchro_admin_js', $commonfunctions->getAssetUrl('main.js'), [], WPSYNCHRO_VERSION, true);
+                    wp_enqueue_script('wpsynchro_admin_js', $commonfunctions->getAssetUrl('wpsynchro.js'), ['wp-i18n'], WPSYNCHRO_VERSION, true);
+                    wp_set_script_translations('wpsynchro_admin_js', 'wpsynchro', WPSYNCHRO_PLUGIN_DIR . 'languages');
 
                     // Load standard data we need
                     (new LoadJSData())->load();
@@ -189,7 +178,7 @@ class WPSynchroBootstrap
         add_action('admin_enqueue_scripts', function ($hook) {
             if (strpos($hook, 'wpsynchro') > -1) {
                 $commonfunctions = new CommonFunctions();
-                wp_enqueue_style('wpsynchro_admin_css', $commonfunctions->getAssetUrl('main.css'), [], WPSYNCHRO_VERSION);
+                wp_enqueue_style('wpsynchro_admin_css', $commonfunctions->getAssetUrl('wpsynchro.css'), [], WPSYNCHRO_VERSION);
             }
         });
 
@@ -200,6 +189,7 @@ class WPSynchroBootstrap
                 if ($hook == 'plugins.php') {
                     $commonfunctions = new CommonFunctions();
                     wp_enqueue_script('wpsynchro_deactivate_js', $commonfunctions->getAssetUrl('deactivation.js'), [], WPSYNCHRO_VERSION, true);
+                    wp_set_script_translations('wpsynchro_deactivate_js', 'wpsynchro', WPSYNCHRO_PLUGIN_DIR . 'languages');
 
                     (new DeactivatePluginData())->load();
                     (new PageHeaderData())->load('wpsynchro_deactivate_js');

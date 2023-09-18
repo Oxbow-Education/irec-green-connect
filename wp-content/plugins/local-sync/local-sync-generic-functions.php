@@ -614,6 +614,22 @@ function is_local_sync_table($tableName) {
 	return false;
 }
 
+function is_wp_merge_table($tableName) {
+	global $wpdb;
+	
+	$wp_prefix_with_tc_prefix = $wpdb->base_prefix . 'wpmerge';
+
+	local_sync_log($wp_prefix_with_tc_prefix, "--------is_wp_merge_table--------");
+
+	$this_sync_strpos = stripos($tableName, $wp_prefix_with_tc_prefix);
+
+	if (false !== $this_sync_strpos && $this_sync_strpos === 0) {
+
+		return true;
+	}
+
+	return false;
+}
 function status_losy($status, $success=true, $return=true, $options='', $multicall=false){
 	local_sync_log($status, "--------status_losy--------");
 }

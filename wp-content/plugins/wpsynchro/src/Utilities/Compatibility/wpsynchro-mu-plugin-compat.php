@@ -8,16 +8,16 @@
  * Author URI:  wpsynchro.com
  * Version:     1.0.5
  */
+
 define('WPSYNCHRO_MU_COMPATIBILITY_VERSION', '1.0.5');
 
 // Check if it is a WP Synchro REST request
 $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 if (strpos(strval($request_uri), "action=wpsynchro") !== false) {
-
     // Figure out the location of plugins
     if (defined('WP_PLUGIN_DIR')) {
         $plugins_location = trailingslashit(WP_PLUGIN_DIR);
-    } else if (defined('WP_CONTENT_DIR')) {
+    } elseif (defined('WP_CONTENT_DIR')) {
         $plugins_location = trailingslashit(WP_CONTENT_DIR) . 'plugins/';
     } else {
         $plugins_location = trailingslashit(dirname(dirname(__FILE__))) . 'plugins/';

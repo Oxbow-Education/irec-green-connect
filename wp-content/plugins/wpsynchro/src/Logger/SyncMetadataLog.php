@@ -1,7 +1,9 @@
 <?php
+
 namespace WPSynchro\Logger;
 
-use WPSynchro\Job;
+use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Migration\Job;
 
 /**
  * Class for handling logging data on sync for use in logs menu (not the logger-logger, but just a log...  :) )
@@ -10,10 +12,6 @@ use WPSynchro\Job;
  */
 class SyncMetadataLog
 {
-    public function __construct()
-    {
-    }
-
     /**
      *  Start a migration entry in the log
      *  @since 1.0.5
@@ -40,7 +38,6 @@ class SyncMetadataLog
         }
 
         $synclog[] = $newsync;
-
         update_option("wpsynchro_sync_logs", $synclog, 'no');
     }
 
@@ -99,10 +96,8 @@ class SyncMetadataLog
      */
     public function removeSingleLogs($logs)
     {
-        global $wpsynchro_container;
-        $common = $wpsynchro_container->get("class.CommonFunctions");
+        $common = new CommonFunctions();
         $log_dir = $common->getLogLocation();
-
         foreach ($logs as $log) {
             // Remove data in db
             $option_to_delete = Job::getJobWPOptionName($log->migration_id, $log->job_id);
@@ -124,15 +119,13 @@ class SyncMetadataLog
         $logs = $this->getAllLogs();
 
         // Remove all log files from wpsynchro dir
-        global $wpsynchro_container;
-        $common = $wpsynchro_container->get("class.CommonFunctions");
+        $common = new CommonFunctions();
         $log_dir = $common->getLogLocation();
 
         // Clean files *.log, *.sql and *.txt
         @array_map('unlink', glob("$log_dir*.sql"));
         @array_map('unlink', glob("$log_dir*.log"));
         @array_map('unlink', glob("$log_dir*.txt"));
-
         $options_to_delete = [];
         foreach ($logs as $log) {
             if (isset($log->installation_id)) {
@@ -142,10 +135,10 @@ class SyncMetadataLog
             }
 
             if (count($options_to_delete) > 30) {
-                // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
                 $this->deleteLogEntriesInDatabase($options_to_delete);
                 $options_to_delete = [];
-                // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
             }
         }
         if (count($options_to_delete) > 0) {
@@ -163,7 +156,6 @@ class SyncMetadataLog
     public function deleteLogEntriesInDatabase($log_options_to_delete)
     {
         global $wpdb;
-
         foreach ($log_options_to_delete as $log_option) {
             delete_option($log_option);
         }

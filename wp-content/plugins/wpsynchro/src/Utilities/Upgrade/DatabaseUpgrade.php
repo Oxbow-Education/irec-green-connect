@@ -2,7 +2,7 @@
 
 namespace WPSynchro\Utilities\Upgrade;
 
-use WPSynchro\MigrationFactory;
+use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 
 /**
@@ -11,7 +11,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
  */
 class DatabaseUpgrade
 {
-
     /**
      *  Check WP Synchro database version and compare with current
      *  @since 1.0.3
@@ -66,8 +65,7 @@ class DatabaseUpgrade
         // Version 2 > 3
         if ($current_version < 3) {
             // Update migrations with the new preset setting
-            global $wpsynchro_container;
-            $migration_factory = $wpsynchro_container->get("class.MigrationFactory");
+            $migration_factory = MigrationFactory::getInstance();
             $migration_factory->getAllMigrations();
             foreach ($migration_factory->migrations as &$migration) {
                 $migration->sync_preset = 'none';
@@ -80,8 +78,7 @@ class DatabaseUpgrade
         // Version 3 > 4
         if ($current_version < 4) {
             // Update migrations with the new table prefix setting
-            global $wpsynchro_container;
-            $migration_factory = $wpsynchro_container->get("class.MigrationFactory");
+            $migration_factory = MigrationFactory::getInstance();
             $migration_factory->getAllMigrations();
             foreach ($migration_factory->migrations as &$migration) {
                 $migration->db_table_prefix_change = true;
@@ -96,8 +93,7 @@ class DatabaseUpgrade
             // Remove IP security option, as it is removed in 1.6.0
             delete_option("wpsynchro_ip_security_enabled");
             // Set all migrations as "direct" connections
-            global $wpsynchro_container;
-            $migration_factory = $wpsynchro_container->get("class.MigrationFactory");
+            $migration_factory = MigrationFactory::getInstance();
             $migration_factory->getAllMigrations();
             foreach ($migration_factory->migrations as &$migration) {
                 $migration->connection_type = "direct";
@@ -112,7 +108,7 @@ class DatabaseUpgrade
 
         // Version 6 > 7 (1.6.4 > 1.7.0)
         if ($current_version < 7) {
-            $migration_factory = new MigrationFactory();
+            $migration_factory = MigrationFactory::getInstance();
             $migration_factory->getAllMigrations();
             foreach ($migration_factory->migrations as &$migration) {
                 $migration->files_ask_user_for_confirm = false;
@@ -128,7 +124,7 @@ class DatabaseUpgrade
             // WordPress cache flush, because of wp updates
             wp_cache_flush();
 
-            $migration_factory = new MigrationFactory();
+            $migration_factory = MigrationFactory::getInstance();
             $migration_factory->getAllMigrations();
             foreach ($migration_factory->migrations as &$migration) {
                 // Add new field
@@ -144,7 +140,7 @@ class DatabaseUpgrade
 
         // Version 8 > 9 (1.8.1 > 1.8.2) - Remove migrations with empty search/replaces, because of bug (WS-99)
         if ($current_version < 9) {
-            $migration_factory = new MigrationFactory();
+            $migration_factory = MigrationFactory::getInstance();
             $migration_factory->getAllMigrations();
             foreach ($migration_factory->migrations as &$migration) {
                 if (empty($migration->searchreplaces)) {
