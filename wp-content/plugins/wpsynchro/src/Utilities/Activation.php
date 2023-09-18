@@ -2,6 +2,7 @@
 
 namespace WPSynchro\Utilities;
 
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\DatabaseTables;
 use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
@@ -38,7 +39,7 @@ class Activation
         /**
          * Create uploads log dir
          */
-        $commonfunctions = new \WPSynchro\CommonFunctions();
+        $commonfunctions = new \WPSynchro\Utilities\CommonFunctions();
         $commonfunctions->createLogLocation();
 
         /**
@@ -118,8 +119,7 @@ class Activation
         $wpdb->query('delete FROM ' . $wpdb->options . " WHERE option_name like '%wpsynchro%' ");
 
         // Remove log dir and all files
-        global $wpsynchro_container;
-        $common = $wpsynchro_container->get('class.CommonFunctions');
+        $common = new CommonFunctions();
         $log_dir = $common->getLogLocation();
         $filelist = scandir($log_dir);
         foreach ($filelist as $file) {

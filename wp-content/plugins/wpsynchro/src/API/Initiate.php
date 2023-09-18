@@ -15,7 +15,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
 
 class Initiate extends WPSynchroService
 {
-
     public function service()
     {
         $sync_response = new \stdClass();
@@ -37,7 +36,7 @@ class Initiate extends WPSynchroService
             }
 
             // Check licensing
-            if (\WPSynchro\CommonFunctions::isPremiumVersion()) {
+            if (\WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
                 $licensing = new Licensing();
                 $licensecheck = $licensing->verifyLicense();
 

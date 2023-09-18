@@ -1,10 +1,12 @@
 <?php
+
 namespace WPSynchro\API;
 
 use WPSynchro\Files\TransportHandler;
 use WPSynchro\Transport\ReturnResult;
 use WPSynchro\Transport\Transfer;
 use WPSynchro\Transport\TransferAccessKey;
+use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling service "filetransfer" - Receiving files
@@ -12,13 +14,10 @@ use WPSynchro\Transport\TransferAccessKey;
  */
 class FileTransfer extends WPSynchroService
 {
-
     public function service()
     {
-
         // init
-        global $wpsynchro_container;
-        $timer = $wpsynchro_container->get("class.SyncTimerList");
+        $timer = SyncTimerList::getInstance();
         $timer->init();
 
         // Get transfer object, so we can get data

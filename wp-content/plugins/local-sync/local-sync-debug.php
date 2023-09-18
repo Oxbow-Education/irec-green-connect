@@ -52,6 +52,9 @@ function local_sync_fatal_error_hadler($return = null) {
 		return ;
 	}
 
+	if(!empty($last_error['type']) && $last_error['type'] == 8192){
+		return;
+	}
 	file_put_contents(LOCAL_SYNC_WP_CONTENT_DIR . '/local-sync-logs.txt', $log_error_types[$last_error['type']] . ": " . $last_error['message'] . " in " . $last_error['file'] . " on " . " line " . $last_error['line'] . "\n", FILE_APPEND);
 }
 

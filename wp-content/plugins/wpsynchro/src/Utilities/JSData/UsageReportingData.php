@@ -9,7 +9,6 @@ namespace WPSynchro\Utilities\JSData;
 
 class UsageReportingData
 {
-
     /**
      *  Load the JS data for Usage reporting component
      */

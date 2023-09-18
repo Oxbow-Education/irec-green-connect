@@ -1,9 +1,12 @@
 <?php
+
 namespace WPSynchro\API;
 
 use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\Files\FileHelperFunctions;
 use WPSynchro\Transport\ReturnResult;
+use WPSynchro\Transport\Transfer;
+use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling service "FileFinalize"
@@ -13,39 +16,29 @@ use WPSynchro\Transport\ReturnResult;
  */
 class FileFinalize extends WPSynchroService
 {
-
     public function service()
     {
-
         // Init timer
-        global $wpsynchro_container;
-        $timer = $wpsynchro_container->get("class.SyncTimerList");
+        $timer = SyncTimerList::getInstance();
         $timer->init();
-
         // Transfer object
-        global $wpsynchro_container;
-        $transfer = $wpsynchro_container->get("class.Transfer");
+        $transfer = new Transfer();
         $transfer->setEncryptionKey(TransferAccessKey::getAccessKey());
         $transfer->populateFromString($this->getRequestBody());
         $body = $transfer->getDataObject();
-
         // Extract parameters
         $delete = $body->delete;
         $allotted_time = $body->allotted_time;
         $timer->addOtherSyncTimeLimit($allotted_time);
-
         $result = new \stdClass();
         $result->success = false;
         $result->errors = [];
         $result->warnings = [];
         $result->debugs = [];
-
         $result->debugs[] = "Finalize service: Start finalize with max time: " . $timer->getRemainingSyncTime();
-
         // remove the old dirs/files
         foreach ($delete as $key => &$deletepath) {
-            $filepath = utf8_decode($deletepath->target_file);
-
+            $filepath = $deletepath->target_file;
             if (!file_exists($filepath) || !is_writable($filepath)) {
                 $result->debugs[] = "Finalize service: Could not find/change file/dir that is on delete array, so ignoring the file: " . $filepath;
                 $deletepath->deleted = true;
@@ -60,7 +53,7 @@ class FileFinalize extends WPSynchroService
                 $delete_result = FileHelperFunctions::removeDirectory($filepath, $timer);
                 $result->debugs[] = "Finalize service: Starting deleting: " . $filepath;
                 if ($delete_result === false) {
-                    // Delete did not complete within timeframe
+                // Delete did not complete within timeframe
                     $result->debugs[] = "Finalize service: Could not complete delete within max time for: " . $filepath;
                 } else {
                     $deleted = true;
@@ -80,7 +73,6 @@ class FileFinalize extends WPSynchroService
         // When all is deleted, we have completed
         $result->debugs[] = "Finalize service: File/dir deleted completed";
         $result->delete = $delete;
-
         $returnresult = new ReturnResult();
         $returnresult->init();
         $returnresult->setDataObject($result);

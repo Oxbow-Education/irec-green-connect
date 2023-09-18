@@ -2,7 +2,7 @@
 
 namespace WPSynchro\Initiate;
 
-use WPSynchro\Logger\Logger;
+use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Transport\RemoteTransport;
 
@@ -23,7 +23,7 @@ class InitiateTokenRetrieval
     /**
      *  Constructor
      */
-    public function __construct(Logger $logger, Destination $destination, $sync_type)
+    public function __construct(LoggerInterface $logger, Destination $destination, $sync_type)
     {
         $this->logger = $logger;
         $this->destination = $destination;
@@ -47,7 +47,7 @@ class InitiateTokenRetrieval
     {
         // Get url
         $url = $this->destination->getFullURL() . '?action=wpsynchro_initiate&type=';
-        if($this->destination->getDestination() == Destination::LOCAL) {
+        if ($this->destination->getDestination() == Destination::LOCAL) {
             $url .= 'local';
         } else {
             $url .= $this->sync_type;
@@ -72,7 +72,7 @@ class InitiateTokenRetrieval
             } elseif (count($this->getErrors()) > 0) {
                 $this->logger->log('CRITICAL', 'Failed initializing - Got error response from remote initiate service -  Response: ', $body);
             } else {
-                $this->service_result->errors [] = __("Could not initate with site: " . $this->destination->getDestination() . " - If it is the remote site, this is normally caused by using the wrong access key to this site or the type (pull/push) is not allowed on the remote site.","wpsynchro");
+                $this->service_result->errors [] = __("Could not initate with site: " . $this->destination->getDestination() . " - If it is the remote site, this is normally caused by using the wrong access key to this site or the type (pull/push) is not allowed on the remote site.", "wpsynchro");
                 $this->logger->log('CRITICAL', 'Failed initializing - Could not fetch a initiation token from remote -  Response body: ', $body);
             }
         } else {

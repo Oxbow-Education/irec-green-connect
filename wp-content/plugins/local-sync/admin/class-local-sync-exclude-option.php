@@ -301,6 +301,9 @@ class Local_Sync_Exclude_Option {
 			return 'table_excluded';
 		}
 
+		if(is_wp_merge_table($table)){
+			return 'table_excluded';
+		}
 		if (local_sync_is_meta_data_backup()) {
 			return $this->is_meta_table_excluded($table);
 		}

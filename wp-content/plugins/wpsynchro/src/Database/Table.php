@@ -21,10 +21,17 @@ class Table
     public $primary_key_column = "";
     public $last_primary_key = 0;
     public $column_types;
-
+    // State
+    public $is_completed = false;
+    public $temp_name = '';
 
     public function __construct()
     {
         $this->column_types = new TableColumns();
+    }
+
+    public function getColumnNames()
+    {
+        return $this->column_types->getAllColumnNames();
     }
 }

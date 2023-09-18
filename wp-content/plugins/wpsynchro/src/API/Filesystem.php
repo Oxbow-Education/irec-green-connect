@@ -10,9 +10,10 @@
 namespace WPSynchro\API;
 
 use WPSynchro\Files\FileHelperFunctions;
-use WPSynchro\CommonFunctions;
+use WPSynchro\Files\PathData;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Transport\RemoteTransport;
-use WPSynchro\Migration;
+use WPSynchro\Migration\Migration;
 use WPSynchro\Transport\Destination;
 
 class Filesystem extends WPSynchroService
@@ -46,7 +47,6 @@ class Filesystem extends WPSynchroService
 
         // If it is not local, call the other site on same service
         if (!$is_local) {
-
             $remote_request = new \stdClass();
             $remote_request->path = $path;
 
@@ -74,7 +74,6 @@ class Filesystem extends WPSynchroService
         $common = new CommonFunctions();
 
         // Paths that should NOT be syncable
-
         $locked_paths = [];
         $locked_paths[] = $common->fixPath(trim($common->getLogLocation(), '/'));
         $locked_paths[] = $common->fixPath(trim(WPSYNCHRO_PLUGIN_DIR, '/'));
@@ -92,10 +91,11 @@ class Filesystem extends WPSynchroService
             $files = [];
             $presorteddata = array_diff(scandir($path), ['..', '.']);
             foreach ($presorteddata as $file) {
-                if (is_file($file))
+                if (is_file($file)) {
                     array_push($files, $file);
-                else
+                } else {
                     array_unshift($files, $file);
+                }
             }
 
             foreach ($files as $file) {
@@ -129,23 +129,5 @@ class Filesystem extends WPSynchroService
 
         echo json_encode($result);
         return;
-    }
-}
-
-class PathData
-{
-
-    public $pathkey = "";
-    public $absolutepath = "";
-    public $basename = "";
-    public $is_file = false;
-    public $dirname = "";
-    public $dir_has_content = false;
-    public $children = [];
-    public $locked = false;
-
-    function __construct()
-    {
-        $this->pathkey = uniqid();
     }
 }
