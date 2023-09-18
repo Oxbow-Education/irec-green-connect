@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\API;
 
 use WPSynchro\Transport\ReturnResult;
@@ -15,7 +16,6 @@ use WPSynchro\Utilities\Actions\ClearTransients;
  */
 class ExecuteAction extends WPSynchroService
 {
-
     public function service()
     {
         $result = new \stdClass();
@@ -25,12 +25,11 @@ class ExecuteAction extends WPSynchroService
         $transfer->setEncryptionKey(TransferAccessKey::getAccessKey());
         $transfer->populateFromString($this->getRequestBody());
         $data = $transfer->getDataObject();
-
-        if ( in_array("clearcaches", $data)) {
+        if (in_array("clearcaches", $data)) {
             (new ClearCachesOnSuccess())->doAction([]);
         }
 
-        if ( in_array("cleartransfertoken", $data)) {
+        if (in_array("cleartransfertoken", $data)) {
             (new ClearCurrentTransfer())->doAction([]);
         }
 
@@ -43,5 +42,4 @@ class ExecuteAction extends WPSynchroService
         $returnresult->setDataObject($result);
         return $returnresult->echoDataFromServiceAndExit();
     }
-
 }

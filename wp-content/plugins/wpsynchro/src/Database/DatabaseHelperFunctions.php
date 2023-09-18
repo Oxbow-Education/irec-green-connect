@@ -8,7 +8,6 @@ namespace WPSynchro\Database;
  */
 class DatabaseHelperFunctions
 {
-
     /**
      *  Handle table prefix name changes, if needed
      *  @since 1.3.2
@@ -76,6 +75,67 @@ class DatabaseHelperFunctions
         return [
             'log_errors' => $log_errors,
             'user_errors' => $user_errors,
+        ];
+    }
+
+    /**
+     *  Get data from local DB, with a certain primary key and max response size
+     */
+    public function getDataFromDB($table, $column_names, $primary_key_column, $last_primary_key, $completed_rows, $max_response_size, $default_rows_per_request)
+    {
+        global $wpdb;
+        $data = [];
+        $has_more_rows_in_table = true;
+        $current_response_size = 0;
+        $is_using_primary_key = strlen($primary_key_column) > 0;
+
+        // Generate the template sql
+        $column_parts = [];
+        foreach ($column_names as $column_name) {
+            $column_parts[] = 'char_length(' . $column_name . ')';
+        }
+        $sql_template = "SELECT t1.*, @total:= @total + (" . implode('+', $column_parts) . ") AS wpsynchro_rowlength FROM (%s) AS t1 JOIN (SELECT @total:=0) AS r WHERE @total < %d";
+
+        while ($current_response_size < $max_response_size) {
+            $remaining_space = $max_response_size - $current_response_size;
+            // Get data
+            if ($is_using_primary_key) {
+                $sql_stmt = 'SELECT * FROM `' . $table . '` WHERE `' . $primary_key_column . '` > ' . $last_primary_key . ' ORDER BY `' . $primary_key_column . '` ASC LIMIT ' . intval($default_rows_per_request);
+                $sql_stmt = sprintf($sql_template, $sql_stmt, $remaining_space);
+                $sql_stmt .= ' ORDER BY `' . $primary_key_column . '` ASC';
+            } else {
+                $sql_stmt = 'SELECT * FROM `' . $table . '` LIMIT ' . $completed_rows . ',' . intval($default_rows_per_request);
+                $sql_stmt = sprintf($sql_template, $sql_stmt, $remaining_space);
+            }
+            $sql_result = $wpdb->get_results($sql_stmt);
+
+            if (empty($sql_result)) {
+                $has_more_rows_in_table = false;
+                break;
+            }
+
+            foreach ($sql_result as $data_row) {
+                unset($data_row->wpsynchro_rowlength);
+                foreach ($data_row as $data_row_col) {
+                    if ($data_row_col !== null) {
+                        $current_response_size += strlen($data_row_col);
+                    }
+                }
+                if ($is_using_primary_key) {
+                    $last_primary_key = $data_row->$primary_key_column;
+                } else {
+                    $completed_rows += 1;
+                }
+                $data[] = $data_row;
+                if ($current_response_size > $max_response_size) {
+                    break;
+                }
+            }
+        }
+
+        return (object) [
+            'data' => $data,
+            'has_more_rows_in_table' => $has_more_rows_in_table
         ];
     }
 }

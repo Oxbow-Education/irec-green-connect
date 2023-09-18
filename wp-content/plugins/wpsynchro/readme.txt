@@ -2,15 +2,14 @@
 Contributors: wpsynchro
 Donate link: https://wpsynchro.com/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=donate
 Tags: migrate,clone,files,media,migration
-Requires at least: 4.9
-Tested up to: 6.2
-Stable tag: 1.9.1
+Requires at least: 5.2
+Tested up to: 6.3
+Stable tag: 1.10.0
 Requires PHP: 7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0
 
-WordPress migration plugin that migrates database tables, media, plugins, themes and whatever you want.
-Fully customizable. Setup once and run as many times as you want.
+WordPress migration plugin that migrates files, database, media, plugins, themes and whatever you want.
 
 == Description ==
 
@@ -95,9 +94,9 @@ If you have an idea for improving WP Synchro or found a bug in WP Synchro, we wo
 Currently we do automated testing on more than 300 different hosting environments with combinations of WordPress/PHP/Database versions.
 
 WP Synchro is tested on :
- * MySQL 5.5 up to MySQL 8.0 and MariaDB from 5.5 to 10.7.
+ * MySQL 5.5 up to MySQL 8.0 and MariaDB from 10.0 to 10.7.
  * PHP 7.0 up to latest version
- * WordPress from 4.9 to latest version.
+ * WordPress from 5.2 to latest version.
 
 = Do you support multisite? =
 
@@ -113,6 +112,18 @@ It is currently planned for one of the next releases to support it.
 4. WP Synchro doing a database migration
 
 == Changelog ==
+
+= 1.10.0 =
+ * Improvement: Support for WP 6.3
+ * Improvement: Bump PHP support to minimum 7.0, instead of 5.6. Like WP core did at long last.
+ * Improvement: Support for PHP 8.2 without deprecation notices
+ * Improvement: Bump MariaDB version support to minimum 10.0, from 5.5
+ * Improvement: Added WordPress nonces to all actions for added security
+ * Improvement: Support for restrictive CSP header (Content Security Policy)
+ * Improvement: Handle when remote site redirects to another location, such as WPML redirecting to a specific language subdir
+ * Improvement: Handle when migrating database from MySQL 8 with collation utf8mb4_0900_ai_ci to an older version MySQL server
+ * Improvement: Improve search/replace in very large serialized data, to prevent out of memory errors and vastly improved performance
+ * Improvement: Optimize the way database migration was done to better handle large datasets in rows
 
 = 1.9.1 =
  * Bump support for WP 6.2

@@ -20,6 +20,7 @@ foreach ($tags_query->posts as $post_id) {
 
 // Remove duplicates and reindex the array
 $tags = array_values(array_unique($tags));
+sort($tags);
 
 ?>
 <!-- Facet buttons -->

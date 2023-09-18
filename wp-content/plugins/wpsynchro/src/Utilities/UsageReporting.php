@@ -2,8 +2,10 @@
 
 namespace WPSynchro\Utilities;
 
-use WPSynchro\CommonFunctions;
-use WPSynchro\MigrationFactory;
+use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Transport\RemoteTransport;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 
@@ -17,9 +19,15 @@ class UsageReporting
     const VERSION = 1;
     private $usage_reporting_url = "https://wpsynchro.com/api/v1/usage-reporting";
     private $migration = null;
+    // Dependencies
+    private $logger;
 
-    public function __construct()
+    /**
+     *  Constructor
+     */
+    public function __construct(LoggerInterface $logger = null)
     {
+        $this->logger = $logger ?? FileLogger::getInstance();
     }
 
     /**
@@ -40,9 +48,7 @@ class UsageReporting
         $data = $this->getData();
 
         // Log the data in current sync log file, to provide transparency as to what we are sending back
-        global $wpsynchro_container;
-        $logger = $wpsynchro_container->get("class.Logger");
-        $logger->log("DEBUG", "Usage reporting data sent to wpsynchro.com server:", $data);
+        $this->logger->log("DEBUG", "Usage reporting data sent to wpsynchro.com server:", $data);
 
         // Send it
         $remotetransport = new RemoteTransport();
@@ -59,7 +65,7 @@ class UsageReporting
      */
     public function getData()
     {
-        $migration_factory = new MigrationFactory();
+        $migration_factory = MigrationFactory::getInstance();
         $migration_count = count($migration_factory->getAllMigrations());
 
         $data = [

@@ -12,7 +12,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
  */
 class MUPluginHandler
 {
-
     private $errors = [];
     private $plugin_file = "wpsynchro-mu-plugin-compat.php";
 

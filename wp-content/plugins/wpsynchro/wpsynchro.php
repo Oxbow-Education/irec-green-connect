@@ -2,8 +2,8 @@
 /*
   Plugin Name: WP Synchro
   Plugin URI: https://wpsynchro.com/home
-  Description: Complete migration plugin for WordPress - Migration of database and files made easy
-  Version: 1.9.1
+  Description: Professional migration plugin for WordPress - Migration of database and files made easy
+  Version: 1.10.0
   Author: WPSynchro
   Author URI: https://wpsynchro.com
   Domain Path: /languages
@@ -33,7 +33,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-define('WPSYNCHRO_VERSION', '1.9.1');
+define('WPSYNCHRO_VERSION', '1.10.0');
 define('WPSYNCHRO_DB_VERSION', '9');
 define('WPSYNCHRO_NEWEST_MU_COMPATIBILITY_VERSION', '1.0.5');
 
