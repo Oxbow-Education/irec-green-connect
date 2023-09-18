@@ -3,8 +3,6 @@
 $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = $page_number * 10;
 $offset = 0;
-
-echo ' page: ' . $page_number; 
 ?>
 
 <?php
@@ -150,7 +148,6 @@ include __DIR__ . '/facet-buttons.php';
 
       setPageQueryParams(newPage, tags)
 
-      console.log({newPage});
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
@@ -160,9 +157,9 @@ include __DIR__ . '/facet-buttons.php';
           tag: tags
         },
         success: function(response) {
-          console.log({
-            response
-          })
+          // console.log({
+          //   response
+          // })
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
