@@ -3,33 +3,38 @@
 $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = $page_number * 10;
 $offset = 0;
+$full_url = $_SERVER['REQUEST_URI'];
+$pathname = parse_url($full_url, PHP_URL_PATH);
+$is_workers  = boolval($pathname == '/workers/');
 ?>
 
 <?php
 
 $tags = isset($_GET['tag']) ? $_GET['tag'] : null;
-$query = get_load_more_posts_query($page_number, $tags, $posts_per_page);
+$query = get_load_more_posts_query($page_number, $is_workers, $tags, $posts_per_page);
 
 $top_resources_args = array(
   'post_type'      => 'post',
   'posts_per_page' => 3,
-  'orderby'        => 'date',  // Sort by post date
-  'order'          => 'DESC',  // Sort in descending order (most recent first)
+  'orderby'        => 'date',
+  'order'          => 'DESC',
   'meta_query'     => array(
     'relation' => 'AND',
     array(
       'key'     => 'is_top_resource',
       'value'   => true,
       'compare' => '=',
-      'type'    => 'BOOLEAN', // Adjust the type if needed
+      'type'    => 'BOOLEAN',
     ),
     array(
       'key'     => 'who_is_this_for',
-      'value'   => 'Worker',
-      'compare' => 'LIKE',
-    ),
+      'value'   => $is_workers ? 'Worker User' : 'Worker User%',
+      'compare' => $is_workers ? 'LIKE' : 'NOT LIKE',
+    )
+
   ),
 );
+
 
 $top_resources_query = new WP_Query($top_resources_args);
 
@@ -66,6 +71,7 @@ include __DIR__ . '/facet-buttons.php';
     let page = <?php echo esc_js($page_number); ?>;
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
+    const isWorkers = Boolean(<?php $is_workers ?>);
 
     // TODO: use resourceId param to open external resource modal
     // still needs work for if the page is refreshed while there are chosen tag params
@@ -125,7 +131,8 @@ include __DIR__ . '/facet-buttons.php';
         data: {
           action: 'load_more_posts',
           page: newPage,
-          tags: tags
+          tags: tags,
+          is_workers: Boolean(isWorkers)
         },
         success: function(response) {
 

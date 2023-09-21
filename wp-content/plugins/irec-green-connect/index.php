@@ -30,11 +30,12 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 add_action('wp_ajax_load_more_posts', 'load_more_posts_callback');
 add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts_callback');
 
-function get_load_more_posts_query($page, $tags, $posts_per_page = 10)
+function get_load_more_posts_query($page, $is_workers, $tags,  $posts_per_page = 10)
 {
   $offset = $posts_per_page > 10 ? 0 : ($page - 1) * $posts_per_page;
+  $is_workers = boolval($is_workers);
 
-  $meta_query_array[] = array(
+  $meta_query_array[] = $is_workers ? array(
     'relation' => 'AND', // Both conditions must be met
     array(
       'key' => 'who_is_this_for',
@@ -43,6 +44,18 @@ function get_load_more_posts_query($page, $tags, $posts_per_page = 10)
     ),
     array(
       'key' => 'worker_tags',
+      'value' => '', // Check if the field has any value (not empty)
+      'compare' => '!='  // Not equal to empty string
+    ),
+  ) : array(
+    'relation' => 'AND', // Both conditions must be met
+    array(
+      'key' => 'who_is_this_for',
+      'value' => 'Worker User',
+      'compare' => 'NOT LIKE', // Match "Worker User" in the multi-select field
+    ),
+    array(
+      'key' => 'organization_tags',
       'value' => '', // Check if the field has any value (not empty)
       'compare' => '!='  // Not equal to empty string
     ),
@@ -61,7 +74,7 @@ function get_load_more_posts_query($page, $tags, $posts_per_page = 10)
     $tags_meta_query_array = array('relation' => 'OR');
     foreach ($sanitized_tags as $value) {
       array_push($tags_meta_query_array, array(
-        'key'     => 'worker_tags',
+        'key'     => $is_workers ? 'worker_tags' : 'organization_tags',
         'value'   => $value,
         'compare' => 'LIKE',
       ));
@@ -78,7 +91,9 @@ function load_more_posts_callback()
 {
   $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
   $tags = isset($_POST['tags']) ? $_POST['tags'] : null;
-  $query = get_load_more_posts_query($page, $tags);
+  $is_workers =  $_POST['is_workers'] == 'true'  ? true : false;
+
+  $query = get_load_more_posts_query($page, $is_workers, $tags);
   require __DIR__ . '/components/resources-loop-grid.php';
 
   wp_die();
