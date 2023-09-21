@@ -41,7 +41,10 @@ $top_resources_query = new WP_Query($top_resources_args);
 ?>
 <?php
 require __DIR__ . '/top-resources.php';
-echo '<hr>';
+?>
+
+<hr class="horizontal-line" />
+<?php
 include __DIR__ . '/facet-buttons.php';
 ?>
 
