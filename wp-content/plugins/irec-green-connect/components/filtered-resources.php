@@ -43,7 +43,7 @@ $top_resources_query = new WP_Query($top_resources_args);
 require __DIR__ . '/top-resources.php';
 ?>
 
-<hr class="horizontal-line" />
+<hr id="horizontalLine" />
 <?php
 include __DIR__ . '/facet-buttons.php';
 ?>

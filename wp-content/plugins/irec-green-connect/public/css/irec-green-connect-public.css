@@ -370,10 +370,10 @@ button.close-modal-btn {
   }
 }
 
-.horizontal-line {
+#horizontalLine {
   height: 1px;
   max-width: 1000px;
   display: block;
-  margin: 0 auto 3rem !important;
+  margin: 0 auto 3rem;
   border-color: #ffffff55;
 }
