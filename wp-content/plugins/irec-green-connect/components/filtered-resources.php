@@ -6,40 +6,9 @@ $offset = 0;
 ?>
 
 <?php
-// Load first posts - filter for worker users w/ worker tags
-$args = array(
-  'post_type' => 'post',
-  'posts_per_page' => $posts_per_page,
-  'meta_query' => array(
-      'relation' => 'AND',
-      array(
-          'key' => 'who_is_this_for',
-          'value' => 'Worker User',
-          'compare' => 'LIKE',
-      ),
-      array(
-          'key' => 'worker_tags',
-          'value' => '',
-          'compare' => '!='
-      ),
-  ),
-  'orderby' => 'title', // Sort by title
-  'order' => 'ASC', // Ascending order (A to Z)
-);
 
-// The code does not currently set the filter_tag url param, but it should
-if (isset($_GET['tag'])) {
-  echo $_GET['tag'];
-  $args['meta_query'] = array(
-    array(
-      'key' => 'worker_tags',
-      'value' => sanitize_text_field($_GET['tag']),
-      'compare' => 'LIKE',
-    ),
-  );
-}
-
-$query = new WP_Query($args);
+$tags = isset($_GET['tag']) ? $_GET['tag'] : null;
+$query = get_load_more_posts_query($page_number, $tags, $posts_per_page);
 
 $top_resources_args = array(
   'post_type'      => 'post',
@@ -127,9 +96,9 @@ include __DIR__ . '/facet-buttons.php';
 
     const setPageStateBasedOnQueryParams = () => {
       const newParams = new URLSearchParams(window.location.search);
-      const tag = newParams.get('tag');
+      const tags = newParams.getAll('tag[]');
+      tags?.forEach(tag => $(`[data-tag="${tag}"]`).addClass('active'))
 
-      $(`[data-tag="${tag}"]`).addClass('active');
     }
 
     const loadMorePosts = () => {
@@ -148,18 +117,17 @@ include __DIR__ . '/facet-buttons.php';
 
       setPageQueryParams(newPage, tags)
 
+
+
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
         data: {
           action: 'load_more_posts',
           page: newPage,
-          tag: tags
+          tags: tags
         },
         success: function(response) {
-          // console.log({
-          //   response
-          // })
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
@@ -174,6 +142,11 @@ include __DIR__ . '/facet-buttons.php';
 
           const numberOfTiles = $('.resources-wrapper .resource-tile').length
           const isEnd = numberOfTiles % 10 > 0 || numberOfTiles == 0;
+
+          console.log({
+            numberOfTiles,
+            isEnd
+          })
 
           if (isEnd) {
             $('#load-more-button').addClass('hidden')
@@ -201,7 +174,9 @@ include __DIR__ . '/facet-buttons.php';
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
       // add resource query param
       let permalink = `${window.location.pathname}?resource=${dataTag}`
-      window.history.pushState({ path: permalink }, '', permalink);
+      window.history.pushState({
+        path: permalink
+      }, '', permalink);
     })
     // close (btn or bg click)
     $(document).on('click', 'div.external-resource-modal-bg, button.close-modal-btn', function() {
