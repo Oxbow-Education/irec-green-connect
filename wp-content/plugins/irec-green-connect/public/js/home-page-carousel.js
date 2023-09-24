@@ -9,9 +9,16 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   const swiper2 = new Swiper('.swiper-container-2', {
-    slidesPerView: 4.25,
+    centeredSlides: false,
+    slidesPerView: 1,
     spaceBetween: 10,
-    centeredSlides: true,
+
+    breakpoints: {
+      993: {
+        slidesPerView: 4.25,
+        centeredSlides: true,
+      },
+    },
   });
 
   swiper1.on('slideChange', function () {

@@ -55,6 +55,10 @@ if ($query->have_posts()) :
         <?php while ($query->have_posts()) : $query->the_post(); ?>
           <div class="swiper-slide">
             <div class="carousel-details">
+              <div class="details-title-quote">
+                <p class="details-title"><?php the_title() ?></p>
+                <p class="details-quote">"<?php the_field('quote') ?>"</p>
+              </div>
               <div class="details-name-position">
                 <p class="details-name"><?php the_field('name') ?></p>
                 <p class="details-position"><?php the_field('position') ?></p>
