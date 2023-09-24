@@ -129,3 +129,15 @@ function fix_svg()
         </style>';
 }
 add_action('admin_head', 'fix_svg');
+
+
+
+function home_page_carousel_shortcode()
+{
+  wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
+  wp_enqueue_style('home-page-carousel-css', '/wp-content/plugins/irec-green-connect/public/css/home-page-carousel.css');
+  wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js');
+  wp_enqueue_script('home-page-carousel', '/wp-content/plugins/irec-green-connect/public/js/home-page-carousel.js');
+  include __DIR__ . '/components/home-page-carousel.php';
+}
+add_shortcode('home_page_carousel', 'home_page_carousel_shortcode');
