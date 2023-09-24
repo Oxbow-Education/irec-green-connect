@@ -3,71 +3,48 @@
 $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = $page_number * 10;
 $offset = 0;
+$full_url = $_SERVER['REQUEST_URI'];
+$pathname = parse_url($full_url, PHP_URL_PATH);
+$is_workers  = boolval($pathname == '/workers/');
 ?>
 
 <?php
-// Load first posts - filter for worker users w/ worker tags
-$args = array(
-  'post_type' => 'post',
-  'posts_per_page' => $posts_per_page,
-  'meta_query' => array(
-      'relation' => 'AND',
-      array(
-          'key' => 'who_is_this_for',
-          'value' => 'Worker User',
-          'compare' => 'LIKE',
-      ),
-      array(
-          'key' => 'worker_tags',
-          'value' => '',
-          'compare' => '!='
-      ),
-  ),
-  'orderby' => 'title', // Sort by title
-  'order' => 'ASC', // Ascending order (A to Z)
-);
 
-// The code does not currently set the filter_tag url param, but it should
-if (isset($_GET['tag'])) {
-  echo $_GET['tag'];
-  $args['meta_query'] = array(
-    array(
-      'key' => 'worker_tags',
-      'value' => sanitize_text_field($_GET['tag']),
-      'compare' => 'LIKE',
-    ),
-  );
-}
-
-$query = new WP_Query($args);
+$tags = isset($_GET['tag']) ? $_GET['tag'] : null;
+$query = get_load_more_posts_query($page_number, $is_workers, $tags, $posts_per_page);
 
 $top_resources_args = array(
   'post_type'      => 'post',
   'posts_per_page' => 3,
-  'orderby'        => 'date',  // Sort by post date
-  'order'          => 'DESC',  // Sort in descending order (most recent first)
+  'orderby'        => 'date',
+  'order'          => 'DESC',
   'meta_query'     => array(
     'relation' => 'AND',
     array(
       'key'     => 'is_top_resource',
       'value'   => true,
       'compare' => '=',
-      'type'    => 'BOOLEAN', // Adjust the type if needed
+      'type'    => 'BOOLEAN',
     ),
     array(
       'key'     => 'who_is_this_for',
-      'value'   => 'Worker',
-      'compare' => 'LIKE',
-    ),
+      'value'   => $is_workers ? 'Worker User' : 'Worker User%',
+      'compare' => $is_workers ? 'LIKE' : 'NOT LIKE',
+    )
+
   ),
 );
+
 
 $top_resources_query = new WP_Query($top_resources_args);
 
 ?>
 <?php
 require __DIR__ . '/top-resources.php';
-echo '<hr>';
+?>
+
+<hr id="horizontalLine" />
+<?php
 include __DIR__ . '/facet-buttons.php';
 ?>
 
@@ -97,6 +74,7 @@ include __DIR__ . '/facet-buttons.php';
     let page = <?php echo esc_js($page_number); ?>;
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
+    const isWorkers = Boolean(<?php $is_workers ?>);
 
     // TODO: use resourceId param to open external resource modal
     // still needs work for if the page is refreshed while there are chosen tag params
@@ -127,9 +105,9 @@ include __DIR__ . '/facet-buttons.php';
 
     const setPageStateBasedOnQueryParams = () => {
       const newParams = new URLSearchParams(window.location.search);
-      const tag = newParams.get('tag');
+      const tags = newParams.getAll('tag[]');
+      tags?.forEach(tag => $(`[data-tag="${tag}"]`).addClass('active'))
 
-      $(`[data-tag="${tag}"]`).addClass('active');
     }
 
     const loadMorePosts = () => {
@@ -148,18 +126,18 @@ include __DIR__ . '/facet-buttons.php';
 
       setPageQueryParams(newPage, tags)
 
+
+
       $.ajax({
         url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
         type: 'POST',
         data: {
           action: 'load_more_posts',
           page: newPage,
-          tag: tags
+          tags: tags,
+          is_workers: Boolean(isWorkers)
         },
         success: function(response) {
-          // console.log({
-          //   response
-          // })
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
@@ -174,6 +152,11 @@ include __DIR__ . '/facet-buttons.php';
 
           const numberOfTiles = $('.resources-wrapper .resource-tile').length
           const isEnd = numberOfTiles % 10 > 0 || numberOfTiles == 0;
+
+          console.log({
+            numberOfTiles,
+            isEnd
+          })
 
           if (isEnd) {
             $('#load-more-button').addClass('hidden')
@@ -201,7 +184,9 @@ include __DIR__ . '/facet-buttons.php';
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
       // add resource query param
       let permalink = `${window.location.pathname}?resource=${dataTag}`
-      window.history.pushState({ path: permalink }, '', permalink);
+      window.history.pushState({
+        path: permalink
+      }, '', permalink);
     })
     // close (btn or bg click)
     $(document).on('click', 'div.external-resource-modal-bg, button.close-modal-btn', function() {
