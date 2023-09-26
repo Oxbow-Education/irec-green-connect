@@ -1,12 +1,12 @@
 .swiper-container .swiper-slide {
-  height: 500px;
+  height: 487px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
 .swiper-slide .carousel-image {
-  height: 80%;
+  height: 90%;
   width: 100%;
   object-fit: contain;
 }
@@ -50,8 +50,8 @@
 
 .details-name {
   color: white;
-  font-size: 30px;
-  line-height: 37px;
+  font-size: 28px;
+  line-height: 34px;
   font-family: 'proxima-nova';
   font-weight: 700;
   text-align: center;
@@ -60,8 +60,8 @@
 
 .details-position {
   color: white;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: 19px;
+  line-height: 23px;
   font-family: 'proxima-nova';
   font-weight: 500;
   text-align: center;
@@ -81,7 +81,7 @@
 .bottom-carousel {
   display: grid;
   grid-template-columns: 1.25fr 1fr 1fr;
-  padding: 40px 20px;
+  padding: 2rem 4rem;
   background-color: #16577b;
 }
 .swiper-container-2 {
@@ -99,18 +99,28 @@
   right: 0;
   top: 0;
   bottom: 0;
-  left: 50%;
+  left: 40%;
   z-index: 2;
   background: transparent linear-gradient(90deg, #16577b00 0%, #16577b 100%) 0%
     0% no-repeat padding-box;
 }
 
 .swiper-container {
-  background-image: url('/wp-content/plugins/irec-green-connect/public/img/carousel-arrows.png');
-  background-size: 75%;
+  /* arrow img over linear opacity gradient over stripes */
+  background-image: url('/wp-content/plugins/irec-green-connect/public/img/carousel-arrows.png'),
+    linear-gradient(270deg, #16577b00 0%, #236489 60%),
+    repeating-linear-gradient(
+      155deg,
+      #16577b,
+      #16577b 12px,
+      #236489 12px,
+      #236489 13px
+    );
+  background-size: 60%, 100%, 100%;
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
+  background-origin: padding-box;
 }
 
 .navigation {
@@ -126,8 +136,8 @@
 .swiper-next,
 .swiper-prev {
   background-color: #dfa43c;
-  width: 40px;
-  height: 40px;
+  width: 75px;
+  height: 75px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,7 +169,7 @@
 .quote-wrapper .carousel-details {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 1s ease;
 }
 
 .quote-wrapper .carousel-details.active {
@@ -172,7 +182,6 @@
   .swiper-2-overlay {
     display: none;
   }
-
   .details-name-position,
   .swiper-container-2 .swiper-slide,
   .swiper-container-2 .details-title-quote,
@@ -185,10 +194,14 @@
     text-align: left;
     margin: 0;
   }
-
   .details-position {
     font-size: 18px;
     line-height: 22px;
     text-align: left;
+  }
+  .swiper-next,
+  .swiper-prev {
+    width: 50px;
+    height: 50px;
   }
 }
