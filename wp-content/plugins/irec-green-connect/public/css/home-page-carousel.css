@@ -178,6 +178,9 @@
 }
 
 @media screen and (max-width: 992px) {
+  .bottom-carousel {
+    padding: 2rem;
+  }
   .quote-wrapper,
   .swiper-2-overlay {
     display: none;
@@ -188,20 +191,32 @@
   .bottom-carousel {
     display: block;
   }
-  .details-name {
-    font-size: 20px;
-    line-height: 27px;
-    text-align: left;
-    margin: 0;
+  .details-title {
+    font-size: 25px;
+    line-height: 30px;
   }
-  .details-position {
-    font-size: 18px;
-    line-height: 22px;
+  .details-quote,
+  .details-position,
+  .details-name {
+    font-size: 14px;
+    line-height: 17px;
     text-align: left;
   }
   .swiper-next,
   .swiper-prev {
     width: 50px;
     height: 50px;
+    padding: 20px;
+  }
+  .swiper-container {
+    /* arrow img over linear opacity gradient over stripes */
+    background-image: url('/wp-content/plugins/irec-green-connect/public/img/carousel-arrows.png'),
+      linear-gradient(270deg, #16577b00 0%, #236489 60%);
+    background-size: 90%, 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-origin: padding-box;
+    height: 350px;
   }
 }
