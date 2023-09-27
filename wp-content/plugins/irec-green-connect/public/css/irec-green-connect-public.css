@@ -52,6 +52,22 @@ h4 {
   outline: none;
 }
 
+.facet-button.org-tag {
+  border: #a1d165 2px solid;
+}
+
+.facet-button.org-tag:focus {
+  background-color: #a1d165;
+  outline: none;
+}
+
+.facet-button.org-tag.active,
+.facet-button.org-tag.active:focus,
+.facet-button.org-tag:hover {
+  background-color: #a1d165;
+  outline: none;
+}
+
 .external-resource-button,
 .external-resource-button:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -307,6 +323,10 @@ button.close-modal-btn {
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   grid-gap: 2rem;
   margin: 0 2rem;
+}
+
+.spacer {
+  height: 10px;
 }
 
 @media only screen and (min-width: 600px) {
