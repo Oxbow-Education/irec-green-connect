@@ -160,6 +160,7 @@ include __DIR__ . '/facet-buttons.php';
             isEnd
           })
 
+          // TODO: fix this - isEnd is never showing as true?
           if (isEnd) {
             $('#load-more-button').addClass('hidden')
           } else {
