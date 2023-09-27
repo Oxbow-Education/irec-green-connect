@@ -52,24 +52,24 @@ function handle_upload_resources($request)
 
       $worker_tags = array();
       if (boolval($worker_tag_1)) {
-        array_push($worker_tags, 'Tag 1');
+        array_push($worker_tags, 'Hiring');
       }
       if (boolval($worker_tag_2)) {
-        array_push($worker_tags, 'Tag 2');
+        array_push($worker_tags, 'Wkr - Tag 2');
       }
       if (boolval($worker_tag_3)) {
-        array_push($worker_tags, 'Tag 3');
+        array_push($worker_tags, 'Wkr - Tag 3');
       }
 
       $org_tags = array();
       if (boolval($org_tag_1)) {
-        array_push($org_tags, 'Tag 1');
+        array_push($org_tags, 'Hiring');
       }
       if (boolval($org_tag_2)) {
-        array_push($org_tags, 'Tag 2');
+        array_push($org_tags, 'Org - Tag 2');
       }
       if (boolval($org_tag_3)) {
-        array_push($org_tags, 'Tag 3');
+        array_push($org_tags, 'Org - Tag 3');
       }
 
 
@@ -78,12 +78,11 @@ function handle_upload_resources($request)
         array_push($who_is_it_for, 'Worker User');
       }
       if (boolval($org_user_type_1)) {
-        array_push($who_is_it_for, 'Org User Type 1');
+        array_push($who_is_it_for, 'Employers');
       }
       if (boolval($org_user_type_2)) {
-        array_push($who_is_it_for, 'Org User Type 2');
+        array_push($who_is_it_for, 'Training Programs');
       }
-
       if (boolval($org_user_type_3)) {
         array_push($who_is_it_for, 'Org User Type 3');
       }
