@@ -12,7 +12,7 @@
     <div>
       <?php if (is_array($tag_array)) {
         foreach ($tag_array as $tag) : ?>
-          <div class="resource-tag"><?php echo $tag ?></div>
+          <div class="resource-tag"><?php echo $tag; echo $is_workers ? 'workers' : 'org'; ?></div>
       <?php endforeach;
       } ?>
     </div>
