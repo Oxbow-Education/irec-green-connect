@@ -4,8 +4,7 @@ $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = $page_number * 10;
 $offset = 0;
 $full_url = $_SERVER['REQUEST_URI'];
-$pathname = parse_url($full_url, PHP_URL_PATH);
-$is_workers  = boolval($pathname == '/workers/');
+$is_workers = strpos($full_url, '/workers') !== false;
 ?>
 
 <?php
@@ -74,10 +73,13 @@ include __DIR__ . '/facet-buttons.php';
     let page = <?php echo esc_js($page_number); ?>;
     const maxPages = <?php echo esc_js($query->max_num_pages); ?>;
     let loading = false;
-    const isWorkers = Boolean(<?php $is_workers ?>);
+    const pathname = window.location.pathname;
+    let isWorkers = false;
+    // if the pathname includes '/workers'
+    if (pathname.indexOf('/workers') !== -1) {
+      isWorkers = true;
+    }
 
-    // TODO: use resourceId param to open external resource modal
-    // still needs work for if the page is refreshed while there are chosen tag params
     const setPageQueryParams = (newPage, tags) => {
       const newParams = new URLSearchParams(window.location.search);
       newParams.set('paged', newPage);
@@ -179,6 +181,7 @@ include __DIR__ . '/facet-buttons.php';
     // EXTERNAL RESOURCE MODAL
     // open
     $(document).on('click', '.external-resource-button', function() {
+      console.log('HELLO!?!??!');
       const dataTag = $(this).attr('data-tag');
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
@@ -200,7 +203,7 @@ include __DIR__ . '/facet-buttons.php';
 
     // FACET BTNS (tag filters)
     $(document).on('click', '.facet-buttons .facet-button', function() {
-
+      console.log('HELLO 2!?!??!');
       if (this.className.includes('active')) {
         $(this).removeClass('active');
       } else {
