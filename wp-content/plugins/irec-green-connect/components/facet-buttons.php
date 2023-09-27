@@ -1,8 +1,9 @@
 <?php
+$tagType = $isWorkers ?'worker_tags' : 'organization_tags';
 $tags_query = new WP_Query(array(
   'post_type' => 'post',
   'posts_per_page' => -1,
-  'meta_key' => 'worker_tags',
+  'meta_key' => $tagType,
   'orderby' => 'meta_value',
   'order' => 'ASC',
   'fields' => 'ids',
