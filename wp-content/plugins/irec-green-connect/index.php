@@ -38,78 +38,73 @@ add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts_callback');
 function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 10) {
   $offset = $posts_per_page > 10 ? 0 : ($page - 1) * $posts_per_page;
   $is_workers = boolval($is_workers);
-
   $args = array(
       'post_type' => 'post',
       'posts_per_page' => $posts_per_page,
       'offset' => $offset,
       'orderby' => 'title',
-      'order' => 'ASC',
-      'meta_query' => array(
-          'relation' => 'AND',
-          // must have a who_is_it_for tag
-          // for workers - must contain 'Worker User'
-          // for orgs - must contain something other than 'Worker User' (but can also contain 'Worker User')
-          array(
-              'key' => 'who_is_this_for',
-              'value' => 'Worker User',
-              'compare' => $is_workers ? 'LIKE' : '!=',
-          ),
-          // must have either worker or org tags (can have both)
-          // for workers - worker_tags cannot be empty
-          // for orgs - organization_tags cannot be empty
-          array(
-              'key' => $is_workers ? 'worker_tags' : 'organization_tags',
-              'value' => '',
-              'compare' => '!=',
-          ),
-      ),
+      'order' => 'ASC'
   );
+
+  $meta_query_array[] = array(
+    'relation' => 'OR',
+    array(
+      'key' => 'who_is_this_for',
+      'value' => 'Worker User',
+      'compare' => $is_workers ? 'LIKE' : '!='
+    ),
+    array(
+      'key' => $is_workers ? 'worker_tags' : 'organization_tags',
+      'value' => '',
+      'compare' => '!=',
+    )
+  );
+
+  // Check if $tags is set and not empty.
+  if (!empty($tags)) {
+      // Sanitize tags.
+      $sanitized_tags = array_map('sanitize_text_field', $tags);
+      $tags_meta_query_array = array('relation' => 'OR');
+
+      // On orgs - filter by 'who_is_this_for' tags if there are any.
+      if (!$is_workers) {
+          // Exclude 'Worker User' from the $sanitized_tags array.
+          $sanitized_tags = array_diff($sanitized_tags, array('Worker User'));
+
+          if (!empty($sanitized_tags)) {
+            foreach ($sanitized_tags as $value) {
+              array_push($tags_meta_query_array, array(
+                'key' => 'who_is_this_for',
+                'value' => $value,
+                'compare' => 'LIKE',
+              ));
+            }
+          }
+      }
+
+      // Filter by other tags if there are any.
+      if (!empty($sanitized_tags)) {
+        foreach ($sanitized_tags as $value) {
+          array_push($tags_meta_query_array, array(
+            'key'     => $is_workers ? 'worker_tags' : 'organization_tags',
+            'value'   => $value,
+            'compare' => 'LIKE',
+          ));
+        }
+      }
+      array_push($meta_query_array, $tags_meta_query_array);
+  }
+
+  $args['meta_query'] = $meta_query_array;
   return new WP_Query($args);
 }
-
-//   $meta_query_array[] = $is_workers ? array(
-//   ) : array(
-//     'relation' => 'AND', // Both conditions must be met
-//     // TODO: Has a who_is_this_for that isn't a Worker User
-//     array(
-//       'key' => 'who_is_this_for',
-//       'value' => 'Worker User',
-//       'compare' => 'NOT LIKE', // Match "Worker User" in the multi-select field
-//     ),
-//     // has to have at least one organization_tags value
-//     array(
-//       'key' => 'organization_tags',
-//       'value' => '', // Check if the field has any value (not empty)
-//       'compare' => '!='  // Not equal to empty string
-//     ),
-//   );
-//     // TODO: this needs a second filter to check for if it has the correct org user tags? HAS TO HAVE THE ONE OF THE TAGS LISTED
-
-//   if (isset($tags) && is_array($tags)) {
-//     $sanitized_tags = array_map('sanitize_text_field', $tags);
-
-//     $tags_meta_query_array = array('relation' => 'OR');
-//     foreach ($sanitized_tags as $value) {
-//       array_push($tags_meta_query_array, array(
-//         'key'     => $is_workers ? 'worker_tags' : 'organization_tags',
-//         'value'   => $value,
-//         'compare' => 'LIKE',
-//       ));
-//     }
-//     array_push($meta_query_array, $tags_meta_query_array);
-//   }
-
-
-//   $args['meta_query'] = $meta_query_array;
-//   return new WP_Query($args);
-// }
 
 function load_more_posts_callback()
 {
   $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
   $tags = isset($_POST['tags']) ? $_POST['tags'] : null;
   $is_workers =  $_POST['is_workers'] == 'true'  ? true : false;
+  // if the post is for orgs, i also need to know who is it for, can i get that info here?
 
   $query = get_load_more_posts_query($page, $is_workers, $tags);
   require __DIR__ . '/components/resources-loop-grid.php';
@@ -148,7 +143,13 @@ function fix_svg()
 }
 add_action('admin_head', 'fix_svg');
 
-
+function enqueue_swiper_styles() {
+  wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
+  // wp_enqueue_style('home-page-carousel-css', '/wp-content/plugins/irec-green-connect/public/css/home-page-carousel.css');
+  wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js');
+  wp_enqueue_script('top-resources', '/wp-content/plugins/irec-green-connect/public/js/top-resources.js');
+}
+add_action('wp_enqueue_scripts', 'enqueue_swiper_styles');
 
 function home_page_carousel_shortcode()
 {
