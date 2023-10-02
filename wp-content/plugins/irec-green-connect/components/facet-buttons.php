@@ -1,23 +1,27 @@
 <?php
-$tagType = $isWorkers ?'worker_tags' : 'organization_tags';
+$tagType = $is_workers ? 'worker_tags' : 'organization_tags';
 $tags_query = new WP_Query(array(
   'post_type' => 'post',
   'posts_per_page' => -1,
-  'meta_key' => $tagType,
+  'meta_query' => array(
+    array(
+      'key' => $tagType,
+      'value' => '',
+      'compare' => '!='
+    )
+  ),
   'orderby' => 'meta_value',
   'order' => 'ASC',
-  'fields' => 'ids',
+  'fields' => 'ids', // gets back an array of the post_ids only
 ));
 
 $tags = array();
 
 foreach ($tags_query->posts as $post_id) {
-  $org_tag_array = get_post_meta($post_id, 'organization_tags', true);
-  // Initialize an empty array for $tags_array
   $tags_array = array();
-  
-  // if the URL path contains "/organizations"
+  // URL path contains /organizations
   if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) {
+    $org_tag_array = get_post_meta($post_id, 'organization_tags', true);
     $who_for_tag_array = get_post_meta($post_id, 'who_is_this_for', true);
     if (is_array($who_for_tag_array)) {
       // Exclude "Worker User" tag from the array
@@ -29,7 +33,7 @@ foreach ($tags_query->posts as $post_id) {
       $tags_array[] = $who_for_tag_array;
     }
   }
-  // if the URL path contains "/workers"
+  // URL path contains /workers
   elseif (strpos($_SERVER['REQUEST_URI'], '/workers') !== false) {
     $worker_tag_array = get_post_meta($post_id, 'worker_tags', true);
     if (is_array($worker_tag_array)) {
@@ -44,7 +48,7 @@ foreach ($tags_query->posts as $post_id) {
     $tags = array_merge($tags, $tags_array);
   }
 }
-
+  
 // Remove duplicates and reindex the array
 $tags = array_values(array_unique($tags));
 sort($tags);
@@ -61,8 +65,7 @@ sort($tags);
       <?php endforeach;
     }
     echo '<div class="spacer"></div>';
-  ?>
-  <?php foreach ($tags as $tag) : ?>
+  foreach ($tags as $tag) : ?>
     <button class="facet-button <?php if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) echo 'org-tag'; ?>" data-tag="<?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
   <button id="clear-tags-button">Show All</button>

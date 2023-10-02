@@ -8,11 +8,17 @@ if ($top_resources_query->have_posts()) {
     <?php
     while ($top_resources_query->have_posts()) {
       $top_resources_query->the_post();
-      // Display your post content here
-      // TODO: needs to display as carousel for more than 3 posts
-      // TODO: need to display as half card for external resource type posts
-      include __DIR__ . '/internal-resource-tile.php';
-    }
+      $is_internal_resource = get_post_meta(get_the_ID(), 'is_internal_resource', true);
+      ?>
+      <?php
+        if ($is_internal_resource) {
+          include __DIR__ . '/internal-resource-tile.php';
+        } else {
+          include __DIR__ . '/external-resource-tile.php';
+        }
+      ?>
+
+    <?php }
     wp_reset_postdata();
   } else {
     // No posts found
