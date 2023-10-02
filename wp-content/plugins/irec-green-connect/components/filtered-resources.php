@@ -14,7 +14,7 @@ $query = get_load_more_posts_query($page_number, $is_workers, $tags, $posts_per_
 
 $top_resources_args = array(
   'post_type'      => 'post',
-  'posts_per_page' => 3,
+  'posts_per_page' => -1,
   'orderby'        => 'date',
   'order'          => 'DESC',
   'meta_query'     => array(
@@ -109,7 +109,6 @@ include __DIR__ . '/facet-buttons.php';
       const newParams = new URLSearchParams(window.location.search);
       const tags = newParams.getAll('tag[]');
       tags?.forEach(tag => $(`[data-tag="${tag}"]`).addClass('active'))
-
     }
 
     const loadMorePosts = () => {
@@ -119,7 +118,6 @@ include __DIR__ . '/facet-buttons.php';
       loading = true;
 
       const newPage = page + 1;
-      // need to deal with multiple tags not just one
       const tags = [];
       $('.facet-buttons .active').each(function() {
         const tag = $(this).data('tag');
@@ -160,7 +158,6 @@ include __DIR__ . '/facet-buttons.php';
             isEnd
           })
 
-          // TODO: fix this - isEnd is never showing as true?
           if (isEnd) {
             $('#load-more-button').addClass('hidden')
           } else {
@@ -182,7 +179,6 @@ include __DIR__ . '/facet-buttons.php';
     // EXTERNAL RESOURCE MODAL
     // open
     $(document).on('click', '.external-resource-button', function() {
-      console.log('HELLO!?!??!');
       const dataTag = $(this).attr('data-tag');
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
@@ -202,9 +198,8 @@ include __DIR__ . '/facet-buttons.php';
       history.replaceState({}, document.title, updatedURL);
     });
 
-    // FACET BTNS (tag filters)
+    // FACET BUTTONS (tag filters)
     $(document).on('click', '.facet-buttons .facet-button', function() {
-      console.log('HELLO 2!?!??!');
       if (this.className.includes('active')) {
         $(this).removeClass('active');
       } else {
