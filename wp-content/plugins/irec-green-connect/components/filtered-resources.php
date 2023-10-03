@@ -176,9 +176,16 @@ include __DIR__ . '/facet-buttons.php';
       loadMorePosts();
     });
 
+    // INTERNAL RESOURCE - open in new tab
+    $(document).on('click', '.internal-resource-tile', function(e) {
+      e.preventDefault();
+      const permalink = $(this).attr('data-tag');
+      window.open(permalink, '_blank');
+    });
+
     // EXTERNAL RESOURCE MODAL
     // open
-    $(document).on('click', '.external-resource-button', function() {
+    $(document).on('click', '.external-resource-button, .external-resource-tile', function() {
       const dataTag = $(this).attr('data-tag');
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
@@ -187,7 +194,7 @@ include __DIR__ . '/facet-buttons.php';
       window.history.pushState({
         path: permalink
       }, '', permalink);
-    })
+    });
     // close (btn or bg click)
     $(document).on('click', 'div.external-resource-modal-bg, button.close-modal-btn', function() {
       const dataTag = $(this).attr('data-tag');
