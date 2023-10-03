@@ -185,7 +185,7 @@ include __DIR__ . '/facet-buttons.php';
 
     // EXTERNAL RESOURCE MODAL
     // open
-    $(document).on('click', '.external-resource-button, .external-resource-tile', function() {
+    $(document).on('click', '.external-resource-button, .external-resource-tile:not(.external-resource-modal-bg)', function() {
       const dataTag = $(this).attr('data-tag');
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
