@@ -1,4 +1,4 @@
-<div class="external-resource-tile resource-tile">
+<div class="external-resource-tile resource-tile" data-tag="<?php echo $post_id; ?>">
   <?php
 
   $post_id = get_the_ID();

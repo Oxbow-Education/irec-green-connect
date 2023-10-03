@@ -69,7 +69,9 @@ h4 {
 }
 
 .external-resource-button,
-.external-resource-button:hover {
+.external-resource-button:hover,
+.external-resource-tile:hover .external-resource-button,
+.external-resource-tile.hover .external-resource-button {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   bottom: 0.625rem;
@@ -94,7 +96,11 @@ a.read-more-button {
 .external-resource-button:hover,
 .external-resource-button:focus,
 .read-more-button:hover,
-.read-more-button:focus {
+.read-more-button:focus,
+.external-resource-tile:hover .external-resource-button,
+.external-resource-tile.hover .external-resource-button,
+.internal-resource-tile:hover .read-more-button,
+.internal-resource-tile.hover .read-more-button {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-radius: 0.625rem;
@@ -232,14 +238,17 @@ button.close-modal-btn {
 
 .external-resource-tile {
   grid-row: span 1;
-  /* height: 9.75rem; */
   height: 11rem;
 }
 
 .internal-resource-tile {
   grid-row: span 2;
-  /* height: 21.5rem; */
   height: 24rem;
+}
+
+.internal-resource-tile:hover,
+.external-resource-tile:hover {
+  cursor: pointer;
 }
 
 .modal-content {
