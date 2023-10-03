@@ -1,9 +1,10 @@
 <?php
 $post_id = get_the_ID();
 $tag_array = $is_workers ?  get_post_meta($post_id, 'worker_tags', true) : get_post_meta($post_id, 'organization_tags', true);
+$post_permalink = get_permalink($post_id);
 ?>
 
-<div class="internal-resource-tile resource-tile">
+<div class="internal-resource-tile resource-tile" data-tag="<?php echo get_the_permalink($post_id); ?>">
   <div>
     <?php the_post_thumbnail(); ?>
     <div class="resource-tile-text">
