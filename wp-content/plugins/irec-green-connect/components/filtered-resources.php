@@ -12,34 +12,6 @@ $is_workers = strpos($full_url, '/workers') !== false;
 $tags = isset($_GET['tag']) ? $_GET['tag'] : null;
 $query = get_load_more_posts_query($page_number, $is_workers, $tags, $posts_per_page);
 
-$top_resources_args = array(
-  'post_type'      => 'post',
-  'posts_per_page' => -1,
-  'orderby'        => 'date',
-  'order'          => 'DESC',
-  'meta_query'     => array(
-    'relation' => 'AND',
-    array(
-      'key'     => 'is_top_resource',
-      'value'   => true,
-      'compare' => '=',
-      'type'    => 'BOOLEAN',
-    ),
-    array(
-      'key'     => 'who_is_this_for',
-      'value'   => $is_workers ? 'Worker User' : 'Worker User%',
-      'compare' => $is_workers ? 'LIKE' : 'NOT LIKE',
-    )
-
-  ),
-);
-
-
-$top_resources_query = new WP_Query($top_resources_args);
-
-?>
-<?php
-require __DIR__ . '/top-resources.php';
 ?>
 
 <hr id="horizontalLine" />
