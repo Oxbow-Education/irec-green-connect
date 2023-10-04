@@ -320,14 +320,12 @@ button.close-modal-btn {
 .facet-buttons,
 .load-more-wrapper,
 .resources-wrapper,
-.top-resources-grid,
 .wrapper {
   margin: 0 2rem;
   max-width: 1000px;
 }
 
-.resources-wrapper,
-.top-resources-grid {
+.resources-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   grid-gap: 2rem;
@@ -339,14 +337,12 @@ button.close-modal-btn {
 }
 
 @media only screen and (min-width: 600px) {
-  .resources-wrapper,
-  .top-resources-grid {
+  .resources-wrapper {
     grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
   }
   .facet-buttons,
   .load-more-wrapper,
   .resources-wrapper,
-  .top-resources-grid,
   .wrapper {
     margin: 0 4rem;
   }
@@ -356,8 +352,7 @@ button.close-modal-btn {
 }
 
 @media only screen and (min-width: 1000px) {
-  .resources-wrapper,
-  .top-resources-grid {
+  .resources-wrapper {
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   }
 }
@@ -366,23 +361,9 @@ button.close-modal-btn {
   .facet-buttons,
   .load-more-wrapper,
   .resources-wrapper,
-  .top-resources-grid,
   .wrapper {
     margin: 0 auto;
   }
-}
-
-.top-resources-grid-container h2 {
-  color: white;
-  font-size: 45px;
-  font-weight: bold;
-  text-align: center;
-  padding: 4rem 0 3rem;
-}
-
-.top-resources-grid {
-  color: #ffffff;
-  padding: 0rem 0 4rem;
 }
 
 .hidden {
