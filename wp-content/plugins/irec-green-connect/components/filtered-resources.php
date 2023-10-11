@@ -19,10 +19,19 @@ $query = get_load_more_posts_query($page_number, $is_workers, $tags, $posts_per_
 include __DIR__ . '/facet-buttons.php';
 ?>
 
-<div class="filter-wrapper">
-  <?php require __DIR__ . '/resources-loop-grid.php'; ?>
-</div>
+<!-- <div class="filter-wrapper"> -->
+<?php require __DIR__ . '/resources-loop-grid.php'; ?>
+<!-- </div> -->
 
+<div class="skeleton-grid">
+
+  <div class="skeleton-tile"></div>
+  <div class="skeleton-tile"></div>
+  <div class="skeleton-tile"></div>
+  <div class="skeleton-tile"></div>
+  <div class="skeleton-tile"></div>
+
+</div>
 <div class="load-more-wrapper">
 
   <?php
@@ -89,6 +98,8 @@ include __DIR__ . '/facet-buttons.php';
 
       loading = true;
 
+      $('.skeleton-grid').addClass('loading')
+
       const newPage = page + 1;
       const tags = [];
       $('.facet-buttons .active').each(function() {
@@ -121,6 +132,7 @@ include __DIR__ . '/facet-buttons.php';
 
           page++;
           loading = false;
+          $('.skeleton-grid').removeClass('loading')
 
           const numberOfTiles = $('.resources-wrapper .resource-tile').length
           const isEnd = numberOfTiles % 10 > 0 || numberOfTiles == 0;
