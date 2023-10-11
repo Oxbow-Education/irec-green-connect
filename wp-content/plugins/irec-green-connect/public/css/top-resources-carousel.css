@@ -22,23 +22,7 @@
   min-height: 0;
   min-width: 0;
   --widgets-spacing: 0 !important;
-}
-
-.top-resources-container .swiper-slide {
-  width: calc(33.3333% - 20px) !important;
-}
-@media (max-width: 1000px) {
-  .top-resources-container .swiper-slide {
-    width: calc(50% - 50px) !important;
-  }
-  .top-resources-container .swiper-wrapper {
-    margin: 0 2rem;
-  }
-}
-@media (max-width: 600px) {
-  .top-resources-container .swiper-slide {
-    width: calc(100% - 64px) !important;
-  }
+  padding: 0px 30px;
 }
 
 .top-resources-container .swiper-pagination .swiper-pagination-bullet {
