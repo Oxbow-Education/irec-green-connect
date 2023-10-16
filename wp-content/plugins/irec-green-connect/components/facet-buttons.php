@@ -43,7 +43,7 @@ sort($tags);
   }
   echo '<div class="spacer"></div>';
   foreach ($tags as $tag) : ?>
-    <button class="facet-button <?php if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) echo 'org-tag'; ?>" data-tag="<?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
+    <button class="facet-button <?php if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) echo 'org-tag'; ?>" data-tag="org-<?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
   <button id="clear-tags-button">Show All</button>
 </div>

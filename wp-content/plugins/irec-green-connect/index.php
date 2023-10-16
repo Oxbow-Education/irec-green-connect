@@ -35,69 +35,80 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 add_action('wp_ajax_load_more_posts', 'load_more_posts_callback');
 add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts_callback');
 
-function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 10) {
+function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 10)
+{
   $offset = $posts_per_page > 10 ? 0 : ($page - 1) * $posts_per_page;
   $is_workers = boolval($is_workers);
+
   $args = array(
-      'post_type' => 'post',
-      'posts_per_page' => $posts_per_page,
-      'offset' => $offset,
-      'orderby' => 'title',
-      'order' => 'ASC'
+    'post_type' => 'post',
+    'posts_per_page' => $posts_per_page,
+    'offset' => $offset,
+    'orderby' => 'title',
+    'order' => 'ASC'
   );
 
-  $meta_query_array[] = array(
-    'relation' => 'OR',
-    array(
-      'key' => 'who_is_this_for',
-      'value' => 'Worker User',
-      'compare' => $is_workers ? 'LIKE' : '!='
-    ),
-    array(
-      'key' => $is_workers ? 'worker_tags' : 'organization_tags',
-      'value' => '',
-      'compare' => '!=',
-    )
+  $meta_query_array = array('relation' => 'AND'); // Initialize the meta query with an 'AND' relation.
+
+  $default_meta_query = array(
+    'key' => $is_workers ? 'worker_tags' : 'organization_tags',
+    'value' => '',
+    'compare' => '!='
   );
+
+  array_push($meta_query_array, $default_meta_query);
 
   // Check if $tags is set and not empty.
   if (!empty($tags)) {
-      // Sanitize tags.
-      $sanitized_tags = array_map('sanitize_text_field', $tags);
-      $tags_meta_query_array = array('relation' => 'OR');
+    // Sanitize tags.
+    $sanitized_tags = array_map('sanitize_text_field', $tags);
 
-      // On orgs - filter by 'who_is_this_for' tags if there are any.
-      if (!$is_workers) {
-          // Exclude 'Worker User' from the $sanitized_tags array.
-          $sanitized_tags = array_diff($sanitized_tags, array('Worker User'));
+    $user_tags = array_map(function ($value) {
+      return substr($value, 4); // Remove "org-"
+    }, array_filter($sanitized_tags, function ($value) {
+      return strpos($value, "org-") === 0;
+    }));
 
-          if (!empty($sanitized_tags)) {
-            foreach ($sanitized_tags as $value) {
-              array_push($tags_meta_query_array, array(
-                'key' => 'who_is_this_for',
-                'value' => $value,
-                'compare' => 'LIKE',
-              ));
-            }
-          }
-      }
+    $filter_tags = array_filter($sanitized_tags, function ($val) {
+      return strpos($val, "org-") !== 0;
+    });
 
-      // Filter by other tags if there are any.
-      if (!empty($sanitized_tags)) {
-        foreach ($sanitized_tags as $value) {
-          array_push($tags_meta_query_array, array(
-            'key'     => $is_workers ? 'worker_tags' : 'organization_tags',
-            'value'   => $value,
+
+    // On orgs - filter by 'who_is_this_for' tags if there are any.
+    if (!$is_workers && count($user_tags)) {
+
+      if (!empty($user_tags)) {
+        $who_for_meta_query = array('relation' => 'OR');
+        foreach ($user_tags as $value) {
+          array_push($who_for_meta_query, array(
+            'key' => 'who_is_this_for',
+            'value' => $value,
             'compare' => 'LIKE',
           ));
         }
+        array_push($meta_query_array, $who_for_meta_query);
       }
-      array_push($meta_query_array, $tags_meta_query_array);
+    }
+
+
+    // Filter by other tags if there are any.
+    if (!empty($filter_tags)) {
+      $tags_meta_query = array('relation' => 'OR');
+      foreach ($filter_tags as $value) {
+        array_push($tags_meta_query, array(
+          'key' => $is_workers ? 'worker_tags' : 'organization_tags',
+          'value' => $value,
+          'compare' => 'LIKE',
+        ));
+      }
+      array_push($meta_query_array, $tags_meta_query);
+    }
   }
 
   $args['meta_query'] = $meta_query_array;
   return new WP_Query($args);
 }
+
 
 function load_more_posts_callback()
 {
