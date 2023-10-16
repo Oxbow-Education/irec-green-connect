@@ -32,12 +32,12 @@ function custom_admin_menu()
   remove_menu_page('edit.php');
 
   // Create "Internal Resources" menu item
-  add_menu_page('Internal Resources', 'Internal Resources Database', 'manage_options', 'edit.php?is_internal_resource=true', '', 'dashicons-admin-post', 5);
+  add_menu_page('Internal Resources', 'Internal Resources Database', 'manage_options', 'edit.php?is_internal_resource=true', '', 'dashicons-format-aside', 5);
   add_submenu_page('edit.php?is_internal_resource=true', 'All Internal Resources', 'All Internal Resources', 'manage_options', 'edit.php?is_internal_resource=true');
   add_submenu_page('edit.php?is_internal_resource=true', 'Add New', 'Add New', 'manage_options', 'post-new.php?is_internal_resource=true');
 
   // Create "External Resources" menu item
-  add_menu_page('External Resources', 'External Resources Database', 'manage_options', 'edit.php?is_internal_resource=false', '', 'dashicons-admin-post', 6);
+  add_menu_page('External Resources', 'External Resources Database', 'manage_options', 'edit.php?is_internal_resource=false', '', 'dashicons-category', 6);
   add_submenu_page('edit.php?is_internal_resource=false', 'All External Resources', 'All External Resources', 'manage_options', 'edit.php?is_internal_resource=false');
   add_submenu_page('edit.php?is_internal_resource=false', 'Add New', 'Add New', 'manage_options', 'post-new.php?is_internal_resource=false');
 }
@@ -336,3 +336,10 @@ function populate_worker_tags_choices($field)
   return $field;
 }
 add_filter('acf/load_field', 'populate_worker_tags_choices');
+
+function remove_comments_menu()
+{
+  remove_menu_page('edit-comments.php');
+}
+
+add_action('admin_menu', 'remove_comments_menu');
