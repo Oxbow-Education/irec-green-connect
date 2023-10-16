@@ -82,14 +82,14 @@ function handle_upload_resources($request)
       $url_text = $item['row_data']['URL Text'];
       $url = $item['row_data']['URL'];
       $worker_user = $item['row_data']['Worker User'];
-      $org_user_type_1 = $item['row_data']['Org User Type 1'];
-      $org_user_type_2 = $item['row_data']['Org User Type 2'];
+      $org_user_type_1 = $item['row_data']['Employers'];
+      $org_user_type_2 = $item['row_data']['Training Programs'];
       $org_user_type_3 = $item['row_data']['Org User Type 3'];
       $org_user_type_4 = $item['row_data']['Org User Type 4'];
-      $worker_tag_1 = $item['row_data']['Resource for Worker Tag 1'];
+      $worker_tag_1 = $item['row_data']['Hiring'];
       $worker_tag_2 = $item['row_data']['Resource for Worker Tag 2'];
       $worker_tag_3 = $item['row_data']['Resource for Worker Tag 3'];
-      $org_tag_1 = $item['row_data']['Resource for Org Tag 1'];
+      $org_tag_1 = $item['row_data']['Hiring'];
       $org_tag_2 = $item['row_data']['Resource for Org Tag 2'];
       $org_tag_3 = $item['row_data']['Resource for Org Tag 3'];
 
