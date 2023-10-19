@@ -179,3 +179,15 @@ function home_page_carousel_shortcode()
   return ob_get_clean();
 }
 add_shortcode('home_page_carousel', 'home_page_carousel_shortcode');
+
+
+function quiz_shortcode()
+{
+  ob_start();
+
+  wp_enqueue_style('quiz-css', '/wp-content/plugins/irec-green-connect/public/css/quiz.css');
+  wp_enqueue_script('quiz-js', '/wp-content/plugins/irec-green-connect/public/js/quiz.js');
+  include __DIR__ . '/components/quiz.php';
+  return ob_get_clean();
+}
+add_shortcode('quiz', 'quiz_shortcode');
