@@ -1,5 +1,5 @@
 document.getElementById('quizButton').addEventListener('click', function () {
-  showSlide(1); // Start the quiz on the first slide
+  showSlide(8); // Start the quiz on the first slide
 });
 
 document
@@ -52,6 +52,9 @@ document.querySelectorAll('.prev-btn').forEach(function (button) {
 });
 
 function showSlide(slideNumber) {
+  if (slideNumber == 8) {
+    document.getElementById('modal').classList.add('results');
+  }
   // Hide all slides
   document
     .querySelectorAll('.quiz-slide')
@@ -76,5 +79,51 @@ function showSlide(slideNumber) {
 }
 
 function closeQuizModal() {
-  // Logic remains the same as before
+  let overlay = document.getElementById('overlay');
+  let modal = document.getElementById('modal');
+  overlay.style.opacity = '0';
+  modal.style.opacity = '0';
+  modal.style.transform = 'scale(0)';
+
+  setTimeout(function () {
+    overlay.classList.add('hidden');
+    modal.classList.add('hidden');
+  }, 50);
 }
+
+const quizForm = document.getElementById('quizForm');
+console.log({ quizForm });
+
+const getMatchScore = (score) => {
+  if (score >= 14) {
+    return 'MATCH';
+  }
+  if (score >= 7) {
+    return 'MAYBE';
+  }
+  return 'NOT;';
+};
+quizForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  let score = 0;
+  formData.forEach((value, key) => {
+    score += Number(value);
+  });
+
+  const matchScore = getMatchScore(score);
+  showSlide(8);
+
+  switch (matchScore) {
+    case 'MATCH':
+      break;
+    case 'MAYBE':
+      break;
+    case 'NOT':
+      break;
+
+    default:
+      break;
+  }
+});
