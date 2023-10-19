@@ -49,7 +49,7 @@
 .quiz-slide.results h6 {
   color: white;
   font-size: 22px;
-  line-height: 27px;
+  line-height: 29px;
   font-weight: 700;
   text-align: center;
   margin: 2rem 0;
@@ -73,6 +73,9 @@
 .quiz-slide.results .actions button {
   margin: 1rem 0;
 }
+.quiz-slide.results .actions p {
+  line-height: 35px;
+}
 
 .quiz-slide.results .actions a {
   color: #d7a650;
@@ -86,8 +89,8 @@
 #modal.results .results-image {
   display: block;
   position: absolute;
-  left: -25px;
-  top: -20px;
+  left: -28px;
+  top: -28px;
 }
 .results,
 #modal.results {

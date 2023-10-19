@@ -58,7 +58,7 @@ $light_weighting = array(
 
 <div id="overlay" class="hidden">
   <div id="modal" class="hidden">
-    <img class="results-image" src="/wp-content/plugins/irec-green-connect/public/img/plain-face.svg" />
+    <img class="results-image" />
 
     <form id="quizForm" action="" method="post">
       <div class="quiz-slide" data-slide="1">
@@ -124,7 +124,7 @@ $light_weighting = array(
         <button id="quizSubmitButton" type="submit" class="quiz-cta">Get My Results</button>
         <button type="button" class="prev-btn">Back</button>
       </div>
-      <div class="quiz-slide results" data-slide="8">
+      <div class="quiz-slide results" data-slide="MATCH">
         <h2>Excellent Match</h2>
         <h6>Run, don’t walk to opportunities to join this exciting field!</h6>
         <p>You can probably handle the work’s challenges and may value its many rewards. You could be helping your neighbors and community save money on their home energy bills while advancing your own career in a matter of weeks or months. We hope you’ll join us.</p>
@@ -146,6 +146,25 @@ $light_weighting = array(
         </div>
       </div>
 
+      <div class="quiz-slide results" data-slide="MAYBE">
+        <h2>Maybe a Match</h2>
+        <h6>You may be a good fit for this type of career and its many rewards, or you may find some parts of it not to your liking.</h6>
+        <hr />
+
+        <div class="actions">
+          <p>Go ahead and check out
+            <a href="">How it Works for Individuals</a>
+            or
+            <a href="">Success Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
+            &nbsp;
+            <span>
+
+              <button>Connect Now </button>
+            </span>&nbsp; with an organzation;
+          </p>
+
+        </div>
+      </div>
       <button id="closeButton"><svg xmlns="http://www.w3.org/2000/svg" width="22.318" height="22.379" viewBox="0 0 22.318 22.379">
           <path d="M21.77,114.654a1.674,1.674,0,0,1-2.367,2.367l-8.242-8.3-8.3,8.3a1.674,1.674,0,0,1-2.367-2.367l8.3-8.3L.49,97.99a1.674,1.674,0,0,1,2.367-2.367l8.3,8.366,8.3-8.3a1.674,1.674,0,0,1,2.367,2.367l-8.3,8.3Z" transform="translate(0 -95.133)" />
         </svg></button>
