@@ -14,7 +14,7 @@ function get_radio_buttons($questionNumber, $questionScores)
       Disagree
     </label>
     <label>
-      <input type='radio' name='question_$questionNumber' value='$unsure' class='image-radio'>
+      <input type='radio' name='question_$questionNumber' value='0' class='image-radio'>
       <img src='/wp-content/plugins/irec-green-connect/public/img/unsure.svg' alt='Unsure'>
       Unsure
     </label>
@@ -24,7 +24,7 @@ function get_radio_buttons($questionNumber, $questionScores)
       Agree
     </label>
     <label>
-    <input type='radio' name='question_<?php echo $questionNumber; ?>' value='<?php echo $strongly_agree; ?>' class='image-radio'>
+    <input type='radio' name='question_$questionNumber' value='$strongly_agree' class='image-radio'>
     <img src='/wp-content/plugins/irec-green-connect/public/img/strongly-agree.svg' alt='Strongly Agree'>
     Strongly Agree
 </label>
@@ -54,18 +54,18 @@ $light_weighting = array(
 );
 ?>
 
-<button id="quizButton">Take the Quiz</button>
+<button id="quizButton" class="quiz-cta">Take the Quiz</button>
 
 <div id="overlay" class="hidden">
   <div id="modal" class="hidden">
-    <form action="
-    " method="post">
+    <img class="results-image" src="/wp-content/plugins/irec-green-connect/public/img/plain-face.svg" />
+
+    <form id="quizForm" action="" method="post">
       <div class="quiz-slide" data-slide="1">
         <h2>I would like to <strong>
             work with my hands, tools, and equipment
           </strong> in my day to day work.</h2>
         <?php echo get_radio_buttons('1', $strong_weighting); ?>
-        <button type="button" class="next-btn">Next</button>
       </div>
       <div class="quiz-slide" data-slide="2">
         <h2>I would like to learn about how <strong>
@@ -104,31 +104,51 @@ $light_weighting = array(
         <div class="checkbox-wrapper">
 
           <label class="quiz-checkbox">
-            <input type="checkbox">
+            <input name="question_7[]" value="1" type="checkbox">
             <span class="checkmark"></span>
             Find on-the-job training: I can be paid to learn new skills.
           </label>
           <label class="quiz-checkbox">
-            <input type="checkbox">
+            <input name="question_7[]" value="1" type="checkbox">
             <span class="checkmark"></span>
             Earn nationwide certifications: I can get credentials to use anywhere in the U.S.
           </label>
           <label class="quiz-checkbox">
-            <input type="checkbox">
+            <input name="question_7[]" value="1" type="checkbox">
             <span class="checkmark"></span>
             Join the home energy industry: I can help communities be more climate resilient.
           </label>
         </div>
 
         <!-- Add question content here -->
+        <button id="quizSubmitButton" type="submit" class="quiz-cta">Get My Results</button>
         <button type="button" class="prev-btn">Back</button>
-        <button type="submit" class="next-btn">Get My Results</button>
       </div>
-      <div class="quiz-slide" data-slide="8">
+      <div class="quiz-slide results" data-slide="8">
+        <h2>Excellent Match</h2>
+        <h6>Run, don’t walk to opportunities to join this exciting field!</h6>
+        <p>You can probably handle the work’s challenges and may value its many rewards. You could be helping your neighbors and community save money on their home energy bills while advancing your own career in a matter of weeks or months. We hope you’ll join us.</p>
+        <hr />
 
+        <div class="actions">
+          <p>To get started as soon as possible&nbsp;
+            <span>
+
+              <button>Connect Now </button>
+            </span>&nbsp;
+            with an organization. If you’d like to
+            keep exploring, check out
+            <a href="">How it Works for Individuals</a>
+            or
+            <a href="">Success Stories.</a>
+          </p>
+
+        </div>
       </div>
 
-      <button id="closeButton">Close</button>
+      <button id="closeButton"><svg xmlns="http://www.w3.org/2000/svg" width="22.318" height="22.379" viewBox="0 0 22.318 22.379">
+          <path d="M21.77,114.654a1.674,1.674,0,0,1-2.367,2.367l-8.242-8.3-8.3,8.3a1.674,1.674,0,0,1-2.367-2.367l8.3-8.3L.49,97.99a1.674,1.674,0,0,1,2.367-2.367l8.3,8.366,8.3-8.3a1.674,1.674,0,0,1,2.367,2.367l-8.3,8.3Z" transform="translate(0 -95.133)" />
+        </svg></button>
     </form>
 
   </div>
