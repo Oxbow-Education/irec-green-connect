@@ -54,7 +54,10 @@ $light_weighting = array(
 );
 ?>
 
-<button id="quizButton" class="quiz-cta">Take the Quiz</button>
+<button id="quizButton" class="quiz-cta">Take the Quiz
+  <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle.svg" alt="" />
+
+</button>
 
 <div id="overlay" class="hidden">
   <div id="modal" class="hidden">
@@ -160,7 +163,26 @@ $light_weighting = array(
             <span>
 
               <button>Connect Now </button>
-            </span>&nbsp; with an organzation;
+            </span>&nbsp; with an organzation.
+          </p>
+
+        </div>
+      </div>
+      <div class="quiz-slide results" data-slide="NOT">
+        <h2>Probably Not a Match</h2>
+        <h6>The particular career paths we’re spotlighting in Weatherization might not be for you, but there are so many other options in the Clean Energy industry available to you that might suit you.</h6>
+        <hr />
+
+        <div class="actions">
+          <p>Here’s a way to explore other career paths in Clean Energy:
+            <a href="">
+              Browse Career Maps in Clean Energy
+            </a>
+            or talk to a
+
+            <a href="">Local Job Center</a>
+
+            for one on one support. If you’re still curious aboutNOT Weatherization careers, keep browsing!
           </p>
 
         </div>

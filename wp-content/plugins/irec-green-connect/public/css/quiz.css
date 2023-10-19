@@ -23,6 +23,7 @@
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
   padding: 50px;
+  overflow: hidden;
 }
 
 .quiz-slide {
@@ -91,6 +92,7 @@
   position: absolute;
   left: -28px;
   top: -28px;
+  z-index: 2;
 }
 .results,
 #modal.results {
@@ -249,6 +251,14 @@ label.selected {
   line-spacing: 48px;
   width: 227px;
   height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.quiz-cta img {
+  width: 27px;
+  height: 27px;
 }
 
 .quiz-cta:hover,
