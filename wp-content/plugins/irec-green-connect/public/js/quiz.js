@@ -1,5 +1,5 @@
 document.getElementById('quizButton').addEventListener('click', function () {
-  showSlide(8); // Start the quiz on the first slide
+  showSlide('MAYBE'); // Start the quiz on the first slide
 });
 
 document
@@ -52,10 +52,21 @@ document.querySelectorAll('.prev-btn').forEach(function (button) {
 });
 
 function showSlide(slideNumber) {
-  if (slideNumber == 8) {
+  if (
+    slideNumber == 'MATCH' ||
+    slideNumber == 'MAYBE' ||
+    slideNumber == 'NOT'
+  ) {
     document.getElementById('modal').classList.add('results');
+    const resultsImage = document.querySelector('#modal .results-image');
+
+    resultsImage.setAttribute(
+      'src',
+      `/wp-content/plugins/irec-green-connect/public/img/${slideNumber}.svg`,
+    );
   }
   // Hide all slides
+
   document
     .querySelectorAll('.quiz-slide')
     .forEach((slide) => slide.classList.remove('active'));
@@ -108,22 +119,10 @@ quizForm.addEventListener('submit', (e) => {
   const form = e.target;
   const formData = new FormData(form);
   let score = 0;
-  formData.forEach((value, key) => {
+  formData.forEach((value) => {
     score += Number(value);
   });
 
   const matchScore = getMatchScore(score);
-  showSlide(8);
-
-  switch (matchScore) {
-    case 'MATCH':
-      break;
-    case 'MAYBE':
-      break;
-    case 'NOT':
-      break;
-
-    default:
-      break;
-  }
+  showSlide(matchScore);
 });
