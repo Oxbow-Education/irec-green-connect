@@ -191,3 +191,14 @@ function quiz_shortcode()
   return ob_get_clean();
 }
 add_shortcode('quiz', 'quiz_shortcode');
+
+
+function connect_now_banner()
+{
+  ob_start();
+
+  wp_enqueue_style('connect-now-banner-css', '/wp-content/plugins/irec-green-connect/public/css/connect-now-banner.css');
+  include __DIR__ . '/components/connect-now-banner.php';
+  return ob_get_clean();
+}
+add_shortcode('connect_now_banner', 'connect_now_banner');

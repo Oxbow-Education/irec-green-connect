@@ -343,3 +343,108 @@ function remove_comments_menu()
 }
 
 add_action('admin_menu', 'remove_comments_menu');
+
+function wage_data_columns($columns)
+{
+  // Remove the title column
+  unset($columns['title']);
+  unset($columns['date']); // Optionally remove the date column or any other you want
+
+  $columns['career_name'] = 'Career Name';
+  $columns['career_short_description'] = 'Short Description';
+  $columns['career_location'] = 'Location';
+  $columns['career_salary_low'] = 'Salary (Low)';
+  $columns['career_salary_high'] = 'Salary (High)';
+
+  return $columns;
+}
+add_filter('manage_wage-data_posts_columns', 'wage_data_columns');
+
+function wage_data_custom_column($column, $post_id)
+{
+  switch ($column) {
+    case 'career_name':
+      echo get_post_meta($post_id, 'career_name', true);
+      break;
+    case 'career_short_description':
+      echo get_post_meta($post_id, 'career_short_description', true);
+      break;
+    case 'career_location':
+      echo get_post_meta($post_id, 'career_location', true);
+      break;
+    case 'career_salary_low':
+      echo get_post_meta($post_id, 'career_salary_low', true);
+      break;
+    case 'career_salary_high':
+      echo get_post_meta($post_id, 'career_salary_high', true);
+      break;
+  }
+}
+add_action('manage_wage-data_posts_custom_column', 'wage_data_custom_column', 10, 2);
+function wage_data_admin_filter_by_location()
+{
+  global $typenow;
+
+  if ($typenow == 'wage-data') {
+    $selected_location = isset($_GET['filter_by_location']) ? $_GET['filter_by_location'] : '';
+    $locations = get_all_wage_data_locations(); // We'll define this function in the next step
+
+    echo '<select name="filter_by_location" id="filter_by_location">';
+    echo '<option value="">All Locations</option>';
+
+    foreach ($locations as $location) {
+      echo '<option value="' . esc_attr($location) . '" ' . selected($location, $selected_location, false) . '>' . esc_html($location) . '</option>';
+    }
+
+    echo '</select>';
+  }
+}
+add_action('restrict_manage_posts', 'wage_data_admin_filter_by_location');
+
+
+function get_all_wage_data_locations()
+{
+  global $wpdb;
+
+  $query = "
+      SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+      LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+      WHERE pm.meta_key = 'career_location' AND p.post_type = 'wage-data'
+  ";
+
+  return $wpdb->get_col($query);
+}
+function wage_data_filter_by_location_query($query)
+{
+  global $pagenow, $typenow;
+
+  if ($typenow == 'wage-data' && $pagenow == 'edit.php' && isset($_GET['filter_by_location']) && $_GET['filter_by_location'] != '') {
+    $query->query_vars['meta_key'] = 'career_location';
+    $query->query_vars['meta_value'] = $_GET['filter_by_location'];
+  }
+}
+add_filter('parse_query', 'wage_data_filter_by_location_query');
+
+
+function add_upload_wage_data_page()
+{
+  add_menu_page(
+    'Upload Wage Data',          // Page title
+    'Upload Wage Data',          // Menu title
+    'manage_options',            // Capability - determines who can access. 'manage_options' is typically for admins.
+    'upload-wage-data',          // Menu slug
+    'load_upload_wage_data_page', // Callback function to display the content of the page
+    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+
+  );
+}
+add_action('admin_menu', 'add_upload_wage_data_page');
+
+function load_upload_wage_data_page()
+{
+  // Check the user's permissions
+  if (!current_user_can('manage_options')) {
+    wp_die(__('You do not have sufficient permissions to access this page.'));
+  }
+  require __DIR__ . '/partials/upload-wage-data.php';
+}
