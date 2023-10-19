@@ -1,0 +1,354 @@
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Medium opacity overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+#modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 896px;
+  max-width: 100%;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  padding: 50px;
+  overflow: hidden;
+}
+
+.quiz-slide {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  height: 0;
+  overflow: hidden;
+}
+.quiz-slide h2 {
+  color: #16577b;
+  font-family: 'proxima-nova';
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.quiz-slide.results h2 {
+  color: white;
+  font-size: 48px;
+  line-height: 58px;
+  font-weight: 700;
+}
+
+.quiz-slide.results h6 {
+  color: white;
+  font-size: 22px;
+  line-height: 29px;
+  font-weight: 700;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.quiz-slide.results p {
+  color: white;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.quiz-slide.results hr {
+  border: none;
+  border-top: 1px solid #ffffff4d;
+  margin: 2rem 0;
+}
+.quiz-slide.results .actions {
+  display: flex;
+  align-items: center;
+}
+.quiz-slide.results .actions button {
+  margin: 1rem 0;
+}
+.quiz-slide.results .actions p {
+  line-height: 35px;
+}
+
+.quiz-slide.results .actions a {
+  color: #d7a650;
+  font-weight: 700;
+  text-decoration: underline;
+}
+#modal .results-image {
+  display: none;
+}
+
+#modal.results .results-image {
+  display: block;
+  position: absolute;
+  left: -28px;
+  top: -28px;
+  z-index: 2;
+}
+.results,
+#modal.results {
+  background-color: #16577b;
+}
+.active {
+  padding: 20px;
+  opacity: 1;
+  height: auto;
+  overflow: auto;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+button {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.image-radio-group {
+  display: flex;
+  gap: 50px;
+  margin: 80px 0px;
+  justify-content: center;
+}
+
+.image-radio {
+  display: none; /* Hide the actual radio buttons */
+}
+
+.image-radio + img {
+  width: 69px;
+  height: 69px;
+  cursor: pointer;
+}
+
+.image-radio-group label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #5a5a5a;
+  font-size: 16px;
+  line-height: 20px;
+  gap: 1rem;
+  text-align: center;
+}
+
+.image-radio-group label:hover,
+label.selected {
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.prev-btn {
+  color: #dfa43c;
+  font-size: 18px;
+  line-height: 25px;
+  border: none;
+  display: block;
+  margin: 0 auto;
+}
+
+.prev-btn:hover,
+.prev-btn:focus {
+  background: none;
+  color: #dfa43c;
+  text-decoration: underline;
+  outline: none;
+}
+
+.checkbox-wrapper {
+  padding: 20px;
+  margin: 20px;
+  margin-bottom: 0;
+}
+.quiz-checkbox {
+  display: block;
+  position: relative;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  line-spacing: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #f4f4f4;
+  padding: 20px;
+  padding-left: 50px;
+  border-radius: 40px;
+  border: 1ps solid #707070;
+  width: max-content;
+  color: #5a5a5a;
+  font-family: 'proxima-nova';
+  width: 100%;
+}
+
+.quiz-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border-radius: 0;
+  transform: translateY(-50%);
+  border: 1px solid #ccc;
+}
+
+.quiz-checkbox input:checked ~ .checkmark {
+  background-color: #d7a650;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+}
+
+.quiz-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.quiz-checkbox .checkmark:after {
+  background-image: url('/wp-content/plugins/irec-green-connect/public/img/check.svg');
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.quiz-cta {
+  background-color: #dfa43c;
+  border-radius: 5px !important;
+  border: none;
+  color: white;
+  font-family: 'proxima-nova';
+  font-weight: 800;
+  font-size: 18px;
+  line-spacing: 48px;
+  width: 227px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.quiz-cta img {
+  width: 27px;
+  height: 27px;
+}
+
+.quiz-cta:hover,
+.quiz-cta:focus {
+  background-color: #d7a650;
+}
+
+.quiz-cta[type='submit'] {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+#closeButton {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#closeButton path {
+  fill: #16577b;
+}
+#modal.results #closeButton path {
+  fill: white;
+}
+
+#closeButton:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 768px) {
+  #modal {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 768px;
+  }
+  .image-radio + img {
+    width: 40px;
+    height: 40px;
+  }
+  .image-radio-group {
+    gap: 1rem;
+  }
+  .image-radio-group label {
+    font-size: 11px;
+  }
+
+  .quiz-slide h2 {
+    font-size: 22px;
+    line-height: 27px;
+  }
+  .quiz-slide.results h2 {
+    font-size: 32px;
+    line-height: 39px;
+  }
+  .quiz-slide.results p,
+  .quiz-slide.results .actions p {
+    font-size: 14px;
+    line-height: 28px;
+  }
+}
+
+@media screen and (max-width: 567px) {
+  #modal {
+    padding: 20px;
+  }
+  .quiz-slide {
+    padding: 0px;
+  }
+  .image-radio-group {
+    gap: 0.7rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .image-radio-group label {
+    display: grid;
+    grid-template-columns: 1fr;
+    line-height: 16px;
+    grid-template-rows: 50px 20px;
+    align-content: center;
+    justify-items: center;
+  }
+
+  .checkbox-wrapper {
+    padding: 0px;
+    margin: 20px;
+    margin-bottom: 0;
+  }
+}
