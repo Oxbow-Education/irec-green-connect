@@ -30,6 +30,28 @@ function get_radio_buttons($questionNumber, $questionScores)
 </label>
   </div>";
 }
+
+$strong_weighting = array(
+  'strongly_agree' => '6',
+  'agree' => '3',
+  'unsure' => '0',
+  'disagree' => '-3',
+  'strongly_disagree' => '-6'
+);
+$medium_weighting = array(
+  'strongly_agree' => '4',
+  'agree' => '2',
+  'unsure' => '0',
+  'disagree' => '-2',
+  'strongly_disagree' => '-4'
+);
+$light_weighting = array(
+  'strongly_agree' => '2',
+  'agree' => '1',
+  'unsure' => '0',
+  'disagree' => '-1',
+  'strongly_disagree' => '-2'
+);
 ?>
 
 <button id="quizButton">Take the Quiz</button>
@@ -42,77 +64,39 @@ function get_radio_buttons($questionNumber, $questionScores)
         <h2>I would like to <strong>
             work with my hands, tools, and equipment
           </strong> in my day to day work.</h2>
-        <?php echo get_radio_buttons('1', array(
-          'strongly_agree' => '1',
-          'agree' => '2',
-          'unsure' => '3',
-          'disagree' => '4',
-          'strongly_disagree' => '5'
-        )); ?>
-
-
+        <?php echo get_radio_buttons('1', $strong_weighting); ?>
         <button type="button" class="next-btn">Next</button>
       </div>
       <div class="quiz-slide" data-slide="2">
         <h2>I would like to learn about how <strong>
             energy efficiency
           </strong> can make homes healthier and teach others about that too.</h2>
-        <?php echo get_radio_buttons('2', array(
-          'strongly_agree' => '1',
-          'agree' => '2',
-          'unsure' => '3',
-          'disagree' => '4',
-          'strongly_disagree' => '5'
-        )); ?>
+        <?php echo get_radio_buttons('2', $medium_weighting); ?>
         <button type="button" class="prev-btn">Back</button>
 
       </div>
       <div class="quiz-slide" data-slide="3">
         <h2>I would like to <strong>help families in need</strong> save money on their energy bills and improve their quality of life.</h2>
         <!-- Add question content here -->
-        <?php echo get_radio_buttons('3', array(
-          'strongly_agree' => '1',
-          'agree' => '2',
-          'unsure' => '3',
-          'disagree' => '4',
-          'strongly_disagree' => '5'
-        )); ?>
+        <?php echo get_radio_buttons('3', $medium_weighting); ?>
         <button type="button" class="prev-btn">Back</button>
       </div>
       <div class="quiz-slide" data-slide="4">
         <h2>I am seeking <strong>stable work with a great opportunity</strong> for promotion or raises in the future.</h2>
         <!-- Add question content here -->
-        <?php echo get_radio_buttons('4', array(
-          'strongly_agree' => '1',
-          'agree' => '2',
-          'unsure' => '3',
-          'disagree' => '4',
-          'strongly_disagree' => '5'
-        )); ?>
+        <?php echo get_radio_buttons('4', $light_weighting); ?>
         <button type="button" class="prev-btn">Back</button>
       </div>
       <div class="quiz-slide" data-slide="5">
         <h2>I am <strong>a team player</strong> and enjoy working with staff members. I’d rather do that than work alone.</h2>
         <!-- Add question content here -->
-        <?php echo get_radio_buttons('5', array(
-          'strongly_agree' => '1',
-          'agree' => '2',
-          'unsure' => '3',
-          'disagree' => '4',
-          'strongly_disagree' => '5'
-        )); ?>
+        <?php echo get_radio_buttons('5', $medium_weighting); ?>
         <button type="button" class="prev-btn">Back</button>
       </div>
       <div class="quiz-slide" data-slide="6">
         <h2>I’m willing and able to work in <strong>attics and crawl spaces</strong> where this work often takes place.</h2>
         <!-- Add question content here -->
-        <?php echo get_radio_buttons('6', array(
-          'strongly_agree' => '1',
-          'agree' => '2',
-          'unsure' => '3',
-          'disagree' => '4',
-          'strongly_disagree' => '5'
-        )); ?>
+        <?php echo get_radio_buttons('6', $strong_weighting); ?>
         <button type="button" class="prev-btn">Back</button>
       </div>
       <div class="quiz-slide" data-slide="7">
