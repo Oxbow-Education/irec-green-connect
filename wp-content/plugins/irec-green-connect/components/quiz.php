@@ -101,6 +101,25 @@ $light_weighting = array(
       </div>
       <div class="quiz-slide" data-slide="7">
         <h2>Last question! <strong>How many of the following interest you?</strong> </h2>
+        <div class="checkbox-wrapper">
+
+          <label class="quiz-checkbox">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            Find on-the-job training: I can be paid to learn new skills.
+          </label>
+          <label class="quiz-checkbox">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            Earn nationwide certifications: I can get credentials to use anywhere in the U.S.
+          </label>
+          <label class="quiz-checkbox">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            Join the home energy industry: I can help communities be more climate resilient.
+          </label>
+        </div>
+
         <!-- Add question content here -->
         <button type="button" class="prev-btn">Back</button>
         <button type="submit" class="next-btn">Get My Results</button>
