@@ -128,9 +128,7 @@ button {
 .image-radio + img {
   width: 69px;
   height: 69px;
-  cursor: pointer; /* Make images appear clickable */
-  /* opacity: 0.6; Give a default opacity to non-selected images */
-  transition: opacity 0.3s ease; /* Smooth transition */
+  cursor: pointer;
 }
 
 .image-radio-group label {
@@ -142,6 +140,7 @@ button {
   font-size: 16px;
   line-height: 20px;
   gap: 1rem;
+  text-align: center;
 }
 
 .image-radio-group label:hover,
@@ -288,4 +287,68 @@ label.selected {
 
 #closeButton:focus {
   outline: none;
+}
+
+@media screen and (max-width: 768px) {
+  #modal {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 768px;
+  }
+  .image-radio + img {
+    width: 40px;
+    height: 40px;
+  }
+  .image-radio-group {
+    gap: 1rem;
+  }
+  .image-radio-group label {
+    font-size: 11px;
+  }
+
+  .quiz-slide h2 {
+    font-size: 22px;
+    line-height: 27px;
+  }
+  .quiz-slide.results h2 {
+    font-size: 32px;
+    line-height: 39px;
+  }
+  .quiz-slide.results p,
+  .quiz-slide.results .actions p {
+    font-size: 14px;
+    line-height: 28px;
+  }
+}
+
+@media screen and (max-width: 567px) {
+  #modal {
+    padding: 20px;
+  }
+  .quiz-slide {
+    padding: 0px;
+  }
+  .image-radio-group {
+    gap: 0.7rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .image-radio-group label {
+    display: grid;
+    grid-template-columns: 1fr;
+    line-height: 16px;
+    grid-template-rows: 50px 20px;
+    align-content: center;
+    justify-items: center;
+  }
+
+  .checkbox-wrapper {
+    padding: 0px;
+    margin: 20px;
+    margin-bottom: 0;
+  }
 }
