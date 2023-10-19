@@ -1,5 +1,5 @@
 document.getElementById('quizButton').addEventListener('click', function () {
-  showSlide('MAYBE'); // Start the quiz on the first slide
+  showSlide(1); // Start the quiz on the first slide
 });
 
 document
@@ -15,7 +15,7 @@ document.getElementById('overlay').addEventListener('click', function (event) {
 const radioInputs = document.querySelectorAll('.image-radio');
 
 radioInputs.forEach(function (radio) {
-  radio.addEventListener('change', function () {
+  radio.addEventListener('click', function () {
     // Find the current slide
     const currentSlide = radio.closest('.quiz-slide');
 
@@ -96,14 +96,19 @@ function closeQuizModal() {
   modal.style.opacity = '0';
   modal.style.transform = 'scale(0)';
 
+  const form = document.getElementById('quizForm');
+  form.reset();
+  const radioLabels = document.querySelectorAll('#modal .selected');
+  radioLabels.forEach((input) => input.classList.remove('selected'));
+
   setTimeout(function () {
     overlay.classList.add('hidden');
     modal.classList.add('hidden');
+    modal.classList.remove('results');
   }, 50);
 }
 
 const quizForm = document.getElementById('quizForm');
-console.log({ quizForm });
 
 const getMatchScore = (score) => {
   if (score >= 14) {
@@ -112,8 +117,9 @@ const getMatchScore = (score) => {
   if (score >= 7) {
     return 'MAYBE';
   }
-  return 'NOT;';
+  return 'NOT';
 };
+
 quizForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const form = e.target;
