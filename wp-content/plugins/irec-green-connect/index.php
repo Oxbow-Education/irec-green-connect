@@ -210,7 +210,7 @@ function wage_data_widget()
   wp_enqueue_style('wage-data-widget-css', '/wp-content/plugins/irec-green-connect/public/css/wage-data-widget.css');
   wp_enqueue_script('wage-data-widget-js', '/wp-content/plugins/irec-green-connect/public/js/wage-data-widget.js');
 
-  include __DIR__ . '/components/wage-data-widgets.php';
+  include __DIR__ . '/components/wage-data-widget.php';
   return ob_get_clean();
 }
 add_shortcode('wage_data_widget', 'wage_data_widget');
