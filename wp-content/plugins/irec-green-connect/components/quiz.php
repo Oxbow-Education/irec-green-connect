@@ -178,10 +178,7 @@ $light_weighting = array(
             <a href="">
               Browse Career Maps in Clean Energy
             </a>
-            or talk to a
-
-            <a href="">Local Job Center</a>
-
+            or talk to a <a href="">Local Job Center</a>
             for one on one support. If you’re still curious aboutNOT Weatherization careers, keep browsing!
           </p>
 
