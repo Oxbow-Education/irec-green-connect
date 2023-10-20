@@ -394,26 +394,33 @@ function wage_data_custom_column($column, $post_id)
   }
 }
 add_action('manage_wage-data_posts_custom_column', 'wage_data_custom_column', 10, 2);
-function wage_data_admin_filter_by_location()
+function wage_data_admin_filter()
 {
   global $typenow;
 
   if ($typenow == 'wage-data') {
-    $selected_location = isset($_GET['filter_by_location']) ? $_GET['filter_by_location'] : '';
-    $locations = get_all_wage_data_locations(); // We'll define this function in the next step
+    // Career Name Filter
+    $selected_career = isset($_GET['filter_by_career_name']) ? $_GET['filter_by_career_name'] : '';
+    $careers = get_all_wage_data_career_names();
+    echo '<select name="filter_by_career_name" id="filter_by_career_name">';
+    echo '<option value="">All Careers</option>';
+    foreach ($careers as $career) {
+      echo '<option value="' . esc_attr($career) . '" ' . selected($career, $selected_career, false) . '>' . esc_html($career) . '</option>';
+    }
+    echo '</select>';
 
+    // Location Filter
+    $selected_location = isset($_GET['filter_by_location']) ? $_GET['filter_by_location'] : '';
+    $locations = get_all_wage_data_locations();
     echo '<select name="filter_by_location" id="filter_by_location">';
     echo '<option value="">All Locations</option>';
-
     foreach ($locations as $location) {
       echo '<option value="' . esc_attr($location) . '" ' . selected($location, $selected_location, false) . '>' . esc_html($location) . '</option>';
     }
-
     echo '</select>';
   }
 }
-add_action('restrict_manage_posts', 'wage_data_admin_filter_by_location');
-
+add_action('restrict_manage_posts', 'wage_data_admin_filter');
 
 function get_all_wage_data_locations()
 {
@@ -422,22 +429,52 @@ function get_all_wage_data_locations()
   $query = "
       SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
       LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-      WHERE pm.meta_key = 'career_location' AND p.post_type = 'wage-data'
+      WHERE pm.meta_key = 'career_location' AND p.post_type = 'wage-data' AND pm.meta_value != ''
   ";
 
   return $wpdb->get_col($query);
 }
-function wage_data_filter_by_location_query($query)
+
+function get_all_wage_data_career_names()
+{
+  global $wpdb;
+
+  $query = "
+      SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+      LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+      WHERE pm.meta_key = 'career_name' AND p.post_type = 'wage-data' AND pm.meta_value != ''
+  ";
+
+  return $wpdb->get_col($query);
+}
+
+function wage_data_filter_query($query)
 {
   global $pagenow, $typenow;
 
-  if ($typenow == 'wage-data' && $pagenow == 'edit.php' && isset($_GET['filter_by_location']) && $_GET['filter_by_location'] != '') {
-    $query->query_vars['meta_key'] = 'career_location';
-    $query->query_vars['meta_value'] = $_GET['filter_by_location'];
+  if ($typenow == 'wage-data' && $pagenow == 'edit.php') {
+    $meta_query = array('relation' => 'AND');
+
+    if (isset($_GET['filter_by_career_name']) && $_GET['filter_by_career_name'] != '') {
+      $meta_query[] = array(
+        'key'   => 'career_name',
+        'value' => $_GET['filter_by_career_name']
+      );
+    }
+
+    if (isset($_GET['filter_by_location']) && $_GET['filter_by_location'] != '') {
+      $meta_query[] = array(
+        'key'   => 'career_location',
+        'value' => $_GET['filter_by_location']
+      );
+    }
+
+    if (count($meta_query) > 1) {
+      $query->set('meta_query', $meta_query);
+    }
   }
 }
-add_filter('parse_query', 'wage_data_filter_by_location_query');
-
+add_filter('parse_query', 'wage_data_filter_query');
 
 function add_upload_wage_data_page()
 {
