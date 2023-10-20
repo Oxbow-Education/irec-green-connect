@@ -64,6 +64,19 @@ function filter_posts_by_internal_resource($query)
 }
 add_filter('parse_query', 'filter_posts_by_internal_resource');
 
+// Register custom REST API endpoint
+function custom_upload_resources_endpoint()
+{
+  register_rest_route('irec-api', '/upload-resources', array(
+    'methods' => 'POST',
+    'callback' => 'handle_upload_resources',
+    'permission_callback' => function () {
+      return current_user_can('edit_posts');
+    },
+  ));
+}
+add_action('rest_api_init', 'custom_upload_resources_endpoint');
+
 
 // Function that saves data submitted by CSVBox to the wp database
 function handle_upload_resources($request)
@@ -164,7 +177,7 @@ function handle_upload_resources($request)
     // Sending email with the error message
     $error_email_subject = 'Error Handling Upload Resources';
     $error_email_body = 'Error Message: ' . $e->getMessage();
-    wp_mail('your-email@example.com', $error_email_subject, $error_email_body);
+    wp_mail('nina@wherewego.org', $error_email_subject, $error_email_body);
 
     return json_encode(array('error' => $e->getMessage()));
   }
@@ -343,3 +356,366 @@ function remove_comments_menu()
 }
 
 add_action('admin_menu', 'remove_comments_menu');
+
+function wage_data_columns($columns)
+{
+  // Remove the title column
+  unset($columns['title']);
+  unset($columns['date']); // Optionally remove the date column or any other you want
+
+  $columns['career_name'] = 'Career Name';
+  $columns['career_short_description'] = 'Short Description';
+  $columns['career_location'] = 'Location';
+  $columns['career_salary_low'] = 'Salary (Low)';
+  $columns['career_salary_high'] = 'Salary (High)';
+
+  return $columns;
+}
+add_filter('manage_wage-data_posts_columns', 'wage_data_columns');
+
+function wage_data_custom_column($column, $post_id)
+{
+  switch ($column) {
+    case 'career_name':
+      echo get_post_meta($post_id, 'career_name', true);
+      break;
+    case 'career_short_description':
+      echo get_post_meta($post_id, 'career_short_description', true);
+      break;
+    case 'career_location':
+      echo get_post_meta($post_id, 'career_location', true);
+      break;
+    case 'career_salary_low':
+      echo get_post_meta($post_id, 'career_salary_low', true);
+      break;
+    case 'career_salary_high':
+      echo get_post_meta($post_id, 'career_salary_high', true);
+      break;
+  }
+}
+add_action('manage_wage-data_posts_custom_column', 'wage_data_custom_column', 10, 2);
+function wage_data_admin_filter()
+{
+  global $typenow;
+
+  if ($typenow == 'wage-data') {
+    // Career Name Filter
+    $selected_career = isset($_GET['filter_by_career_name']) ? $_GET['filter_by_career_name'] : '';
+    $careers = get_all_wage_data_career_names();
+    echo '<select name="filter_by_career_name" id="filter_by_career_name">';
+    echo '<option value="">All Careers</option>';
+    foreach ($careers as $career) {
+      echo '<option value="' . esc_attr($career) . '" ' . selected($career, $selected_career, false) . '>' . esc_html($career) . '</option>';
+    }
+    echo '</select>';
+
+    // Location Filter
+    $selected_location = isset($_GET['filter_by_location']) ? $_GET['filter_by_location'] : '';
+    $locations = get_all_wage_data_locations();
+    echo '<select name="filter_by_location" id="filter_by_location">';
+    echo '<option value="">All Locations</option>';
+    foreach ($locations as $location) {
+      echo '<option value="' . esc_attr($location) . '" ' . selected($location, $selected_location, false) . '>' . esc_html($location) . '</option>';
+    }
+    echo '</select>';
+  }
+}
+add_action('restrict_manage_posts', 'wage_data_admin_filter');
+
+function get_all_wage_data_locations()
+{
+  global $wpdb;
+
+  $query = "
+      SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+      LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+      WHERE pm.meta_key = 'career_location' AND p.post_type = 'wage-data' AND pm.meta_value != ''
+  ";
+
+  return $wpdb->get_col($query);
+}
+
+function get_all_wage_data_career_names()
+{
+  global $wpdb;
+
+  $query = "
+      SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+      LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+      WHERE pm.meta_key = 'career_name' AND p.post_type = 'wage-data' AND pm.meta_value != ''
+  ";
+
+  return $wpdb->get_col($query);
+}
+
+function wage_data_filter_query($query)
+{
+  global $pagenow, $typenow;
+
+  if ($typenow == 'wage-data' && $pagenow == 'edit.php') {
+    $meta_query = array('relation' => 'AND');
+
+    if (isset($_GET['filter_by_career_name']) && $_GET['filter_by_career_name'] != '') {
+      $meta_query[] = array(
+        'key'   => 'career_name',
+        'value' => $_GET['filter_by_career_name']
+      );
+    }
+
+    if (isset($_GET['filter_by_location']) && $_GET['filter_by_location'] != '') {
+      $meta_query[] = array(
+        'key'   => 'career_location',
+        'value' => $_GET['filter_by_location']
+      );
+    }
+
+    if (count($meta_query) > 1) {
+      $query->set('meta_query', $meta_query);
+    }
+  }
+}
+add_filter('parse_query', 'wage_data_filter_query');
+
+function add_upload_wage_data_page()
+{
+  add_menu_page(
+    'Upload Wage Data',          // Page title
+    'Upload Wage Data',          // Menu title
+    'manage_options',            // Capability - determines who can access. 'manage_options' is typically for admins.
+    'upload-wage-data',          // Menu slug
+    'load_upload_wage_data_page', // Callback function to display the content of the page
+    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+
+  );
+}
+add_action('admin_menu', 'add_upload_wage_data_page');
+
+function load_upload_wage_data_page()
+{
+  // Check the user's permissions
+  if (!current_user_can('manage_options')) {
+    wp_die(__('You do not have sufficient permissions to access this page.'));
+  }
+  require __DIR__ . '/partials/upload-wage-data.php';
+}
+
+// Register custom REST API endpoint
+function custom_upload_wage_data_endpoint()
+{
+  register_rest_route('irec-api', '/upload-wage-data', array(
+    'methods' => 'POST',
+    'callback' => 'handle_upload_wage_data',
+    'permission_callback' => function () {
+      return current_user_can('edit_posts');
+    },
+  ));
+}
+add_action('rest_api_init', 'custom_upload_wage_data_endpoint');
+
+// Function that saves data submitted by CSVBox to the wp database
+function handle_upload_wage_data($request)
+{
+  try {
+
+    $response_data = $request->get_json_params();
+
+    foreach ($response_data as $item) {
+
+      // Extract the necessary data from the "row_data" field
+      $career_name = $item['row_data']['Career Name'];
+      $career_short_description = $item['row_data']['Career Description'];
+      $career_location = $item['row_data']['Career Location'];
+      $career_salary_low = $item['row_data']['Career Salary Low'];
+      $career_salary_high = $item['row_data']['Career Salary High'];
+
+
+      // Create an array of post data
+      $post_data = array(
+        'post_title'   => $career_name . ' - ' . $career_location,
+        'post_type'    => 'wage-data',
+        'post_status'  => 'publish'
+      );
+
+      // Insert the post into the database
+      $post_id = wp_insert_post($post_data);
+
+      // Set the custom fields
+      update_post_meta($post_id, 'career_name', $career_name);
+      update_post_meta($post_id, 'career_short_description', $career_short_description);
+      update_post_meta($post_id, 'career_location', $career_location);
+      update_post_meta($post_id, 'career_salary_high', $career_salary_high);
+      update_post_meta($post_id, 'career_salary_low', $career_salary_low);
+    }
+  } catch (Exception $e) {
+    // Sending email with the error message
+    $error_email_subject = 'Error Handling Wage Resources';
+    $error_email_body = 'Error Message: ' . $e->getMessage();
+    wp_mail('nina@wherewego.org', $error_email_subject, $error_email_body);
+
+    return json_encode(array('error' => $e->getMessage()));
+  }
+
+  return json_encode(array('message' => 'Success!'));
+}
+
+function custom_upload_organizations_endpoint()
+{
+  register_rest_route('irec-api', '/upload-organizations', array(
+    'methods' => 'POST',
+    'callback' => 'handle_upload_organizations',
+    'permission_callback' => function () {
+      return current_user_can('edit_posts');
+    },
+  ));
+}
+add_action('rest_api_init', 'custom_upload_organizations_endpoint');
+
+// Function that saves data submitted by CSVBox to the wp database
+function handle_upload_organizations($request)
+{
+  try {
+
+    $response_data = $request->get_json_params();
+
+    foreach ($response_data as $item) {
+
+      // Extract the necessary data from the "row_data" field
+      $organization = $item['row_data']['Organization'];
+      $address_line_1 = $item['row_data']['Address Line 1'];
+      $city = $item['row_data']['City'];
+      $phone = $item['row_data']['Phone'];
+      $state = $item['row_data']['State'];
+      $zip = $item['row_data']['Zip'];
+      $sentence = $item['row_data']['Sentence'];
+      $organization_email_address = $item['row_data']['Organization Email Address'];
+      $organization_link = $item['row_data']['Organization Link'];
+      $featured = $item['row_data']['Featured'];
+      $service_1 = $item['row_data']['Service 1'];
+      $service_2 = $item['row_data']['Service 2'];
+      $service_3 = $item['row_data']['Service 3'];
+      $service_4 = $item['row_data']['Service 4'];
+      $constractors_wanted = $item['row_data']['Contractors Wanted'];
+      $hiring_now = $item['row_data']['Hiring Now	'];
+      $irec_accredited = $item['row_data']['IREC Accredited'];
+      $paid_training = $item['row_data']['Paid Training'];
+      $info_sessions = $item['row_data']['Info Sessions'];
+      $apprenticeship = $item['row_data']['Apprenticeship'];
+      $pre_apprenticeship = $item['row_data']['Pre-apprenticeship'];
+      $youth_program = $item['row_data']['Youth Program'];
+      $other = $item['row_data']['Other'];
+      $image_link = $item['row_data']['Image Link'];
+
+
+      // Create an array of post data
+      $post_data = array(
+        'post_title'   => $organization,
+        'post_type'    => 'organization',
+        'post_status'  => 'publish'
+      );
+
+      // Insert the post into the database
+      $post_id = wp_insert_post($post_data);
+
+      // Set the custom fields
+      update_post_meta($post_id, 'organization', $organization);
+      update_post_meta($post_id, 'address_line_1', $address_line_1);
+      update_post_meta($post_id, 'city', $city);
+      update_post_meta($post_id, 'state', $state);
+      update_post_meta($post_id, 'phone', $phone);
+      update_post_meta($post_id, 'zip', $zip);
+      update_post_meta($post_id, 'sentence', $sentence);
+      update_post_meta($post_id, 'email', $organization_email_address);
+      update_post_meta($post_id, 'link', $organization_link);
+      update_post_meta($post_id, 'featured', $featured);
+      if (boolval($service_1)) {
+        update_post_meta($post_id, 'service_1', true);
+      }
+      if (boolval($service_2)) {
+        update_post_meta($post_id, 'service_2', true);
+      }
+      if (boolval($service_3)) {
+        update_post_meta($post_id, 'service_3', true);
+      }
+      if (boolval($service_4)) {
+        update_post_meta($post_id, 'service_4', true);
+      }
+
+      $tags = array();
+      if ($constractors_wanted) {
+        array_push($tags, 'Contractors Wanted');
+      }
+      if ($hiring_now) {
+        array_push($tags, 'Hiring Now');
+      }
+      if ($irec_accredited) {
+        array_push($tags, 'IREC Accredited');
+      }
+      if ($paid_training) {
+        array_push($tags, 'Paid Training');
+      }
+      if ($info_sessions) {
+        array_push($tags, 'Info Sessions');
+      }
+      if ($apprenticeship) {
+        array_push($tags, 'Apprenticeship');
+      }
+      if ($pre_apprenticeship) {
+        array_push($tags, 'Pre-apprenticeship');
+      }
+      if ($youth_program) {
+        array_push($tags, 'Youth Program');
+      }
+      if ($other) {
+        array_push($tags, 'Other');
+      }
+      update_post_meta($post_id, 'tags', $tags);
+      update_post_meta($post_id, 'image', $image_link);
+
+      $geoData = get_lat_lng_from_address($address_line_1, $city, $state, $zip);
+      if ($geoData) {
+
+
+        update_field('_geoloc', $geoData, $post_id);
+      }
+    }
+  } catch (Exception $e) {
+    // Sending email with the error message
+    $error_email_subject = 'Error Handling Wage Resources';
+    $error_email_body = 'Error Message: ' . $e->getMessage();
+    wp_mail('nina@wherewego.org', $error_email_subject, $error_email_body);
+
+    return json_encode(array('error' => $e->getMessage()));
+  }
+
+  return json_encode(array('message' => 'Success!'));
+}
+
+
+
+function get_lat_lng_from_address($address, $city, $state, $zip)
+{
+
+  $apiKey = 'AIzaSyDmpMknHZCk19dfAumNHIRMIziQb6Ny5Y4';
+  $fullAddress = urlencode($address . ' ' . $city . ', ' . $state . ' ' . $zip);
+  $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$fullAddress}&key={$apiKey}";
+
+  $response = wp_remote_get($url); // Let's use WordPress's function
+  if (is_wp_error($response)) {
+    error_log(print_r($response->get_error_message(), true)); // Log errors
+    return false;
+  }
+
+  $data = json_decode(wp_remote_retrieve_body($response));
+
+  if (!empty($data->results[0])) {
+    $lat = $data->results[0]->geometry->location->lat;
+    $lng = $data->results[0]->geometry->location->lng;
+
+    error_log("Lat: $lat | Lng: $lng"); // Debugging line
+
+    return array('lat' => floatval($lat), 'lng' => floatval($lng));
+  } else {
+    error_log("No Geocode Result: " . print_r($data, true)); // Log non-results
+    return false;
+  }
+}

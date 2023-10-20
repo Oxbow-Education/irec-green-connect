@@ -1,0 +1,14 @@
+{
+  "name": "ninahorne/wp-algolia",
+  "authors": [
+    {
+      "name": "Nina Horne",
+      "email": "nina.horne1221@gmail.com"
+    }
+  ],
+  "require": {
+    "algolia/algoliasearch-client-php": "3.0.0",
+    "php": "7.4.33"
+  }
+
+}
