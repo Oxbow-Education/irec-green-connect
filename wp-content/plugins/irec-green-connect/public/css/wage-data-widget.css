@@ -36,3 +36,21 @@
   padding: 2rem;
   padding-left: calc(50px);
 }
+
+@media screen and (max-width: 768px) {
+  .wage-data-title {
+    grid-template-columns: 50px auto 100px;
+  }
+  .wage-data-title img {
+    height: 15px;
+    width: 15px;
+  }
+  .wage-data-title h2 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .wage-data-title p {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
