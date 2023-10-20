@@ -465,7 +465,7 @@ function load_upload_wage_data_page()
 // Register custom REST API endpoint
 function custom_upload_wage_data_endpoint()
 {
-  register_rest_route('irec-api', '/upload-wage_data', array(
+  register_rest_route('irec-api', '/upload-wage-data', array(
     'methods' => 'POST',
     'callback' => 'handle_upload_wage_data',
     'permission_callback' => function () {
@@ -486,7 +486,7 @@ function handle_upload_wage_data($request)
 
       // Extract the necessary data from the "row_data" field
       $career_name = $item['row_data']['Career Name'];
-      $career_short_description = $item['row_data']['Career Short Description'];
+      $career_short_description = $item['row_data']['Career Description'];
       $career_location = $item['row_data']['Career Location'];
       $career_salary_low = $item['row_data']['Career Salary Low'];
       $career_salary_high = $item['row_data']['Career Salary High'];
