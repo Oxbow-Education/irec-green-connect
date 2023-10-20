@@ -64,6 +64,19 @@ function filter_posts_by_internal_resource($query)
 }
 add_filter('parse_query', 'filter_posts_by_internal_resource');
 
+// Register custom REST API endpoint
+function custom_upload_resources_endpoint()
+{
+  register_rest_route('irec-api', '/upload-resources', array(
+    'methods' => 'POST',
+    'callback' => 'handle_upload_resources',
+    'permission_callback' => function () {
+      return current_user_can('edit_posts');
+    },
+  ));
+}
+add_action('rest_api_init', 'custom_upload_resources_endpoint');
+
 
 // Function that saves data submitted by CSVBox to the wp database
 function handle_upload_resources($request)
@@ -164,7 +177,7 @@ function handle_upload_resources($request)
     // Sending email with the error message
     $error_email_subject = 'Error Handling Upload Resources';
     $error_email_body = 'Error Message: ' . $e->getMessage();
-    wp_mail('your-email@example.com', $error_email_subject, $error_email_body);
+    wp_mail('nina@wherewego.org', $error_email_subject, $error_email_body);
 
     return json_encode(array('error' => $e->getMessage()));
   }
@@ -447,4 +460,63 @@ function load_upload_wage_data_page()
     wp_die(__('You do not have sufficient permissions to access this page.'));
   }
   require __DIR__ . '/partials/upload-wage-data.php';
+}
+
+// Register custom REST API endpoint
+function custom_upload_wage_data_endpoint()
+{
+  register_rest_route('irec-api', '/upload-wage_data', array(
+    'methods' => 'POST',
+    'callback' => 'handle_upload_wage_data',
+    'permission_callback' => function () {
+      return current_user_can('edit_posts');
+    },
+  ));
+}
+add_action('rest_api_init', 'custom_upload_wage_data_endpoint');
+
+// Function that saves data submitted by CSVBox to the wp database
+function handle_upload_wage_data($request)
+{
+  try {
+
+    $response_data = $request->get_json_params();
+
+    foreach ($response_data as $item) {
+
+      // Extract the necessary data from the "row_data" field
+      $career_name = $item['row_data']['Career Name'];
+      $career_short_description = $item['row_data']['Career Short Description'];
+      $career_location = $item['row_data']['Career Location'];
+      $career_salary_low = $item['row_data']['Career Salary Low'];
+      $career_salary_high = $item['row_data']['Career Salary High'];
+
+
+      // Create an array of post data
+      $post_data = array(
+        'post_title'   => $career_name . ' - ' . $career_location,
+        'post_type'    => 'wage-data',
+        'post_status'  => 'publish'
+      );
+
+      // Insert the post into the database
+      $post_id = wp_insert_post($post_data);
+
+      // Set the custom fields
+      update_post_meta($post_id, 'career_name', $career_name);
+      update_post_meta($post_id, 'career_short_description', $career_short_description);
+      update_post_meta($post_id, 'career_location', $career_location);
+      update_post_meta($post_id, 'career_salary_high', $career_salary_high);
+      update_post_meta($post_id, 'career_salary_low', $career_salary_low);
+    }
+  } catch (Exception $e) {
+    // Sending email with the error message
+    $error_email_subject = 'Error Handling Wage Resources';
+    $error_email_body = 'Error Message: ' . $e->getMessage();
+    wp_mail('nina@wherewego.org', $error_email_subject, $error_email_body);
+
+    return json_encode(array('error' => $e->getMessage()));
+  }
+
+  return json_encode(array('message' => 'Success!'));
 }
