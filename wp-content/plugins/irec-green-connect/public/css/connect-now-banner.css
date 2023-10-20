@@ -37,3 +37,15 @@
     linear-gradient(-90deg, #172b4300 0%, #172b43b2 46%, #16577b 100%) 0% 0%
     no-repeat padding-box;
 }
+
+@media screen and (max-width: 768px) {
+  .connect-now-banner h1 {
+    font-size: 35px;
+    line-height: 37px;
+  }
+  #connectNowBanner::before {
+    background: transparent
+      linear-gradient(180deg, #172b4300 0%, #172b43b2 46%, #16577b 100%) 0% 0%
+      no-repeat padding-box;
+  }
+}
