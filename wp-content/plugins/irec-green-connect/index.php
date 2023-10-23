@@ -214,3 +214,15 @@ function wage_data_widget()
   return ob_get_clean();
 }
 add_shortcode('wage_data_widget', 'wage_data_widget');
+
+function organizations_navigator()
+{
+  ob_start();
+
+  wp_enqueue_style('organizations-navigator-css', '/wp-content/plugins/irec-green-connect/public/css/organizations-navigator.css');
+  wp_enqueue_script('organizations-navigator-js', '/wp-content/plugins/irec-green-connect/public/js/organizations-navigator.js');
+
+  include __DIR__ . '/components/organizations-navigator.php';
+  return ob_get_clean();
+}
+add_shortcode('organizations_navigator', 'organizations_navigator');
