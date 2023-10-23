@@ -2,7 +2,16 @@ let geocoder;
 let map;
 let markers = [];
 let bounds;
+let search;
 
+function setPositionQuery(lat, lng) {
+  const aroundLatLng = `${lat}, ${lng}`;
+  search.helper.setQueryParameter('aroundRadius', 80467);
+  search.helper.setQueryParameter('aroundLatLng', aroundLatLng);
+  search.helper.search();
+  bounds = new google.maps.LatLngBounds();
+  markers.forEach((marker) => marker.setMap(null));
+}
 // Adds a marker to the map
 const addMarker = (item) => {
   const icon = {
@@ -44,13 +53,30 @@ function initMap() {
   initMarkers();
 }
 
+const getZipCodeFromCoordinates = async (lat, lng) => {
+  var latlng = new google.maps.LatLng(lat, lng);
+
+  const { results } = await geocoder.geocode({ location: latlng });
+  if (results[0]) {
+    for (var i = 0; i < results[0].address_components.length; i++) {
+      const component = results[0].address_components[i];
+      if (component.types.includes('postal_code')) {
+        var zipCode = component.short_name;
+        return Promise.resolve(zipCode);
+      }
+    }
+  } else {
+    return Promise.reject('No results found.');
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // Define google items
   geocoder = new google.maps.Geocoder();
   bounds = new google.maps.LatLngBounds();
 
   // Init search
-  const search = instantsearch({
+  search = instantsearch({
     indexName: 'organization',
     searchClient: algoliasearch(
       'QVXOOP4L7N',
@@ -113,16 +139,48 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const lat = results.results[0].geometry.location.lat();
       const lng = results.results[0].geometry.location.lng();
-      const aroundLatLng = `${lat}, ${lng}`;
-      search.helper.setQueryParameter('aroundRadius', 80467);
-      search.helper.setQueryParameter('aroundLatLng', aroundLatLng);
-      search.helper.search();
-      bounds = new google.maps.LatLngBounds();
-      markers.forEach((marker) => marker.setMap(null));
+      setPositionQuery(lat, lng);
     } catch (err) {
       console.log(err);
     }
   });
+
+  const getUserLocation = async () => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          const zipcode = await getZipCodeFromCoordinates(latitude, longitude);
+          console.log({ zipcode });
+          document.getElementById('zipcode').value = zipcode;
+          setPositionQuery(latitude, longitude);
+        },
+        function (error) {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              alert('User denied the request for Geolocation.');
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert('Location information is unavailable.');
+              break;
+            case error.TIMEOUT:
+              alert('The request to get user location timed out.');
+              break;
+            case error.UNKNOWN_ERROR:
+              alert('An unknown error occurred.');
+              break;
+          }
+        },
+      );
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
+  };
+
+  // Attach the function to the button click event
+  var geolocButton = document.getElementById('geolocButton');
+  geolocButton.addEventListener('click', getUserLocation);
 
   search.start();
 });

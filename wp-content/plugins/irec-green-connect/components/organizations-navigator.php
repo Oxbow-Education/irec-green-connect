@@ -3,7 +3,7 @@
     <h2>Connect Now</h2>
     <form id="custom-searchbox">
       <input type="text" id="zipcode" name="zipcode" placeholder="Enter zipcode">
-      <button class="crosshairs-button" type="button">
+      <button id="geolocButton" class="crosshairs-button" type="button">
         <img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs.svg" />
       </button>
       <button class="submit-button" type="submit">Go</button>
