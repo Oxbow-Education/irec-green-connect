@@ -78,7 +78,7 @@
   margin: 0.75rem 0;
 }
 #hits {
-  padding-bottom: 5rem;
+  padding: 5rem 0rem;
 }
 #hits .ais-infinite-hits {
   padding: 0rem 3rem;
@@ -183,4 +183,13 @@
   margin: 5rem auto 0rem;
   display: block;
   padding: 1rem 2rem;
+}
+
+.ais-infinite-hits--showmoreButton:disabled {
+  display: none;
+}
+
+#map {
+  height: 338px;
+  width: 100%;
 }
