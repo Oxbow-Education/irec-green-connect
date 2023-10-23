@@ -18,7 +18,7 @@ require __DIR__ . '/external-resource-modal.php';
 
       if (is_array($who_is_this_for_tags)) {
         foreach ($who_is_this_for_tags as $tag) : ?>
-          <div class="resource-tag org-tag"><?php echo $tag; ?></div>
+          <!-- <div class="resource-tag org-tag"><?php echo $tag; ?></div> -->
       <?php endforeach;
       } ?>
     </div>
