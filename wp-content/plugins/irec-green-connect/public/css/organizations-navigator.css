@@ -192,4 +192,29 @@
 #map {
   height: 338px;
   width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  #hits .ais-infinite-hits {
+    grid-template-columns: 1fr 1fr;
+  }
+  .organizations-navigator {
+    grid-template-columns: 1fr;
+    padding: 7rem 1rem 1rem;
+  }
+  .organizations-navigator h2 {
+    font-size: 35px;
+    line-height: 37px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #hits .ais-infinite-hits {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  #hits {
+    padding: 3rem 0rem;
+  }
 }
