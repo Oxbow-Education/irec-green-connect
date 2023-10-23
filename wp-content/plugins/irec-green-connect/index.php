@@ -221,6 +221,10 @@ function organizations_navigator()
 
   wp_enqueue_style('organizations-navigator-css', '/wp-content/plugins/irec-green-connect/public/css/organizations-navigator.css');
   wp_enqueue_script('organizations-navigator-js', '/wp-content/plugins/irec-green-connect/public/js/organizations-navigator.js');
+  wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
+  wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
+  wp_enqueue_script('google-maps-js', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsvRzE48uIrgqcw_mFz2yspQJsz9Bl-BQ&libraries=places&callback=initMap');
+
 
   include __DIR__ . '/components/organizations-navigator.php';
   return ob_get_clean();
