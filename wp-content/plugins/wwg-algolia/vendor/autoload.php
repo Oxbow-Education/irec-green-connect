@@ -4,8 +4,4 @@
 
 require_once __DIR__ . '/composer/autoload_real.php';
 
-<<<<<<< Updated upstream:wp-content/plugins/wwg-algolia/vendor/autoload.php
 return ComposerAutoloaderInit1e95241fce284376acdb98aaf6c92090::getLoader();
-=======
-return ComposerAutoloaderInitd70735973642f4fb29ef24f89a9b6e21::getLoader();
->>>>>>> Stashed changes:wp-content/plugins/wpsynchro/vendor/autoload.php
