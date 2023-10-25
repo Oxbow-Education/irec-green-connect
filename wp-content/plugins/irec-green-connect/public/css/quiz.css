@@ -239,7 +239,8 @@ label.selected {
   background-position: center;
 }
 
-.quiz-cta {
+.quiz-cta,
+#quizButton {
   background-color: #dfa43c;
   border-radius: 5px !important;
   border: none;
