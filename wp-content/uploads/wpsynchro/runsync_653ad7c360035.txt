@@ -1,0 +1,18 @@
+[2023-10-26 21:18:59.642716] [INFO] Starting migration loop - With allotted time: 26.89871096611 seconds
+[2023-10-26 21:18:59.643337] [INFO] Initating with remote and local host with remaining time:26.898085832596
+[2023-10-26 21:18:59.648605] [DEBUG] Calling initate service for destination: local
+[2023-10-26 21:18:59.741731] [DEBUG] Got initiate token: 800c32352224505e8c19e64524978b16c1c2d282a477288c312158827fc48ae2
+[2023-10-26 21:18:59.741820] [DEBUG] Calling initate service for destination: remote
+[2023-10-26 21:19:00.074281] [DEBUG] Got initiate token: 637ab0ac5711092fc97d6565bd5b083d9c6cf83e404dcafcd5b90763d0c8dc85
+[2023-10-26 21:19:00.075519] [INFO] Initation completed on: 0.43243217468262 seconds
+[2023-10-26 21:19:00.080270] [INFO] Ending migration loop - with remaining time: 26.461172819138
+[2023-10-26 21:19:00.249519] [INFO] Starting migration loop - With allotted time: 26.860033035278 seconds
+[2023-10-26 21:19:00.250248] [INFO] Getting masterdata from source and target with remaining time:26.859284877777
+[2023-10-26 21:19:00.250983] [DEBUG] Calling masterdata service on: http://irec-green-connect.local/ with intent to user as 'source'
+[2023-10-26 21:19:00.397888] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-10-26 21:19:00.725921] [INFO] Completed masterdata on: 0.47565984725952 seconds
+[2023-10-26 21:19:00.745891] [INFO] Ending migration loop - with remaining time: 26.363650083542
+[2023-10-26 21:19:00.868286] [INFO] Starting migration loop - With allotted time: 26.887679815292 seconds
+[2023-10-26 21:19:00.877741] [INFO] Ending migration loop - with remaining time: 26.878222942352
+[2023-10-26 21:19:00.976649] [INFO] Starting migration loop - With allotted time: 26.908663034439 seconds
+[2023-10-26 21:19:00.977502] [INFO] Starting database migration loop with remaining time: 26.907799959183
