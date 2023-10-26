@@ -96,15 +96,16 @@ function handle_upload_resources($request)
       $url = $item['row_data']['URL'];
       $worker_user = $item['row_data']['Worker User'];
       $org_user_type_1 = $item['row_data']['Employers'];
-      $org_user_type_2 = $item['row_data']['Training Programs'];
-      $org_user_type_3 = $item['row_data']['Org User Type 3'];
-      $org_user_type_4 = $item['row_data']['Org User Type 4'];
-      $worker_tag_1 = $item['row_data']['Hiring'];
-      $worker_tag_2 = $item['row_data']['Resource for Worker Tag 2'];
-      $worker_tag_3 = $item['row_data']['Resource for Worker Tag 3'];
-      $org_tag_1 = $item['row_data']['Hiring'];
-      $org_tag_2 = $item['row_data']['Resource for Org Tag 2'];
-      $org_tag_3 = $item['row_data']['Resource for Org Tag 3'];
+      $org_user_type_2 = $item['row_data']['Training/Education'];
+      $org_user_type_3 = $item['row_data']['Contractor'];
+      $org_user_type_4 = $item['row_data']['CBOs'];
+      $worker_tag_1 = $item['row_data']['Industry Information'];
+      $worker_tag_2 = $item['row_data']['Training Opportunities'];
+      $worker_tag_3 = $item['row_data']['Espanol'];
+      $org_tag_1 = $item['row_data']['Marketing and Communications'];
+      $org_tag_2 = $item['row_data']['DEIA'];
+      $org_tag_3 = $item['row_data']['Workforce Development'];
+      $org_tag_4 = $item['row_data']['Industry Connections'];
 
       // Create an array of post data
       $post_data = array(
@@ -118,26 +119,28 @@ function handle_upload_resources($request)
 
       $worker_tags = array();
       if (boolval($worker_tag_1)) {
-        array_push($worker_tags, 'Hiring');
+        array_push($worker_tags, 'Industry Information');
       }
       if (boolval($worker_tag_2)) {
-        array_push($worker_tags, 'Wkr - Tag 2');
+        array_push($worker_tags, 'Training Opportunities');
       }
       if (boolval($worker_tag_3)) {
-        array_push($worker_tags, 'Wkr - Tag 3');
+        array_push($worker_tags, 'Espanol');
       }
 
       $org_tags = array();
       if (boolval($org_tag_1)) {
-        array_push($org_tags, 'Hiring');
+        array_push($org_tags, 'Marketing and Communications');
       }
       if (boolval($org_tag_2)) {
-        array_push($org_tags, 'Org - Tag 2');
+        array_push($org_tags, 'DEIA');
       }
       if (boolval($org_tag_3)) {
-        array_push($org_tags, 'Org - Tag 3');
+        array_push($org_tags, 'Workforce Development');
       }
-
+      if (boolval($org_tag_4)) {
+        array_push($org_tags, 'Industry Connections');
+      }
 
       $who_is_it_for = array();
       if (boolval($worker_user)) {
@@ -147,13 +150,13 @@ function handle_upload_resources($request)
         array_push($who_is_it_for, 'Employers');
       }
       if (boolval($org_user_type_2)) {
-        array_push($who_is_it_for, 'Training Programs');
+        array_push($who_is_it_for, 'Training/Education');
       }
       if (boolval($org_user_type_3)) {
-        array_push($who_is_it_for, 'Org User Type 3');
+        array_push($who_is_it_for, 'Contractor');
       }
       if (boolval($org_user_type_4)) {
-        array_push($who_is_it_for, 'Org User Type 4');
+        array_push($who_is_it_for, 'CBOs');
       }
 
 
