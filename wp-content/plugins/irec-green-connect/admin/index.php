@@ -101,7 +101,8 @@ function handle_upload_resources($request)
       $org_user_type_4 = $item['row_data']['CBOs'];
       $worker_tag_1 = $item['row_data']['Industry Information'];
       $worker_tag_2 = $item['row_data']['Training Opportunities'];
-      $worker_tag_3 = $item['row_data']['Espanol'];
+      $worker_tag_3 = $item['row_data']['Career Information'];
+      $worker_tag_4 = $item['row_data']['Español'];
       $org_tag_1 = $item['row_data']['Marketing and Communications'];
       $org_tag_2 = $item['row_data']['DEIA'];
       $org_tag_3 = $item['row_data']['Workforce Development'];
@@ -125,7 +126,10 @@ function handle_upload_resources($request)
         array_push($worker_tags, 'Training Opportunities');
       }
       if (boolval($worker_tag_3)) {
-        array_push($worker_tags, 'Espanol');
+        array_push($worker_tags, 'Career Information');
+      }
+      if (boolval($worker_tag_4)) {
+        array_push($worker_tags, 'Español');
       }
 
       $org_tags = array();
