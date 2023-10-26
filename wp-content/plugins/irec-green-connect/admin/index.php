@@ -275,7 +275,7 @@ function change_post_label()
 function populate_worker_tags_choices($field)
 {
 
-  if ($field['name'] == 'worker_filters_to_show') {
+  if ($field['name'] == 'worker_tags_to_show') {
 
     $args = array(
       'post_type' => 'post',
@@ -301,7 +301,7 @@ function populate_worker_tags_choices($field)
     $field['choices'] = $choices;
   }
 
-  if ($field['name'] == 'org_filters_to_show') {
+  if ($field['name'] == 'org_tags_to_show') {
 
     $args = array(
       'post_type' => 'post',
@@ -327,7 +327,7 @@ function populate_worker_tags_choices($field)
     $field['choices'] = $choices;
   }
 
-  if ($field['name'] == 'user_filters_to_show') {
+  if ($field['name'] == 'user_tags_to_show') {
 
     $args = array(
       'post_type' => 'post',
