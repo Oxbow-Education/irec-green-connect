@@ -268,7 +268,7 @@ function change_post_label()
   }
 }
 
-// Populates the optiosn for the "Filters to show" custom field
+// Populates the options for the "Filters to show" custom field
 // on the Worker Resources page
 function populate_worker_tags_choices($field)
 {

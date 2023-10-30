@@ -1,7 +1,7 @@
 <?php
 $post_id = get_the_ID();
 $tag_array = $is_workers ?  get_post_meta($post_id, 'worker_tags', true) : get_post_meta($post_id, 'organization_tags', true);
-$post_text = get_post_meta($post_id, 'short_description', true);
+$post_text = get_post_meta($post_id, 'long_description', true);
 require __DIR__ . '/external-resource-modal.php';
 ?>
 <div class="external-resource-tile resource-tile" data-tag="<?php echo $post_id; ?>">
