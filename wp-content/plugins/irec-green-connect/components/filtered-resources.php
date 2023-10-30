@@ -121,16 +121,14 @@ include __DIR__ . '/facet-buttons.php';
           is_workers: Boolean(isWorkers)
         },
         success: function(response) {
-          console.log({
-            response
-          })
+          console.log(response)
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
 
           if (addToExisting) {
             $('.resources-wrapper:first').append($('.resources-wrapper:last .resource-tile'));
-            $('.resources-wrapper:last').remove();
+            // $('.resources-wrapper:last').remove();
           }
 
           page++;
@@ -140,10 +138,7 @@ include __DIR__ . '/facet-buttons.php';
           const numberOfTiles = $('.resources-wrapper .resource-tile').length
           const isEnd = numberOfTiles % 10 > 0 || numberOfTiles == 0;
 
-          console.log({
-            numberOfTiles,
-            isEnd
-          })
+
 
           if (isEnd) {
             $('#load-more-button').addClass('hidden')
@@ -175,6 +170,10 @@ include __DIR__ . '/facet-buttons.php';
     // open
     $(document).on('click', '.external-resource-button, .external-resource-tile:not(.external-resource-modal-bg)', function() {
       const dataTag = $(this).attr('data-tag');
+      console.log({
+        dataTag
+      })
+      console.log(document.querySelector(`div.external-resource-modal[data-tag="${dataTag}"]`))
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
       // add resource query param
