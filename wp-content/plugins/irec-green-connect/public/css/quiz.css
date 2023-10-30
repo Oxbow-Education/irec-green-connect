@@ -259,6 +259,7 @@ label.selected {
 .quiz-cta img {
   width: 27px;
   height: 27px;
+  margin-left: 0.5rem;
 }
 
 .quiz-cta:hover,
