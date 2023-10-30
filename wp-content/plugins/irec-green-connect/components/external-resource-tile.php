@@ -22,10 +22,6 @@ require __DIR__ . '/external-resource-modal.php';
       <?php endforeach;
       } ?>
     </div>
-
-    <p class="resource-description clamp-2">
-      <?php echo $post_text ?>
-    </p>
   </div>
   <button class="external-resource-button" data-tag="<?php echo $post_id; ?>">
     <span class="dashicons dashicons-plus-alt2"></span>
