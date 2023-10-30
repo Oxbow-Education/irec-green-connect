@@ -38,7 +38,7 @@ if ($query->have_posts()) :
         <div class="carousel-details <?php if ($index == 0) { ?> active <?php } ?>">
           <div class="details-title-quote">
             <p class="details-title"><?php the_title() ?></p>
-            <p class="details-quote">"<?php the_field('quote') ?>"</p>
+            <p class="details-quote"><?php the_field('quote') ?></p>
           </div>
         </div>
       <?php
