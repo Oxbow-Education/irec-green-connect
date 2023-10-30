@@ -25,7 +25,6 @@ h4 {
   background-color: #236489;
   color: #ffffff;
   padding-bottom: 3em;
-  margin: 0;
   margin: 0 auto;
 }
 
@@ -37,7 +36,7 @@ h4 {
   color: #ffffff;
   font-size: 0.75rem;
   outline: none;
-  margin-bottom: 0.5rem;
+  margin: 5px 0;
 }
 
 .facet-button.active,
@@ -50,7 +49,7 @@ h4 {
 }
 
 .facet-button:focus {
-  background-color: #236489;
+  background-color: transparent;
   outline: none;
 }
 
@@ -136,6 +135,8 @@ a.read-more-button {
   color: #ffffff;
   font-size: 0.75rem;
   outline: none;
+  margin-top: 5px;
+  border: 1.5px solid white;
 }
 
 #clear-tags-button:hover {
