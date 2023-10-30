@@ -119,13 +119,13 @@ function handle_upload_resources($request)
 
       $worker_tags = array();
       if (boolval($worker_tag_1)) {
-        array_push($worker_tags, 'Industry Information');
+        array_push($worker_tags, 'Industry Info');
       }
       if (boolval($worker_tag_2)) {
-        array_push($worker_tags, 'Training Opportunities');
+        array_push($worker_tags, 'Trainings');
       }
       if (boolval($worker_tag_3)) {
-        array_push($worker_tags, 'Career Information');
+        array_push($worker_tags, 'Career Info');
       }
       if (boolval($worker_tag_4)) {
         array_push($worker_tags, 'Español');

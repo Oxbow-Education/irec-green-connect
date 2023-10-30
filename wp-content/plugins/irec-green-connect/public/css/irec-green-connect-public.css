@@ -102,7 +102,7 @@ a.read-more-button {
 .external-resource-tile.hover .external-resource-button,
 .internal-resource-tile:hover .read-more-button,
 .internal-resource-tile.hover .read-more-button {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
   border: none;
   border-radius: 0.625rem;
   color: #00aeb3;
@@ -309,7 +309,7 @@ button.close-modal-btn {
 }
 
 .resource-tile .attachment-post-thumbnail {
-  height: 172px;
+  height: 150px;
   object-fit: cover;
   object-position: top;
   width: 100%;
@@ -377,7 +377,7 @@ button.close-modal-btn {
   .resources-wrapper,
   .skeleton-grid,
   .wrapper {
-    margin: 0 4rem;
+    margin: 0 2rem;
   }
   #contact-us-container h2 {
     font-size: 65px;
