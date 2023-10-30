@@ -121,7 +121,6 @@ include __DIR__ . '/facet-buttons.php';
           is_workers: Boolean(isWorkers)
         },
         success: function(response) {
-          console.log(response)
 
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
@@ -156,6 +155,7 @@ include __DIR__ . '/facet-buttons.php';
     // LOAD MORE BTN
     $(document).on('click', '#load-more-button', function() {
       loadMorePosts();
+      $('#load-more-button').blur();
     });
 
     // INTERNAL RESOURCE - open in new tab
