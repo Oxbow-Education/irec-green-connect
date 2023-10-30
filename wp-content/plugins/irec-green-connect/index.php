@@ -63,13 +63,13 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
     // Sanitize tags.
     $sanitized_tags = array_map('sanitize_text_field', $tags);
 
-    $user_tags = array_map(function ($value) {
+    $filter_tags = array_map(function ($value) {
       return substr($value, 4); // Remove "org-"
     }, array_filter($sanitized_tags, function ($value) {
       return strpos($value, "org-") === 0;
     }));
 
-    $filter_tags = array_filter($sanitized_tags, function ($val) {
+    $user_tags = array_filter($sanitized_tags, function ($val) {
       return strpos($val, "org-") !== 0;
     });
 
@@ -115,8 +115,8 @@ function load_more_posts_callback()
   $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
   $tags = isset($_POST['tags']) ? $_POST['tags'] : null;
   $is_workers =  $_POST['is_workers'] == 'true'  ? true : false;
-  // if the post is for orgs, i also need to know who is it for, can i get that info here?
 
+  // if the post is for orgs, i also need to know who is it for, can i get that info here?
   $query = get_load_more_posts_query($page, $is_workers, $tags);
   require __DIR__ . '/components/resources-loop-grid.php';
 

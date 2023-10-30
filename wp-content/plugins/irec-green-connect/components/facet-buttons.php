@@ -13,12 +13,6 @@ if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) {
   if (is_array($org_tags_to_show)) {
     $tags = $org_tags_to_show;
   }
-  if (is_array($user_tags_to_show)) {
-    // Exclude "Worker User" tag from the array
-    $tags = array_merge($tags, array_filter($user_tags_to_show, function ($tag) {
-      return $tag !== 'Worker User';
-    }));
-  }
 }
 // URL path contains /workers
 elseif (strpos($_SERVER['REQUEST_URI'], '/workers') !== false) {
@@ -45,7 +39,7 @@ sort($tags);
   echo '<div class="spacer"></div>';
   // for either type of page, show worker or org tags here
   foreach ($tags as $tag) : ?>
-    <button class="facet-button <?php if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) echo 'org-tag'; ?>" data-tag="org-<?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
+    <button class="facet-button <?php if (!$is_workers) echo 'org-tag'; ?>" data-tag="<?php if (!$is_workers) echo 'org-'; ?><?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
   <button id="clear-tags-button">Show All</button>
 </div>
