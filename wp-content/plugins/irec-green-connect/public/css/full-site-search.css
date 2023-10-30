@@ -1,0 +1,45 @@
+#full-site-searchbox {
+  position: absolute;
+  top: 15px;
+  right: -32px;
+  background-color: white;
+  width: 372px;
+  overflow: hidden;
+}
+
+#fullSiteSearch,
+#fullSiteSearch:focus {
+  border: 1px solid #707070;
+  padding: 1rem;
+  border-radius: 0px;
+  outline: none;
+  width: 100%;
+}
+
+#fullSearchHits a {
+  color: #16577b;
+  font-weight: bold;
+  font-family: 'proxima-nova';
+  height: 100%;
+  width: 100%;
+}
+
+#fullSearchHits .ais-hits--item {
+  padding: 1rem;
+}
+
+#fullSearchHits .ais-hits--item:hover {
+  background-color: #d7a65014;
+}
+
+@media screen and (max-width: 1024px) {
+  #full-site-searchbox {
+    right: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+  }
+}
+
+#no-results-message {
+  padding: 1rem;
+}
