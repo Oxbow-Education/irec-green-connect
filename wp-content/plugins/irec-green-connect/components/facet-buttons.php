@@ -39,7 +39,7 @@ sort($tags);
   echo '<div class="spacer"></div>';
   // for either type of page, show worker or org tags here
   foreach ($tags as $tag) : ?>
-    <button class="facet-button <?php if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) echo 'org-tag'; ?>" data-tag="org-<?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
+    <button class="facet-button <?php if (!$is_workers) echo 'org-tag'; ?>" data-tag="<?php if (!$is_workers) echo 'org-'; ?><?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
   <button id="clear-tags-button">Show All</button>
 </div>

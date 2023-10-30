@@ -91,7 +91,6 @@ function handle_upload_resources($request)
       $title = $item['row_data']['Title Sentence'];
       $organization_name = $item['row_data']['Organization Name'];
       $long_description = $item['row_data']['Long Description'];
-      $short_description = $item['row_data']['Short Description'];
       $url_text = $item['row_data']['URL Text'];
       $url = $item['row_data']['URL'];
       $worker_user = $item['row_data']['Worker User'];
@@ -175,7 +174,6 @@ function handle_upload_resources($request)
       if (count($org_tags) > 0) {
         update_post_meta($post_id, 'organization_tags', $org_tags);
       }
-      update_post_meta($post_id, 'short_description', $short_description);
       update_post_meta($post_id, 'long_description', $long_description);
       update_post_meta($post_id, 'url', $url);
       update_post_meta($post_id, 'url_text', $url_text);

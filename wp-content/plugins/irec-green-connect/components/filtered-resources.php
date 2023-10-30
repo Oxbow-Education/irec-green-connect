@@ -127,7 +127,7 @@ include __DIR__ . '/facet-buttons.php';
 
           if (addToExisting) {
             $('.resources-wrapper:first').append($('.resources-wrapper:last .resource-tile'));
-            $('.resources-wrapper:last').remove();
+            // $('.resources-wrapper:last').remove();
           }
 
           page++;
@@ -137,10 +137,7 @@ include __DIR__ . '/facet-buttons.php';
           const numberOfTiles = $('.resources-wrapper .resource-tile').length
           const isEnd = numberOfTiles % 10 > 0 || numberOfTiles == 0;
 
-          console.log({
-            numberOfTiles,
-            isEnd
-          })
+
 
           if (isEnd) {
             $('#load-more-button').addClass('hidden')
@@ -158,6 +155,7 @@ include __DIR__ . '/facet-buttons.php';
     // LOAD MORE BTN
     $(document).on('click', '#load-more-button', function() {
       loadMorePosts();
+      $('#load-more-button').blur();
     });
 
     // INTERNAL RESOURCE - open in new tab
@@ -167,17 +165,27 @@ include __DIR__ . '/facet-buttons.php';
       window.open(permalink, '_blank');
     });
 
+
     // EXTERNAL RESOURCE MODAL
     // open
     $(document).on('click', '.external-resource-button, .external-resource-tile:not(.external-resource-modal-bg)', function() {
       const dataTag = $(this).attr('data-tag');
+      console.log({
+        dataTag
+      })
+      console.log(document.querySelector(`div.external-resource-modal[data-tag="${dataTag}"]`))
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
       // add resource query param
-      let permalink = `${window.location.pathname}?resource=${dataTag}`
+      const currentURL = window.location.href;
+      const url = new URL(currentURL);
+      const existingParams = new URLSearchParams(url.search);
+      existingParams.set('resource', dataTag);
+      const updatedURL = `${url.pathname}?${existingParams.toString()}${url.hash}`;
       window.history.pushState({
-        path: permalink
-      }, '', permalink);
+        path: updatedURL
+      }, '', updatedURL);
+
     });
     // close (btn or bg click)
     $(document).on('click', 'div.external-resource-modal-bg, button.close-modal-btn', function() {
@@ -185,8 +193,15 @@ include __DIR__ . '/facet-buttons.php';
       $(`div.external-resource-modal[data-tag="${dataTag}"]`).removeClass('active');
       $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).removeClass('active');
       // remove resource query param, don't reload page
-      const updatedURL = window.location.href.replace(/[?&]resource=\d+/, '');
-      history.replaceState({}, document.title, updatedURL);
+      const currentURL = window.location.href; // Get the current URL
+      const url = new URL(currentURL);
+      const existingParams = new URLSearchParams(url.search);
+      existingParams.delete('resource');
+      const updatedURL = `${url.pathname}?${existingParams.toString()}${url.hash}`;
+      window.history.pushState({
+        path: updatedURL
+      }, '', updatedURL);
+
     });
 
     // FACET BUTTONS (tag filters)
