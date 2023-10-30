@@ -230,3 +230,17 @@ function organizations_navigator()
   return ob_get_clean();
 }
 add_shortcode('organizations_navigator', 'organizations_navigator');
+function full_site_search()
+{
+  ob_start();
+
+  wp_enqueue_style('full-site-css', '/wp-content/plugins/irec-green-connect/public/css/full-site-search.css');
+  wp_enqueue_script('full-site-js', '/wp-content/plugins/irec-green-connect/public/js/full-site-search.js');
+  wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
+  wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
+
+
+  include __DIR__ . '/components/full-site-search.php';
+  return ob_get_clean();
+}
+add_shortcode('full_site_search', 'full_site_search');
