@@ -211,38 +211,37 @@ function register_update_posts_endpoint()
 
 function update_posts_callback($request)
 {
-	
-	try {
-		
-  $post_type = $request->get_param('postType');
-  $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
-  $algolia_app_id = get_option('algolia_sync_plugin_app_id');
-  $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-  $index = $client->initIndex($post_type);
-  $index->clearObjects()->wait();
+
+  try {
+
+    $post_type = $request->get_param('postType');
+    $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+    $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+    $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+    $index = $client->initIndex($post_type);
+    $index->clearObjects()->wait();
 
 
-  $args = array(
-    'post_type' => $post_type,
-    'posts_per_page' => -1,
-  );
-
-  $posts = get_posts($args);
-
-  foreach ($posts as $post) {
-
-    // Example: Update post content
-    $updated_post = array(
-      'ID' => $post->ID,
+    $args = array(
+      'post_type' => $post_type,
+      'posts_per_page' => -1,
     );
-    wp_update_post($updated_post);
-  }
 
-  return new WP_REST_Response(array('message' => 'Posts updated successfully'), 200);
-	}
-		catch(Exception $e){
-			return json_encode(array("error" => $e->getMessage()));
-		}
+    $posts = get_posts($args);
+
+    foreach ($posts as $post) {
+
+      // Example: Update post content
+      $updated_post = array(
+        'ID' => $post->ID,
+      );
+      wp_update_post($updated_post);
+    }
+
+    return new WP_REST_Response(array('message' => 'Posts updated successfully'), 200);
+  } catch (Exception $e) {
+    return json_encode(array("error" => $e->getMessage()));
+  }
 }
 
 
@@ -291,12 +290,13 @@ function algolia_sync_plugin_sync_on_publish($post_id)
     $record = [];
     $record['objectID'] = $post_id;
     $record['title'] = $post->post_title;
-    $record['content'] = $post->post_content;
+    $record['link'] = get_permalink($post_id);
+    // $record['content'] = substr($post->post_content, 0, 300);
     $post_metas = get_post_custom($post_id);
     foreach ($post_metas as $key => $values) {
       // We have to handle geolocation field differently so that they
       // come through in the way that Algolia can understand
-      if ($key != '_geoloc') {
+      if ($key != '_geoloc' && substr($key, 0, 1) != "_") {
         $value = get_field($key, $post_id);
         if (is_numeric($value)) {
           $value = intval($value);
@@ -304,6 +304,7 @@ function algolia_sync_plugin_sync_on_publish($post_id)
         $record[$key] = $value;
       }
     }
+
     // Group fields have to be fetched using ACF's get_field function
     $geoloc = get_field('_geoloc', $post_id);
     if (!empty($geoloc)) {
