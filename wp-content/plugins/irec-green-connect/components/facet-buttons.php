@@ -13,12 +13,6 @@ if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) {
   if (is_array($org_tags_to_show)) {
     $tags = $org_tags_to_show;
   }
-  if (is_array($user_tags_to_show)) {
-    // Exclude "Worker User" tag from the array
-    $tags = array_merge($tags, array_filter($user_tags_to_show, function ($tag) {
-      return $tag !== 'Worker User';
-    }));
-  }
 }
 // URL path contains /workers
 elseif (strpos($_SERVER['REQUEST_URI'], '/workers') !== false) {
