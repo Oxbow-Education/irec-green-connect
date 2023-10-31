@@ -242,6 +242,7 @@ button.close-modal-btn {
 .external-resource-tile {
   grid-row: span 1;
   height: 11rem;
+  z-index: 100;
 }
 
 .internal-resource-tile {
@@ -407,11 +408,21 @@ button.close-modal-btn {
 
 @media screen and (max-width: 1000px) {
   .external-resource-modal {
-    width: 80%;
+    width: 90%;
+    max-height: 100vh;
   }
 
   .modal-content {
     padding: 2rem;
+  }
+  .external-resource-modal h5 {
+    font-size: 22px;
+    line-height: 25px;
+  }
+  .external-resource-modal p,
+  .external-resource-modal a {
+    font-size: 16px;
+    line-height: 18px;
   }
 }
 

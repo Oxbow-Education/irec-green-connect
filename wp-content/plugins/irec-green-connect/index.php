@@ -63,11 +63,13 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
     // Sanitize tags.
     $sanitized_tags = array_map('sanitize_text_field', $tags);
 
-    $filter_tags = array_map(function ($value) {
+    // If it's the org tags, we have to remove the org- prefix
+    $filter_tags = !$is_workers ? array_map(function ($value) {
       return substr($value, 4); // Remove "org-"
     }, array_filter($sanitized_tags, function ($value) {
       return strpos($value, "org-") === 0;
-    }));
+    })) : $sanitized_tags;
+
 
     $user_tags = array_filter($sanitized_tags, function ($val) {
       return strpos($val, "org-") !== 0;
@@ -76,7 +78,6 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
 
     // On orgs - filter by 'who_is_this_for' tags if there are any.
     if (!$is_workers && count($user_tags)) {
-
       if (!empty($user_tags)) {
         $who_for_meta_query = array('relation' => 'OR');
         foreach ($user_tags as $value) {
@@ -86,6 +87,7 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
             'compare' => 'LIKE',
           ));
         }
+
         array_push($meta_query_array, $who_for_meta_query);
       }
     }
@@ -104,6 +106,7 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
       array_push($meta_query_array, $tags_meta_query);
     }
   }
+
 
   $args['meta_query'] = $meta_query_array;
   return new WP_Query($args);

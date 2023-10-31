@@ -122,6 +122,9 @@ include __DIR__ . '/facet-buttons.php';
         },
         success: function(response) {
 
+          console.log({
+            response
+          })
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
 
