@@ -132,3 +132,11 @@ quizForm.addEventListener('submit', (e) => {
   const matchScore = getMatchScore(score);
   showSlide(matchScore);
 });
+
+const inlineBlocks = document.querySelectorAll('.inline-block');
+inlineBlocks.forEach((button) => {
+  button.addEventListener('click', (e) => {
+    const slide = button.closest('.quiz-slide');
+    slide.scrollTop = slide.scrollHeight;
+  });
+});
