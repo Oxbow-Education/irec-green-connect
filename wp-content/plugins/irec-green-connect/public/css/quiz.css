@@ -56,10 +56,26 @@
   margin: 2rem 0;
 }
 
-.quiz-slide.results p {
+.quiz-slide.results p,
+.quiz-slide.results div {
   color: white;
   font-size: 18px;
   line-height: 26px;
+}
+.quiz-slide::-webkit-scrollbar {
+  display: none;
+}
+
+.quiz-slide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.inline-block .jet-dropbar__content {
+  top: -16px;
+}
+.inline-block .jet-dropbar__content a {
+  color: #236489 !important;
 }
 
 .quiz-slide.results hr {
@@ -74,7 +90,7 @@
 .quiz-slide.results .actions button {
   margin: 1rem 0;
 }
-.quiz-slide.results .actions p {
+.quiz-slide.results .actions div {
   line-height: 35px;
 }
 
@@ -90,8 +106,10 @@
 #modal.results .results-image {
   display: block;
   position: absolute;
-  left: -28px;
-  top: -28px;
+  left: -18px;
+  top: -41px;
+  transform: scale(0.75);
+  transform-origin: left;
   z-index: 2;
 }
 .results,
@@ -321,10 +339,16 @@ label.selected {
     line-height: 39px;
   }
   .quiz-slide.results p,
-  .quiz-slide.results .actions p {
+  .quiz-slide.results .actions div {
     font-size: 14px;
     line-height: 28px;
   }
+  #closeButton {
+    top: 60px;
+  }
+}
+.inline-block {
+  display: inline-block;
 }
 
 @media screen and (max-width: 567px) {
