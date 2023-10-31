@@ -134,17 +134,22 @@ $light_weighting = array(
         <hr />
 
         <div class="actions">
-          <p>To get started as soon as possible&nbsp;
-            <span>
+          <div>To get started as soon as possible&nbsp;
 
-              <button>Connect Now </button>
-            </span>&nbsp;
+            <div class="inline-block">
+
+              <?php
+              echo do_shortcode('[elementor-template id="5687"]');
+              ?>
+            </div>
+
+            &nbsp;
             with an organization. If you'd like to
             keep exploring, check out
             <a href="">How it Works for Individuals</a>
             or
             <a href="">Success Stories.</a>
-          </p>
+          </div>
 
         </div>
       </div>
@@ -155,16 +160,18 @@ $light_weighting = array(
         <hr />
 
         <div class="actions">
-          <p>Go ahead and check out
-            <a href="">How it Works for Individuals</a>
+          <div>Go ahead and check out
+            <a href="/how-it-works-for-individuals/">How it Works for Individuals</a>
             or
-            <a href="">Success Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
+            <a href="/career-stories">Career Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
             &nbsp;
-            <span>
+            <div class="inline-block">
 
-              <button>Connect Now </button>
-            </span>&nbsp; with an organization.
-          </p>
+              <?php
+              echo do_shortcode('[elementor-template id="5687"]');
+              ?>
+            </div>&nbsp; with an organization.
+          </div>
 
         </div>
       </div>
@@ -175,11 +182,9 @@ $light_weighting = array(
 
         <div class="actions">
           <p>Here's a way to explore other career paths in Clean Energy:
-            <a href="">
-              Browse Career Maps in Clean Energy
-            </a>
-            or talk to a <a href="">Local Job Center</a>
-            for one on one support. If you're still curious aboutNOT Weatherization careers, keep browsing!
+            <a href="https://www.irecusa.org/career-maps/" target="_blank">Browse Career Maps in Clean Energy</a>
+            or talk to a <a href="https://www.careeronestop.org/LocalHelp/AmericanJobCenters/find-american-job-centers.aspx" target="_blank">Local Job Center</a>
+            for one on one support. If you're still curious about Weatherization careers, keep browsing!
           </p>
 
         </div>
