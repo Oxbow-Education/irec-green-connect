@@ -33,8 +33,14 @@
 }
 
 .wage-data-description {
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
   padding-left: calc(50px);
+}
+
+.hits-divider {
+  border: none;
+  border-top: 1px solid #ffffff55;
+  margin: 0rem 3rem 2rem 3rem !important;
 }
 
 @media screen and (max-width: 768px) {

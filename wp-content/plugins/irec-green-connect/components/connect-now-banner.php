@@ -1,5 +1,16 @@
 <?php global $post; ?>
 <div class="connect-now-banner">
 
-  <h1>Become a Weatherization Worker in <span><?php echo esc_html(get_post_meta(get_the_ID(), 'state', true)); ?></span></h1>
+  <?php
+  // Get the value of the custom field "state"
+  $state_value = get_post_meta(get_the_ID(), 'state', true);
+
+  // Check if the state value is "National" and display accordingly
+  if ($state_value === 'National') {
+    echo '<h1>Become a Weatherization Worker in <span>the United States</span></h1>';
+  } else {
+    echo '<h1>Become a Weatherization Worker in <span>' . esc_html($state_value) . '</span></h1>';
+  }
+  ?>
+
 </div>

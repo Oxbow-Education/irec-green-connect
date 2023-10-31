@@ -16,6 +16,7 @@ function format_number($num)
 
 $args = array(
   'post_type'      => 'wage-data',
+  'status' => 'publish',
   'posts_per_page' => -1,  // Fetch all posts; be careful with this on large datasets!
   'meta_query'     => array(
     array(

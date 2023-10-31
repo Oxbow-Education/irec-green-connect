@@ -2,13 +2,13 @@ let geocoder;
 let map;
 let markers = [];
 let bounds;
-let search;
+let orgsSearch;
 
 function setPositionQuery(lat, lng) {
   const aroundLatLng = `${lat}, ${lng}`;
-  search.helper.setQueryParameter('aroundRadius', 80467);
-  search.helper.setQueryParameter('aroundLatLng', aroundLatLng);
-  search.helper.search();
+  orgsSearch.helper.setQueryParameter('aroundRadius', 80467);
+  orgsSearch.helper.setQueryParameter('aroundLatLng', aroundLatLng);
+  orgsSearch.helper.search();
   bounds = new google.maps.LatLngBounds();
   markers.forEach((marker) => marker.setMap(null));
 }
@@ -26,6 +26,13 @@ const addMarker = (item) => {
     icon: icon,
   };
   const marker = new google.maps.Marker(markerOptions);
+  const infoWindow = new google.maps.InfoWindow({
+    content: item.organization,
+  });
+
+  marker.addListener('click', function () {
+    infoWindow.open(map, marker);
+  });
   markers.push(marker);
   bounds.extend(marker.getPosition());
   map.fitBounds(bounds);
@@ -75,9 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
   geocoder = new google.maps.Geocoder();
   bounds = new google.maps.LatLngBounds();
 
-  // Init search
-  search = instantsearch({
+  // Init orgsSearch
+  orgsSearch = instantsearch({
     indexName: 'organization',
+    facets: ['filters'],
     searchClient: algoliasearch(
       'QVXOOP4L7N',
       'b589196885c2c6d140833e9cb83c4fa0',
@@ -85,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Add and define widgets
-  search.addWidgets([
+  orgsSearch.addWidgets([
     instantsearch.widgets.configure({
       hitsPerPage: 12,
     }),
@@ -100,9 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="organization-image">
             <img src="/wp-content/uploads/2023/09/NREL-Quality-Control-Inspector-72292-scaled.jpg" />
             <div class="organization-tags">
-              ${item.tags.map((tag) => `<span>${tag}</span>`)}
+              ${item.tags.map((tag) => `<span>${tag}</span>`).join('')}
             </div>
           </div>
+           <div class="organization-filters">
+            ${item.filters.map((filter) => `<span>${filter}</span>`).join('')}
+          </div>
+        
             <p class="organization-sentence">${item.sentence}</p>
             <div class="organization-info">
               <div>
@@ -182,5 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
   var geolocButton = document.getElementById('geolocButton');
   geolocButton.addEventListener('click', getUserLocation);
 
-  search.start();
+  orgsSearch.start();
+
+  const filterButtons = document.querySelectorAll('.org-filters');
+  filterButtons.forEach((facet) => {
+    facet.addEventListener('click', (e) => {
+      const data = e.target.dataset.filter;
+      orgsSearch.helper.setQueryParameter('facetFilters', [`filters:${data}`]);
+      orgsSearch.helper.search();
+    });
+  });
 });

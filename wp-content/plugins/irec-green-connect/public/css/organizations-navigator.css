@@ -16,6 +16,12 @@
   font-weight: 700;
 }
 
+.organizations-navigator .disclaimer {
+  color: white;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 1rem 0;
+}
 .organizations-navigator form {
   padding: 4rem 0 0;
   display: grid;
@@ -32,6 +38,8 @@
   padding-left: 1rem;
   box-shadow: none;
   border: none;
+  height: 68px;
+  font-size: 22px;
 }
 .organizations-navigator .crosshairs-button {
   grid-column-start: 2;
@@ -64,7 +72,7 @@
 }
 
 .organizations-navigator .filters {
-  padding: 2rem 0;
+  padding: 2rem 0 0;
 }
 .organizations-navigator .filters h6 {
   color: #ffffff;
@@ -78,13 +86,13 @@
   margin: 0.75rem 0;
 }
 #hits {
-  padding: 5rem 0rem;
+  padding: 0rem 0rem 5rem;
 }
 #hits .ais-infinite-hits {
   padding: 0rem 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .organization-card * {
@@ -127,6 +135,23 @@
   font-weight: 600;
 }
 
+.organization-filters {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#hits .ais-infinite-hits.ais-infinite-hits__empty {
+  color: #dfa43c;
+}
+.organization-filters span {
+  font-size: 12px;
+  color: white;
+  background-color: #8d2a4f;
+  padding: 5px 10px;
+}
+
 .organization-card .organization-sentence {
   color: #363636;
   font-size: 14px;
@@ -166,6 +191,8 @@
   align-items: center;
   justify-content: center;
   padding: 0.75rem;
+  width: 114px;
+  height: 39px;
 }
 
 .organization-card .organization-link img {
@@ -217,4 +244,27 @@
   #hits {
     padding: 3rem 0rem;
   }
+}
+
+.org-filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+}
+.org-filter,
+.org-filter:hover {
+  background-color: transparent;
+  border-radius: 5px !important;
+  border: 2px solid #8d2a4f;
+  color: white;
+  width: 142px;
+  height: 39px;
+  font-size: 14px;
+  line-height: 17px;
+}
+.org-filter:hover,
+.org-filter.active {
+  background-color: #8d2a4f;
 }
