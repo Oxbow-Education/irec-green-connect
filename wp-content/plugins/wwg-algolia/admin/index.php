@@ -296,7 +296,7 @@ function algolia_sync_plugin_sync_on_publish($post_id)
     foreach ($post_metas as $key => $values) {
       // We have to handle geolocation field differently so that they
       // come through in the way that Algolia can understand
-      if ($key != '_geoloc' && substr($key, 0, 1) != "_") {
+      if ($key != '_geoloc') {
         $value = get_field($key, $post_id);
         if (is_numeric($value)) {
           $value = intval($value);

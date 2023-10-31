@@ -495,6 +495,21 @@ function add_upload_wage_data_page()
 }
 add_action('admin_menu', 'add_upload_wage_data_page');
 
+function add_upload_organization_page()
+{
+  add_menu_page(
+    'Upload Organization Data',          // Page title
+    'Upload Organization Data',          // Menu title
+    'manage_options',            // Capability - determines who can access. 'manage_options' is typically for admins.
+    'upload-organization-data',          // Menu slug
+    'load_upload_organization_page', // Callback function to display the content of the page
+    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+
+  );
+}
+add_action('admin_menu', 'add_upload_organization_page');
+
+
 function load_upload_wage_data_page()
 {
   // Check the user's permissions
@@ -502,6 +517,14 @@ function load_upload_wage_data_page()
     wp_die(__('You do not have sufficient permissions to access this page.'));
   }
   require __DIR__ . '/partials/upload-wage-data.php';
+}
+function load_upload_organization_page()
+{
+  // Check the user's permissions
+  if (!current_user_can('manage_options')) {
+    wp_die(__('You do not have sufficient permissions to access this page.'));
+  }
+  require __DIR__ . '/partials/upload-organization-data.php';
 }
 
 // Register custom REST API endpoint
@@ -595,10 +618,10 @@ function handle_upload_organizations($request)
       $organization_email_address = $item['row_data']['Organization Email Address'];
       $organization_link = $item['row_data']['Organization Link'];
       $featured = $item['row_data']['Featured'];
-      $service_1 = $item['row_data']['Service 1'];
-      $service_2 = $item['row_data']['Service 2'];
-      $service_3 = $item['row_data']['Service 3'];
-      $service_4 = $item['row_data']['Service 4'];
+      $service_1 = $item['row_data']['Info & Help'];
+      $service_2 = $item['row_data']['Training'];
+      $service_3 = $item['row_data']['Employment'];
+      $service_4 = $item['row_data']['For Contractors'];
       $constractors_wanted = $item['row_data']['Contractors Wanted'];
       $hiring_now = $item['row_data']['Hiring Now	'];
       $irec_accredited = $item['row_data']['IREC Accredited'];
@@ -615,7 +638,7 @@ function handle_upload_organizations($request)
       $post_data = array(
         'post_title'   => $organization,
         'post_type'    => 'organization',
-        'post_status'  => 'publish'
+        'post_status'  => 'draft'
       );
 
       // Insert the post into the database
@@ -632,17 +655,19 @@ function handle_upload_organizations($request)
       update_post_meta($post_id, 'email', $organization_email_address);
       update_post_meta($post_id, 'link', $organization_link);
       update_post_meta($post_id, 'featured', $featured);
+
+      $filters = array();
       if (boolval($service_1)) {
-        update_post_meta($post_id, 'service_1', true);
+        array_push($filters, 'Info & Help');
       }
       if (boolval($service_2)) {
-        update_post_meta($post_id, 'service_2', true);
+        array_push($filters, 'Training');
       }
       if (boolval($service_3)) {
-        update_post_meta($post_id, 'service_3', true);
+        array_push($filters, 'Employement');
       }
       if (boolval($service_4)) {
-        update_post_meta($post_id, 'service_4', true);
+        array_push($filters, 'For Contractors');
       }
 
       $tags = array();
@@ -674,14 +699,21 @@ function handle_upload_organizations($request)
         array_push($tags, 'Other');
       }
       update_post_meta($post_id, 'tags', $tags);
+      update_post_meta($post_id, 'filters', $filters);
       update_post_meta($post_id, 'image', $image_link);
 
       $geoData = get_lat_lng_from_address($address_line_1, $city, $state, $zip);
       if ($geoData) {
-
-
         update_field('_geoloc', $geoData, $post_id);
       }
+
+      $updated_post = array(
+        'ID'           => $post_id,
+        'post_status'  => 'publish',
+      );
+
+      // Update the post in the database
+      wp_update_post($updated_post);
     }
   } catch (Exception $e) {
     // Sending email with the error message
@@ -700,11 +732,11 @@ function handle_upload_organizations($request)
 function get_lat_lng_from_address($address, $city, $state, $zip)
 {
 
-  $apiKey = 'AIzaSyCsvRzE48uIrgqcw_mFz2yspQJsz9Bl-BQ';
+  $apiKey = 'AIzaSyDmpMknHZCk19dfAumNHIRMIziQb6Ny5Y4';
   $fullAddress = urlencode($address . ' ' . $city . ', ' . $state . ' ' . $zip);
   $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$fullAddress}&key={$apiKey}";
 
-  $response = wp_remote_get($url); // Let's use WordPress's function
+  $response = wp_remote_get($url);
   if (is_wp_error($response)) {
     error_log(print_r($response->get_error_message(), true)); // Log errors
     return false;
