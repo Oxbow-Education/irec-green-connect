@@ -146,9 +146,9 @@ $light_weighting = array(
             &nbsp;
             with an organization. If you'd like to
             keep exploring, check out
-            <a href="">How it Works for Individuals</a>
+            <a href="/how-it-works-for-individuals">How it Works for Individuals</a>
             or
-            <a href="">Success Stories.</a>
+            <a href="/career-stories">Career Stories.</a>
           </div>
 
         </div>

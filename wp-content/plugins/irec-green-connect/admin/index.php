@@ -664,7 +664,7 @@ function handle_upload_organizations($request)
         array_push($filters, 'Training');
       }
       if (boolval($service_3)) {
-        array_push($filters, 'Employement');
+        array_push($filters, 'Employment');
       }
       if (boolval($service_4)) {
         array_push($filters, 'For Contractors');
