@@ -24,6 +24,10 @@
   --widgets-spacing: 0 !important;
 }
 
+.top-resources-container .external-resource-tile {
+  z-index: 100;
+}
+
 .top-resources-container .swiper-pagination .swiper-pagination-bullet {
   height: 23px;
   width: 23px;
