@@ -196,9 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   orgsSearch.start();
 
-  const filterButtons = document.querySelectorAll('.org-filters');
+  const filterButtons = document.querySelectorAll('.org-filter');
   filterButtons.forEach((facet) => {
     facet.addEventListener('click', (e) => {
+      filterButtons.forEach((f) => f.classList.remove('active'));
+      facet.classList.add('active');
       const data = e.target.dataset.filter;
       orgsSearch.helper.setQueryParameter('facetFilters', [`filters:${data}`]);
       orgsSearch.helper.search();

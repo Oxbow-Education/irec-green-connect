@@ -247,10 +247,10 @@
 }
 
 .org-filters {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto 1fr;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
   gap: 1rem;
 }
 .org-filter,
@@ -267,4 +267,10 @@
 .org-filter:hover,
 .org-filter.active {
   background-color: #8d2a4f;
+}
+
+.org-filters p {
+  color: white;
+  font-size: 14px;
+  margin: 0 !important;
 }

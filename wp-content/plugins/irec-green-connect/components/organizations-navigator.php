@@ -22,9 +22,16 @@
       <div class="org-filters">
 
         <button class="org-filter" data-filter="Info & Help">Info & Help</button>
+        <p>Organizations that offer general support and information</p>
         <button class="org-filter" data-filter="Training">Training</button>
+        <p>Organizations that provide training to get workers certified</p>
+
         <button class="org-filter" data-filter="Employment">Employment</button>
+        <p>Organizations that hire workers directly</p>
+
         <button class="org-filter" data-filter="For Contractors">For Contractors</button>
+        <p>Find contracts for my company to bid on</p>
+
       </div>
     </div>
   </div>
