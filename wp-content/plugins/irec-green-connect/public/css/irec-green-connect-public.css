@@ -242,7 +242,6 @@ button.close-modal-btn {
 .external-resource-tile {
   grid-row: span 1;
   height: 11rem;
-  z-index: 100;
 }
 
 .internal-resource-tile {
