@@ -133,16 +133,16 @@ function handle_upload_resources($request)
 
       $org_tags = array();
       if (boolval($org_tag_1)) {
-        array_push($org_tags, 'Marketing and Communications');
+        array_push($org_tags, 'Outreach');
       }
       if (boolval($org_tag_2)) {
         array_push($org_tags, 'DEIA');
       }
       if (boolval($org_tag_3)) {
-        array_push($org_tags, 'Workforce Development');
+        array_push($org_tags, 'Workforce Dev');
       }
       if (boolval($org_tag_4)) {
-        array_push($org_tags, 'Industry Connections');
+        array_push($org_tags, 'Industry Links');
       }
 
       $who_is_it_for = array();
