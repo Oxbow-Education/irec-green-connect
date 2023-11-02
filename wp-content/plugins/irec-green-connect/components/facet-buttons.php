@@ -14,8 +14,8 @@ if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false) {
     $tags = $org_tags_to_show;
   }
 }
-// URL path contains /workers
-elseif (strpos($_SERVER['REQUEST_URI'], '/workers') !== false) {
+// URL path contains /individuals
+elseif (strpos($_SERVER['REQUEST_URI'], '/individuals') !== false) {
   if (is_array($worker_tags_to_show)) {
     $tags = $worker_tags_to_show;
   }
