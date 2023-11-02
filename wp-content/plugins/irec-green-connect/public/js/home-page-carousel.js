@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const swiper1 = new Swiper('.swiper-container', {
     slidesPerView: 1,
     spaceBetween: 10,
+
     navigation: {
       nextEl: '.swiper-next',
       prevEl: '.swiper-prev',
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     centeredSlides: false,
     slidesPerView: 1,
     spaceBetween: 10,
-
+    preventClicks: false,
     breakpoints: {
       993: {
         slidesPerView: 4.25,
