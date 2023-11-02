@@ -310,8 +310,9 @@ function save_internal_resource_to_algolia($post_id)
     // Check if the custom field 'is_internal_resource' is set to 'true'
     $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
 
-    if ($is_internal_resource === 'true') {
+    if (boolval($is_internal_resource)) {
       // Get the post title, content, and link
+
       $post = get_post($post_id);
       $title = $post->post_title;
       $content = $post->post_content;
@@ -363,17 +364,15 @@ function save_external_resource_to_algolia($post_id)
   if (
     get_post_type($post_id) == 'post'
     && get_post_status($post_id) == 'publish'
-    && get_post_meta($post_id, 'is_internal_resource', true) != 'true'
+    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
   ) {
     // Get the post title and content
     $post = get_post($post_id);
     $title = $post->post_title;
     $content = $post->post_content;
 
-    // Get the value of 'who_is_this_for' custom field (assuming it's a multi-select field)
     $who_is_this_for = get_post_meta($post_id, 'who_is_this_for', true);
 
-    // Initialize variables for generating the link
     $is_worker = false;
     $page_number = 1;
 
@@ -384,39 +383,58 @@ function save_external_resource_to_algolia($post_id)
       $args = array(
         'post_type' => 'post',
         'post_status' => 'publish',
+
         'meta_query' => array(
           'relation' => 'AND',
           array(
             'key' => 'who_is_this_for',
             'value' => 'Worker User',
-            'compare' => 'IN',
-          ),
-          array(
-            'key' => 'is_internal_resource',
-            'value' => 'false',
+            'compare' => 'LIKE',
           ),
         ),
+        'orderby' => 'title', // Order by post title
+        'order' => 'ASC',
+        'posts_per_page' => -1,
       );
-
-      $worker_query = new WP_Query($args);
-
-      // Calculate the page number based on the current post's position
-      if ($worker_query->have_posts()) {
-        $current_post_position = 0;
-        while ($worker_query->have_posts()) {
-          $worker_query->the_post();
-          $current_post_position++;
-          if ($post_id == get_the_ID()) {
-            $page_number = ceil($current_post_position / 10);
-            break;
-          }
-        }
-        wp_reset_postdata();
-      }
+    } else {
+      $is_worker = false;
+      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
+      $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'meta_query' => array(
+          'key' => 'organization_tags',
+          'value' => '',
+          'compare' => '!=',
+        ),
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'posts_per_page' => -1,
+      );
     }
+
+    $worker_query = new WP_Query($args);
+
+    // Calculate the page number based on the current post's position
+    if ($worker_query->have_posts()) {
+      $current_post_position = 0;
+      while ($worker_query->have_posts()) {
+        $worker_query->the_post();
+
+        $current_post_position++;
+        if ($post_id == get_the_ID()) {
+          $page_number = ceil($current_post_position / 10);
+          // break;
+        }
+      }
+
+      wp_reset_postdata();
+    }
+
 
     // Generate the link based on the criteria
     if ($is_worker) {
+
       $link = '/workers?paged=' . $page_number . '&resource=' . $post_id;
     } else {
       $link = '/organizations?paged=' . $page_number . '&resource=' . $post_id;

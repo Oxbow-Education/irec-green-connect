@@ -186,10 +186,32 @@ function handle_upload_resources($request)
 
     return json_encode(array('error' => $e->getMessage()));
   }
+  update_all_posts();
+
 
   return json_encode(array('message' => 'Success!'));
 }
 
+// We run this to trigger all of the hooks that go into saving the
+// search data a post
+function update_all_posts()
+{
+  $posts = get_posts(array(
+    'post_type' => 'post', // Specify the post type
+    'posts_per_page' => -1, // Retrieve all posts of the specified type
+  ));
+
+  foreach ($posts as $post) {
+    $post_data = array(
+      'ID' => $post->ID,
+      'post_title' => $post->post_title, // Keep the existing title
+      'post_content' => $post->post_content, // Keep the existing content
+      'post_status' => $post->post_status, // Keep the existing status
+    );
+
+    wp_update_post($post_data); // Update the post without changing its content or status
+  }
+}
 
 // Add custom main menu page
 function add_upload_external_resources_menu()
