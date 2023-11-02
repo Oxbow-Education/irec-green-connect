@@ -14,7 +14,7 @@ function get_radio_buttons($questionNumber, $questionScores)
       Disagree
     </label>
     <label>
-      <input type='radio' name='question_$questionNumber' value='0' class='image-radio'>
+      <input type='radio' name='question_$questionNumber' value='1' class='image-radio'>
       <img src='/wp-content/plugins/irec-green-connect/public/img/unsure.svg' alt='Unsure'>
       Unsure
     </label>

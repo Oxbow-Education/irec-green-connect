@@ -435,7 +435,7 @@ function save_external_resource_to_algolia($post_id)
     // Generate the link based on the criteria
     if ($is_worker) {
 
-      $link = '/workers?paged=' . $page_number . '&resource=' . $post_id;
+      $link = '/individuals?paged=' . $page_number . '&resource=' . $post_id;
     } else {
       $link = '/organizations?paged=' . $page_number . '&resource=' . $post_id;
     }
