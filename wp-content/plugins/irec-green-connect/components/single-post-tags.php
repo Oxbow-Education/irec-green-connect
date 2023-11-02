@@ -16,10 +16,7 @@ $org_tag_array = array_intersect($org_tag_array, $org_tags_to_show);
 $who_for_tag_array = array_intersect($who_for_tag_array, $user_tags_to_show);
 
 
-// Remove "Worker User" from the array
-$who_for_tag_array = array_filter($who_for_tag_array, function ($value) {
-  return $value !== 'Worker User';
-}); ?>
+?>
 <div class="single-resource-tags">
   <?php
   // tags - green for org related, blue for worker
