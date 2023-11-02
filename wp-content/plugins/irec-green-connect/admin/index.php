@@ -32,14 +32,14 @@ function custom_admin_menu()
   remove_menu_page('edit.php');
 
   // Create "Internal Resources" menu item
-  add_menu_page('Internal Resources', 'Internal Resources Database', 'manage_options', 'edit.php?is_internal_resource=true', '', 'dashicons-format-aside', 5);
+  add_menu_page('Internal Resources', 'Internal Resources Database', 'edit_posts', 'edit.php?is_internal_resource=true', '', 'dashicons-format-aside', 5);
   add_submenu_page('edit.php?is_internal_resource=true', 'All Internal Resources', 'All Internal Resources', 'manage_options', 'edit.php?is_internal_resource=true');
-  add_submenu_page('edit.php?is_internal_resource=true', 'Add New', 'Add New', 'manage_options', 'post-new.php?is_internal_resource=true');
+  add_submenu_page('edit.php?is_internal_resource=true', 'Add New', 'Add New', 'edit_posts', 'post-new.php?is_internal_resource=true');
 
   // Create "External Resources" menu item
-  add_menu_page('External Resources', 'External Resources Database', 'manage_options', 'edit.php?is_internal_resource=false', '', 'dashicons-category', 6);
+  add_menu_page('External Resources', 'External Resources Database', 'edit_posts', 'edit.php?is_internal_resource=false', '', 'dashicons-category', 6);
   add_submenu_page('edit.php?is_internal_resource=false', 'All External Resources', 'All External Resources', 'manage_options', 'edit.php?is_internal_resource=false');
-  add_submenu_page('edit.php?is_internal_resource=false', 'Add New', 'Add New', 'manage_options', 'post-new.php?is_internal_resource=false');
+  add_submenu_page('edit.php?is_internal_resource=false', 'Add New', 'Add New', 'edit_posts', 'post-new.php?is_internal_resource=false');
 }
 add_action('admin_menu', 'custom_admin_menu');
 
@@ -213,20 +213,6 @@ function update_all_posts()
   }
 }
 
-// Add custom main menu page
-function add_upload_external_resources_menu()
-{
-  add_menu_page(
-    'Upload External Resources',           // Page title
-    'Upload External Resources',           // Menu title
-    'edit_posts',                          // Capability
-    'upload-external-resources',           // Menu slug
-    'handle_upload_external_resources',    // Callback function
-    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
-    6                                      // Position (optional, this will place it below "Posts")
-  );
-}
-add_action('admin_menu', 'add_upload_external_resources_menu');
 
 // Callback function for the custom menu page
 function handle_upload_external_resources()
@@ -502,13 +488,26 @@ function wage_data_filter_query($query)
   }
 }
 add_filter('parse_query', 'wage_data_filter_query');
+// Add custom main menu page
+function add_upload_external_resources_menu()
+{
+  add_menu_page(
+    'Upload External Resources',           // Page title
+    'Upload External Resources',           // Menu title
+    'edit_posts',                          // Capability
+    'upload-external-resources',           // Menu slug
+    'handle_upload_external_resources',    // Callback function
+    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+  );
+}
+add_action('admin_menu', 'add_upload_external_resources_menu');
 
 function add_upload_wage_data_page()
 {
   add_menu_page(
     'Upload Wage Data',          // Page title
     'Upload Wage Data',          // Menu title
-    'manage_options',            // Capability - determines who can access. 'manage_options' is typically for admins.
+    'edit_posts',            // Capability - determines who can access. 'manage_options' is typically for admins.
     'upload-wage-data',          // Menu slug
     'load_upload_wage_data_page', // Callback function to display the content of the page
     'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
@@ -522,10 +521,10 @@ function add_upload_organization_page()
   add_menu_page(
     'Upload Organization Data',          // Page title
     'Upload Organization Data',          // Menu title
-    'manage_options',            // Capability - determines who can access. 'manage_options' is typically for admins.
+    'edit_posts',            // Capability - determines who can access. 'manage_options' is typically for admins.
     'upload-organization-data',          // Menu slug
     'load_upload_organization_page', // Callback function to display the content of the page
-    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+    'dashicons-upload',
 
   );
 }
