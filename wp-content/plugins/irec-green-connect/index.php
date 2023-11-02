@@ -250,3 +250,235 @@ function full_site_search()
   return ob_get_clean();
 }
 add_shortcode('full_site_search', 'full_site_search');
+
+
+// This saves and deletes pages to the algolia full_site_search index
+// on save
+function save_to_algolia_on_publish($post_id)
+{
+  // Check if the post type is 'page' and post status is 'publish'
+  if (get_post_type($post_id) == 'page' && get_post_status($post_id) == 'publish') {
+    // Get the post title, content, and link
+    $post = get_post($post_id);
+    $title = $post->post_title;
+    $content = $post->post_content;
+    $link = get_permalink($post_id);
+
+    // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+    // Sync post with Algolia
+    $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+    $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+    // Perform the synchronization with Algolia using the Algolia API
+    // Replace this code with your own logic to sync the post with Algolia
+
+    // Example code using the Algolia PHP SDK
+    $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+    $index = $client->initIndex('full_site_search');
+
+    // Define the data to be indexed
+    $record = array(
+      'objectID' => $post_id, // Use the post ID as the Algolia objectID
+      'title' => $title,
+      'content' => $content,
+      'link' => $link
+    );
+
+
+    // Save the data to the Algolia index
+    $index->saveObject($record);
+
+    add_action('wp_trash_post', function ($post_id) use ($index) {
+      $index->deleteObject($post_id);
+    });
+
+    // Example for deleting data when a post's status changes to 'draft' or 'pending'
+    add_action('transition_post_status', function ($new_status, $old_status, $post) use ($index) {
+      if (($new_status == 'draft' || $new_status == 'pending') && $old_status == 'publish') {
+        $index->deleteObject($post->ID);
+      }
+    }, 10, 3);
+  }
+}
+
+add_action('save_post', 'save_to_algolia_on_publish');
+
+function save_internal_resource_to_algolia($post_id)
+{
+  // Check if the post type is 'post' and the post is published
+  if (get_post_type($post_id) == 'post' && get_post_status($post_id) == 'publish') {
+    // Check if the custom field 'is_internal_resource' is set to 'true'
+    $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
+
+    if (boolval($is_internal_resource)) {
+      // Get the post title, content, and link
+
+      $post = get_post($post_id);
+      $title = $post->post_title;
+      $content = $post->post_content;
+      $link = get_permalink($post_id);
+
+      // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+      // Sync post with Algolia
+      $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+      $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+      // Perform the synchronization with Algolia using the Algolia API
+      // Replace this code with your own logic to sync the post with Algolia
+
+      // Example code using the Algolia PHP SDK
+      $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+      $index = $client->initIndex('full_site_search');
+
+      // Define the data to be indexed
+      $data = [
+        'objectID' => $post_id, // Use the post ID as the Algolia objectID
+        'title' => $title,
+        'content' => $content,
+        'link' => $link,
+      ];
+
+      // Save the data to the Algolia index
+      $index->saveObject($data);
+      add_action('wp_trash_post', function ($post_id) use ($index) {
+        $index->deleteObject($post_id);
+      });
+
+      // Example for deleting data when a post's status changes to 'draft' or 'pending'
+      add_action('transition_post_status', function ($new_status, $old_status, $post) use ($index) {
+        if (($new_status == 'draft' || $new_status == 'pending') && $old_status == 'publish') {
+          $index->deleteObject($post->ID);
+        }
+      }, 10, 3);
+    }
+  }
+}
+
+// Hook the function to the 'save_post' action
+add_action('save_post', 'save_internal_resource_to_algolia');
+
+
+function save_external_resource_to_algolia($post_id)
+{
+  // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
+  if (
+    get_post_type($post_id) == 'post'
+    && get_post_status($post_id) == 'publish'
+    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+  ) {
+    // Get the post title and content
+    $post = get_post($post_id);
+    $title = $post->post_title;
+    $content = $post->post_content;
+
+    $who_is_this_for = get_post_meta($post_id, 'who_is_this_for', true);
+
+    $is_worker = false;
+    $page_number = 1;
+
+    if (is_array($who_is_this_for) && in_array('Worker User', $who_is_this_for)) {
+      $is_worker = true;
+
+      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
+      $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+
+        'meta_query' => array(
+          'relation' => 'AND',
+          array(
+            'key' => 'who_is_this_for',
+            'value' => 'Worker User',
+            'compare' => 'LIKE',
+          ),
+        ),
+        'orderby' => 'title', // Order by post title
+        'order' => 'ASC',
+        'posts_per_page' => -1,
+      );
+    } else {
+      $is_worker = false;
+      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
+      $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'meta_query' => array(
+          'key' => 'organization_tags',
+          'value' => '',
+          'compare' => '!=',
+        ),
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'posts_per_page' => -1,
+      );
+    }
+
+    $worker_query = new WP_Query($args);
+
+    // Calculate the page number based on the current post's position
+    if ($worker_query->have_posts()) {
+      $current_post_position = 0;
+      while ($worker_query->have_posts()) {
+        $worker_query->the_post();
+
+        $current_post_position++;
+        if ($post_id == get_the_ID()) {
+          $page_number = ceil($current_post_position / 10);
+          // break;
+        }
+      }
+
+      wp_reset_postdata();
+    }
+
+
+    // Generate the link based on the criteria
+    if ($is_worker) {
+
+      $link = '/workers?paged=' . $page_number . '&resource=' . $post_id;
+    } else {
+      $link = '/organizations?paged=' . $page_number . '&resource=' . $post_id;
+    }
+
+    // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+    // Sync post with Algolia
+    $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+    $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+    // Perform the synchronization with Algolia using the Algolia API
+    // Replace this code with your own logic to sync the post with Algolia
+
+    // Example code using the Algolia PHP SDK
+    $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+    $index = $client->initIndex('full_site_search');
+    // Define the data to be indexed
+    $data = [
+      'objectID' => $post_id, // Use the post ID as the Algolia objectID
+      'title' => $title,
+      'content' => $content,
+      'link' => $link,
+    ];
+
+    // Save the data to the Algolia index
+    $index->saveObject($data);
+    add_action('wp_trash_post', function ($post_id) use ($index) {
+      $index->deleteObject($post_id);
+    });
+
+    // Example for deleting data when a post's status changes to 'draft' or 'pending'
+    add_action('transition_post_status', function ($new_status, $old_status, $post) use ($index) {
+      if (($new_status == 'draft' || $new_status == 'pending') && $old_status == 'publish') {
+        $index->deleteObject($post->ID);
+      }
+    }, 10, 3);
+  }
+}
+
+// Hook the function to the 'save_post' action
+add_action('save_post', 'save_external_resource_to_algolia');
+  
+
+// nice to have
+// on page save, if page has value for 'worker_tags_to_display", add each tag to the full page search where title = Resources about <tag>, content is empty, and url is page?tags=<>
+// on page save, if page has value for 'org_tags_to_display", add each tag to the full page search where title = Resources about <tag>, content is empty, and url is page?tags=<org-tag>
+// on page save, if page has value for 'user_tags_to_display", add each tag to the full page search where title = Resources for: tag, content is empty, and url is page?tags=<org-tag>
