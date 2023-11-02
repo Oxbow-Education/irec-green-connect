@@ -31,15 +31,23 @@ sort($tags);
   <h4 id="filter-by">Filter By</h4>
   <?php
   // if /organizations page, we want an additional top row of tags here (who_is_it_for)
-  if (strpos($_SERVER['REQUEST_URI'], '/organizations') !== false && !empty($user_tags_to_show)) {
+  if (!$is_workers && !empty($user_tags_to_show)) {
+  ?>
+    <p class="filter-label">Filter by Organization Type</p>
+    <?php
     foreach ($user_tags_to_show as $userTag) : ?>
-      <button class="facet-button" data-tag="<?php echo esc_attr($userTag); ?>"><?php echo esc_html($userTag); ?></button>
+      <button class="facet-button  <?php if (!$is_workers) echo 'org-tag'; ?>" data-tag="<?php echo esc_attr($userTag); ?>"><?php echo esc_html($userTag); ?></button>
     <?php endforeach;
   }
   echo '<div class="spacer"></div>';
+  if (!$is_workers) {
+    ?>
+    <p class="filter-label">Filter by Topic</p>
+  <?php
+  }
   // for either type of page, show worker or org tags here
   foreach ($tags as $tag) : ?>
-    <button class="facet-button <?php if (!$is_workers) echo 'org-tag'; ?>" data-tag="<?php if (!$is_workers) echo 'org-'; ?><?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
+    <button class="facet-button" data-tag="<?php if (!$is_workers) echo 'org-'; ?><?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
   <button id="clear-tags-button">Show All</button>
 </div>

@@ -79,7 +79,7 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
     // On orgs - filter by 'who_is_this_for' tags if there are any.
     if (!$is_workers && count($user_tags)) {
       if (!empty($user_tags)) {
-        $who_for_meta_query = array('relation' => 'OR');
+        $who_for_meta_query = array('relation' => 'AND');
         foreach ($user_tags as $value) {
           array_push($who_for_meta_query, array(
             'key' => 'who_is_this_for',
@@ -95,7 +95,7 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
 
     // Filter by other tags if there are any.
     if (!empty($filter_tags)) {
-      $tags_meta_query = array('relation' => 'OR');
+      $tags_meta_query = array('relation' => 'AND');
       foreach ($filter_tags as $value) {
         array_push($tags_meta_query, array(
           'key' => $is_workers ? 'worker_tags' : 'organization_tags',
