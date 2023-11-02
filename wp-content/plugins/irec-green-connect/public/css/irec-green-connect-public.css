@@ -58,7 +58,7 @@ h4 {
 }
 
 .facet-button.org-tag:focus {
-  background-color: #a1d165;
+  background-color: transparent;
   outline: none;
 }
 
@@ -328,6 +328,13 @@ button.close-modal-btn {
 .wrapper {
   margin: 0 2rem;
   max-width: 1000px;
+}
+.facet-buttons .filter-label {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 0;
+  margin: 5px 0;
 }
 
 .resources-wrapper,
