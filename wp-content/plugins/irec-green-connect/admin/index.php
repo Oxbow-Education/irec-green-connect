@@ -101,7 +101,7 @@ function handle_upload_resources($request)
       $worker_tag_1 = $item['row_data']['Industry Information'];
       $worker_tag_2 = $item['row_data']['Training Opportunities'];
       $worker_tag_3 = $item['row_data']['Career Information'];
-      $worker_tag_4 = $item['row_data']['Español'];
+      $worker_tag_4 = $item['row_data']['Espanol'];
       $org_tag_1 = $item['row_data']['Marketing and Communications'];
       $org_tag_2 = $item['row_data']['DEIA'];
       $org_tag_3 = $item['row_data']['Workforce Development'];
