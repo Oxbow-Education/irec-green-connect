@@ -1,10 +1,10 @@
 === WP Synchro - WordPress Migration Plugin for Database & Files ===
 Contributors: wpsynchro
 Donate link: https://wpsynchro.com/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=donate
-Tags: migrate,clone,files,media,migration
+Tags: migrate,clone,files,database,migration
 Requires at least: 5.2
 Tested up to: 6.4
-Stable tag: 1.11.0
+Stable tag: 1.11.1
 Requires PHP: 7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0
@@ -112,6 +112,11 @@ It is currently planned for one of the next releases to support it.
 4. WP Synchro doing a database migration
 
 == Changelog ==
+
+= 1.11.1 =
+ * Bugfix: Fix PHP timeout issue caused by serialized string search/replace handler, that goes into endless loop for defective serialized strings
+ * Bugfix: Fix issue with some tables not being migrated when source database is MariaDB and when table does not have a primary key
+ * Improvement: Improve the error reporting when database server gives errors
 
 = 1.11.0 =
  * Bugfix: No longer have problems with migration of WordFence database tables

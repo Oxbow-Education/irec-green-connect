@@ -2,6 +2,7 @@
 
 namespace WPSynchro\Database;
 
+use WPSynchro\Database\Exception\SerializedStringException;
 use WPSynchro\Logger\FileLogger;
 use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Transport\Destination;
@@ -107,6 +108,11 @@ class DatabaseSync
             // If no more work, mark as completed
             if ($nomorework) {
                 $this->job->database_completed = true;
+                break;
+            }
+
+            // If we found errors, break out
+            if (count($this->job->errors) > 0) {
                 break;
             }
 
@@ -349,6 +355,10 @@ class DatabaseSync
             $wpdb->query('SET FOREIGN_KEY_CHECKS=0;');
             foreach ($sql_inserts as $sql_insert) {
                 $wpdb->query($sql_insert);
+                if (strlen($wpdb->last_error) > 0) {
+                    $this->job->errors[] = $wpdb->last_error;
+                    $wpdb->last_error = '';
+                }
                 $wpdb->flush();
             }
         }
@@ -507,7 +517,11 @@ class DatabaseSync
     {
         // Check data type
         if (is_serialized($data)) {
-            $this->serialized_string_handler->searchReplaceSerialized($data, $this->job->db_search_replaces);
+            try {
+                $this->serialized_string_handler->searchReplaceSerialized($data, $this->job->db_search_replaces);
+            } catch (SerializedStringException $ex) {
+                $this->logger->log('ERROR', $ex->getMessage(), $ex->data);
+            }
         } else {
             // Its just plain data, so simple fixy fixy
             foreach ($this->job->db_search_replaces as $replaces) {
