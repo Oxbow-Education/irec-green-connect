@@ -161,11 +161,12 @@ include __DIR__ . '/facet-buttons.php';
       $('#load-more-button').blur();
     });
 
-    // INTERNAL RESOURCE - open in new tab
+    // INTERNAL RESOURCE 
     $(document).on('click', '.internal-resource-tile', function(e) {
       e.preventDefault();
       const permalink = $(this).attr('data-tag');
-      window.open(permalink, '_blank');
+      window.location.href = permalink;
+
     });
 
 
