@@ -4,13 +4,39 @@ let markers = [];
 let bounds;
 let orgsSearch;
 
+function calculateBounds(centerLatLng, radiusMiles) {
+  // Earth's radius in miles
+  const earthRadius = 3958.8; // approximate value for the radius of the Earth in miles
+
+  // Convert the radius from miles to radians
+  const radiusRadians = radiusMiles / earthRadius;
+
+  const lat = centerLatLng.lat;
+  const lng = centerLatLng.lng;
+
+  // Calculate the latitude and longitude bounds
+  const north = lat + radiusRadians * (180 / Math.PI);
+  const south = lat - radiusRadians * (180 / Math.PI);
+  const east =
+    lng + (radiusRadians * (180 / Math.PI)) / Math.cos((lat * Math.PI) / 180);
+  const west =
+    lng - (radiusRadians * (180 / Math.PI)) / Math.cos((lat * Math.PI) / 180);
+
+  return {
+    north: north,
+    south: south,
+    east: east,
+    west: west,
+  };
+}
+
 function setPositionQuery(lat, lng) {
   const aroundLatLng = `${lat}, ${lng}`;
-  orgsSearch.helper.setQueryParameter('aroundRadius', 80467);
+  orgsSearch.helper.setQueryParameter('aroundRadius', 160934);
   orgsSearch.helper.setQueryParameter('aroundLatLng', aroundLatLng);
   orgsSearch.helper.search();
-  bounds = new google.maps.LatLngBounds();
-  markers.forEach((marker) => marker.setMap(null));
+  const bounds = calculateBounds({ lat, lng }, 50);
+  map.fitBounds(bounds);
 }
 // Adds a marker to the map
 const addMarker = (item) => {
@@ -102,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showPrevious: false,
       templates: {
         item: (item) => {
-          addMarker(item);
           return `<div class="organization-card">
           <h6>${item.organization}</h6>
           <div class="organization-image">
@@ -164,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           const zipcode = await getZipCodeFromCoordinates(latitude, longitude);
-          console.log({ zipcode });
           document.getElementById('zipcode').value = zipcode;
           setPositionQuery(latitude, longitude);
         },

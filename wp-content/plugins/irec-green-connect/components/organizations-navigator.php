@@ -1,4 +1,4 @@
-<div class="organizations-navigator">
+<div id="connectNow" class="organizations-navigator">
   <div>
     <h2>Connect Now</h2>
     <?php
