@@ -243,9 +243,6 @@ function full_site_search()
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
 
-
-
-
   include __DIR__ . '/components/full-site-search.php';
   return ob_get_clean();
 }
@@ -256,6 +253,19 @@ add_shortcode('full_site_search', 'full_site_search');
 // on save
 function save_to_algolia_on_publish($post_id)
 {
+
+  // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+  // Sync post with Algolia
+  $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+  $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+  // Perform the synchronization with Algolia using the Algolia API
+  // Replace this code with your own logic to sync the post with Algolia
+
+  // Example code using the Algolia PHP SDK
+  $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+  $index = $client->initIndex('full_site_search');
+
   // Check if the post type is 'page' and post status is 'publish'
   if (get_post_type($post_id) == 'page' && get_post_status($post_id) == 'publish') {
     // Get the post title, content, and link
@@ -263,18 +273,6 @@ function save_to_algolia_on_publish($post_id)
     $title = $post->post_title;
     $content = $post->post_content;
     $link = get_permalink($post_id);
-
-    // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
-    // Sync post with Algolia
-    $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
-    $algolia_app_id = get_option('algolia_sync_plugin_app_id');
-
-    // Perform the synchronization with Algolia using the Algolia API
-    // Replace this code with your own logic to sync the post with Algolia
-
-    // Example code using the Algolia PHP SDK
-    $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-    $index = $client->initIndex('full_site_search');
 
     // Define the data to be indexed
     $record = array(
@@ -287,17 +285,11 @@ function save_to_algolia_on_publish($post_id)
 
     // Save the data to the Algolia index
     $index->saveObject($record);
-
-    add_action('wp_trash_post', function ($post_id) use ($index) {
-      $index->deleteObject($post_id);
-    });
-
-    // Example for deleting data when a post's status changes to 'draft' or 'pending'
-    add_action('transition_post_status', function ($new_status, $old_status, $post) use ($index) {
-      if (($new_status == 'draft' || $new_status == 'pending') && $old_status == 'publish') {
-        $index->deleteObject($post->ID);
-      }
-    }, 10, 3);
+  } else if (
+    get_post_type($post_id) == 'page'
+    && get_post_status($post_id) != 'publish'
+  ) {
+    $index->deleteObject($post_id);
   }
 }
 
@@ -305,6 +297,19 @@ add_action('save_post', 'save_to_algolia_on_publish');
 
 function save_internal_resource_to_algolia($post_id)
 {
+
+  // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+  // Sync post with Algolia
+  $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+  $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+  // Perform the synchronization with Algolia using the Algolia API
+  // Replace this code with your own logic to sync the post with Algolia
+
+  // Example code using the Algolia PHP SDK
+  $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+  $index = $client->initIndex('full_site_search');
+
   // Check if the post type is 'post' and the post is published
   if (get_post_type($post_id) == 'post' && get_post_status($post_id) == 'publish') {
     // Check if the custom field 'is_internal_resource' is set to 'true'
@@ -318,18 +323,6 @@ function save_internal_resource_to_algolia($post_id)
       $content = $post->post_content;
       $link = get_permalink($post_id);
 
-      // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
-      // Sync post with Algolia
-      $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
-      $algolia_app_id = get_option('algolia_sync_plugin_app_id');
-
-      // Perform the synchronization with Algolia using the Algolia API
-      // Replace this code with your own logic to sync the post with Algolia
-
-      // Example code using the Algolia PHP SDK
-      $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-      $index = $client->initIndex('full_site_search');
-
       // Define the data to be indexed
       $data = [
         'objectID' => $post_id, // Use the post ID as the Algolia objectID
@@ -340,17 +333,12 @@ function save_internal_resource_to_algolia($post_id)
 
       // Save the data to the Algolia index
       $index->saveObject($data);
-      add_action('wp_trash_post', function ($post_id) use ($index) {
-        $index->deleteObject($post_id);
-      });
-
-      // Example for deleting data when a post's status changes to 'draft' or 'pending'
-      add_action('transition_post_status', function ($new_status, $old_status, $post) use ($index) {
-        if (($new_status == 'draft' || $new_status == 'pending') && $old_status == 'publish') {
-          $index->deleteObject($post->ID);
-        }
-      }, 10, 3);
     }
+  } else if (
+    get_post_type($post_id) == 'post'
+    && get_post_status($post_id) != 'publish'
+  ) {
+    $index->deleteObject($post_id);
   }
 }
 
@@ -360,6 +348,18 @@ add_action('save_post', 'save_internal_resource_to_algolia');
 
 function save_external_resource_to_algolia($post_id)
 {
+  // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+  // Sync post with Algolia
+  $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+  $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+  // Perform the synchronization with Algolia using the Algolia API
+  // Replace this code with your own logic to sync the post with Algolia
+
+  // Example code using the Algolia PHP SDK
+  $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+  $index = $client->initIndex('full_site_search');
+
   // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
   if (
     get_post_type($post_id) == 'post'
@@ -440,17 +440,7 @@ function save_external_resource_to_algolia($post_id)
       $link = '/organizations?paged=' . $page_number . '&resource=' . $post_id;
     }
 
-    // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
-    // Sync post with Algolia
-    $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
-    $algolia_app_id = get_option('algolia_sync_plugin_app_id');
 
-    // Perform the synchronization with Algolia using the Algolia API
-    // Replace this code with your own logic to sync the post with Algolia
-
-    // Example code using the Algolia PHP SDK
-    $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-    $index = $client->initIndex('full_site_search');
     // Define the data to be indexed
     $data = [
       'objectID' => $post_id, // Use the post ID as the Algolia objectID
@@ -461,16 +451,12 @@ function save_external_resource_to_algolia($post_id)
 
     // Save the data to the Algolia index
     $index->saveObject($data);
-    add_action('wp_trash_post', function ($post_id) use ($index) {
-      $index->deleteObject($post_id);
-    });
-
-    // Example for deleting data when a post's status changes to 'draft' or 'pending'
-    add_action('transition_post_status', function ($new_status, $old_status, $post) use ($index) {
-      if (($new_status == 'draft' || $new_status == 'pending') && $old_status == 'publish') {
-        $index->deleteObject($post->ID);
-      }
-    }, 10, 3);
+  } else if (
+    get_post_type($post_id) == 'post'
+    && get_post_status($post_id) != 'publish'
+    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+  ) {
+    $index->deleteObject($post_id);
   }
 }
 
