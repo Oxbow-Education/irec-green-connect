@@ -86,6 +86,8 @@ class DatabaseHelperFunctions
         global $wpdb;
         $data = [];
         $has_more_rows_in_table = true;
+        $errors = [];
+
         $current_response_size = 0;
         $is_using_primary_key = strlen($primary_key_column) > 0;
         $start_time = microtime(true);
@@ -93,7 +95,7 @@ class DatabaseHelperFunctions
         // Generate the template sql
         $column_parts = [];
         foreach ($column_names as $column_name) {
-            $column_parts[] = 'char_length(' . $column_name . ')';
+            $column_parts[] = 'char_length(`' . $column_name . '`)';
         }
         $sql_template = "SELECT t1.*, @total:= @total + (" . implode('+', $column_parts) . ") AS wpsynchro_rowlength FROM (%s) AS t1 JOIN (SELECT @total:=0) AS r WHERE @total < %d";
 
@@ -105,10 +107,16 @@ class DatabaseHelperFunctions
                 $sql_stmt = sprintf($sql_template, $sql_stmt, $remaining_space);
                 $sql_stmt .= ' ORDER BY `' . $primary_key_column . '` ASC';
             } else {
-                $sql_stmt = 'SELECT * FROM `' . $table . '` LIMIT ' . $completed_rows . ',' . intval($default_rows_per_request);
+                $order_by = ' ORDER BY `' . implode('`,`', $column_names) . '` ' ;
+                $sql_stmt = 'SELECT * FROM `' . $table . '` ' . $order_by . ' LIMIT ' . $completed_rows . ',' . intval($default_rows_per_request);
                 $sql_stmt = sprintf($sql_template, $sql_stmt, $remaining_space);
+                $sql_stmt .= $order_by;
             }
             $sql_result = $wpdb->get_results($sql_stmt);
+            if (strlen($wpdb->last_error) > 0) {
+                $errors[] = $wpdb->last_error;
+                $wpdb->last_error = '';
+            }
 
             if (empty($sql_result)) {
                 $has_more_rows_in_table = false;
@@ -143,7 +151,8 @@ class DatabaseHelperFunctions
 
         return (object) [
             'data' => $data,
-            'has_more_rows_in_table' => $has_more_rows_in_table
+            'has_more_rows_in_table' => $has_more_rows_in_table,
+            'errors' => $errors
         ];
     }
 }

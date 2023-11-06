@@ -2,6 +2,8 @@
 
 namespace WPSynchro\Database;
 
+use WPSynchro\Database\Exception\SerializedStringException;
+
 /**
  * Handle serialized strings
  * @since 1.10.0
@@ -9,26 +11,28 @@ namespace WPSynchro\Database;
 class SerializedStringHandler
 {
     const STRING_START_PART = 's:';
-    private $string_tokenize_length = 0;
+    const STRING_TOKENIZE_LENGTH = 2;
     const STRING_END_PART = '";';
 
-    public function __construct()
-    {
-        $this->string_tokenize_length = strlen(self::STRING_START_PART);
-    }
-
     /**
-     *  Do search/replaces in serialized data
+     * Do search/replaces in serialized data
+     * @throws SerializedStringException Throws exception when serialized string is broken and no search/replace could be done
      */
     public function searchReplaceSerialized(string &$data, array $search_replaces)
     {
         $offset = 0;
+        $last_offset = -1;
         while (($data_pos = strpos($data, self::STRING_START_PART, $offset)) !== false) {
+            // Make sure we dont do endless loops, if the serialized content is broken
+            if ($offset == $last_offset) {
+                throw new SerializedStringException('Skipping serialized value that is broken, so no search/replaces could be done in this value.', 0, $data);
+            }
+            $last_offset = $offset;
+
             // Get string length
-            $length_start_pos = $data_pos + $this->string_tokenize_length;
+            $length_start_pos = $data_pos + self::STRING_TOKENIZE_LENGTH;
             $length_end_pos = strpos($data, ':', $length_start_pos);
             $length_length = $length_end_pos - $length_start_pos;
-            $length_value = substr($data, $length_start_pos, $length_length);
 
             // Get string value
             $string_start_pos = $length_start_pos + $length_length + 2;
