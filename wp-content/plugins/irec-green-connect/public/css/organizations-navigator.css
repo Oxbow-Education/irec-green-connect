@@ -134,6 +134,9 @@
   padding: 0.5rem;
   font-weight: 600;
 }
+.organization-card .organization-tags span:not(:first-child) {
+  border-left: 1px solid white;
+}
 
 .organization-filters {
   padding: 1rem;
@@ -197,10 +200,12 @@
 
 .organization-card .organization-link img {
   margin-left: 5px;
+  max-height: 100%;
 }
 
 .ais-infinite-hits--showmoreButton,
-.ais-infinite-hits--showmoreButton:hover {
+.ais-infinite-hits--showmoreButton:hover,
+.ais-infinite-hits--showmoreButton:focus {
   background-color: #dfa43c;
   border: none;
   border-radius: 5px !important;
