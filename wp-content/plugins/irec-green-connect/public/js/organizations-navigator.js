@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <a class="organization-link" href="${
                 item.link
               }" target="_blank">Get Started 
-              <img src="/wp-content/plugins/irec-green-connect/public/img/arow-right.svg" />
+              <img src="/wp-content/plugins/irec-green-connect/public/img/link.png" />
               </a>
             </div>
           </div>

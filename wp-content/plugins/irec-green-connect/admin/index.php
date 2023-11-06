@@ -373,7 +373,7 @@ add_action('admin_menu', 'remove_comments_menu');
 function wage_data_columns($columns)
 {
   // Remove the title column
-  unset($columns['title']);
+  // unset($columns['title']);
   unset($columns['date']); // Optionally remove the date column or any other you want
 
   $columns['career_name'] = 'Career Name';
@@ -644,7 +644,7 @@ function handle_upload_organizations($request)
       $service_3 = $item['row_data']['Employment'];
       $service_4 = $item['row_data']['For Contractors'];
       $constractors_wanted = $item['row_data']['Contractors Wanted'];
-      $hiring_now = $item['row_data']['Hiring Now	'];
+      $hiring_now = $item['row_data']['Hiring Now'];
       $irec_accredited = $item['row_data']['IREC Accredited'];
       $paid_training = $item['row_data']['Paid Training'];
       $info_sessions = $item['row_data']['Info Sessions'];

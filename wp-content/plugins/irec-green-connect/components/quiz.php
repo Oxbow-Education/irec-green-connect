@@ -177,7 +177,7 @@ $light_weighting = array(
       </div>
       <div class="quiz-slide results" data-slide="NOT">
         <h2>Probably Not a Match</h2>
-        <h6>The particular career paths we're spotlighting in Weatherization might not be for you, but there are so many other options in the Clean Energy industry available to you that might suit you.</h6>
+        <h6>The particular career paths we're spotlighting in weatherization might not be for you, but there are many other options in the clean energy industry that could be a great fit for you.</h6>
         <hr />
 
         <div class="actions">
