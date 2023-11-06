@@ -99,7 +99,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  left: 40%;
+  left: 60%;
   z-index: 2;
   background: transparent linear-gradient(90deg, #16577b00 0%, #16577b 100%) 0%
     0% no-repeat padding-box;
@@ -175,6 +175,9 @@
 .quote-wrapper .carousel-details.active {
   visibility: visible;
   opacity: 1;
+}
+.details-position:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 992px) {

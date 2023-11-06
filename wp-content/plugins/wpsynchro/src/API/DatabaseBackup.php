@@ -85,6 +85,10 @@ class DatabaseBackup extends WPSynchroService
 
         // Execute and check result
         $data = $wpdb->get_results($sql_stmt);
+        if (strlen($wpdb->last_error) > 0) {
+            $result->errors[] = $wpdb->last_error;
+            $wpdb->last_error = '';
+        }
 
         // Get databasesync object
         $databasesync = new DatabaseSync();

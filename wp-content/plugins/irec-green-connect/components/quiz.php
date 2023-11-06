@@ -14,7 +14,7 @@ function get_radio_buttons($questionNumber, $questionScores)
       Disagree
     </label>
     <label>
-      <input type='radio' name='question_$questionNumber' value='0' class='image-radio'>
+      <input type='radio' name='question_$questionNumber' value='1' class='image-radio'>
       <img src='/wp-content/plugins/irec-green-connect/public/img/unsure.svg' alt='Unsure'>
       Unsure
     </label>
@@ -146,9 +146,9 @@ $light_weighting = array(
             &nbsp;
             with an organization. If you'd like to
             keep exploring, check out
-            <a href="/how-it-works-for-individuals">How it Works for Individuals</a>
+            <a href="/how-it-works-for-individuals" target="_blank">How it Works for Individuals</a>
             or
-            <a href="/career-stories">Career Stories.</a>
+            <a href="/career-stories" target="_blank">Career Stories.</a>
           </div>
 
         </div>
@@ -161,9 +161,9 @@ $light_weighting = array(
 
         <div class="actions">
           <div>Go ahead and check out
-            <a href="/how-it-works-for-individuals/">How it Works for Individuals</a>
+            <a href="/how-it-works-for-individuals/" target="_blank">How it Works for Individuals</a>
             or
-            <a href="/career-stories">Career Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
+            <a href="/career-stories" target="_blank">Career Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
             &nbsp;
             <div class="inline-block">
 
@@ -177,7 +177,7 @@ $light_weighting = array(
       </div>
       <div class="quiz-slide results" data-slide="NOT">
         <h2>Probably Not a Match</h2>
-        <h6>The particular career paths we're spotlighting in Weatherization might not be for you, but there are so many other options in the Clean Energy industry available to you that might suit you.</h6>
+        <h6>The particular career paths we're spotlighting in weatherization might not be for you, but there are many other options in the clean energy industry that could be a great fit for you.</h6>
         <hr />
 
         <div class="actions">

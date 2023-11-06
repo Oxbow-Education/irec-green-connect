@@ -32,6 +32,7 @@ return array(
     'WPSynchro\\Database\\DatabaseFinalize' => $baseDir . '/src/Database/DatabaseFinalize.php',
     'WPSynchro\\Database\\DatabaseHelperFunctions' => $baseDir . '/src/Database/DatabaseHelperFunctions.php',
     'WPSynchro\\Database\\DatabaseSync' => $baseDir . '/src/Database/DatabaseSync.php',
+    'WPSynchro\\Database\\Exception\\SerializedStringException' => $baseDir . '/src/Database/Exception/SerializedStringException.php',
     'WPSynchro\\Database\\SerializedStringHandler' => $baseDir . '/src/Database/SerializedStringHandler.php',
     'WPSynchro\\Database\\Table' => $baseDir . '/src/Database/Table.php',
     'WPSynchro\\Database\\TableColumns' => $baseDir . '/src/Database/TableColumns.php',

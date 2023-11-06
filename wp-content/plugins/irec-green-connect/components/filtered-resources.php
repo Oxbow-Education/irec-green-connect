@@ -4,7 +4,7 @@ $page_number = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $posts_per_page = $page_number * 10;
 $offset = 0;
 $full_url = $_SERVER['REQUEST_URI'];
-$is_workers = strpos($full_url, '/workers') !== false;
+$is_workers = strpos($full_url, '/individuals') !== false;
 ?>
 
 <?php
@@ -56,8 +56,8 @@ include __DIR__ . '/facet-buttons.php';
     let loading = false;
     const pathname = window.location.pathname;
     let isWorkers = false;
-    // if the pathname includes '/workers'
-    if (pathname.indexOf('/workers') !== -1) {
+    // if the pathname includes '/individvuals'
+    if (pathname.indexOf('/individuals') !== -1) {
       isWorkers = true;
     }
 
@@ -161,11 +161,12 @@ include __DIR__ . '/facet-buttons.php';
       $('#load-more-button').blur();
     });
 
-    // INTERNAL RESOURCE - open in new tab
+    // INTERNAL RESOURCE 
     $(document).on('click', '.internal-resource-tile', function(e) {
       e.preventDefault();
       const permalink = $(this).attr('data-tag');
-      window.open(permalink, '_blank');
+      window.location.href = permalink;
+
     });
 
 
