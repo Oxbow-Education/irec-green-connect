@@ -49,7 +49,7 @@ class ClientSyncDatabase extends WPSynchroService
         $max_response_size = $body->max_response_size ?? 1000000;
         $default_rows_per_request = $body->default_rows_per_request ?? 10000;
         $column_names = $body->column_names ?? [];
-        $time_limit = $body->time_limit ?? - 1;
+        $time_limit = $body->time_limit ?? -1;
 
         $sql_inserts = $body->sql_inserts ?? [];
 
@@ -59,12 +59,17 @@ class ClientSyncDatabase extends WPSynchroService
             $data_result_from_db = $database_helper_functions->getDataFromDB($table, $column_names, $primary_key_column, $last_primary_key, $completed_rows, $max_response_size, $default_rows_per_request, $time_limit);
             $result->data = $data_result_from_db->data;
             $result->has_more_rows_in_table = $data_result_from_db->has_more_rows_in_table;
+            $result->errors = array_merge($result->errors, $data_result_from_db->errors);
         } elseif ($type == "push") {
             $wpdb->query("SET FOREIGN_KEY_CHECKS=0;");
             // If multiple sql inserts
             if (is_array($sql_inserts)) {
                 foreach ($sql_inserts as $sql_insert) {
                     $result->data = $wpdb->query($sql_insert);
+                    if (strlen($wpdb->last_error) > 0) {
+                        $result->errors[] = $wpdb->last_error;
+                        $wpdb->last_error = '';
+                    }
                     // If it fails, break out and handle it
                     if ($result->data === false) {
                         break;
@@ -72,11 +77,19 @@ class ClientSyncDatabase extends WPSynchroService
                 }
             } else {
                 $result->data = $wpdb->query($sql_inserts);
+                if (strlen($wpdb->last_error) > 0) {
+                    $result->errors[] = $wpdb->last_error;
+                    $wpdb->last_error = '';
+                }
             }
         } elseif ($type == "finalize") {
             $wpdb->query("SET FOREIGN_KEY_CHECKS=0;");
             foreach ($sql_inserts as $sql_insert) {
                 $result->data = $wpdb->query($sql_insert);
+                if (strlen($wpdb->last_error) > 0) {
+                    $result->errors[] = $wpdb->last_error;
+                    $wpdb->last_error = '';
+                }
             }
         }
 
@@ -89,6 +102,18 @@ class ClientSyncDatabase extends WPSynchroService
             foreach ($logs['log_errors'] as $log_error) {
                 $result->debugs[] = $log_error;
             }
+        }
+
+        // Prefix errors, warnings, debugs with site url
+        $site_url = 'Database error on ' . parse_url(get_site_url(), PHP_URL_HOST) . ': ';
+        foreach ($result->errors as &$error) {
+            $error = $site_url . $error;
+        }
+        foreach ($result->warnings as &$warning) {
+            $warning = $site_url . $warning;
+        }
+        foreach ($result->debugs as &$debug) {
+            $debug = $site_url . $debug;
         }
 
         $returnresult = new ReturnResult();

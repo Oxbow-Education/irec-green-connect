@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd70735973642f4fb29ef24f89a9b6e21
+class ComposerStaticInit2ba422472cd5840f904f9f3bdbae873f
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -47,6 +47,7 @@ class ComposerStaticInitd70735973642f4fb29ef24f89a9b6e21
         'WPSynchro\\Database\\DatabaseFinalize' => __DIR__ . '/../..' . '/src/Database/DatabaseFinalize.php',
         'WPSynchro\\Database\\DatabaseHelperFunctions' => __DIR__ . '/../..' . '/src/Database/DatabaseHelperFunctions.php',
         'WPSynchro\\Database\\DatabaseSync' => __DIR__ . '/../..' . '/src/Database/DatabaseSync.php',
+        'WPSynchro\\Database\\Exception\\SerializedStringException' => __DIR__ . '/../..' . '/src/Database/Exception/SerializedStringException.php',
         'WPSynchro\\Database\\SerializedStringHandler' => __DIR__ . '/../..' . '/src/Database/SerializedStringHandler.php',
         'WPSynchro\\Database\\Table' => __DIR__ . '/../..' . '/src/Database/Table.php',
         'WPSynchro\\Database\\TableColumns' => __DIR__ . '/../..' . '/src/Database/TableColumns.php',
@@ -131,9 +132,9 @@ class ComposerStaticInitd70735973642f4fb29ef24f89a9b6e21
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd70735973642f4fb29ef24f89a9b6e21::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd70735973642f4fb29ef24f89a9b6e21::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd70735973642f4fb29ef24f89a9b6e21::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2ba422472cd5840f904f9f3bdbae873f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2ba422472cd5840f904f9f3bdbae873f::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2ba422472cd5840f904f9f3bdbae873f::$classMap;
 
         }, null, ClassLoader::class);
     }
