@@ -22,7 +22,7 @@ $post_permalink = get_permalink($post_id);
     </div>
   </div>
   <button class="read-more-button" data-tag="<?php echo $post_id; ?>">
-    <a class="read-more-button" href="<?php echo get_the_permalink($post_id); ?>" target="_blank">
+    <a class="read-more-button" href="<?php echo get_the_permalink($post_id); ?>"             >
       Read More
     </a>
   </button>
