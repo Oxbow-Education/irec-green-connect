@@ -4,6 +4,21 @@ let markers = [];
 let bounds;
 let orgsSearch;
 
+// This is just a short term solution. IREC requested that the
+// map auto filter by the state selected.
+const STATE_COORDS = {
+  Oklahoma: { lat: 35.0078, lng: -97.0929 },
+  Pennsylvania: { lat: 41.2033, lng: -77.1945 },
+  Wisconsin: { lat: 43.7844, lng: -88.7879 },
+};
+function prefilterMapBasedOnLocation() {
+  const connectNowWrapper = document.getElementById('connectNow');
+  const state = connectNowWrapper.dataset.state;
+  const coords = STATE_COORDS[state];
+  if (coords) {
+    setPositionQuery(coords.lat, coords.lng);
+  }
+}
 function calculateBounds(centerLatLng, radiusMiles) {
   // Earth's radius in miles
   const earthRadius = 3958.8; // approximate value for the radius of the Earth in miles
@@ -35,11 +50,11 @@ function setPositionQuery(lat, lng) {
   orgsSearch.helper.setQueryParameter('aroundRadius', 160934);
   orgsSearch.helper.setQueryParameter('aroundLatLng', aroundLatLng);
   orgsSearch.helper.search();
-  const bounds = calculateBounds({ lat, lng }, 50);
+  const bounds = calculateBounds({ lat, lng }, 75);
   map.fitBounds(bounds);
 }
 // Adds a marker to the map
-const addMarker = (item) => {
+function addMarker(item) {
   const icon = {
     url: '/wp-content/plugins/irec-green-connect/public/img/marker.svg',
     scaledSize: new google.maps.Size(50, 50),
@@ -62,10 +77,10 @@ const addMarker = (item) => {
   markers.push(marker);
   bounds.extend(marker.getPosition());
   map.fitBounds(bounds);
-};
+}
 
 // Pulls all organizations to initialize the map markers
-const initMarkers = async () => {
+async function initMarkers() {
   const organizations = await fetch(
     '/wp-json/wp/v2/organization?per_page=100',
   ).then((response) => {
@@ -75,7 +90,8 @@ const initMarkers = async () => {
     return response.json();
   });
   organizations.forEach((org) => addMarker(org?.acf));
-};
+  prefilterMapBasedOnLocation();
+}
 
 // Initialized the map
 function initMap() {
@@ -86,7 +102,7 @@ function initMap() {
   initMarkers();
 }
 
-const getZipCodeFromCoordinates = async (lat, lng) => {
+async function getZipCodeFromCoordinates(lat, lng) {
   var latlng = new google.maps.LatLng(lat, lng);
 
   const { results } = await geocoder.geocode({ location: latlng });
@@ -101,7 +117,7 @@ const getZipCodeFromCoordinates = async (lat, lng) => {
   } else {
     return Promise.reject('No results found.');
   }
-};
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // Define google items
@@ -167,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const formValues = new FormData(form);
     const zipcode = formValues.get('zipcode');
+    console.log({ zipcode });
     try {
       const results = await geocoder.geocode({
         address: zipcode,
@@ -182,10 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const getUserLocation = async () => {
+  async function getUserLocation() {
     if ('geolocation' in navigator) {
+      document.getElementById('connectNow').classList.add('loading');
       navigator.geolocation.getCurrentPosition(
         async (position) => {
+          document.getElementById('connectNow').classList.remove('loading');
+
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           const zipcode = await getZipCodeFromCoordinates(latitude, longitude);
@@ -193,6 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
           setPositionQuery(latitude, longitude);
         },
         function (error) {
+          document.getElementById('connectNow').classList.remove('loading');
+
           switch (error.code) {
             case error.PERMISSION_DENIED:
               alert('User denied the request for Geolocation.');
@@ -210,16 +232,19 @@ document.addEventListener('DOMContentLoaded', () => {
         },
       );
     } else {
+      document.getElementById('connectNow').classList.remove('loading');
+
       alert('Geolocation is not supported by this browser.');
     }
-  };
+  }
 
   // Attach the function to the button click event
-  var geolocButton = document.getElementById('geolocButton');
+  const geolocButton = document.getElementById('geolocButton');
   geolocButton.addEventListener('click', getUserLocation);
 
   orgsSearch.start();
 
+  // Filter button functionality
   const filterButtons = document.querySelectorAll('.org-filter');
   filterButtons.forEach((facet) => {
     facet.addEventListener('click', (e) => {
