@@ -41,6 +41,19 @@
   height: 68px;
   font-size: 22px;
 }
+.organizations-navigator #custom-searchbox input:invalid {
+  border: 1px solid red;
+}
+
+#zipcode-error {
+  display: none;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+#custom-searchbox:invalid #zipcode-error {
+  display: inline-block;
+}
 .organizations-navigator .crosshairs-button {
   grid-column-start: 2;
   grid-column-end: 3;
@@ -278,4 +291,30 @@
   color: white;
   font-size: 14px;
   margin: 0 !important;
+}
+
+.spinner {
+  display: none;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #8d2a4f;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  z-index: 10;
+  margin: 10px;
+  margin-left: 20px;
+}
+
+.loading .spinner {
+  display: block;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
