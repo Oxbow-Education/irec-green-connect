@@ -158,7 +158,6 @@ function algolia_sync_plugin_post_types_callback()
             var postType = $(this).data('post-type');
             var updateButton = $(this);
             var originalButtonText = updateButton.text();
-            console.log({postType})
 
             // Disable the button during the update process
             updateButton.prop('disabled', true);
@@ -230,15 +229,17 @@ function update_posts_callback($request)
     $posts = get_posts($args);
 
     foreach ($posts as $post) {
-
+      $hide_from_algolia = get_post_meta($post->ID, '_hide_from_algolia', true);
       // Example: Update post content
       $updated_post = array(
         'ID' => $post->ID,
+
       );
       wp_update_post($updated_post);
+      update_post_meta($post->ID, '_hide_from_algolia', $hide_from_algolia);
     }
 
-    return new WP_REST_Response(array('message' => 'Posts updated successfully'), 200);
+    return new WP_REST_Response(array('message' => 'Posts updated successfully.'), 200);
   } catch (Exception $e) {
     return json_encode(array("error" => $e->getMessage()));
   }
