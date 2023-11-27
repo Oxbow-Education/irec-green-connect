@@ -4,7 +4,7 @@ Donate link: https://wpsynchro.com/?utm_source=wordpress.org&utm_medium=referral
 Tags: migrate,clone,files,database,migration
 Requires at least: 5.2
 Tested up to: 6.4
-Stable tag: 1.11.1
+Stable tag: 1.11.2
 Requires PHP: 7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0
@@ -113,6 +113,10 @@ It is currently planned for one of the next releases to support it.
 
 == Changelog ==
 
+= 1.11.2 =
+ * Bugfix: Fix PHP timeout issue caused by serialized data, kinda like 1.11.1 hotfix, but caused by another data.
+ * Improvement: Added more safety against timeout issues in serialized data, so it wont happen again
+
 = 1.11.1 =
  * Bugfix: Fix PHP timeout issue caused by serialized string search/replace handler, that goes into endless loop for defective serialized strings
  * Bugfix: Fix issue with some tables not being migrated when source database is MariaDB and when table does not have a primary key
@@ -140,18 +144,5 @@ It is currently planned for one of the next releases to support it.
  * Improvement: Handle when migrating database from MySQL 8 with collation utf8mb4_0900_ai_ci to an older version MySQL server
  * Improvement: Improve search/replace in very large serialized data, to prevent out of memory errors and vastly improved performance
  * Improvement: Optimize the way database migration was done to better handle large datasets in rows
-
-= 1.9.1 =
- * Bump support for WP 6.2
- * Improvement: API now flushes data before returning
-
-= 1.9.0 =
- * Bug: Fix issue where MU plugin did not load properly
- * Improvement: Ensure WP 6.1 and PHP 8.1 compatibility
- * Improvement: Improve the warning message when different versions of WP is used
- * Improvement: Add search/replaces for db for cases where the protocol part of the url is wrong in db
- * Improvement: Add check for MU plugin enabled on the target site, when file migration is done, to ensure performance and result
- * Improvement: Add "resume" button when migrations fail, which can used to attempt resume, in such cases where a simple timeout is the problem
-
 
 ** Only showing the last few releases - See rest of changelog in changelog.txt or in menu "Changelog" **

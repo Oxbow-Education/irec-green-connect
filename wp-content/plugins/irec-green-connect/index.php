@@ -267,7 +267,11 @@ function save_to_algolia_on_publish($post_id)
   $index = $client->initIndex('full_site_search');
 
   // Check if the post type is 'page' and post status is 'publish'
-  if (get_post_type($post_id) == 'page' && get_post_status($post_id) == 'publish') {
+  if (
+    get_post_type($post_id) == 'page'
+    && get_post_status($post_id) == 'publish'
+    && !boolval(get_post_meta($post_id, '_hide_from_algolia', true))
+  ) {
     // Get the post title, content, and link
     $post = get_post($post_id);
     $title = $post->post_title;
@@ -287,7 +291,6 @@ function save_to_algolia_on_publish($post_id)
     $index->saveObject($record);
   } else if (
     get_post_type($post_id) == 'page'
-    && get_post_status($post_id) != 'publish'
   ) {
     $index->deleteObject($post_id);
   }
@@ -311,7 +314,11 @@ function save_internal_resource_to_algolia($post_id)
   $index = $client->initIndex('full_site_search');
 
   // Check if the post type is 'post' and the post is published
-  if (get_post_type($post_id) == 'post' && get_post_status($post_id) == 'publish') {
+  if (
+    get_post_type($post_id) == 'post'
+    && get_post_status($post_id) == 'publish'
+    && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
+  ) {
     // Check if the custom field 'is_internal_resource' is set to 'true'
     $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
 
@@ -336,7 +343,6 @@ function save_internal_resource_to_algolia($post_id)
     }
   } else if (
     get_post_type($post_id) == 'post'
-    && get_post_status($post_id) != 'publish'
   ) {
     $index->deleteObject($post_id);
   }
@@ -365,6 +371,7 @@ function save_external_resource_to_algolia($post_id)
     get_post_type($post_id) == 'post'
     && get_post_status($post_id) == 'publish'
     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+    && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
   ) {
     // Get the post title and content
     $post = get_post($post_id);
@@ -453,8 +460,11 @@ function save_external_resource_to_algolia($post_id)
     $index->saveObject($data);
   } else if (
     get_post_type($post_id) == 'post'
-    && get_post_status($post_id) != 'publish'
+    && (get_post_status($post_id) != 'publish' ||
+      boolval(get_post_meta($post_id, '_hide_from_algolia'))
+    )
     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+
   ) {
     $index->deleteObject($post_id);
   }

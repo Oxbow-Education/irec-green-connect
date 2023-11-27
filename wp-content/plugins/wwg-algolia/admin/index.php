@@ -268,7 +268,7 @@ function algolia_sync_plugin_sync_on_publish($post_id)
   // Check if sync is enabled for the post type
   $post_types = get_option('algolia_sync_plugin_post_types');
   $post_type = get_post_type($post_id);
-  if (!in_array($post_type, $post_types)) {
+  if (!in_array($post_type, $post_types) || boolval(get_post_meta($post_id, '_hide_from_algolia', true))) {
     return;
   }
 
@@ -317,3 +317,43 @@ function algolia_sync_plugin_sync_on_publish($post_id)
   }
 }
 add_action('save_post', 'algolia_sync_plugin_sync_on_publish');
+
+
+function add_custom_meta_box()
+{
+  $post_types_to_sync = get_option('algolia_sync_plugin_post_types', array());
+
+  foreach ($post_types_to_sync as $post_type) {
+    add_meta_box(
+      'algolia_custom_fields',
+      'WWG Algolia Custom Fields',
+      'render_custom_meta_box',
+      $post_type,
+      'normal',
+      'default'
+    );
+  }
+}
+add_action('add_meta_boxes', 'add_custom_meta_box');
+function render_custom_meta_box($post)
+{
+  $hide_from_algolia = get_post_meta($post->ID, '_hide_from_algolia', true);
+
+  // Check the checkbox if it's already checked
+  $checked = $hide_from_algolia ? 'checked="checked"' : '';
+
+  echo '<label for="hide_from_algolia">Hide from search (Algolia):</label>';
+  echo '<input type="checkbox" id="hide_from_algolia" name="hide_from_algolia" ' . $checked . ' />';
+}
+
+function save_custom_meta_data($post_id)
+{
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+  if (isset($_POST['hide_from_algolia'])) {
+    update_post_meta($post_id, '_hide_from_algolia', 1);
+  } else {
+    delete_post_meta($post_id, '_hide_from_algolia');
+  }
+}
+add_action('save_post', 'save_custom_meta_data');
