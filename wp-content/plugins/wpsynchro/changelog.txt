@@ -1,3 +1,7 @@
+= 1.11.2 =
+ * Bugfix: Fix PHP timeout issue caused by serialized data, kinda like 1.11.1 hotfix, but caused by another data.
+ * Improvement: Added more safety against timeout issues in serialized data, so it wont happen again
+
 = 1.11.1 =
  * Bugfix: Fix PHP timeout issue caused by serialized string search/replace handler, that goes into endless loop for defective serialized strings
  * Bugfix: Fix issue with some tables not being migrated when source database is MariaDB and when table does not have a primary key

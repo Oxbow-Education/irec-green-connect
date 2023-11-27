@@ -4,6 +4,18 @@ $worker_tag_array = get_post_meta(get_the_ID(), 'worker_tags', true);
 $org_tag_array = get_post_meta(get_the_ID(), 'organization_tags', true);
 $who_for_tag_array = get_post_meta(get_the_ID(), 'who_is_this_for', true);
 
+if (is_string($worker_tag_array)) {
+  $worker_tag_array = array($worker_tag_array);
+}
+
+if (is_string($org_tag_array)) {
+  $org_tag_array = array($org_tag_array);
+}
+
+if (is_string($who_for_tag_array)) {
+  $who_for_tag_array = array($who_for_tag_array);
+}
+
 $resources_for_individuals_page_id = 276;
 $resources_for_orgs_page_id = 1955;
 $user_tags_to_show = get_post_meta($resources_for_orgs_page_id, 'user_tags_to_show', true);
