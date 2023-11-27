@@ -4,7 +4,7 @@ Tags: page builder, editor, landing page, drag-and-drop, elementor, visual edito
 Requires at least: 6.0
 Tested up to: 6.4
 Requires PHP: 7.3
-Stable tag: 3.17.2
+Stable tag: 3.17.3
 Beta tag: 3.17.0-beta4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -240,6 +240,10 @@ You can also add a new language via [translate.wordpress.org](https://go.element
 == Changelog ==
 
 See Elementor Developer Edition versions changelog [here](https://go.elementor.com/dev-changelog/)
+
+= 3.17.3 - 2023-11-08 =
+
+* Modified control sanitization to enforce better security policies in Dynamic tags
 
 = 3.17.2 - 2023-11-01 =
 

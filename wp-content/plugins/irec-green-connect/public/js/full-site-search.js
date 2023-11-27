@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
   input.addEventListener('input', async (e) => {
     e.preventDefault();
     const keyword = e.target.value;
-    console.log({ keyword });
     try {
       search.helper.setQuery(keyword);
       search.helper.search();
@@ -59,9 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const searchResults = document.querySelectorAll('.search-result');
+    if (searchResults?.length) {
+      searchResults[0].querySelector('a')?.click();
+    }
+  });
+
   const searchToggle = document.getElementById('searchToggle');
   searchToggle.addEventListener('click', () => {
     form.classList.toggle('hidden');
+    form[0].focus();
   });
   search.start();
 });

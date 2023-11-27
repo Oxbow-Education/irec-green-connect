@@ -9,6 +9,7 @@
  * Version:     1.0.5
  */
 
+// phpcs:ignoreFile
 define('WPSYNCHRO_MU_COMPATIBILITY_VERSION', '1.0.5');
 
 // Check if it is a WP Synchro REST request

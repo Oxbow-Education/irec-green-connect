@@ -42,11 +42,6 @@ include __DIR__ . '/facet-buttons.php';
 
 </div>
 
-<!-- temp footer -->
-<div id="contact-us-container" class="wrapper">
-  <p>Still need support?</p>
-  <h2>Contact us at <a href="mailto: info@irecusa.org">info@irecusa.org</a></h2>
-</div>
 
 <!-- We need to keep this javascript in the same file because it's using php variables -->
 <script>
