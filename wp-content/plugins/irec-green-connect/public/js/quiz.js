@@ -149,7 +149,7 @@ inlineBlocks.forEach((button) => {
 });
 
 const connectNowLinks = document
-  .querySelectorAll('.connect-now a')
+  .querySelectorAll('#modal .connect-now a')
   .forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
