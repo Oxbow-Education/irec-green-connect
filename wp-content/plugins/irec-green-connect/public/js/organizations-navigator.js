@@ -298,3 +298,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+document
+  .getElementById('geolocButton')
+  .addEventListener('mouseover', function (event) {
+    var tooltip = document.getElementById('tooltip');
+    var buttonRect = event.target.getBoundingClientRect();
+
+    tooltip.style.display = 'block';
+    tooltip.style.left = buttonRect.left - 67 + 'px'; // Align with the left edge of the button
+    tooltip.style.top = buttonRect.top + 50 + 'px'; // Position below the button
+  });
+
+document
+  .getElementById('geolocButton')
+  .addEventListener('mouseout', function () {
+    document.getElementById('tooltip').style.display = 'none';
+  });

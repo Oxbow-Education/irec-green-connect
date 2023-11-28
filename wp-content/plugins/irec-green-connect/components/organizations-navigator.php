@@ -11,11 +11,15 @@ $state_value = get_post_meta($page_id, 'state', true);
       <button id="clearLocation" class="hidden">Clear</button>
       <span id="zipcode-error" style="color: red;">Please enter a valid zipcode.</span>
       <div class="spinner"></div>
+
       <button title="User your current location" id="geolocButton" class="crosshairs-button" type="button">
         <img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs.svg" />
       </button>
+
       <button class="submit-button" type="submit">Go</button>
     </form>
+    <div id="tooltip" style="display: none;">Use your current location</div>
+
     <div class="filters">
       <h6>Filter By:</h6>
       <hr />
