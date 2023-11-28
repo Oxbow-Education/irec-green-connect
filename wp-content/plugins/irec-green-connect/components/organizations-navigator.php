@@ -5,15 +5,10 @@ $state_value = get_post_meta($page_id, 'state', true);
 <div data-state="<?php echo $state_value ?>" id="connectNow" class="organizations-navigator">
   <div>
     <h2>Connect Now</h2>
-    <?php
-
-
-    if ($state_value === 'National') {
-      echo '<p class="disclaimer">Green Workforce Connect currently only connects organizations active in Oklahoma, Pennsylvania, and Wisconsin. Stay tuned as we add more states and check out our resources (link to the resources page) that are useful for all types of organizations and people around the country.</p>';
-    }
-    ?>
+    <p class="disclaimer">Green Workforce Connect currently only connects organizations active in Oklahoma, Pennsylvania, and Wisconsin. Stay tuned as we add more states and check out our <a style="color: inherit; text-decoration: underline" href="/individuals">resources</a> that are useful for all types of organizations and people around the country.</p>
     <form id="custom-searchbox">
       <input type="text" pattern="\b\d{5}\b" id="zipcode" name="zipcode" placeholder="Enter zipcode">
+      <button id="clearLocation" class="hidden">Clear</button>
       <span id="zipcode-error" style="color: red;">Please enter a valid zipcode.</span>
       <div class="spinner"></div>
       <button id="geolocButton" class="crosshairs-button" type="button">
