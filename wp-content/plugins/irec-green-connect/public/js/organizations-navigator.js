@@ -6,6 +6,11 @@ let orgsSearch;
 
 // This is just a short term solution. IREC requested that the
 // map auto filter by the state selected.
+const STATE_ABREVS = {
+  Oklahoma: 'OK',
+  Pennsylvania: 'PA',
+  Wisconsin: 'WI',
+};
 const STATE_COORDS = {
   Oklahoma: { lat: 35.0078, lng: -97.0929 },
   Pennsylvania: { lat: 41.2033, lng: -77.1945 },
@@ -14,10 +19,11 @@ const STATE_COORDS = {
 function prefilterMapBasedOnLocation() {
   const connectNowWrapper = document.getElementById('connectNow');
   const state = connectNowWrapper.dataset.state;
-  const coords = STATE_COORDS[state];
-  if (coords) {
-    setPositionQuery(coords.lat, coords.lng);
-  }
+  const abbrev = STATE_ABREVS[state];
+  orgsSearch.helper.setQueryParameter('facetFilters', [`state:${abbrev}`]);
+  orgsSearch.helper.search();
+  const bounds = calculateBounds(STATE_COORDS[state], 75);
+  map.fitBounds(bounds);
 }
 function calculateBounds(centerLatLng, radiusMiles) {
   // Earth's radius in miles
@@ -237,6 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const zipcode = await getZipCodeFromCoordinates(latitude, longitude);
           document.getElementById('zipcode').value = zipcode;
           setPositionQuery(latitude, longitude);
+          document.getElementById('clearLocation').classList.remove('hidden');
         },
         function (error) {
           document.getElementById('connectNow').classList.remove('loading');
