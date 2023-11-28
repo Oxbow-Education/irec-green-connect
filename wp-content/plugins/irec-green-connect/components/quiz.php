@@ -62,7 +62,9 @@ $light_weighting = array(
 <div id="overlay" class="hidden">
   <div id="modal" class="hidden">
     <img class="results-image" />
-
+    <button id="closeButton"><svg xmlns="http://www.w3.org/2000/svg" width="22.318" height="22.379" viewBox="0 0 22.318 22.379">
+        <path d="M21.77,114.654a1.674,1.674,0,0,1-2.367,2.367l-8.242-8.3-8.3,8.3a1.674,1.674,0,0,1-2.367-2.367l8.3-8.3L.49,97.99a1.674,1.674,0,0,1,2.367-2.367l8.3,8.366,8.3-8.3a1.674,1.674,0,0,1,2.367,2.367l-8.3,8.3Z" transform="translate(0 -95.133)" />
+      </svg></button>
     <form id="quizForm" action="" method="post">
       <div class="quiz-slide" data-slide="1">
         <h2>I would like to <strong>
@@ -189,9 +191,7 @@ $light_weighting = array(
 
         </div>
       </div>
-      <button id="closeButton"><svg xmlns="http://www.w3.org/2000/svg" width="22.318" height="22.379" viewBox="0 0 22.318 22.379">
-          <path d="M21.77,114.654a1.674,1.674,0,0,1-2.367,2.367l-8.242-8.3-8.3,8.3a1.674,1.674,0,0,1-2.367-2.367l8.3-8.3L.49,97.99a1.674,1.674,0,0,1,2.367-2.367l8.3,8.366,8.3-8.3a1.674,1.674,0,0,1,2.367,2.367l-8.3,8.3Z" transform="translate(0 -95.133)" />
-        </svg></button>
+
     </form>
 
   </div>

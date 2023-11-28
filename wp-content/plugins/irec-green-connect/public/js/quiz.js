@@ -1,5 +1,11 @@
+const toggleHTMLScrollLock = () => {
+  const html = document.querySelector('html');
+  html.classList.toggle('no-scroll');
+};
+
 document.getElementById('quizButton').addEventListener('click', function () {
   showSlide(1); // Start the quiz on the first slide
+  toggleHTMLScrollLock();
 });
 
 document
@@ -100,6 +106,7 @@ function closeQuizModal() {
   form.reset();
   const radioLabels = document.querySelectorAll('#modal .selected');
   radioLabels.forEach((input) => input.classList.remove('selected'));
+  toggleHTMLScrollLock();
 
   setTimeout(function () {
     overlay.classList.add('hidden');
