@@ -105,7 +105,7 @@ $light_weighting = array(
         <button type="button" class="prev-btn">Back</button>
       </div>
       <div class="quiz-slide" data-slide="7">
-        <h2>Last question! <strong>How many of the following interest you?</strong> </h2>
+        <h2>Last question! <strong>Which of the following interest you?</strong> </h2>
         <div class="checkbox-wrapper">
 
           <label class="quiz-checkbox">
