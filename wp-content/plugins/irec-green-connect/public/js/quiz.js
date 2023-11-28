@@ -147,3 +147,13 @@ inlineBlocks.forEach((button) => {
     slide.scrollTop = slide.scrollHeight;
   });
 });
+
+const connectNowLinks = document
+  .querySelectorAll('.connect-now a')
+  .forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const src = link.getAttribute('href');
+      window.open(src, '_blank');
+    });
+  });

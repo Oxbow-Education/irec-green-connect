@@ -138,7 +138,7 @@ $light_weighting = array(
         <div class="actions">
           <div>To get started as soon as possible&nbsp;
 
-            <div class="inline-block">
+            <div class="connect-now inline-block">
 
               <?php
               echo do_shortcode('[elementor-template id="5687"]');
@@ -167,7 +167,7 @@ $light_weighting = array(
             or
             <a href="/career-stories" target="_blank">Career Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
             &nbsp;
-            <div class="inline-block">
+            <div class="connect-now inline-block">
 
               <?php
               echo do_shortcode('[elementor-template id="5687"]');

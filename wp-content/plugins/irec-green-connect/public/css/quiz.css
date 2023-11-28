@@ -24,7 +24,7 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
   padding: 50px;
   overflow-x: hidden;
-  overfloy-w: scroll;
+  overflow-y: scroll;
 }
 
 .quiz-slide {
@@ -34,6 +34,17 @@
   overflow: hidden;
   margin: auto;
 }
+
+.quiz-slide::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px; /* or any other measure */
+}
+.quiz-slide::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  border: 2px solid white; /* or any other color */
+}
+
 .quiz-slide h2 {
   color: #16577b;
   font-family: 'proxima-nova';
@@ -101,6 +112,9 @@
   font-weight: 700;
   text-decoration: underline;
 }
+.quiz-slide.results .actions .connect-now a {
+  text-decoration: none;
+}
 #modal .results-image {
   display: none;
 }
@@ -123,7 +137,7 @@
   padding: 20px;
   opacity: 1;
   height: auto;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .hidden {
