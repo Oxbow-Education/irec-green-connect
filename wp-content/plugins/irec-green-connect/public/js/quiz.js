@@ -1,5 +1,11 @@
+const toggleHTMLScrollLock = () => {
+  const html = document.querySelector('html');
+  html.classList.toggle('no-scroll');
+};
+
 document.getElementById('quizButton').addEventListener('click', function () {
   showSlide(1); // Start the quiz on the first slide
+  toggleHTMLScrollLock();
 });
 
 document
@@ -100,6 +106,7 @@ function closeQuizModal() {
   form.reset();
   const radioLabels = document.querySelectorAll('#modal .selected');
   radioLabels.forEach((input) => input.classList.remove('selected'));
+  toggleHTMLScrollLock();
 
   setTimeout(function () {
     overlay.classList.add('hidden');
@@ -140,3 +147,13 @@ inlineBlocks.forEach((button) => {
     slide.scrollTop = slide.scrollHeight;
   });
 });
+
+const connectNowLinks = document
+  .querySelectorAll('#modal .connect-now a')
+  .forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const src = link.getAttribute('href');
+      window.open(src, '_blank');
+    });
+  });
