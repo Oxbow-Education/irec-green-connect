@@ -217,10 +217,15 @@ include __DIR__ . '/facet-buttons.php';
       loadMorePosts();
     });
     // Clear all tags
-    $(document).on('click', '#clear-tags-button', () => {
+    $(document).on('click', '#clear-tags-button', (e) => {
       page = 0;
+
+      const type = e.target.dataset.tag;
+      console.log({
+        type
+      })
       $('.resources-wrapper').remove();
-      $('.facet-buttons .facet-button').removeClass('active');
+      $(`.facet-buttons .facet-button[data-type="${type}"]`).removeClass('active');
       loadMorePosts();
     })
 
