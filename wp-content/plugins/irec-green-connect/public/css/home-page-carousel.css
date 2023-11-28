@@ -49,6 +49,7 @@
 }
 
 .details-name {
+  display: block;
   color: white;
   font-size: 28px;
   line-height: 34px;
