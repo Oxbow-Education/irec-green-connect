@@ -23,7 +23,8 @@
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
   padding: 50px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overfloy-w: scroll;
 }
 
 .quiz-slide {
@@ -31,6 +32,7 @@
   transition: opacity 0.3s ease-in-out;
   height: 0;
   overflow: hidden;
+  margin: auto;
 }
 .quiz-slide h2 {
   color: #16577b;
@@ -106,6 +108,7 @@
 #modal.results .results-image {
   display: block;
   position: absolute;
+  background-color: #16577b;
   left: -18px;
   top: -41px;
   transform: scale(0.75);
@@ -291,11 +294,13 @@ label.selected {
 }
 
 #closeButton {
+  display: block;
   border: none;
   background: none;
-  position: absolute;
+  margin-left: auto;
+  /* position: absolute;
   top: 20px;
-  right: 20px;
+  right: 20px; */
 }
 
 #closeButton path {
@@ -316,8 +321,7 @@ label.selected {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 768px;
+    justify-content: flex-start;
   }
   .image-radio + img {
     width: 40px;
@@ -333,6 +337,7 @@ label.selected {
   .quiz-slide h2 {
     font-size: 22px;
     line-height: 27px;
+    margin-top: 50px;
   }
   .quiz-slide.results h2 {
     font-size: 32px;
@@ -377,4 +382,8 @@ label.selected {
     margin: 20px;
     margin-bottom: 0;
   }
+}
+
+.no-scroll {
+  overflow: hidden !important;
 }
