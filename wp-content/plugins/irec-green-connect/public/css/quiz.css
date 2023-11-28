@@ -23,7 +23,8 @@
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
   padding: 50px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .quiz-slide {
@@ -31,7 +32,19 @@
   transition: opacity 0.3s ease-in-out;
   height: 0;
   overflow: hidden;
+  margin: auto;
 }
+
+.quiz-slide::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px; /* or any other measure */
+}
+.quiz-slide::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  border: 2px solid white; /* or any other color */
+}
+
 .quiz-slide h2 {
   color: #16577b;
   font-family: 'proxima-nova';
@@ -99,6 +112,9 @@
   font-weight: 700;
   text-decoration: underline;
 }
+.quiz-slide.results .actions .connect-now a {
+  text-decoration: none;
+}
 #modal .results-image {
   display: none;
 }
@@ -106,6 +122,7 @@
 #modal.results .results-image {
   display: block;
   position: absolute;
+  background-color: #16577b;
   left: -18px;
   top: -41px;
   transform: scale(0.75);
@@ -120,7 +137,7 @@
   padding: 20px;
   opacity: 1;
   height: auto;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .hidden {
@@ -291,11 +308,13 @@ label.selected {
 }
 
 #closeButton {
+  display: block;
   border: none;
   background: none;
-  position: absolute;
+  margin-left: auto;
+  /* position: absolute;
   top: 20px;
-  right: 20px;
+  right: 20px; */
 }
 
 #closeButton path {
@@ -316,8 +335,7 @@ label.selected {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 768px;
+    justify-content: flex-start;
   }
   .image-radio + img {
     width: 40px;
@@ -333,6 +351,7 @@ label.selected {
   .quiz-slide h2 {
     font-size: 22px;
     line-height: 27px;
+    margin-top: 50px;
   }
   .quiz-slide.results h2 {
     font-size: 32px;
@@ -377,4 +396,8 @@ label.selected {
     margin: 20px;
     margin-bottom: 0;
   }
+}
+
+.no-scroll {
+  overflow: hidden !important;
 }
