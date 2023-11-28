@@ -1,5 +1,6 @@
 .swiper-container .swiper-slide {
-  height: 487px;
+  height: calc(100vh - 350px);
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
