@@ -36,18 +36,23 @@ sort($tags);
     <p class="filter-label">Filter by Organization Type</p>
     <?php
     foreach ($user_tags_to_show as $userTag) : ?>
-      <button class="facet-button  <?php if (!$is_workers) echo 'org-tag'; ?>" data-tag="<?php echo esc_attr($userTag); ?>"><?php echo esc_html($userTag); ?></button>
-    <?php endforeach;
+      <button class="facet-button  <?php if (!$is_workers) echo 'org-tag'; ?>" data-tag="<?php echo esc_attr($userTag); ?>" data-type=<?php if (!$is_workers) echo 'org-tag'; ?>><?php echo esc_html($userTag); ?></button>
+    <?php endforeach; ?>
+
+    <button id="clear-tags-button" data-tag="<?php if (!$is_workers) echo 'org-tag'; ?>">Show All</button>
+  <?php
+
   }
+
   echo '<div class="spacer"></div>';
   if (!$is_workers) {
-    ?>
+  ?>
     <p class="filter-label">Filter by Topic</p>
   <?php
   }
   // for either type of page, show worker or org tags here
   foreach ($tags as $tag) : ?>
-    <button class="facet-button" data-tag="<?php if (!$is_workers) echo 'org-'; ?><?php echo esc_attr($tag); ?>"><?php echo esc_html($tag); ?></button>
+    <button class="facet-button" data-tag="<?php if (!$is_workers) echo 'org-'; ?><?php echo esc_attr($tag); ?>" data-type="<?php if (!$is_workers) echo 'org'; ?>"><?php echo esc_html($tag); ?></button>
   <?php endforeach; ?>
-  <button id="clear-tags-button">Show All</button>
+  <button id="clear-tags-button" data-tag="<?php if (!$is_workers) echo 'org'; ?>">Show All</button>
 </div>
