@@ -61,7 +61,7 @@ if ($query->have_posts()) :
 
               </div>
               <div class="details-name-position">
-                <p class="details-name"><?php the_field('name') ?></p>
+                <a href="/career-stories#<?php the_field('video_id') ?>" class="details-name"><?php the_field('name') ?></a>
                 <a href="/career-stories#<?php the_field('video_id') ?>" class="details-position">See <?php the_field('name') ?>'s story</a>
               </div>
             </div>

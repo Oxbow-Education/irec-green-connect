@@ -48,4 +48,30 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+  swiper2.on('slideChange', function () {
+    const activeIndex = swiper2.activeIndex;
+    swiper1.slideTo(activeIndex);
+
+    const quotes = document.querySelectorAll(
+      '.quote-wrapper .carousel-details',
+    );
+    quotes.forEach((quote, index) => {
+      if (index == activeIndex) {
+        quote.classList.add('active');
+      } else {
+        quote.classList.remove('active');
+      }
+    });
+
+    const slides = document.querySelectorAll(
+      '.swiper-container-1 .swiper-slide',
+    );
+    slides.forEach((slide, index) => {
+      if (index < activeIndex) {
+        slide.classList.add('hidden');
+      } else {
+        slide.classList.remove('hidden');
+      }
+    });
+  });
 });
