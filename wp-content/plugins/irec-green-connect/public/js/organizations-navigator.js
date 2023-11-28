@@ -19,11 +19,13 @@ const STATE_COORDS = {
 function prefilterMapBasedOnLocation() {
   const connectNowWrapper = document.getElementById('connectNow');
   const state = connectNowWrapper.dataset.state;
-  const abbrev = STATE_ABREVS[state];
-  orgsSearch.helper.setQueryParameter('facetFilters', [`state:${abbrev}`]);
-  orgsSearch.helper.search();
-  const bounds = calculateBounds(STATE_COORDS[state], 75);
-  map.fitBounds(bounds);
+  if (STATE_ABREVS[state]) {
+    const abbrev = STATE_ABREVS[state];
+    orgsSearch.helper.setQueryParameter('facetFilters', [`state:${abbrev}`]);
+    orgsSearch.helper.search();
+    const bounds = calculateBounds(STATE_COORDS[state], 75);
+    map.fitBounds(bounds);
+  }
 }
 function calculateBounds(centerLatLng, radiusMiles) {
   // Earth's radius in miles
@@ -161,7 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
           return `<div class="organization-card">
           <h6>${item.organization}</h6>
           <div class="organization-image">
-            <img src="/wp-content/uploads/2023/09/NREL-Quality-Control-Inspector-72292-scaled.jpg" />
+            <img src="${
+              item.is_employer
+                ? 'http://irec.wherewego.org/wp-content/uploads/2023/11/1-1.png'
+                : 'http://irec.wherewego.org/wp-content/uploads/2023/11/2-1-1.png'
+            }" />
             <div class="organization-tags">
               ${item.tags.map((tag) => `<span>${tag}</span>`).join('')}
             </div>
