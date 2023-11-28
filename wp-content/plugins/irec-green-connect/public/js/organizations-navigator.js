@@ -53,6 +53,14 @@ function setPositionQuery(lat, lng) {
   const bounds = calculateBounds({ lat, lng }, 75);
   map.fitBounds(bounds);
 }
+
+function removePositionQuery() {
+  orgsSearch.helper.setQueryParameter('aroundRadius', undefined);
+  orgsSearch.helper.setQueryParameter('aroundLatLng', undefined);
+  orgsSearch.helper.search();
+
+  prefilterMapBasedOnLocation();
+}
 // Adds a marker to the map
 function addMarker(item) {
   const icon = {
@@ -173,17 +181,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         </div>`;
         },
+        empty:
+          '<p style="col-span: 3">Green Workforce Connect currently connects to organizations active in Oklahoma, Pennsylvania, and Wisconsin.</p>',
       },
     }),
   ]);
 
   // Handle form submission
   const form = document.getElementById('custom-searchbox');
+  const input = document.getElementById('zipcode');
+  const clearLocation = document.getElementById('clearLocation');
+  input.addEventListener('input', () => {
+    if (input.value) {
+      clearLocation.classList.remove('hidden');
+    } else {
+      clearLocation.classList.add('hidden');
+    }
+  });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formValues = new FormData(form);
     const zipcode = formValues.get('zipcode');
-    console.log({ zipcode });
+    if (!zipcode) {
+      removePositionQuery();
+    }
     try {
       const results = await geocoder.geocode({
         address: zipcode,
@@ -197,6 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.log(err);
     }
+  });
+
+  clearLocation.addEventListener('click', () => {
+    input.value = '';
+    clearLocation.classList.add('hidden');
   });
 
   async function getUserLocation() {
@@ -248,10 +274,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterButtons = document.querySelectorAll('.org-filter');
   filterButtons.forEach((facet) => {
     facet.addEventListener('click', (e) => {
+      const wasActive = facet.classList.contains('active');
       filterButtons.forEach((f) => f.classList.remove('active'));
-      facet.classList.add('active');
-      const data = e.target.dataset.filter;
-      orgsSearch.helper.setQueryParameter('facetFilters', [`filters:${data}`]);
+
+      if (wasActive) {
+        facet.classList.remove('active');
+        orgsSearch.helper.setQueryParameter('facetFilters', '');
+      } else {
+        facet.classList.add('active');
+        const data = facet.dataset.filter;
+        orgsSearch.helper.setQueryParameter('facetFilters', [
+          `filters:${data}`,
+        ]);
+      }
       orgsSearch.helper.search();
     });
   });

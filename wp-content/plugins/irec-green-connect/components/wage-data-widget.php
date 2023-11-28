@@ -35,7 +35,7 @@ if ($wage_data_query->have_posts()) :
 ?>
     <div class="wage-data">
       <div class="wage-data-title">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/yellow-plus.svg" />
+        <img src="/wp-content/plugins/irec-green-connect/public/img/yellow-chevron.png" />
         <h2><?php echo get_post_meta(get_the_ID(), 'career_name', true) ?></h2>
         <p>
           <?php

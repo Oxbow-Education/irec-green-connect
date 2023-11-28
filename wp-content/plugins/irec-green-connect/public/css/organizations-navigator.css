@@ -1,3 +1,6 @@
+#custom-searchbox {
+  position: relative;
+}
 .organizations-navigator * {
   font-family: 'proxima-nova';
 }
@@ -43,6 +46,23 @@
 }
 .organizations-navigator #custom-searchbox input:invalid {
   border: 1px solid red;
+}
+
+#clearLocation.hidden {
+  display: none;
+}
+#clearLocation,
+#clearLocation:hover,
+#clearLocation:focus {
+  display: block;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  z-index: 20;
+  right: 172px;
+  top: 78px;
+  color: black;
+  outline: none;
 }
 
 #zipcode-error {
@@ -160,6 +180,7 @@
 
 #hits .ais-infinite-hits.ais-infinite-hits__empty {
   color: #dfa43c;
+  display: block;
 }
 .organization-filters span {
   font-size: 12px;
@@ -272,7 +293,8 @@
   gap: 1rem;
 }
 .org-filter,
-.org-filter:hover {
+.org-filter:hover,
+.org-filter:focus {
   background-color: transparent;
   border-radius: 5px !important;
   border: 2px solid #8d2a4f;
@@ -283,6 +305,7 @@
   line-height: 17px;
 }
 .org-filter:hover,
+.org-filter:focus.active,
 .org-filter.active {
   background-color: #8d2a4f;
 }
