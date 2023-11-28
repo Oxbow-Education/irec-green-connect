@@ -148,7 +148,7 @@ $light_weighting = array(
             &nbsp;
             with an organization. If you'd like to
             keep exploring, check out
-            <a href="/how-it-works-for-individuals" target="_blank">How it Works for Individuals</a>
+            <a href="/how-it-works-for-individuals" target="_blank">How It Works for Individuals</a>
             or
             <a href="/career-stories" target="_blank">Career Stories.</a>
           </div>
@@ -163,7 +163,7 @@ $light_weighting = array(
 
         <div class="actions">
           <div>Go ahead and check out
-            <a href="/how-it-works-for-individuals/" target="_blank">How it Works for Individuals</a>
+            <a href="/how-it-works-for-individuals/" target="_blank">How It Works for Individuals</a>
             or
             <a href="/career-stories" target="_blank">Career Stories.</a> to learn more about the reality of the work. If you'd like to talk to someone in your area about local opportunities,
             &nbsp;
