@@ -117,9 +117,7 @@ include __DIR__ . '/facet-buttons.php';
         },
         success: function(response) {
 
-          console.log({
-            response
-          })
+
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
 
@@ -167,25 +165,54 @@ include __DIR__ . '/facet-buttons.php';
 
     // EXTERNAL RESOURCE MODAL
     // open
+    // $(document).on('click', '.external-resource-button, .external-resource-tile:not(.external-resource-modal-bg)', function() {
+    //   const dataTag = $(this).attr('data-tag');
+    //   $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
+    //   $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
+    //   // add resource query param
+    //   const currentURL = window.location.href;
+    //   const url = new URL(currentURL);
+    //   const existingParams = new URLSearchParams(url.search);
+    //   existingParams.set('resource', dataTag);
+    //   const updatedURL = `${url.pathname}?${existingParams.toString()}${url.hash}`;
+    //   window.history.pushState({
+    //     path: updatedURL
+    //   }, '', updatedURL);
+
+    // });
     $(document).on('click', '.external-resource-button, .external-resource-tile:not(.external-resource-modal-bg)', function() {
       const dataTag = $(this).attr('data-tag');
-      console.log({
-        dataTag
-      })
-      console.log(document.querySelector(`div.external-resource-modal[data-tag="${dataTag}"]`))
-      $(`div.external-resource-modal[data-tag="${dataTag}"]`).addClass('active');
-      $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`).addClass('active');
-      // add resource query param
-      const currentURL = window.location.href;
-      const url = new URL(currentURL);
-      const existingParams = new URLSearchParams(url.search);
-      existingParams.set('resource', dataTag);
-      const updatedURL = `${url.pathname}?${existingParams.toString()}${url.hash}`;
-      window.history.pushState({
-        path: updatedURL
-      }, '', updatedURL);
+      const modal = $(`div.external-resource-modal[data-tag="${dataTag}"]`);
+      const modalBg = $(`div.external-resource-modal-bg[data-tag="${dataTag}"]`);
+
+      // Check if the modal is a child of '.swiper-slide'
+      if (modal.closest('.swiper-slide').length) {
+        // Remove the modal from its current position
+        modal.detach();
+        modalBg.detach()
+
+        // Append the modal to the end of the body
+        $('body').append(modalBg);
+        $('body').append(modal);
+      } else {
+        // Add resource query param
+        const currentURL = window.location.href;
+        const url = new URL(currentURL);
+        const existingParams = new URLSearchParams(url.search);
+        existingParams.set('resource', dataTag);
+        const updatedURL = `${url.pathname}?${existingParams.toString()}${url.hash}`;
+        window.history.pushState({
+          path: updatedURL
+        }, '', updatedURL);
+      }
+
+      // Add 'active' class to the modal and modal background
+      modal.addClass('active');
+      modalBg.addClass('active');
+
 
     });
+
     // close (btn or bg click)
     $(document).on('click', 'div.external-resource-modal-bg, button.close-modal-btn', function() {
       const dataTag = $(this).attr('data-tag');
