@@ -96,7 +96,7 @@ async function initMarkers() {
 // Initialized the map
 function initMap() {
   const options = {
-    zoom: 8,
+    zoom: 9,
   };
   map = new google.maps.Map(document.getElementById('map'), options);
   initMarkers();
