@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h6>${item.organization}</h6>
           <div class="organization-image">
             <img src="${
-              item.is_employer
+              !item.is_training_provider
                 ? 'http://irec.wherewego.org/wp-content/uploads/2023/11/1-1.png'
                 : 'http://irec.wherewego.org/wp-content/uploads/2023/11/2-1-1.png'
             }" />
