@@ -777,3 +777,40 @@ function get_lat_lng_from_address($address, $city, $state, $zip)
     return false;
   }
 }
+
+function update_tags_based_on_who_is_it_for($post_id)
+{
+  // Check if it's an autosave or a revision
+  if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
+    return;
+  }
+
+  // Check if the post type is 'post'
+  $post_type = get_post_type($post_id);
+  if ("post" != $post_type) {
+    return;
+  }
+
+  // Get the array of values from 'who_is_it_for'
+  $who_is_it_for = get_post_meta($post_id, 'who_is_this_for', true);
+
+  // Ensure $who_is_it_for is an array
+  if (!is_array($who_is_it_for)) {
+    $who_is_it_for = array($who_is_it_for);
+  }
+
+  // Check if 'Worker User' is in the array
+  $contains_worker_user = in_array('Worker User', $who_is_it_for);
+
+  // Check conditions and update meta fields
+  if (!$contains_worker_user) {
+    // If 'Worker User' is not in the array, empty 'worker_tags'
+    update_post_meta($post_id, 'worker_tags', '');
+  } elseif ($contains_worker_user && count($who_is_it_for) == 1) {
+    // If 'who_is_it_for' contains ONLY 'Worker User', empty 'organization_tags'
+    update_post_meta($post_id, 'organization_tags', '');
+  }
+}
+
+// Hook into the save_post action
+add_action('save_post', 'update_tags_based_on_who_is_it_for');
