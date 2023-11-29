@@ -477,7 +477,8 @@ add_action('save_post', 'save_external_resource_to_algolia');
 function newsletter_sign_up_shortcode()
 {
   ob_start();
-
+  wp_enqueue_style('newsletter-css', '/wp-content/plugins/irec-green-connect/public/css/newsletter-sign-up.css');
+  wp_enqueue_script('newsletter-js', '/wp-content/plugins/irec-green-connect/public/js/newsletter-sign-up.js');
   include __DIR__ . '/components/newsletter-sign-up.php';
   return ob_get_clean();
 }
