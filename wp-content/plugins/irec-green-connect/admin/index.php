@@ -176,6 +176,88 @@ function custom_post_count($counts, $type, $perm)
   // Return the modified counts
   return $counts;
 }
+function modify_post_views($views)
+{
+  global $typenow;
+
+  if ($typenow === 'post') {
+    // Check if we're dealing with 'post' post type
+    $filter_by_internal = isset($_GET['filter_by_internal']) ? $_GET['filter_by_internal'] : '';
+
+    foreach ($views as $view => $link) {
+      $href_regex = '/(href=")([^"]*)/';
+      preg_match($href_regex, $link, $href_match);
+
+      if (!empty($href_match[2])) {
+        $href = html_entity_decode($href_match[2]);
+        $url_parts = parse_url($href);
+        parse_str($url_parts['query'], $query_params);
+
+        $query_params['filter_by_internal'] = $filter_by_internal;
+        $url_parts['query'] = urldecode(http_build_query($query_params));
+
+        // Reconstruct the URL only with available parts
+        $new_href = (isset($url_parts['scheme']) ? $url_parts['scheme'] . '://' : '') .
+          (isset($url_parts['host']) ? $url_parts['host'] : '') .
+          (isset($url_parts['path']) ? $url_parts['path'] : '') .
+          '?' . $url_parts['query'];
+
+        $views[$view] = preg_replace($href_regex, '$1' . esc_url($new_href), $link);
+      }
+    }
+  }
+
+  return $views;
+}
+
+add_filter('views_edit-post', 'modify_post_views');
+
+function redirect_post_list_to_filtered()
+{
+  global $pagenow;
+
+  // Check if we are on the edit.php page in the admin area for post type 'post'
+  if (is_admin() && 'edit.php' === $pagenow && isset($_GET['post_type']) && $_GET['post_type'] === 'post') {
+    if (!isset($_GET['filter_by_internal'])) {
+      // If referrer URL contains a 'post' parameter, use its value
+      $referrer = wp_get_referer();
+      if ($referrer) {
+        parse_str(parse_url($referrer, PHP_URL_QUERY), $query_params);
+        if (isset($query_params['post'])) {
+          $post_id = $query_params['post'];
+          $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
+
+          $redirect_url = $is_internal_resource == 1
+            ? admin_url('edit.php?post_type=post&filter_by_internal=true')
+            : admin_url('edit.php?post_type=post&filter_by_internal=false');
+
+          wp_redirect($redirect_url);
+          exit;
+        }
+      }
+    }
+  }
+}
+add_action('admin_init', 'redirect_post_list_to_filtered');
+
+
+
+// Helper function to rebuild URL from components, if not available use below code
+if (!function_exists('http_build_url')) {
+  function http_build_url(array $url_parts)
+  {
+    return (isset($url_parts['scheme']) ? "{$url_parts['scheme']}:" : '') .
+      ((isset($url_parts['user']) || isset($url_parts['host'])) ? '//' : '') .
+      (isset($url_parts['user']) ? "{$url_parts['user']}" : '') .
+      (isset($url_parts['pass']) ? ":{$url_parts['pass']}" : '') .
+      (isset($url_parts['user']) ? '@' : '') .
+      (isset($url_parts['host']) ? "{$url_parts['host']}" : '') .
+      (isset($url_parts['port']) ? ":{$url_parts['port']}" : '') .
+      (isset($url_parts['path']) ? "{$url_parts['path']}" : '') .
+      (isset($url_parts['query']) ? "?{$url_parts['query']}" : '') .
+      (isset($url_parts['fragment']) ? "#{$url_parts['fragment']}" : '');
+  }
+}
 
 add_filter('wp_count_posts', 'custom_post_count', 10, 3);
 function change_post_labels_based_on_query($labels)
