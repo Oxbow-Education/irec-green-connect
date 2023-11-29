@@ -29,40 +29,204 @@ add_action('admin_init', 'hide_default_editor');
 // Hide the Posts menu item
 function custom_admin_menu()
 {
+  // Remove the default 'Posts' menu
   remove_menu_page('edit.php');
 
   // Create "Internal Resources" menu item
-  add_menu_page('Internal Resources', 'Internal Resources Database', 'edit_posts', 'edit.php?is_internal_resource=true', '', 'dashicons-format-aside', 5);
-  add_submenu_page('edit.php?is_internal_resource=true', 'All Internal Resources', 'All Internal Resources', 'manage_options', 'edit.php?is_internal_resource=true');
-  add_submenu_page('edit.php?is_internal_resource=true', 'Add New', 'Add New', 'edit_posts', 'post-new.php?is_internal_resource=true');
+  add_menu_page(
+    'Internal Resources',
+    'Internal Resources',
+    'edit_posts',
+    'edit.php?post_type=post&filter_by_internal=true',
+    '',
+    'dashicons-format-aside',
+    5
+  );
+  add_submenu_page(
+    'edit.php?post_type=post&filter_by_internal=true',
+    'All Internal Resources',
+    'All Internal Resources',
+    'manage_options',
+    'edit.php?post_type=post&filter_by_internal=true'
+  );
+  add_submenu_page(
+    'edit.php?post_type=post&filter_by_internal=true',
+    'Add New',
+    'Add New',
+    'edit_posts',
+    'post-new.php?post_type=post'
+  );
 
   // Create "External Resources" menu item
-  add_menu_page('External Resources', 'External Resources Database', 'edit_posts', 'edit.php?is_internal_resource=false', '', 'dashicons-category', 6);
-  add_submenu_page('edit.php?is_internal_resource=false', 'All External Resources', 'All External Resources', 'manage_options', 'edit.php?is_internal_resource=false');
-  add_submenu_page('edit.php?is_internal_resource=false', 'Add New', 'Add New', 'edit_posts', 'post-new.php?is_internal_resource=false');
+  add_menu_page(
+    'External Resources',
+    'External Resources',
+    'edit_posts',
+    'edit.php?post_type=post&filter_by_internal=false',
+    '',
+    'dashicons-category',
+    6
+  );
+  add_submenu_page(
+    'edit.php?post_type=post&filter_by_internal=false',
+    'All External Resources',
+    'All External Resources',
+    'manage_options',
+    'edit.php?post_type=post&filter_by_internal=false'
+  );
+  add_submenu_page(
+    'edit.php?post_type=post&filter_by_internal=false',
+    'Add New',
+    'Add New',
+    'edit_posts',
+    'post-new.php?post_type=post'
+  );
 }
 add_action('admin_menu', 'custom_admin_menu');
 
-// Filter posts based on "is_internal_resource" and change label
+
+
 function filter_posts_by_internal_resource($query)
 {
-  global $pagenow;
-  if (is_admin() && $pagenow == 'edit.php' && isset($_GET['is_internal_resource'])) {
-    $is_internal = $_GET['is_internal_resource'] === 'true' ? true : false;
-    $query->query_vars['meta_key'] = 'is_internal_resource';
-    $query->query_vars['meta_value'] = $is_internal;
+  // Only modify the query in the admin area for the main posts query
+  if (is_admin() && $query->is_main_query() && isset($_GET['post_type']) && $_GET['post_type'] == 'post') {
+    // Check for a custom query parameter, e.g., 'filter_by_internal'
+    if (isset($_GET['filter_by_internal'])) {
+      $filter_value = $_GET['filter_by_internal'];
 
-    // Change label
-    $label = $is_internal ? 'Internal Resources' : 'External Resources';
-    add_filter('gettext', function ($translated_text) use ($label) {
-      if ($translated_text == 'Posts') {
-        return $label;
+      if ($filter_value == 'true') {
+        // Filter posts where is_internal_resource is true
+        $query->set('meta_query', array(
+          array(
+            'key'     => 'is_internal_resource',
+            'value'   => 1,
+            'compare' => '='
+          )
+        ));
+      } elseif ($filter_value == 'false') {
+        // Filter posts where is_internal_resource is not true
+        $query->set('meta_query', array(
+          array(
+            'key'     => 'is_internal_resource',
+            'value'   => 1,
+            'compare' => '!='
+          )
+        ));
       }
-      return $translated_text;
-    });
+    }
   }
 }
-add_filter('parse_query', 'filter_posts_by_internal_resource');
+
+add_action('pre_get_posts', 'filter_posts_by_internal_resource');
+
+function custom_post_count($counts, $type, $perm)
+{
+  // Check if we're dealing with 'post' post type
+  if ($type !== 'post' || !isset($_GET['filter_by_internal'])) {
+    return $counts;
+  }
+
+  // The custom query arguments to match our filter condition
+  $args = array(
+    'post_type'   => 'post',
+    'post_status' => 'any',
+    'posts_per_page' => -1,
+    'meta_query'  => array(
+      array(
+        'key'     => 'is_internal_resource',
+        'value'   => 1,
+        'compare' => $_GET['filter_by_internal'] == 'true' ? '==' : '!='
+      )
+    ),
+    'fields'      => 'ids'
+  );
+
+  // Get all posts matching our criteria
+  $query = new WP_Query($args);
+  $posts = $query->posts;
+
+  // Recalculate counts based on filtered posts
+  $counts = (object) array(
+    'publish' => 0,
+    'future'  => 0,
+    'completed' => 0,
+    'draft'   => 0,
+    'private' => 0,
+    'trash'   => 0,
+    'auto-draft' => 0,
+    'inherit' => 0,
+    'request-pending' => 0,
+    'request-confirmed' => 0,
+    'request-failed' => 0,
+    'request-completed' => 0
+  );
+
+  // Update the counts based on post status
+  foreach ($posts as $post_id) {
+    $post_status = get_post_status($post_id);
+    if (property_exists($counts, $post_status)) {
+      $counts->$post_status++;
+    } else {
+      // Handle the case where the status is not defined in your counts object
+      // This could involve initializing the property or handling it in another way
+    }
+  }
+
+
+  // Return the modified counts
+  return $counts;
+}
+
+add_filter('wp_count_posts', 'custom_post_count', 10, 3);
+function change_post_labels_based_on_query($labels)
+{
+  // Check if 'filter_by_internal' is set in the URL
+  if (isset($_GET['filter_by_internal'])) {
+    $internal = $_GET['filter_by_internal'] === 'true';
+
+    // Define labels based on the 'filter_by_internal' value
+    $resource_type = $internal ? 'Internal Resource' : 'External Resource';
+    $resource_type_plural = $internal ? 'Internal Resources' : 'External Resources';
+
+    // Set the labels
+    $labels->name = $resource_type_plural;
+    $labels->singular_name = $resource_type;
+    $labels->add_new = 'Add New';
+    $labels->add_new_item = 'Add New ' . $resource_type;
+    $labels->edit_item = 'Edit ' . $resource_type;
+    $labels->new_item = 'New ' . $resource_type;
+    $labels->view_item = 'View ' . $resource_type;
+    $labels->view_items = 'View ' . $resource_type_plural;
+    $labels->search_items = 'Search ' . $resource_type_plural;
+    $labels->not_found = 'No ' . strtolower($resource_type_plural) . ' found';
+    $labels->not_found_in_trash = 'No ' . strtolower($resource_type_plural) . ' found in Trash';
+    $labels->parent_item_colon = 'Parent ' . $resource_type . ':';
+    $labels->all_items = 'All ' . $resource_type_plural;
+    $labels->archives = $resource_type . ' Archives';
+    $labels->attributes = $resource_type . ' Attributes';
+    $labels->insert_into_item = 'Insert into ' . strtolower($resource_type);
+    $labels->uploaded_to_this_item = 'Uploaded to this ' . strtolower($resource_type);
+    $labels->featured_image = 'Featured Image for this ' . strtolower($resource_type);
+    $labels->set_featured_image = 'Set featured image for this ' . strtolower($resource_type);
+    $labels->remove_featured_image = 'Remove featured image for this ' . strtolower($resource_type);
+    $labels->use_featured_image = 'Use as featured image for this ' . strtolower($resource_type);
+    $labels->filter_items_list = 'Filter ' . strtolower($resource_type_plural) . ' list';
+    $labels->items_list_navigation = $resource_type_plural . ' list navigation';
+    $labels->items_list = $resource_type_plural . ' list';
+    $labels->item_published = $resource_type . ' published';
+    $labels->item_published_privately = $resource_type . ' published privately';
+    $labels->item_reverted_to_draft = $resource_type . ' reverted to draft';
+    $labels->item_scheduled = $resource_type . ' scheduled';
+    $labels->item_updated = $resource_type . ' updated';
+    $labels->menu_name = $resource_type_plural;
+    $labels->name_admin_bar = $resource_type;
+  }
+
+  return $labels;
+}
+add_filter('post_type_labels_post', 'change_post_labels_based_on_query');
+
+
 
 // Register custom REST API endpoint
 function custom_upload_resources_endpoint()
