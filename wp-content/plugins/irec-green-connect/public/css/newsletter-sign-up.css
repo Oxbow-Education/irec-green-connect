@@ -52,6 +52,11 @@
   box-sizing: border-box;
 }
 
+#_form_23_ ._form_element select option {
+  background-color: #ffffff; /* or any other contrasting color */
+  color: black; /* text color */
+}
+
 #_form_23_ textarea {
   resize: none;
 }

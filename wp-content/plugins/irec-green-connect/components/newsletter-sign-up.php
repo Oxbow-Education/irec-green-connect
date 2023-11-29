@@ -10,7 +10,7 @@
   <div class="_form-content">
     <div class="_form_element _x34282746 _full_width _clear">
       <div class="_form-title">
-        Sign Up for our Newsletter
+        Sign Up to Receive Updates
       </div>
     </div>
     <div class="_form_element _x41259773 _full_width _clear">
