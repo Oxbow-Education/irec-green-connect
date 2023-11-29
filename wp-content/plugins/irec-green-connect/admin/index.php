@@ -176,6 +176,59 @@ function custom_post_count($counts, $type, $perm)
   // Return the modified counts
   return $counts;
 }
+function modify_post_views($views)
+{
+  global $typenow;
+
+  if ($typenow === 'post') {
+    // Check if we're dealing with 'post' post type
+    $filter_by_internal = isset($_GET['filter_by_internal']) ? $_GET['filter_by_internal'] : '';
+
+    foreach ($views as $view => $link) {
+      $href_regex = '/(href=")([^"]*)/';
+      preg_match($href_regex, $link, $href_match);
+
+      if (!empty($href_match[2])) {
+        $href = html_entity_decode($href_match[2]);
+        $url_parts = parse_url($href);
+        parse_str($url_parts['query'], $query_params);
+
+        $query_params['filter_by_internal'] = $filter_by_internal;
+        $url_parts['query'] = urldecode(http_build_query($query_params));
+
+        // Reconstruct the URL only with available parts
+        $new_href = (isset($url_parts['scheme']) ? $url_parts['scheme'] . '://' : '') .
+          (isset($url_parts['host']) ? $url_parts['host'] : '') .
+          (isset($url_parts['path']) ? $url_parts['path'] : '') .
+          '?' . $url_parts['query'];
+
+        $views[$view] = preg_replace($href_regex, '$1' . esc_url($new_href), $link);
+      }
+    }
+  }
+
+  return $views;
+}
+
+add_filter('views_edit-post', 'modify_post_views');
+
+
+// Helper function to rebuild URL from components, if not available use below code
+if (!function_exists('http_build_url')) {
+  function http_build_url(array $url_parts)
+  {
+    return (isset($url_parts['scheme']) ? "{$url_parts['scheme']}:" : '') .
+      ((isset($url_parts['user']) || isset($url_parts['host'])) ? '//' : '') .
+      (isset($url_parts['user']) ? "{$url_parts['user']}" : '') .
+      (isset($url_parts['pass']) ? ":{$url_parts['pass']}" : '') .
+      (isset($url_parts['user']) ? '@' : '') .
+      (isset($url_parts['host']) ? "{$url_parts['host']}" : '') .
+      (isset($url_parts['port']) ? ":{$url_parts['port']}" : '') .
+      (isset($url_parts['path']) ? "{$url_parts['path']}" : '') .
+      (isset($url_parts['query']) ? "?{$url_parts['query']}" : '') .
+      (isset($url_parts['fragment']) ? "#{$url_parts['fragment']}" : '');
+  }
+}
 
 add_filter('wp_count_posts', 'custom_post_count', 10, 3);
 function change_post_labels_based_on_query($labels)
