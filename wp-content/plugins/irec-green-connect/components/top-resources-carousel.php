@@ -3,6 +3,7 @@ $full_url = $_SERVER['REQUEST_URI'];
 
 $is_workers = strpos($full_url, '/individuals') !== false;
 
+
 $top_resources_args = array(
   'post_type'      => 'post',
   'posts_per_page' => -1,
@@ -17,13 +18,13 @@ $top_resources_args = array(
       'type'    => 'BOOLEAN',
     ),
     array(
-      'key'     => 'who_is_this_for',
-      'value'   => $is_workers ? 'Worker User' : 'Worker User%',
-      'compare' => $is_workers ? 'LIKE' : 'NOT LIKE',
+      'key' => $is_workers ? 'worker_tags' : 'organization_tags',
+      'value' => '',
+      'compare' => '!='
     )
-
   ),
 );
+
 
 $top_resources_query = new WP_Query($top_resources_args);
 
