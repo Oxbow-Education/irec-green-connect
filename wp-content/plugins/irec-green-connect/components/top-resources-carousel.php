@@ -3,7 +3,6 @@ $full_url = $_SERVER['REQUEST_URI'];
 
 $is_workers = strpos($full_url, '/individuals') !== false;
 
-
 $top_resources_args = array(
   'post_type'      => 'post',
   'posts_per_page' => -1,
