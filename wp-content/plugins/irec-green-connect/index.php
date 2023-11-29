@@ -472,9 +472,13 @@ function save_external_resource_to_algolia($post_id)
 
 // Hook the function to the 'save_post' action
 add_action('save_post', 'save_external_resource_to_algolia');
-  
 
-// nice to have
-// on page save, if page has value for 'worker_tags_to_display", add each tag to the full page search where title = Resources about <tag>, content is empty, and url is page?tags=<>
-// on page save, if page has value for 'org_tags_to_display", add each tag to the full page search where title = Resources about <tag>, content is empty, and url is page?tags=<org-tag>
-// on page save, if page has value for 'user_tags_to_display", add each tag to the full page search where title = Resources for: tag, content is empty, and url is page?tags=<org-tag>
+
+function newsletter_sign_up_shortcode()
+{
+  ob_start();
+
+  include __DIR__ . '/components/newsletter-sign-up.php';
+  return ob_get_clean();
+}
+add_shortcode('newsletter_sign_up', 'newsletter_sign_up_shortcode');
