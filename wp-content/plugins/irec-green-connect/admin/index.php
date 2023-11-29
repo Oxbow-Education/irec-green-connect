@@ -212,6 +212,35 @@ function modify_post_views($views)
 
 add_filter('views_edit-post', 'modify_post_views');
 
+function redirect_post_list_to_filtered()
+{
+  global $pagenow;
+
+  // Check if we are on the edit.php page in the admin area for post type 'post'
+  if (is_admin() && 'edit.php' === $pagenow && isset($_GET['post_type']) && $_GET['post_type'] === 'post') {
+    if (!isset($_GET['filter_by_internal'])) {
+      // If referrer URL contains a 'post' parameter, use its value
+      $referrer = wp_get_referer();
+      if ($referrer) {
+        parse_str(parse_url($referrer, PHP_URL_QUERY), $query_params);
+        if (isset($query_params['post'])) {
+          $post_id = $query_params['post'];
+          $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
+
+          $redirect_url = $is_internal_resource == 1
+            ? admin_url('edit.php?post_type=post&filter_by_internal=true')
+            : admin_url('edit.php?post_type=post&filter_by_internal=false');
+
+          wp_redirect($redirect_url);
+          exit;
+        }
+      }
+    }
+  }
+}
+add_action('admin_init', 'redirect_post_list_to_filtered');
+
+
 
 // Helper function to rebuild URL from components, if not available use below code
 if (!function_exists('http_build_url')) {
