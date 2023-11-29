@@ -133,7 +133,7 @@
 #modal.results {
   background-color: #16577b;
 }
-.active {
+.quiz-slide.active {
   padding: 20px;
   opacity: 1;
   height: auto;
