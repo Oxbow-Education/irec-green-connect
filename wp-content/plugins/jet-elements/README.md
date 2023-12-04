@@ -4,7 +4,24 @@ Brand new addon for Elementor Page builder. It provides the set of modules to cr
 
 # ChangeLog
 
-## [2.6.13.1](https://github.com/ZemezLab/jet-elements/archive/2.6.13.zip) - 02.10.2023
+## [2.6.14](https://github.com/ZemezLab/jet-elements/archive/2.6.14.zip) - 06.11.2023
+* Fixed: [Crocoblock/suggestions#6842](https://github.com/Crocoblock/suggestions/issues/6842)
+* Fixed: Contact Form 7 styles
+* Fixed: Second item stretch to full width in the Slider widget 
+* Fixed: Column Vertical Scrollbar with Sticky Column script conflict
+* Fixed: nofollow attribute with image in the Portfolio widget 
+* Fixed: minor issues
+* Added: Parallax Section compatibility with Elementor Dropdown Menu
+* Added: `Slider CSS ID` option in the Slider widget
+* Added: `Show current weather details in your timezone` option in the Weather widget
+* Added: `Button Download Name` option in the Download Button widget
+* Added: `jet-elements/download-button/label` filter hook
+* Updated: Vue js module
+
+## [2.6.13.2](https://github.com/ZemezLab/jet-elements/archive/2.6.13.2.zip) - 03.10.2023
+* Fixed: elementor-template Rest API endpoint
+
+## [2.6.13.1](https://github.com/ZemezLab/jet-elements/archive/2.6.13.1.zip) - 02.10.2023
 * Fixed: minor issue.
 
 ## [2.6.13](https://github.com/ZemezLab/jet-elements/archive/2.6.13.zip) - 28.09.2023

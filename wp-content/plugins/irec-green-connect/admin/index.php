@@ -1,6 +1,6 @@
 <?php
 
-
+include realpath(dirname(__FILE__) . '/google-analytics/index.php');
 // This function changed the "edit" text to "Edit site data" to help Editors better
 // pick the right edit option
 function custom_admin_texts($translated_text, $text, $domain)

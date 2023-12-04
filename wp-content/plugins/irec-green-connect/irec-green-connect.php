@@ -85,3 +85,4 @@ run_irec_green_connect();
 
 
 require __DIR__ . '/index.php';
+require_once __DIR__ . '/vendor/autoload.php';

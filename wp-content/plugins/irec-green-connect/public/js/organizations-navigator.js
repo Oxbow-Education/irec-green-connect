@@ -23,7 +23,7 @@ function prefilterMapBasedOnLocation() {
     const abbrev = STATE_ABREVS[state];
     orgsSearch.helper.setQueryParameter('facetFilters', [`state:${abbrev}`]);
     orgsSearch.helper.search();
-    const bounds = calculateBounds(STATE_COORDS[state], 75);
+    const bounds = calculateBounds(STATE_COORDS[state], 50);
     map.fitBounds(bounds);
   }
 }
@@ -58,7 +58,7 @@ function setPositionQuery(lat, lng) {
   orgsSearch.helper.setQueryParameter('aroundRadius', 160934);
   orgsSearch.helper.setQueryParameter('aroundLatLng', aroundLatLng);
   orgsSearch.helper.search();
-  const bounds = calculateBounds({ lat, lng }, 75);
+  const bounds = calculateBounds({ lat, lng }, 50);
   map.fitBounds(bounds);
 }
 
