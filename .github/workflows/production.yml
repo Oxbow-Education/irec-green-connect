@@ -1,0 +1,80 @@
+name: Production Deployment
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # # Database Backup
+  # backup:
+  #   runs-on: ubuntu-latest
+  #   name: Create Database Backup
+  #   env:
+  #     SSH_KEY: ${{ secrets.SSH_PROD_PRIVATE_KEY }}
+  #     SSHPASS: ${{ secrets.SSH_PROD_PASSPHRASE }}
+  #     SSH_HOST: ${{ secrets.SSH_PROD_HOST }}
+  #     SSH_PORT: ${{ secrets.SSH_PROD_PORT }}
+  #     SSH_USER: ${{ secrets.SSH_PROD_USER }}
+  #   steps:
+  #     # 1. Create a run timestamp output with id=time name=date
+  #     - name: Get date timestamp
+  #       id: time
+  #       run: echo "::set-output name=date::$(date '+%Y-%m-%d_%H-%M-%S')"
+
+  #     # 2. Configure SSH Access on GH CI to the staging machine
+  #     - name: Configure SSH Access
+  #       # Creates an ssh config file with the key/host/port/user
+  #       run: |
+  #         mkdir -p ~/.ssh/
+  #         echo "$SSH_KEY" > ~/.ssh/staging.key
+  #         chmod 600 ~/.ssh/staging.key
+  #         cat >>~/.ssh/config <<END
+  #         Host staging
+  #           HostName $SSH_HOST
+  #           User $SSH_USER
+  #           Port $SSH_PORT
+  #           IdentityFile ~/.ssh/staging.key
+  #           StrictHostKeyChecking no
+  #           LogLevel INFO
+  #         END
+
+  #     # 3. Create the $SSH_ASKPASS with a script that just echoes $SSHPASS value
+  #     # to negate asking for the passphrase during ssh connection
+  #     - name: Create SSH_ASKPASS
+  #       run: |
+  #         cat > /tmp/ssh-askpass-script <<EOL
+  #         #!/bin/bash
+  #         echo $SSHPASS
+  #         EOL
+  #         chmod +x /tmp/ssh-askpass-script
+
+  #     # 4. Sets display to :0.0 and uses setsid to ensure that ssh will use
+  #     # $SSH_ASKPASS value. Connects to the staging defined in the hosts file and runs mysqldump.
+  #     - name: Run mysqldump via SSH
+  #       run: |
+  #         DISPLAY=":0.0" SSH_ASKPASS="/tmp/ssh-askpass-script" setsid ssh staging mysqldump --skip-add-drop-table --skip-extended-insert -u ${{ secrets.DB_STAGE_USER }} -p${{ secrets.DB_STAGE_PASSWORD }} ${{ secrets.DB_STAGE_NAME }} > backup-${{ steps.time.outputs.date }}.sql
+
+  #     # 5. Save the copied backup as an artifact
+  #     - name: Archive Database Backup
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: backup-${{ steps.time.outputs.date }}
+  #         path: backup-${{ steps.time.outputs.date }}.sql
+
+  # FTP Deploy
+  deploy:
+    name: 🚀 Deploy via FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SFTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: gvam1164.siteground.biz
+          username: nina@greenworkforceconnect.org
+          password: ${{ secrets.FTP_PROD_PASSWORD }}
+          server-dir: nina@greenworkforceconnect.org/public_html/
+          port: 21
