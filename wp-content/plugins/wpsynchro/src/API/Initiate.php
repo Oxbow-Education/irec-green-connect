@@ -7,15 +7,15 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\Licensing;
 use WPSynchro\Transport\ReturnResult;
 use WPSynchro\Utilities\Compatibility\MUPluginHandler;
 use WPSynchro\Transport\TransferToken;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
+use WPSynchro\Utilities\Licensing\Licensing;
 
 class Initiate extends WPSynchroService
 {
-
     public function service()
     {
         $sync_response = new \stdClass();
@@ -37,7 +37,7 @@ class Initiate extends WPSynchroService
             }
 
             // Check licensing
-            if (\WPSynchro\CommonFunctions::isPremiumVersion()) {
+            if (CommonFunctions::isPremiumVersion()) {
                 $licensing = new Licensing();
                 $licensecheck = $licensing->verifyLicense();
 

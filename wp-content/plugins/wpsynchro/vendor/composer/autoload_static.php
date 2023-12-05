@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
+class ComposerStaticInite718c56e304758bfb3fc87c744bcf1dc
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -37,22 +37,25 @@ class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
         'WPSynchro\\API\\Migrate' => __DIR__ . '/../..' . '/src/API/Migrate.php',
         'WPSynchro\\API\\PopulateFileList' => __DIR__ . '/../..' . '/src/API/PopulateFileList.php',
         'WPSynchro\\API\\PopulateFileListStatus' => __DIR__ . '/../..' . '/src/API/PopulateFileListStatus.php',
+        'WPSynchro\\API\\SaveMigration' => __DIR__ . '/../..' . '/src/API/SaveMigration.php',
         'WPSynchro\\API\\Status' => __DIR__ . '/../..' . '/src/API/Status.php',
         'WPSynchro\\API\\StatusFileChanges' => __DIR__ . '/../..' . '/src/API/StatusFileChanges.php',
         'WPSynchro\\API\\VerifyMigration' => __DIR__ . '/../..' . '/src/API/VerifyMigration.php',
         'WPSynchro\\API\\WPSynchroService' => __DIR__ . '/../..' . '/src/API/WPSynchroService.php',
         'WPSynchro\\CLI\\WPCLICommand' => __DIR__ . '/../..' . '/src/CLI/WPCLICommand.php',
-        'WPSynchro\\CommonFunctions' => __DIR__ . '/../..' . '/src/CommonFunctions.php',
         'WPSynchro\\Database\\DatabaseBackup' => __DIR__ . '/../..' . '/src/Database/DatabaseBackup.php',
         'WPSynchro\\Database\\DatabaseFinalize' => __DIR__ . '/../..' . '/src/Database/DatabaseFinalize.php',
         'WPSynchro\\Database\\DatabaseHelperFunctions' => __DIR__ . '/../..' . '/src/Database/DatabaseHelperFunctions.php',
         'WPSynchro\\Database\\DatabaseSync' => __DIR__ . '/../..' . '/src/Database/DatabaseSync.php',
+        'WPSynchro\\Database\\Exception\\SerializedStringException' => __DIR__ . '/../..' . '/src/Database/Exception/SerializedStringException.php',
+        'WPSynchro\\Database\\SerializedStringHandler' => __DIR__ . '/../..' . '/src/Database/SerializedStringHandler.php',
         'WPSynchro\\Database\\Table' => __DIR__ . '/../..' . '/src/Database/Table.php',
         'WPSynchro\\Database\\TableColumns' => __DIR__ . '/../..' . '/src/Database/TableColumns.php',
         'WPSynchro\\Files\\FileHelperFunctions' => __DIR__ . '/../..' . '/src/Files/FileHelperFunctions.php',
         'WPSynchro\\Files\\FilesSync' => __DIR__ . '/../..' . '/src/Files/FilesSync.php',
         'WPSynchro\\Files\\FinalizeFiles' => __DIR__ . '/../..' . '/src/Files/FinalizeFiles.php',
         'WPSynchro\\Files\\Location' => __DIR__ . '/../..' . '/src/Files/Location.php',
+        'WPSynchro\\Files\\PathData' => __DIR__ . '/../..' . '/src/Files/PathData.php',
         'WPSynchro\\Files\\PathHandler' => __DIR__ . '/../..' . '/src/Files/PathHandler.php',
         'WPSynchro\\Files\\PopulateFileListFilterIterator' => __DIR__ . '/../..' . '/src/Files/PopulateFileListFilterIterator.php',
         'WPSynchro\\Files\\PopulateFileListState' => __DIR__ . '/../..' . '/src/Files/PopulateFileListState.php',
@@ -64,19 +67,17 @@ class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
         'WPSynchro\\Finalize\\FinalizeSync' => __DIR__ . '/../..' . '/src/Finalize/FinalizeSync.php',
         'WPSynchro\\Initiate\\InitiateSync' => __DIR__ . '/../..' . '/src/Initiate/InitiateSync.php',
         'WPSynchro\\Initiate\\InitiateTokenRetrieval' => __DIR__ . '/../..' . '/src/Initiate/InitiateTokenRetrieval.php',
-        'WPSynchro\\Job' => __DIR__ . '/../..' . '/src/Job.php',
-        'WPSynchro\\Licensing' => __DIR__ . '/../..' . '/src/Licensing.php',
         'WPSynchro\\Logger\\FileLogger' => __DIR__ . '/../..' . '/src/Logger/FileLogger.php',
-        'WPSynchro\\Logger\\Logger' => __DIR__ . '/../..' . '/src/Logger/Logger.php',
-        'WPSynchro\\Logger\\LoggerTrait' => __DIR__ . '/../..' . '/src/Logger/LoggerTrait.php',
+        'WPSynchro\\Logger\\LoggerInterface' => __DIR__ . '/../..' . '/src/Logger/LoggerInterface.php',
         'WPSynchro\\Logger\\MemoryLogger' => __DIR__ . '/../..' . '/src/Logger/MemoryLogger.php',
         'WPSynchro\\Logger\\NullLogger' => __DIR__ . '/../..' . '/src/Logger/NullLogger.php',
         'WPSynchro\\Logger\\SyncMetadataLog' => __DIR__ . '/../..' . '/src/Logger/SyncMetadataLog.php',
         'WPSynchro\\Masterdata\\MasterdataRetrieval' => __DIR__ . '/../..' . '/src/Masterdata/MasterdataRetrieval.php',
         'WPSynchro\\Masterdata\\MasterdataSync' => __DIR__ . '/../..' . '/src/Masterdata/MasterdataSync.php',
-        'WPSynchro\\Migration' => __DIR__ . '/../..' . '/src/Migration.php',
-        'WPSynchro\\MigrationController' => __DIR__ . '/../..' . '/src/MigrationController.php',
-        'WPSynchro\\MigrationFactory' => __DIR__ . '/../..' . '/src/MigrationFactory.php',
+        'WPSynchro\\Migration\\Job' => __DIR__ . '/../..' . '/src/Migration/Job.php',
+        'WPSynchro\\Migration\\Migration' => __DIR__ . '/../..' . '/src/Migration/Migration.php',
+        'WPSynchro\\Migration\\MigrationController' => __DIR__ . '/../..' . '/src/Migration/MigrationController.php',
+        'WPSynchro\\Migration\\MigrationFactory' => __DIR__ . '/../..' . '/src/Migration/MigrationFactory.php',
         'WPSynchro\\Pages\\AdminAddEdit' => __DIR__ . '/../..' . '/src/Pages/AdminAddEdit.php',
         'WPSynchro\\Pages\\AdminChangelog' => __DIR__ . '/../..' . '/src/Pages/AdminChangelog.php',
         'WPSynchro\\Pages\\AdminLicensing' => __DIR__ . '/../..' . '/src/Pages/AdminLicensing.php',
@@ -85,7 +86,6 @@ class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
         'WPSynchro\\Pages\\AdminRunSync' => __DIR__ . '/../..' . '/src/Pages/AdminRunSync.php',
         'WPSynchro\\Pages\\AdminSetup' => __DIR__ . '/../..' . '/src/Pages/AdminSetup.php',
         'WPSynchro\\Pages\\AdminSupport' => __DIR__ . '/../..' . '/src/Pages/AdminSupport.php',
-        'WPSynchro\\ServiceController' => __DIR__ . '/../..' . '/src/ServiceController.php',
         'WPSynchro\\Status\\MigrateStatus' => __DIR__ . '/../..' . '/src/Status/MigrateStatus.php',
         'WPSynchro\\Transport\\BasicAuth' => __DIR__ . '/../..' . '/src/Transport/BasicAuth.php',
         'WPSynchro\\Transport\\Destination' => __DIR__ . '/../..' . '/src/Transport/Destination.php',
@@ -107,6 +107,7 @@ class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
         'WPSynchro\\Utilities\\Actions\\EmailOnSyncFailure' => __DIR__ . '/../..' . '/src/Utilities/Actions/EmailOnSyncFailure.php',
         'WPSynchro\\Utilities\\Actions\\EmailOnSyncSuccess' => __DIR__ . '/../..' . '/src/Utilities/Actions/EmailOnSyncSuccess.php',
         'WPSynchro\\Utilities\\Activation' => __DIR__ . '/../..' . '/src/Utilities/Activation.php',
+        'WPSynchro\\Utilities\\CommonFunctions' => __DIR__ . '/../..' . '/src/Utilities/CommonFunctions.php',
         'WPSynchro\\Utilities\\Compatibility\\Compatibility' => __DIR__ . '/../..' . '/src/Utilities/Compatibility/Compatibility.php',
         'WPSynchro\\Utilities\\Compatibility\\MUPluginHandler' => __DIR__ . '/../..' . '/src/Utilities/Compatibility/MUPluginHandler.php',
         'WPSynchro\\Utilities\\Configuration\\PluginConfiguration' => __DIR__ . '/../..' . '/src/Utilities/Configuration/PluginConfiguration.php',
@@ -118,6 +119,9 @@ class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
         'WPSynchro\\Utilities\\JSData\\LoadJSData' => __DIR__ . '/../..' . '/src/Utilities/JSData/LoadJSData.php',
         'WPSynchro\\Utilities\\JSData\\PageHeaderData' => __DIR__ . '/../..' . '/src/Utilities/JSData/PageHeaderData.php',
         'WPSynchro\\Utilities\\JSData\\UsageReportingData' => __DIR__ . '/../..' . '/src/Utilities/JSData/UsageReportingData.php',
+        'WPSynchro\\Utilities\\Licensing\\LicenseState' => __DIR__ . '/../..' . '/src/Utilities/Licensing/LicenseState.php',
+        'WPSynchro\\Utilities\\Licensing\\Licensing' => __DIR__ . '/../..' . '/src/Utilities/Licensing/Licensing.php',
+        'WPSynchro\\Utilities\\SingletonTrait' => __DIR__ . '/../..' . '/src/Utilities/SingletonTrait.php',
         'WPSynchro\\Utilities\\SyncTimer' => __DIR__ . '/../..' . '/src/Utilities/SyncTimer.php',
         'WPSynchro\\Utilities\\SyncTimerList' => __DIR__ . '/../..' . '/src/Utilities/SyncTimerList.php',
         'WPSynchro\\Utilities\\Upgrade\\DatabaseUpgrade' => __DIR__ . '/../..' . '/src/Utilities/Upgrade/DatabaseUpgrade.php',
@@ -128,9 +132,9 @@ class ComposerStaticInit6ac74a5630382b13cd5eb589287c109a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6ac74a5630382b13cd5eb589287c109a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6ac74a5630382b13cd5eb589287c109a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit6ac74a5630382b13cd5eb589287c109a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite718c56e304758bfb3fc87c744bcf1dc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite718c56e304758bfb3fc87c744bcf1dc::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite718c56e304758bfb3fc87c744bcf1dc::$classMap;
 
         }, null, ClassLoader::class);
     }

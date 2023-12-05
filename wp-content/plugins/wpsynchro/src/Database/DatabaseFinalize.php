@@ -7,16 +7,21 @@
 
 namespace WPSynchro\Database;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Masterdata\MasterdataSync;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\Destination;
+use WPSynchro\Utilities\SyncTimerList;
 
 class DatabaseFinalize
 {
-
     // Data objects
     public $job = null;
     public $migration = null;
     public $databasesync = null;
+
+    // Dependencies
     public $logger = null;
     public $timer = null;
 
@@ -24,8 +29,10 @@ class DatabaseFinalize
      * Constructor
      * @since 1.0.0
      */
-    public function __construct()
+    public function __construct(LoggerInterface $logger = null)
     {
+        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->timer = SyncTimerList::getInstance();
     }
 
     /**
@@ -34,15 +41,10 @@ class DatabaseFinalize
      */
     public function finalize()
     {
-        // Timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get("class.SyncTimerList");
-
-        $sync_controller = $wpsynchro_container->get("class.MigrationController");
+        $sync_controller = MigrationController::getInstance();
         $this->job = $sync_controller->job;
         $this->migration = $sync_controller->migration;
 
-        $this->logger = $wpsynchro_container->get("class.Logger");
         $this->databasesync = new DatabaseSync();
         $this->databasesync->job = $this->job;
         $this->databasesync->migration = $this->migration;
@@ -150,16 +152,11 @@ class DatabaseFinalize
             $to_table_lookup[$to_table->name] = $to_table->rows;
         }
 
-        // Get prefix of remote db
-        $commonfunctions = new CommonFunctions();
-        $table_prefix = $commonfunctions->getDBTempTableName();
-
         // Run finalize checks
         foreach ($this->job->from_dbmasterdata as $from_table) {
-
             $from_rows = $from_table->rows;
             // If its old temp table on source, just ignore
-            if (strpos($from_table->name, $table_prefix) > -1) {
+            if (strpos($from_table->name, DatabaseSync::TMP_TABLE_PREFIX) > -1) {
                 $this->logger->log("DEBUG", "Table " . $from_table->name . " is a old temp table, so ignore");
                 continue;
             }
@@ -332,7 +329,7 @@ class DatabaseFinalize
                 $sql_queries[] = "DELETE FROM  `" . $table_temp_name . "` WHERE meta_key LIKE '" . $wpdb->esc_like($target_prefix) . "%'";
                 $sql_queries[] = "UPDATE `" . $table_temp_name . "` SET meta_key = REPLACE(meta_key, '" . $source_prefix . "', '" . $target_prefix . "') WHERE meta_key LIKE '" . $wpdb->esc_like($source_prefix) . "%'";
                 $this->logger->log("DEBUG", "update data in temp table " . $table_temp_name . " (" . $table_name . ") to replace source prefix " . $source_prefix . " with target prefix " . $target_prefix);
-            } else if ($table_name == $this->job->to_wp_options_table) {
+            } elseif ($table_name == $this->job->to_wp_options_table) {
                 // Update prefix in options table
                 $sql_queries[] = "DELETE FROM  `" . $table_temp_name . "` WHERE option_name LIKE '" . $wpdb->esc_like($target_prefix) . "%'";
                 $sql_queries[] = "UPDATE `" . $table_temp_name . "` SET option_name = REPLACE(option_name, '" . $source_prefix . "', '" . $target_prefix . "') WHERE option_name LIKE '" . $wpdb->esc_like($source_prefix) . "%'";
@@ -349,8 +346,7 @@ class DatabaseFinalize
     public function retrieveDatabaseTables($temp_table = true)
     {
         // Retrieve new db tables list from destination
-        global $wpsynchro_container;
-        $masterdata_obj = $wpsynchro_container->get('class.MasterdataSync');
+        $masterdata_obj = new MasterdataSync();
         $data_to_retrieve = ["dbdetails"];
         $masterdata_obj->migration = $this->migration;
         $masterdata_obj->job = $this->job;
@@ -456,7 +452,7 @@ class DatabaseFinalize
 
         // If from has rows, but the to table is empty, could be memory limit hit, exceeding post max size or mysql max_packet_size
         if ($from_rows > 0 && $to_rows == 0) {
-            $this->job->errors[] = sprintf(__("Finalize: Error in database migration for table %s - No rows has been transferred, but should contain %d rows. Normally this is because the ressource limits has been hit and the database content is too large. Contact support is this continues to fail.", "wpsynchro"), $from_tablename, $from_rows);
+            $this->job->errors[] = sprintf(__("Finalize: Error in database migration for table %s - No rows has been transferred, but should contain %d rows. Normally this is because the ressource limits has been hit and the database content is too large. Contact support if this continues to fail.", "wpsynchro"), $from_tablename, $from_rows);
             return;
         }
 

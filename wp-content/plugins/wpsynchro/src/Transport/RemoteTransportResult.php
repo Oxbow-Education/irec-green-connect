@@ -2,6 +2,9 @@
 
 namespace WPSynchro\Transport;
 
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
+
 /**
  * Class for handling result of transport
  * @since 1.3.0
@@ -17,6 +20,7 @@ class RemoteTransportResult
     public $files;
     public $body_length;
     // HTTP
+    public $headers = [];
     public $statuscode;
     // Errors, warnings etc
     public $errors = [];
@@ -25,6 +29,16 @@ class RemoteTransportResult
     public $debugs = [];
     // Success or not
     public $success = false;
+    // Dependencies
+    private $logger;
+
+    /**
+     *  Constructor
+     */
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger ?? FileLogger::getInstance();
+    }
 
     public function getBody()
     {
@@ -76,28 +90,30 @@ class RemoteTransportResult
         return $this->response_object;
     }
 
+    public function getHeader($header)
+    {
+        return $this->headers[$header] ?? false;
+    }
+
     public function writeMessagesToLog()
     {
-        global $wpsynchro_container;
-        $logger = $wpsynchro_container->get("class.Logger");
-
         foreach ($this->errors as $errortext) {
-            $logger->log("ERROR", $errortext);
+            $this->logger->log("ERROR", $errortext);
         }
         $this->errors = [];
 
         foreach ($this->warnings as $warningtext) {
-            $logger->log("WARNING", $warningtext);
+            $this->logger->log("WARNING", $warningtext);
         }
         $this->warnings = [];
 
         foreach ($this->infos as $infolog) {
-            $logger->log("INFO", $infolog);
+            $this->logger->log("INFO", $infolog);
         }
         $this->infos = [];
 
         foreach ($this->debugs as $debuglog) {
-            $logger->log("DEBUG", $debuglog);
+            $this->logger->log("DEBUG", $debuglog);
         }
         $this->debugs = [];
     }
@@ -121,17 +137,30 @@ class RemoteTransportResult
                 $this->debugs[] = print_r($this->response_object, true);
             }
         } else {
-
             // Check statuscode
             $this->statuscode = wp_remote_retrieve_response_code($this->response_object);
+            $this->headers = wp_remote_retrieve_headers($this->response_object);
 
             // check if wpsynchrotransfer or json
             $body_data = wp_remote_retrieve_body($this->response_object);
 
             // Check if there is any PHP notices/warnings etc found in response
-            if (strpos($body_data, "<b>Notice</b>:") > -1 || strpos($body_data, "<b>Warning</b>:") > -1 || strpos($body_data, "<b>Fatal error</b>:") > -1) {
+            $php_notices_index = strpos($body_data, "<b>Notice</b>:");
+            $php_warning_index = strpos($body_data, "<b>Warning</b>:");
+            $php_fatal_error_index = strpos($body_data, "<b>Fatal error</b>:");
+            if ($php_notices_index !== false || $php_warning_index !== false || $php_fatal_error_index !== false) {
                 $sitename = $url = strtok($this->url, '?');
+                $error_msg = "";
+                $error_index = 0;
+                if ($php_notices_index !== false) {
+                    $error_index = $php_notices_index;
+                } elseif ($php_warning_index !== false) {
+                    $error_index = $php_warning_index;
+                } elseif ($php_fatal_error_index !== false) {
+                    $error_index = $php_fatal_error_index;
+                }
                 $this->errors[] = sprintf("Found one or more PHP notices/warnings/errors in response on url: %s. These must be fixed or suppressed before WP Synchro can complete migration. The errors should also be in PHP error log on the site. Also make sure WP_DEBUG is set to false in wp-config.php.", $sitename);
+                $this->errors[] = substr($body_data, $error_index, 500);
             }
 
             // Check for authentication on remote

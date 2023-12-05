@@ -1,10 +1,11 @@
 <?php
+
 namespace WPSynchro\Logger;
 
 /**
  * Memory logger
  */
-class MemoryLogger implements Logger
+class MemoryLogger implements LoggerInterface
 {
     public $emergencies = [];
     public $alerts = [];
@@ -14,20 +15,17 @@ class MemoryLogger implements Logger
     public $notices = [];
     public $infos = [];
     public $debugs = [];
-    
-
     public function log($level, $message, $context = "")
     {
         // Format log msg
         $date = new \DateTime();
-
         $formatted_msg = "[{$date->format($this->dateformat)}] [{$level}] {$message}" . PHP_EOL;
 
         // If context, print that on newline
         if (is_array($context) || is_object($context)) {
             $formatted_msg .= PHP_EOL . print_r($context, true) . PHP_EOL;
         }
-        
+
         if ($level === 'EMERGENCY') {
             $this->emergencies[] = $formatted_msg;
         } elseif ($level === 'ALERT') {

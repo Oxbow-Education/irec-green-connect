@@ -2,6 +2,7 @@
 namespace Elementor\Modules\Ai\Connect;
 
 use Elementor\Core\Common\Modules\Connect\Apps\Library;
+use Elementor\Modules\Ai\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -108,7 +109,7 @@ class Ai extends Library {
 			$method,
 			$endpoint,
 			[
-				'timeout' => 50,
+				'timeout' => 100,
 				'headers' => $headers,
 				'body' => $body,
 			],
@@ -151,12 +152,13 @@ class Ai extends Library {
 		);
 	}
 
-	public function get_completion_text( $prompt ) {
+	public function get_completion_text( $prompt, $context = [] ) {
 		return $this->ai_request(
 			'POST',
 			'text/completion',
 			[
 				'prompt' => $prompt,
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			]
@@ -169,45 +171,48 @@ class Ai extends Library {
 	 *
 	 * @return mixed|\WP_Error
 	 */
-	public function get_image_prompt_enhanced( $prompt ) {
+	public function get_image_prompt_enhanced( $prompt, $context = [] ) {
 		return $this->ai_request(
 			'POST',
 			'text/enhance-image-prompt',
 			[
 				'prompt' => $prompt,
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			]
 		);
 	}
 
-	public function get_edit_text( $input, $instruction ) {
+	public function get_edit_text( $input, $instruction, $context = [] ) {
 		return $this->ai_request(
 			'POST',
 			'text/edit',
 			[
 				'input' => $input,
 				'instruction' => $instruction,
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			]
 		);
 	}
 
-	public function get_custom_code( $prompt, $language ) {
+	public function get_custom_code( $prompt, $language, $context = [] ) {
 		return $this->ai_request(
 			'POST',
 			'text/custom-code',
 			[
 				'prompt' => $prompt,
 				'language' => $language,
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			]
 		);
 	}
 
-	public function get_custom_css( $prompt, $html_markup, $element_id ) {
+	public function get_custom_css( $prompt, $html_markup, $element_id, $context = [] ) {
 		return $this->ai_request(
 			'POST',
 			'text/custom-css',
@@ -215,6 +220,7 @@ class Ai extends Library {
 				'prompt' => $prompt,
 				'html_markup' => $html_markup,
 				'element_id' => $element_id,
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			]
@@ -228,7 +234,7 @@ class Ai extends Library {
 	 *
 	 * @return mixed|\WP_Error
 	 */
-	public function get_text_to_image( $prompt, $prompt_settings ) {
+	public function get_text_to_image( $prompt, $prompt_settings, $context = [] ) {
 		return $this->ai_request(
 			'POST',
 			'image/text-to-image',
@@ -236,6 +242,7 @@ class Ai extends Library {
 				self::PROMPT => $prompt,
 				self::IMAGE_TYPE => $prompt_settings[ self::IMAGE_TYPE ] . '/' . $prompt_settings[ self::STYLE_PRESET ],
 				self::ASPECT_RATIO => $prompt_settings[ self::ASPECT_RATIO ],
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			]
@@ -249,7 +256,7 @@ class Ai extends Library {
 	 * @return mixed|\WP_Error
 	 * @throws \Exception
 	 */
-	public function get_image_to_image( $image_data ) {
+	public function get_image_to_image( $image_data, $context = [] ) {
 		$image_file = get_attached_file( $image_data['attachment_id'] );
 
 		if ( ! $image_file ) {
@@ -264,6 +271,7 @@ class Ai extends Library {
 				self::IMAGE_TYPE => $image_data['promptSettings'][ self::IMAGE_TYPE ] . '/' . $image_data['promptSettings'][ self::STYLE_PRESET ],
 				self::IMAGE_STRENGTH => $image_data['promptSettings'][ self::IMAGE_STRENGTH ],
 				self::ASPECT_RATIO => $image_data['promptSettings'][ self::ASPECT_RATIO ],
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			],
@@ -281,7 +289,7 @@ class Ai extends Library {
 	 * @return mixed|\WP_Error
 	 * @throws \Exception
 	 */
-	public function get_image_to_image_upscale( $image_data ) {
+	public function get_image_to_image_upscale( $image_data, $context = [] ) {
 		$image_file = get_attached_file( $image_data['attachment_id'] );
 
 		if ( ! $image_file ) {
@@ -293,6 +301,66 @@ class Ai extends Library {
 			'image/image-to-image/upscale',
 			[
 				self::IMAGE_RESOLUTION => $image_data['promptSettings']['upscale_to'],
+				'context' => wp_json_encode( $context ),
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+			],
+			$image_file,
+			'image'
+		);
+
+		return $result;
+	}
+
+	/**
+	 * get_image_to_image_remove_background
+	 * @param $image_data
+	 *
+	 * @return mixed|\WP_Error
+	 * @throws \Exception
+	 */
+	public function get_image_to_image_remove_background( $image_data, $context = [] ) {
+		$image_file = get_attached_file( $image_data['attachment_id'] );
+
+		if ( ! $image_file ) {
+			throw new \Exception( 'Image file not found' );
+		}
+
+		$result = $this->ai_request(
+			'POST',
+			'image/image-to-image/remove-background',
+			[
+				'context' => wp_json_encode( $context ),
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+			],
+			$image_file,
+			'image'
+		);
+
+		return $result;
+	}
+
+	/**
+	 * get_image_to_image_remove_text
+	 * @param $image_data
+	 *
+	 * @return mixed|\WP_Error
+	 * @throws \Exception
+	 */
+	public function get_image_to_image_replace_background( $image_data, $context = [] ) {
+		$image_file = get_attached_file( $image_data['attachment_id'] );
+
+		if ( ! $image_file ) {
+			throw new \Exception( 'Image file not found' );
+		}
+
+		$result = $this->ai_request(
+			'POST',
+			'image/image-to-image/replace-background',
+			[
+				self::PROMPT => $image_data[ self::PROMPT ],
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			],
@@ -330,7 +398,7 @@ class Ai extends Library {
 	 * @return mixed|\WP_Error
 	 * @throws \Exception
 	 */
-	public function get_image_to_image_out_painting( $image_data ) {
+	public function get_image_to_image_out_painting( $image_data, $context = [] ) {
 		$img_content = str_replace( ' ', '+', $image_data['mask'] );
 		$img_content = substr( $img_content, strpos( $img_content, ',' ) + 1 );
 		$img_content = base64_decode( $img_content );
@@ -346,6 +414,7 @@ class Ai extends Library {
 			[
 				self::PROMPT => $image_data[ self::PROMPT ],
 				self::IMAGE_TYPE => '',
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			],
@@ -368,7 +437,7 @@ class Ai extends Library {
 	 * @return mixed|\WP_Error
 	 * @throws \Exception
 	 */
-	public function get_image_to_image_mask( $image_data ) {
+	public function get_image_to_image_mask( $image_data, $context = [] ) {
 		$image_file = get_attached_file( $image_data['attachment_id'] );
 		$mask_file = $this->store_temp_file( $image_data['mask'], '.svg' );
 
@@ -387,6 +456,7 @@ class Ai extends Library {
 				self::PROMPT => $image_data[ self::PROMPT ],
 				self::IMAGE_TYPE => $image_data['promptSettings'][ self::IMAGE_TYPE ] . '/' . $image_data['promptSettings'][ self::STYLE_PRESET ],
 				self::IMAGE_STRENGTH => $image_data['promptSettings'][ self::IMAGE_STRENGTH ],
+				'context' => wp_json_encode( $context ),
 				'api_version' => ELEMENTOR_VERSION,
 				'site_lang' => get_bloginfo( 'language' ),
 			],
@@ -405,6 +475,74 @@ class Ai extends Library {
 		);
 
 		return $result;
+	}
+
+	public function generate_layout( $prompt, $context, $variation_type ) {
+		return $this->ai_request(
+			'POST',
+			'generate/layout',
+			[
+				'prompt' => $prompt,
+				'context' => $context ?? [],
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+				'variationType' => (int) $variation_type,
+			]
+		);
+	}
+
+	public function get_layout_prompt_enhanced( $prompt, $context = [] ) {
+		return $this->ai_request(
+			'POST',
+			'generate/enhance-prompt',
+			[
+				'prompt' => $prompt,
+				'context' => wp_json_encode( $context ),
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+			]
+		);
+	}
+
+	public function get_history_by_type( $type, $page, $limit, $context = [] ) {
+		$endpoint = Module::HISTORY_TYPE_ALL === $type
+			? 'history'
+			: add_query_arg( [
+				'page' => $page,
+				'limit' => $limit,
+			], "history/{$type}" );
+
+		return $this->ai_request(
+			'POST',
+			$endpoint,
+			[
+				'context' => wp_json_encode( $context ),
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+			]
+		);
+	}
+
+	public function delete_history_item( $id, $context = [] ) {
+		return $this->ai_request(
+			'DELETE', 'history/' . $id,
+			[
+				'context' => wp_json_encode( $context ),
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+			]
+		);
+	}
+
+	public function toggle_favorite_history_item( $id, $context = [] ) {
+		return $this->ai_request(
+			'POST', sprintf( 'history/%s/favorite', $id ),
+			[
+				'context' => wp_json_encode( $context ),
+				'api_version' => ELEMENTOR_VERSION,
+				'site_lang' => get_bloginfo( 'language' ),
+			]
+		);
 	}
 
 	protected function init() {}

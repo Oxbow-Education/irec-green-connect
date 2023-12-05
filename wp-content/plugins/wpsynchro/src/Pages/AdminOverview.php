@@ -7,25 +7,24 @@
 
 namespace WPSynchro\Pages;
 
-use WPSynchro\CommonFunctions;
-use WPSynchro\MigrationFactory;
-use WPSynchro\Licensing;
+use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
+use WPSynchro\Utilities\Licensing\Licensing;
 
 class AdminOverview
 {
-
     public $migration_factory;
 
     public function __construct()
     {
-        $this->migration_factory = new MigrationFactory();
+        $this->migration_factory = MigrationFactory::getInstance();
     }
 
     public static function render()
     {
 
-        $instance = new self;
+        $instance = new self();
         $instance->handleGET();
     }
 
@@ -65,8 +64,13 @@ class AdminOverview
 
         // If delete
         if (strlen($delete) > 0) {
-            $migration_factory = new MigrationFactory();
-            $migration_factory->deleteMigration($delete);
+            $delete_nonce = $_REQUEST['nonce'] ?? '';
+            if (wp_verify_nonce($delete_nonce, 'wpsynchro_delete_migration')) {
+                $migration_factory = MigrationFactory::getInstance();
+                $migration_factory->deleteMigration($delete);
+            } else {
+                echo "<div class='notice wpsynchro-notice'><p>" . __('Migration was not deleted, as the security token is no longer valid. Try again.', 'wpsynchro') . '</p></div>';
+            }
         }
 
         // Check for duplicate
@@ -78,13 +82,18 @@ class AdminOverview
 
         // If duplicate
         if (strlen($duplicate) > 0) {
-            $migration_factory = new MigrationFactory();
-            $migration_factory->duplicateMigration($duplicate);
+            $duplicate_nonce = $_REQUEST['nonce'] ?? '';
+            if (wp_verify_nonce($duplicate_nonce, 'wpsynchro_duplicate_migration')) {
+                $migration_factory = MigrationFactory::getInstance();
+                $migration_factory->duplicateMigration($duplicate);
+            } else {
+                echo "<div class='notice wpsynchro-notice'><p>" . __('Migration was not duplicated, as the security token is no longer valid. Try again.', 'wpsynchro') . '</p></div>';
+            }
         }
 
         // Check if healthcheck should be run
         $run_healthcheck = false;
-        if (\WPSynchro\CommonFunctions::isPremiumVersion()) {
+        if (CommonFunctions::isPremiumVersion()) {
             $licensing = new Licensing();
             if ($licensing->hasProblemWithLicensing()) {
                 $run_healthcheck = true;
@@ -106,20 +115,30 @@ class AdminOverview
 
         // Cards
         $card_content = "";
-        if (!\WPSynchro\CommonFunctions::isPremiumVersion()) {
+        if (!\WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
             $card_content .= $commonfunctions->getTemplateFile("card-pro-version");
         }
         $card_content .= $commonfunctions->getTemplateFile("card-mailinglist");
         $card_content .= $commonfunctions->getTemplateFile("card-facebook");
 
+        // Nonces
+        $run_migration_nonce = wp_create_nonce('wpsynchro_run_migration');
+        $delete_migration_nonce = wp_create_nonce('wpsynchro_delete_migration');
+        $duplicate_migration_nonce = wp_create_nonce('wpsynchro_duplicate_migration');
+
         // Data for JS
         $data_for_js = [
-            "isPro" => \WPSynchro\CommonFunctions::isPremiumVersion(),
+            "isPro" => \WPSynchro\Utilities\CommonFunctions::isPremiumVersion(),
             "pageUrl" => menu_page_url('wpsynchro_overview', false),
             "runSyncUrl" => menu_page_url('wpsynchro_run', false),
+            "runSyncNonce" => $run_migration_nonce,
+            'deleteMigrationNonce' => $delete_migration_nonce,
+            'duplicateMigrationNonce' => $duplicate_migration_nonce,
             "AddEditUrl" => menu_page_url('wpsynchro_addedit', false),
             "compatErrors" => $compat_errors,
             "showReviewNotification" => $show_review_notification,
+            "reviewNotificationText" => $review_notification_text,
+            "cardContent" => $card_content,
             "runHealthcheck" => $run_healthcheck,
             "showUsageReporting" => $show_usage_reporting,
             "reviewNotificationDismissUrl" => add_query_arg(['wpsynchro_dismiss_review_request' => 1], admin_url()),
@@ -128,36 +147,7 @@ class AdminOverview
         ];
         wp_localize_script('wpsynchro_admin_js', 'wpsynchro_overview_data', $data_for_js);
 
-        $translation_for_js = [
-            "reviewNotificationText" => $review_notification_text,
-            "pageTitle" => __('Overview', 'wpsynchro'),
-            "reviewNotificationRateButton" => __('Rate WP Synchro on WordPress.org', 'wpsynchro'),
-            "reviewNotificationDismissButton" => __('Dismiss forever', 'wpsynchro'),
-            "addMigrationButton" => __('Add migration', 'wpsynchro'),
-            "tableColumnName" => __('Name', 'wpsynchro'),
-            "tableColumnType" => __('Type', 'wpsynchro'),
-            "tableColumnDescription" => __('Description', 'wpsynchro'),
-            "tableColumnActions" => __('Actions', 'wpsynchro'),
-            "canRunText" => __('Run now', 'wpsynchro'),
-            "canNotRunElementTitle" => __('Migration can not be run - See description', 'wpsynchro'),
-            "actionEditText" => __('Edit', 'wpsynchro'),
-            "actionDuplicateText" => __('Duplicate', 'wpsynchro'),
-            "actionScheduleText" => __('Schedule', 'wpsynchro'),
-            "actionDeleteText" => __('Delete', 'wpsynchro'),
-            "actionDeleteConfirmText" => __('Are you sure you want to delete this?', 'wpsynchro'),
-            "cardContent" => $card_content,
-            "nomigrationsText" => __('Get started by adding a new migration...', 'wpsynchro'),
-            "scheduleHeaderText" => __("Scheduling a migration", "wpsynchro"),
-            "scheduleText1" => sprintf(__("To schedule a job to run at a certain time or with a certain interval, you need to have %sWP CLI%s installed.", "wpsynchro"), "<a href='https://wp-cli.org/' target='_blank'>", "</a>"),
-            "scheduleText2" => __("With WP CLI installed, you can run this migration", "wpsynchro"),
-            "scheduleText3" => __("with this command", "wpsynchro"),
-            "scheduleText4" => __("Or if you want it in quiet mode, with no output", "wpsynchro"),
-            "scheduleText5" => __("You can add this command to cron and run it exactly how you want it.", "wpsynchro"),
-
-        ];
-        wp_localize_script('wpsynchro_admin_js', 'wpsynchro_overview_translations', $translation_for_js);
-
         // Print content
-        echo '<div id="wpsynchro-overview" class="wpsynchro"><page-overview></page-overview></div>';
+        echo '<div id="wpsynchro-overview" class="wpsynchro"></div>';
     }
 }

@@ -11,7 +11,6 @@ namespace WPSynchro\Utilities\Compatibility;
  */
 class Compatibility
 {
-
     private $accepted_plugins_list = ["wpsynchro/wpsynchro.php"];
 
     public function __construct()

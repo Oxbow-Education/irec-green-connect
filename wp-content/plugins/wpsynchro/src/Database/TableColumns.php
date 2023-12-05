@@ -8,16 +8,26 @@ namespace WPSynchro\Database;
  */
 class TableColumns
 {
-
     public $string = [];
     public $numeric = [];
     public $bit = [];
     public $binary = [];
     public $unknown = [];
     public $generated = [];
+    public $column_types_used = [];
 
     public function __construct()
     {
+    }
+
+    public function addColumnTypeUsed($column_type)
+    {
+        $this->column_types_used[strtolower($column_type)] = true;
+    }
+
+    public function isColumnTypeUsed($column_type)
+    {
+        return isset($this->column_types_used[strtolower($column_type)]);
     }
 
     public function isString($column)
@@ -43,5 +53,10 @@ class TableColumns
     public function isGenerated($column)
     {
         return isset($this->generated[$column]);
+    }
+
+    public function getAllColumnNames()
+    {
+        return array_merge($this->string, $this->numeric, $this->bit, $this->binary, $this->unknown, $this->generated);
     }
 }

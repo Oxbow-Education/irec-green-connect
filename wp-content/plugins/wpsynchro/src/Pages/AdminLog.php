@@ -7,12 +7,13 @@
 
 namespace WPSynchro\Pages;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Logger\SyncMetadataLog;
+use WPSynchro\Migration\MigrationFactory;
+use WPSynchro\Utilities\Licensing\Licensing;
 
 class AdminLog
 {
-
     /**
      *  Called from WP menu to show setup
      *  @since 1.0.0
@@ -29,45 +30,55 @@ class AdminLog
 
         // Remove all logs
         if (isset($_REQUEST['removelogs']) && $_REQUEST['removelogs'] == 1) {
+            $nonce = $_GET['nonce'] ?? '';
+            if (!wp_verify_nonce($nonce, 'wpsynchro_delete_logs')) {
+                echo "<div class='notice wpsynchro-notice'><p>" . __('Security token is no longer valid - Go back and try again.', 'wpsynchro') . '</p></div>';
+                return;
+            }
             $metalog = new SyncMetadataLog();
             $metalog->removeAllLogs();
             echo "<script>window.location='" . menu_page_url('wpsynchro_log', false) . "';</script>";
             return;
         }
 
-        $removelogs_url = add_query_arg('removelogs', 1, menu_page_url('wpsynchro_log', false));
-        $commonfunctions = new CommonFunctions();
-
         // Get data
         $metadatalog = new SyncMetadataLog();
         $data = $metadatalog->getAllLogs();
         $data = array_reverse($data);
 
+        // Links
+        $remove_logs_link = add_query_arg(
+            [
+                'removelogs' => 1,
+                'nonce' => wp_create_nonce('wpsynchro_delete_logs')
+            ],
+            menu_page_url('wpsynchro_log', false)
+        );
+        $show_log_url = add_query_arg(
+            [
+                'nonce' => wp_create_nonce('wpsynchro_show_log')
+            ],
+            menu_page_url('wpsynchro_log', false)
+        );
+        $download_log_url = add_query_arg(
+            [
+                'action' => 'wpsynchro_frontend_download_log',
+                'nonce' => wp_create_nonce('wpsynchro_download_log')
+            ],
+            get_home_url()
+        );
+
         // Data for JS
         $data_for_js = [
             "logData" => $data,
-            "removeAllLogs" => $removelogs_url,
-            "showLogUrl" => menu_page_url('wpsynchro_log', false),
-            "downloadLogUrl" => trailingslashit(get_home_url()) . '?action=wpsynchro_frontend_download_log',
+            "removeAllLogs" => $remove_logs_link,
+            "showLogUrl" => $show_log_url,
+            "downloadLogUrl" => $download_log_url,
         ];
         wp_localize_script('wpsynchro_admin_js', 'wpsynchro_logs_data', $data_for_js);
 
-        $translation_for_js = [
-            "pageTitle" => __('Logs', 'wpsynchro'),
-            "introText" => __('See your last migrations and the result of them. Here you can also download the log file from the migration.', 'wpsynchro'),
-            "deleteLogsButton" => __('Delete all logs', 'wpsynchro'),
-            "tableColumnDate" => __('Migration date', 'wpsynchro'),
-            "tableColumnStatus" => __('Status', 'wpsynchro'),
-            "tableColumnDescription" => __('Description', 'wpsynchro'),
-            "tableColumnLogfile" => __('Logfile', 'wpsynchro'),
-            "noLogsText" => __('No migrations are done yet.', 'wpsynchro'),
-            "actionShowLog" => __('Show log', 'wpsynchro'),
-            "actionDownloadLog" => __('Download log', 'wpsynchro'),
-        ];
-        wp_localize_script('wpsynchro_admin_js', 'wpsynchro_logs_translations', $translation_for_js);
-
         // Print content
-        echo '<div id="wpsynchro-log" class="wpsynchro"><page-logs></page-logs></div>';
+        echo '<div id="wpsynchro-log" class="wpsynchro"></div>';
     }
 
     /**
@@ -76,10 +87,15 @@ class AdminLog
      */
     public function showLog($job_id, $migration_id)
     {
+        $nonce = $_GET['nonce'] ?? '';
+        if (!wp_verify_nonce($nonce, 'wpsynchro_show_log')) {
+            echo "<div class='notice wpsynchro-notice'><p>" . __('Security token is no longer valid - Go back and try again.', 'wpsynchro') . '</p></div>';
+            return;
+        }
+
         // Check if file exist
         $common = new CommonFunctions();
-        global $wpsynchro_container;
-        $migration_factory = $wpsynchro_container->get('class.MigrationFactory');
+        $migration_factory = MigrationFactory::getInstance();
 
         $logpath = $common->getLogLocation();
         $filename = $common->getLogFilename($job_id);
@@ -96,9 +112,9 @@ class AdminLog
 
             echo '<h3>Licensing:</h3>';
             if (CommonFunctions::isPremiumVersion()) {
-                $licensing = new \WPSynchro\Licensing();
+                $licensing = new Licensing();
                 echo '<pre>';
-                print_r($licensing->getLicenseDetails());
+                print_r($licensing->getLicenseState());
                 echo '</pre>';
             } else {
                 echo "<p>License key: FREE version</p>";

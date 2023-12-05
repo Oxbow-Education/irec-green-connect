@@ -1,0 +1,1173 @@
+[2023-10-30 23:27:33.448354] [INFO] Starting migration loop - With allotted time: 26.894317150116 seconds
+[2023-10-30 23:27:33.449475] [DEBUG] Usage reporting data sent to wpsynchro.com server:
+
+Array
+(
+    [version] => 1
+    [site_hash] => 018a47bbaa1d160a1d0929fef4b862ea97dab084
+    [lang] => en_US
+    [is_pro] => 
+    [migration_count] => 2
+    [total_migrations] => 23
+    [features_used_this_sync] => Array
+        (
+            [success_notification_email] => 1
+            [error_notification_email] => 1
+            [clear_cache_on_success] => 1
+            [sync_preset] => db_all
+            [sync_database] => 1
+            [sync_files] => 
+            [db_make_backup] => 
+            [db_table_prefix_change] => 1
+            [db_preserve_options_table_keys] => Array
+                (
+                    [0] => active_plugins
+                    [1] => blog_public
+                )
+
+            [db_preserve_options_custom] => 
+            [include_all_database_tables] => 1
+            [only_include_database_table_count] => 0
+            [searchreplaces_count] => 7
+            [file_locations_count] => 0
+            [files_exclude_files_match_count] => 3
+            [files_ask_user_for_confirm] => 
+        )
+
+)
+
+[2023-10-30 23:27:34.144055] [INFO] Initating with remote and local host with remaining time:26.198657035828
+[2023-10-30 23:27:34.156677] [DEBUG] Calling initate service for destination: local
+[2023-10-30 23:27:34.288189] [DEBUG] Got initiate token: 9d0339ae808a2efb95bdc3024435dc50aeb4d3e4072a17a0842dbccaed17e468
+[2023-10-30 23:27:34.288334] [DEBUG] Calling initate service for destination: remote
+[2023-10-30 23:27:34.875229] [DEBUG] Got initiate token: fdb90aaa67b0e0aa7597d9c3843a686b83699d384c0cdad0cb5221730bd66219
+[2023-10-30 23:27:34.876740] [INFO] Initation completed on: 1.4276919364929 seconds
+[2023-10-30 23:27:34.879715] [INFO] Ending migration loop - with remaining time: 25.462962150574
+[2023-10-30 23:27:35.196969] [INFO] Starting migration loop - With allotted time: 26.857571840286 seconds
+[2023-10-30 23:27:35.197605] [INFO] Getting masterdata from source and target with remaining time:26.856935024261
+[2023-10-30 23:27:35.198072] [DEBUG] Calling masterdata service on: http://localhost:10004/ with intent to user as 'source'
+[2023-10-30 23:27:35.392383] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-10-30 23:27:35.599372] [INFO] Completed masterdata on: 0.40176391601562 seconds
+[2023-10-30 23:27:35.612126] [INFO] Ending migration loop - with remaining time: 26.442421913147
+[2023-10-30 23:27:35.731668] [INFO] Starting migration loop - With allotted time: 26.897706985474 seconds
+[2023-10-30 23:27:35.745273] [INFO] Ending migration loop - with remaining time: 26.884099006653
+[2023-10-30 23:27:35.866215] [INFO] Starting migration loop - With allotted time: 26.905025959015 seconds
+[2023-10-30 23:27:35.867113] [INFO] Starting database migration loop with remaining time: 26.904119968414
+[2023-10-30 23:27:37.002915] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.003059] [INFO] New table is started: wp_duplicator_packages and setting new max response size: 125000
+[2023-10-30 23:27:37.005105] [INFO] Marking table: wp_duplicator_packages as completed
+[2023-10-30 23:27:37.121460] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.121765] [DEBUG] Lastrun in : 0.11865401268005 seconds - response size throttle: 131250 and remaining time: 25.649466991425
+[2023-10-30 23:27:37.122300] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 1 / 42,393
+[2023-10-30 23:27:37.137250] [INFO] New table is started: wp_e_submissions and setting new max response size: 125000
+[2023-10-30 23:27:37.138488] [INFO] Marking table: wp_e_submissions as completed
+[2023-10-30 23:27:37.257733] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.258080] [DEBUG] Lastrun in : 0.12067985534668 seconds - response size throttle: 131250 and remaining time: 25.513153076172
+[2023-10-30 23:27:37.258690] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 5 / 42,393
+[2023-10-30 23:27:37.275809] [INFO] New table is started: wp_e_submissions_actions_log and setting new max response size: 125000
+[2023-10-30 23:27:37.277318] [INFO] Marking table: wp_e_submissions_actions_log as completed
+[2023-10-30 23:27:37.410192] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.410761] [DEBUG] Lastrun in : 0.13477182388306 seconds - response size throttle: 131250 and remaining time: 25.360472917557
+[2023-10-30 23:27:37.410936] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 9 / 42,393
+[2023-10-30 23:27:37.430710] [INFO] New table is started: wp_jet_search_suggestions and setting new max response size: 125000
+[2023-10-30 23:27:37.432630] [INFO] Marking table: wp_jet_search_suggestions as completed
+[2023-10-30 23:27:37.567726] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.568140] [DEBUG] Lastrun in : 0.13718414306641 seconds - response size throttle: 131250 and remaining time: 25.203092098236
+[2023-10-30 23:27:37.568908] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 10 / 42,393
+[2023-10-30 23:27:37.580959] [INFO] New table is started: wp_local_sync_local_site_new_attachments and setting new max response size: 125000
+[2023-10-30 23:27:37.582251] [INFO] Marking table: wp_local_sync_local_site_new_attachments as completed
+[2023-10-30 23:27:37.737533] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.738187] [DEBUG] Lastrun in : 0.15708088874817 seconds - response size throttle: 131250 and remaining time: 25.033046007156
+[2023-10-30 23:27:37.738884] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 84 / 42,393
+[2023-10-30 23:27:37.759276] [INFO] New table is started: wp_local_sync_options and setting new max response size: 125000
+[2023-10-30 23:27:37.760486] [INFO] Marking table: wp_local_sync_options as completed
+[2023-10-30 23:27:37.882167] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:37.882564] [DEBUG] Lastrun in : 0.12311387062073 seconds - response size throttle: 131250 and remaining time: 24.888669013977
+[2023-10-30 23:27:37.882997] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 104 / 42,393
+[2023-10-30 23:27:37.903546] [INFO] New table is started: wp_options and setting new max response size: 125000
+[2023-10-30 23:27:38.208161] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:38.209063] [DEBUG] Lastrun in : 0.30534601211548 seconds - response size throttle: 131250 and remaining time: 24.562169075012
+[2023-10-30 23:27:38.209307] [INFO] Database progress update: Data: 0.0MB / 111.2MB - Rows: 255 / 42,393
+[2023-10-30 23:27:38.463748] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:38.464147] [DEBUG] Lastrun in : 0.23106408119202 seconds - response size throttle: 137813 and remaining time: 24.307085990906
+[2023-10-30 23:27:38.464309] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 442 / 42,393
+[2023-10-30 23:27:38.673976] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:38.674599] [DEBUG] Lastrun in : 0.18114709854126 seconds - response size throttle: 144704 and remaining time: 24.096633911133
+[2023-10-30 23:27:38.675251] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 470 / 42,393
+[2023-10-30 23:27:38.869470] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:38.869642] [DEBUG] Lastrun in : 0.17233204841614 seconds - response size throttle: 151940 and remaining time: 23.901588916779
+[2023-10-30 23:27:38.869705] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 472 / 42,393
+[2023-10-30 23:27:39.048243] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:39.048761] [DEBUG] Lastrun in : 0.16706800460815 seconds - response size throttle: 159537 and remaining time: 23.722470998764
+[2023-10-30 23:27:39.048899] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 474 / 42,393
+[2023-10-30 23:27:39.245266] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:39.245740] [DEBUG] Lastrun in : 0.18235301971436 seconds - response size throttle: 167514 and remaining time: 23.525494098663
+[2023-10-30 23:27:39.245921] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 476 / 42,393
+[2023-10-30 23:27:39.429631] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:39.430113] [DEBUG] Lastrun in : 0.16256809234619 seconds - response size throttle: 175890 and remaining time: 23.341120004654
+[2023-10-30 23:27:39.430919] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 478 / 42,393
+[2023-10-30 23:27:39.617629] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:39.617955] [DEBUG] Lastrun in : 0.16623497009277 seconds - response size throttle: 184685 and remaining time: 23.153279066086
+[2023-10-30 23:27:39.618148] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 480 / 42,393
+[2023-10-30 23:27:39.795385] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:39.797529] [DEBUG] Lastrun in : 0.16010499000549 seconds - response size throttle: 193920 and remaining time: 22.973726987839
+[2023-10-30 23:27:39.813619] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 482 / 42,393
+[2023-10-30 23:27:40.011216] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:40.011696] [DEBUG] Lastrun in : 0.1738440990448 seconds - response size throttle: 203616 and remaining time: 22.759537935257
+[2023-10-30 23:27:40.011953] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 484 / 42,393
+[2023-10-30 23:27:40.237201] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:40.238114] [DEBUG] Lastrun in : 0.209233045578 seconds - response size throttle: 213797 and remaining time: 22.533121109009
+[2023-10-30 23:27:40.238725] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 515 / 42,393
+[2023-10-30 23:27:40.525544] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:40.527159] [DEBUG] Lastrun in : 0.26270604133606 seconds - response size throttle: 224487 and remaining time: 22.244076013565
+[2023-10-30 23:27:40.527504] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 519 / 42,393
+[2023-10-30 23:27:40.810489] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:40.810725] [DEBUG] Lastrun in : 0.26046991348267 seconds - response size throttle: 235712 and remaining time: 21.960505962372
+[2023-10-30 23:27:40.810786] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 529 / 42,393
+[2023-10-30 23:27:41.219208] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:41.219984] [DEBUG] Lastrun in : 0.39838409423828 seconds - response size throttle: 247498 and remaining time: 21.551249027252
+[2023-10-30 23:27:41.220441] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 537 / 42,393
+[2023-10-30 23:27:41.416386] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:41.417352] [DEBUG] Lastrun in : 0.18279695510864 seconds - response size throttle: 259873 and remaining time: 21.353884935379
+[2023-10-30 23:27:41.418066] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 541 / 42,393
+[2023-10-30 23:27:41.614926] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:41.615378] [DEBUG] Lastrun in : 0.17922520637512 seconds - response size throttle: 272867 and remaining time: 21.155857086182
+[2023-10-30 23:27:41.616374] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 545 / 42,393
+[2023-10-30 23:27:41.640889] [INFO] Marking table: wp_options as completed
+[2023-10-30 23:27:41.790969] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:41.791445] [DEBUG] Lastrun in : 0.15286993980408 seconds - response size throttle: 286511 and remaining time: 20.97979092598
+[2023-10-30 23:27:41.791539] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 548 / 42,393
+[2023-10-30 23:27:41.801549] [INFO] New table is started: wp_postmeta and setting new max response size: 125000
+[2023-10-30 23:27:41.973868] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:41.974422] [DEBUG] Lastrun in : 0.17278099060059 seconds - response size throttle: 131250 and remaining time: 20.796811103821
+[2023-10-30 23:27:41.975009] [INFO] Database progress update: Data: 1.1MB / 111.2MB - Rows: 843 / 42,393
+[2023-10-30 23:27:42.251159] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:42.252370] [DEBUG] Lastrun in : 0.26048302650452 seconds - response size throttle: 137813 and remaining time: 20.518881082535
+[2023-10-30 23:27:42.252680] [INFO] Database progress update: Data: 3.3MB / 111.2MB - Rows: 1,571 / 42,393
+[2023-10-30 23:27:42.474856] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:42.475582] [DEBUG] Lastrun in : 0.20433115959167 seconds - response size throttle: 144704 and remaining time: 20.295654058456
+[2023-10-30 23:27:42.476662] [INFO] Database progress update: Data: 4.4MB / 111.2MB - Rows: 1,982 / 42,393
+[2023-10-30 23:27:42.673039] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:42.674230] [DEBUG] Lastrun in : 0.17087483406067 seconds - response size throttle: 151940 and remaining time: 20.097006082535
+[2023-10-30 23:27:42.674666] [INFO] Database progress update: Data: 5.6MB / 111.2MB - Rows: 2,124 / 42,393
+[2023-10-30 23:27:42.863656] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:42.864219] [DEBUG] Lastrun in : 0.16582798957825 seconds - response size throttle: 159537 and remaining time: 19.90702009201
+[2023-10-30 23:27:42.864417] [INFO] Database progress update: Data: 5.6MB / 111.2MB - Rows: 2,390 / 42,393
+[2023-10-30 23:27:43.047925] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:43.048368] [DEBUG] Lastrun in : 0.15992999076843 seconds - response size throttle: 167514 and remaining time: 19.722867012024
+[2023-10-30 23:27:43.048546] [INFO] Database progress update: Data: 5.6MB / 111.2MB - Rows: 2,526 / 42,393
+[2023-10-30 23:27:43.230684] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:43.231158] [DEBUG] Lastrun in : 0.16757202148438 seconds - response size throttle: 175890 and remaining time: 19.54007601738
+[2023-10-30 23:27:43.231380] [INFO] Database progress update: Data: 6.7MB / 111.2MB - Rows: 2,600 / 42,393
+[2023-10-30 23:27:43.434332] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:43.435581] [DEBUG] Lastrun in : 0.17454886436462 seconds - response size throttle: 184685 and remaining time: 19.335654973984
+[2023-10-30 23:27:43.435874] [INFO] Database progress update: Data: 6.7MB / 111.2MB - Rows: 2,666 / 42,393
+[2023-10-30 23:27:43.660733] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:43.661878] [DEBUG] Lastrun in : 0.20276880264282 seconds - response size throttle: 193920 and remaining time: 19.109357118607
+[2023-10-30 23:27:43.662157] [INFO] Database progress update: Data: 6.7MB / 111.2MB - Rows: 2,714 / 42,393
+[2023-10-30 23:27:43.836346] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:43.836549] [DEBUG] Lastrun in : 0.14096903800964 seconds - response size throttle: 203616 and remaining time: 18.934683084488
+[2023-10-30 23:27:43.836779] [INFO] Database progress update: Data: 6.7MB / 111.2MB - Rows: 2,762 / 42,393
+[2023-10-30 23:27:44.014469] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:44.014846] [DEBUG] Lastrun in : 0.16468191146851 seconds - response size throttle: 213797 and remaining time: 18.756386041641
+[2023-10-30 23:27:44.014955] [INFO] Database progress update: Data: 6.7MB / 111.2MB - Rows: 2,810 / 42,393
+[2023-10-30 23:27:44.224167] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:44.224501] [DEBUG] Lastrun in : 0.18897008895874 seconds - response size throttle: 224487 and remaining time: 18.546730995178
+[2023-10-30 23:27:44.224612] [INFO] Database progress update: Data: 6.7MB / 111.2MB - Rows: 2,866 / 42,393
+[2023-10-30 23:27:44.448211] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:44.448421] [DEBUG] Lastrun in : 0.21038699150085 seconds - response size throttle: 235712 and remaining time: 18.322809934616
+[2023-10-30 23:27:44.448489] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,022 / 42,393
+[2023-10-30 23:27:44.629363] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:44.629865] [DEBUG] Lastrun in : 0.1675169467926 seconds - response size throttle: 247498 and remaining time: 18.14137005806
+[2023-10-30 23:27:44.630100] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,070 / 42,393
+[2023-10-30 23:27:44.819718] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:44.819862] [DEBUG] Lastrun in : 0.16476702690125 seconds - response size throttle: 259873 and remaining time: 17.951369047165
+[2023-10-30 23:27:44.819915] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,126 / 42,393
+[2023-10-30 23:27:45.116438] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:45.116849] [DEBUG] Lastrun in : 0.28409290313721 seconds - response size throttle: 272867 and remaining time: 17.6543841362
+[2023-10-30 23:27:45.117297] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,182 / 42,393
+[2023-10-30 23:27:45.342948] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:45.343818] [DEBUG] Lastrun in : 0.20065999031067 seconds - response size throttle: 286511 and remaining time: 17.427416086197
+[2023-10-30 23:27:45.344243] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,239 / 42,393
+[2023-10-30 23:27:45.539809] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:45.540166] [DEBUG] Lastrun in : 0.1832799911499 seconds - response size throttle: 300837 and remaining time: 17.231065988541
+[2023-10-30 23:27:45.540261] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,303 / 42,393
+[2023-10-30 23:27:45.740747] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:45.741509] [DEBUG] Lastrun in : 0.18843293190002 seconds - response size throttle: 315879 and remaining time: 17.029724121094
+[2023-10-30 23:27:45.741710] [INFO] Database progress update: Data: 7.8MB / 111.2MB - Rows: 3,367 / 42,393
+[2023-10-30 23:27:45.946073] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:45.947023] [DEBUG] Lastrun in : 0.17766714096069 seconds - response size throttle: 331673 and remaining time: 16.824213981628
+[2023-10-30 23:27:45.947253] [INFO] Database progress update: Data: 8.9MB / 111.2MB - Rows: 3,431 / 42,393
+[2023-10-30 23:27:46.164811] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:46.166785] [DEBUG] Lastrun in : 0.1979820728302 seconds - response size throttle: 348257 and remaining time: 16.604454040527
+[2023-10-30 23:27:46.167834] [INFO] Database progress update: Data: 8.9MB / 111.2MB - Rows: 3,503 / 42,393
+[2023-10-30 23:27:46.357875] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:46.358260] [DEBUG] Lastrun in : 0.16486001014709 seconds - response size throttle: 365670 and remaining time: 16.412971019745
+[2023-10-30 23:27:46.358961] [INFO] Database progress update: Data: 8.9MB / 111.2MB - Rows: 3,575 / 42,393
+[2023-10-30 23:27:46.555336] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:46.556435] [DEBUG] Lastrun in : 0.18621206283569 seconds - response size throttle: 383954 and remaining time: 16.2148001194
+[2023-10-30 23:27:46.557048] [INFO] Database progress update: Data: 8.9MB / 111.2MB - Rows: 3,647 / 42,393
+[2023-10-30 23:27:46.788709] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:46.789673] [DEBUG] Lastrun in : 0.19768500328064 seconds - response size throttle: 403152 and remaining time: 15.981563091278
+[2023-10-30 23:27:46.790502] [INFO] Database progress update: Data: 8.9MB / 111.2MB - Rows: 3,727 / 42,393
+[2023-10-30 23:27:47.014139] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:47.014629] [DEBUG] Lastrun in : 0.19992208480835 seconds - response size throttle: 423310 and remaining time: 15.756603002548
+[2023-10-30 23:27:47.015292] [INFO] Database progress update: Data: 8.9MB / 111.2MB - Rows: 3,807 / 42,393
+[2023-10-30 23:27:47.236126] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:47.236523] [DEBUG] Lastrun in : 0.20355701446533 seconds - response size throttle: 444476 and remaining time: 15.534711122513
+[2023-10-30 23:27:47.236994] [INFO] Database progress update: Data: 10.0MB / 111.2MB - Rows: 3,887 / 42,393
+[2023-10-30 23:27:47.474974] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:47.476176] [DEBUG] Lastrun in : 0.21339082717896 seconds - response size throttle: 466700 and remaining time: 15.295063018799
+[2023-10-30 23:27:47.476594] [INFO] Database progress update: Data: 10.0MB / 111.2MB - Rows: 3,975 / 42,393
+[2023-10-30 23:27:47.701423] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:47.702512] [DEBUG] Lastrun in : 0.20046091079712 seconds - response size throttle: 490035 and remaining time: 15.068722963333
+[2023-10-30 23:27:47.702895] [INFO] Database progress update: Data: 10.0MB / 111.2MB - Rows: 4,063 / 42,393
+[2023-10-30 23:27:47.920626] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:47.920887] [DEBUG] Lastrun in : 0.19424986839294 seconds - response size throttle: 514537 and remaining time: 14.850345134735
+[2023-10-30 23:27:47.921468] [INFO] Database progress update: Data: 10.0MB / 111.2MB - Rows: 4,161 / 42,393
+[2023-10-30 23:27:48.123102] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:48.123407] [DEBUG] Lastrun in : 0.18805289268494 seconds - response size throttle: 540264 and remaining time: 14.647825956345
+[2023-10-30 23:27:48.123807] [INFO] Database progress update: Data: 11.1MB / 111.2MB - Rows: 4,418 / 42,393
+[2023-10-30 23:27:48.346277] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:48.347418] [DEBUG] Lastrun in : 0.20497012138367 seconds - response size throttle: 567278 and remaining time: 14.42381811142
+[2023-10-30 23:27:48.363668] [INFO] Database progress update: Data: 11.1MB / 111.2MB - Rows: 4,541 / 42,393
+[2023-10-30 23:27:48.610414] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:48.611700] [DEBUG] Lastrun in : 0.23659992218018 seconds - response size throttle: 595642 and remaining time: 14.159536123276
+[2023-10-30 23:27:48.611996] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 4,685 / 42,393
+[2023-10-30 23:27:48.881339] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:48.881607] [DEBUG] Lastrun in : 0.25404119491577 seconds - response size throttle: 625425 and remaining time: 13.889624118805
+[2023-10-30 23:27:48.881924] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 4,765 / 42,393
+[2023-10-30 23:27:49.121346] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:49.122598] [DEBUG] Lastrun in : 0.22782897949219 seconds - response size throttle: 656697 and remaining time: 13.648641109467
+[2023-10-30 23:27:49.122831] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 4,813 / 42,393
+[2023-10-30 23:27:49.395303] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:49.397210] [DEBUG] Lastrun in : 0.25048589706421 seconds - response size throttle: 689532 and remaining time: 13.374027967453
+[2023-10-30 23:27:49.397473] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 4,893 / 42,393
+[2023-10-30 23:27:49.678060] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:49.679466] [DEBUG] Lastrun in : 0.25155997276306 seconds - response size throttle: 724009 and remaining time: 13.091839075089
+[2023-10-30 23:27:49.679811] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 4,949 / 42,393
+[2023-10-30 23:27:49.973370] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:49.974360] [DEBUG] Lastrun in : 0.26254606246948 seconds - response size throttle: 760210 and remaining time: 12.796875953674
+[2023-10-30 23:27:49.974812] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 5,013 / 42,393
+[2023-10-30 23:27:50.246626] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:50.247398] [DEBUG] Lastrun in : 0.24243187904358 seconds - response size throttle: 798221 and remaining time: 12.523836135864
+[2023-10-30 23:27:50.247619] [INFO] Database progress update: Data: 12.2MB / 111.2MB - Rows: 5,077 / 42,393
+[2023-10-30 23:27:50.517742] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:50.519492] [DEBUG] Lastrun in : 0.25574398040771 seconds - response size throttle: 838133 and remaining time: 12.25174498558
+[2023-10-30 23:27:50.519833] [INFO] Database progress update: Data: 13.3MB / 111.2MB - Rows: 5,141 / 42,393
+[2023-10-30 23:27:50.822598] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:50.822825] [DEBUG] Lastrun in : 0.26739883422852 seconds - response size throttle: 880040 and remaining time: 11.948405981064
+[2023-10-30 23:27:50.822884] [INFO] Database progress update: Data: 13.3MB / 111.2MB - Rows: 5,303 / 42,393
+[2023-10-30 23:27:51.067353] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:51.068106] [DEBUG] Lastrun in : 0.23543310165405 seconds - response size throttle: 924042 and remaining time: 11.703127145767
+[2023-10-30 23:27:51.068271] [INFO] Database progress update: Data: 13.3MB / 111.2MB - Rows: 5,393 / 42,393
+[2023-10-30 23:27:51.357411] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:51.358262] [DEBUG] Lastrun in : 0.27110600471497 seconds - response size throttle: 970245 and remaining time: 11.412971019745
+[2023-10-30 23:27:51.358453] [INFO] Database progress update: Data: 14.5MB / 111.2MB - Rows: 5,807 / 42,393
+[2023-10-30 23:27:51.630851] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:51.631775] [DEBUG] Lastrun in : 0.25245189666748 seconds - response size throttle: 1018758 and remaining time: 11.139456987381
+[2023-10-30 23:27:51.631897] [INFO] Database progress update: Data: 15.6MB / 111.2MB - Rows: 6,096 / 42,393
+[2023-10-30 23:27:51.943343] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:51.945421] [DEBUG] Lastrun in : 0.29965782165527 seconds - response size throttle: 1069696 and remaining time: 10.825824022293
+[2023-10-30 23:27:51.945894] [INFO] Database progress update: Data: 16.7MB / 111.2MB - Rows: 6,648 / 42,393
+[2023-10-30 23:27:52.222948] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:52.223521] [DEBUG] Lastrun in : 0.2562210559845 seconds - response size throttle: 1123181 and remaining time: 10.547712087631
+[2023-10-30 23:27:52.223971] [INFO] Database progress update: Data: 16.7MB / 111.2MB - Rows: 6,736 / 42,393
+[2023-10-30 23:27:52.521546] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:52.523156] [DEBUG] Lastrun in : 0.27489399909973 seconds - response size throttle: 1179341 and remaining time: 10.248080968857
+[2023-10-30 23:27:52.523526] [INFO] Database progress update: Data: 17.8MB / 111.2MB - Rows: 6,824 / 42,393
+[2023-10-30 23:27:52.831379] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:52.833119] [DEBUG] Lastrun in : 0.28027415275574 seconds - response size throttle: 1238309 and remaining time: 9.9381220340729
+[2023-10-30 23:27:52.833956] [INFO] Database progress update: Data: 17.8MB / 111.2MB - Rows: 6,920 / 42,393
+[2023-10-30 23:27:53.142437] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:53.142967] [DEBUG] Lastrun in : 0.28084301948547 seconds - response size throttle: 1300225 and remaining time: 9.6282651424408
+[2023-10-30 23:27:53.143449] [INFO] Database progress update: Data: 17.8MB / 111.2MB - Rows: 7,017 / 42,393
+[2023-10-30 23:27:53.455301] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:53.456797] [DEBUG] Lastrun in : 0.2997419834137 seconds - response size throttle: 1365237 and remaining time: 9.3144409656525
+[2023-10-30 23:27:53.457188] [INFO] Database progress update: Data: 18.9MB / 111.2MB - Rows: 7,388 / 42,393
+[2023-10-30 23:27:53.784653] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:53.785004] [DEBUG] Lastrun in : 0.29376792907715 seconds - response size throttle: 1433499 and remaining time: 8.9862270355225
+[2023-10-30 23:27:53.785128] [INFO] Database progress update: Data: 18.9MB / 111.2MB - Rows: 7,565 / 42,393
+[2023-10-30 23:27:54.103975] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:54.104950] [DEBUG] Lastrun in : 0.30967998504639 seconds - response size throttle: 1505174 and remaining time: 8.6662819385529
+[2023-10-30 23:27:54.105090] [INFO] Database progress update: Data: 20.0MB / 111.2MB - Rows: 7,940 / 42,393
+[2023-10-30 23:27:54.487000] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:54.708110] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:54.711460] [DEBUG] Lastrun in : 0.58943605422974 seconds - response size throttle: 1580433 and remaining time: 8.0597779750824
+[2023-10-30 23:27:54.711869] [INFO] Database progress update: Data: 23.4MB / 111.2MB - Rows: 9,101 / 42,393
+[2023-10-30 23:27:55.044026] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:55.045198] [DEBUG] Lastrun in : 0.30171608924866 seconds - response size throttle: 1659455 and remaining time: 7.726035118103
+[2023-10-30 23:27:55.045372] [INFO] Database progress update: Data: 24.5MB / 111.2MB - Rows: 9,692 / 42,393
+[2023-10-30 23:27:55.438958] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:55.623649] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:55.625161] [DEBUG] Lastrun in : 0.55078101158142 seconds - response size throttle: 1742428 and remaining time: 7.146075963974
+[2023-10-30 23:27:55.625411] [INFO] Database progress update: Data: 28.9MB / 111.2MB - Rows: 11,195 / 42,393
+[2023-10-30 23:27:55.961378] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:55.963025] [DEBUG] Lastrun in : 0.31347489356995 seconds - response size throttle: 1829550 and remaining time: 6.8082189559937
+[2023-10-30 23:27:55.963582] [INFO] Database progress update: Data: 31.1MB / 111.2MB - Rows: 12,027 / 42,393
+[2023-10-30 23:27:56.273694] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:56.276239] [DEBUG] Lastrun in : 0.28627896308899 seconds - response size throttle: 1921028 and remaining time: 6.4949960708618
+[2023-10-30 23:27:56.276512] [INFO] Database progress update: Data: 33.4MB / 111.2MB - Rows: 12,723 / 42,393
+[2023-10-30 23:27:56.637832] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:56.658646] [DEBUG] Lastrun in : 0.35339307785034 seconds - response size throttle: 2017080 and remaining time: 6.11261510849
+[2023-10-30 23:27:56.659448] [INFO] Database progress update: Data: 35.6MB / 111.2MB - Rows: 13,607 / 42,393
+[2023-10-30 23:27:57.057121] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:57.057756] [DEBUG] Lastrun in : 0.38268804550171 seconds - response size throttle: 2117934 and remaining time: 5.7134780883789
+[2023-10-30 23:27:57.057896] [INFO] Database progress update: Data: 36.7MB / 111.2MB - Rows: 14,231 / 42,393
+[2023-10-30 23:27:57.454418] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:57.455551] [DEBUG] Lastrun in : 0.37743592262268 seconds - response size throttle: 2223831 and remaining time: 5.3156869411469
+[2023-10-30 23:27:57.455754] [INFO] Database progress update: Data: 38.9MB / 111.2MB - Rows: 15,195 / 42,393
+[2023-10-30 23:27:57.805414] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:57.806445] [DEBUG] Lastrun in : 0.32404088973999 seconds - response size throttle: 2335023 and remaining time: 4.9647901058197
+[2023-10-30 23:27:57.806652] [INFO] Database progress update: Data: 41.2MB / 111.2MB - Rows: 15,947 / 42,393
+[2023-10-30 23:27:58.171745] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:58.173280] [DEBUG] Lastrun in : 0.34540295600891 seconds - response size throttle: 2451775 and remaining time: 4.5979659557343
+[2023-10-30 23:27:58.173801] [INFO] Database progress update: Data: 43.4MB / 111.2MB - Rows: 16,721 / 42,393
+[2023-10-30 23:27:58.652525] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:58.653043] [DEBUG] Lastrun in : 0.45732402801514 seconds - response size throttle: 2500000 and remaining time: 4.1181890964508
+[2023-10-30 23:27:58.653110] [INFO] Database progress update: Data: 45.6MB / 111.2MB - Rows: 17,668 / 42,393
+[2023-10-30 23:27:59.063864] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:59.066599] [DEBUG] Lastrun in : 0.40283393859863 seconds - response size throttle: 2500000 and remaining time: 3.7046430110931
+[2023-10-30 23:27:59.067083] [INFO] Database progress update: Data: 47.8MB / 111.2MB - Rows: 18,428 / 42,393
+[2023-10-30 23:27:59.623628] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:27:59.626725] [DEBUG] Lastrun in : 0.53357219696045 seconds - response size throttle: 2500000 and remaining time: 3.1445250511169
+[2023-10-30 23:27:59.627417] [INFO] Database progress update: Data: 50.1MB / 111.2MB - Rows: 19,342 / 42,393
+[2023-10-30 23:28:00.052471] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:00.053011] [DEBUG] Lastrun in : 0.39909195899963 seconds - response size throttle: 2500000 and remaining time: 2.718220949173
+[2023-10-30 23:28:00.053102] [INFO] Database progress update: Data: 52.3MB / 111.2MB - Rows: 20,206 / 42,393
+[2023-10-30 23:28:00.434845] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:00.436561] [DEBUG] Lastrun in : 0.37069416046143 seconds - response size throttle: 2500000 and remaining time: 2.3347060680389
+[2023-10-30 23:28:00.437406] [INFO] Database progress update: Data: 53.4MB / 111.2MB - Rows: 20,451 / 42,393
+[2023-10-30 23:28:00.867354] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:00.868159] [DEBUG] Lastrun in : 0.40069198608398 seconds - response size throttle: 2500000 and remaining time: 1.9030790328979
+[2023-10-30 23:28:00.868347] [INFO] Database progress update: Data: 53.4MB / 111.2MB - Rows: 20,689 / 42,393
+[2023-10-30 23:28:01.221754] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:01.222930] [DEBUG] Lastrun in : 0.33970284461975 seconds - response size throttle: 2500000 and remaining time: 1.5483040809631
+[2023-10-30 23:28:01.223137] [INFO] Database progress update: Data: 54.5MB / 111.2MB - Rows: 20,927 / 42,393
+[2023-10-30 23:28:01.621740] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:01.624418] [DEBUG] Lastrun in : 0.37429809570312 seconds - response size throttle: 2500000 and remaining time: 1.1468291282654
+[2023-10-30 23:28:01.625132] [INFO] Database progress update: Data: 54.5MB / 111.2MB - Rows: 21,165 / 42,393
+[2023-10-30 23:28:02.030450] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:02.033111] [DEBUG] Lastrun in : 0.37516522407532 seconds - response size throttle: 2500000 and remaining time: 0.73813009262085
+[2023-10-30 23:28:02.033524] [INFO] Database progress update: Data: 55.6MB / 111.2MB - Rows: 21,405 / 42,393
+[2023-10-30 23:28:02.413217] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:02.625557] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:02.891557] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:03.099333] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:03.387729] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:03.630631] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:03.941815] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:04.172157] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:04.389703] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:04.626602] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:04.907177] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:05.084424] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:05.087883] [DEBUG] Lastrun in : 3.0322260856628 seconds - response size throttle: 2500000 and remaining time: 0
+[2023-10-30 23:28:05.088338] [INFO] Database progress update: Data: 84.5MB / 111.2MB - Rows: 32,623 / 42,393
+[2023-10-30 23:28:05.108240] [INFO] Ending database migration loop with remaining time: 0 seconds
+[2023-10-30 23:28:05.122899] [INFO] Ending migration loop - with remaining time: 0
+[2023-10-30 23:28:05.245550] [INFO] Starting migration loop - With allotted time: 26.887982845306 seconds
+[2023-10-30 23:28:05.246279] [INFO] Starting database migration loop with remaining time: 26.887244939804
+[2023-10-30 23:28:05.702495] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:05.703608] [DEBUG] Lastrun in : 0.45725297927856 seconds - response size throttle: 2500000 and remaining time: 26.429917812347
+[2023-10-30 23:28:05.703810] [INFO] Database progress update: Data: 87.9MB / 111.2MB - Rows: 33,546 / 42,393
+[2023-10-30 23:28:06.070663] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:06.504699] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:06.506122] [DEBUG] Lastrun in : 0.78347396850586 seconds - response size throttle: 2500000 and remaining time: 25.627417802811
+[2023-10-30 23:28:06.507555] [INFO] Database progress update: Data: 92.3MB / 111.2MB - Rows: 35,253 / 42,393
+[2023-10-30 23:28:06.930709] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:07.200515] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:07.201102] [DEBUG] Lastrun in : 0.67276191711426 seconds - response size throttle: 2500000 and remaining time: 24.932420969009
+[2023-10-30 23:28:07.201200] [INFO] Database progress update: Data: 95.7MB / 111.2MB - Rows: 36,757 / 42,393
+[2023-10-30 23:28:07.635435] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:07.638206] [DEBUG] Lastrun in : 0.42366600036621 seconds - response size throttle: 2500000 and remaining time: 24.495334863663
+[2023-10-30 23:28:07.638714] [INFO] Database progress update: Data: 96.8MB / 111.2MB - Rows: 37,001 / 42,393
+[2023-10-30 23:28:08.066133] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:08.066871] [DEBUG] Lastrun in : 0.40484309196472 seconds - response size throttle: 2500000 and remaining time: 24.066653966904
+[2023-10-30 23:28:08.067030] [INFO] Database progress update: Data: 96.8MB / 111.2MB - Rows: 37,219 / 42,393
+[2023-10-30 23:28:08.484488] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:08.485739] [DEBUG] Lastrun in : 0.39337205886841 seconds - response size throttle: 2500000 and remaining time: 23.647789001465
+[2023-10-30 23:28:08.486486] [INFO] Database progress update: Data: 97.9MB / 111.2MB - Rows: 37,460 / 42,393
+[2023-10-30 23:28:08.520047] [INFO] Marking table: wp_postmeta as completed
+[2023-10-30 23:28:08.777412] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:08.777697] [DEBUG] Lastrun in : 0.26636409759521 seconds - response size throttle: 2500000 and remaining time: 23.355825901031
+[2023-10-30 23:28:08.777767] [INFO] Database progress update: Data: 97.9MB / 111.2MB - Rows: 37,651 / 42,393
+[2023-10-30 23:28:08.790212] [INFO] New table is started: wp_posts and setting new max response size: 125000
+[2023-10-30 23:28:08.967636] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:08.967907] [DEBUG] Lastrun in : 0.17760801315308 seconds - response size throttle: 131250 and remaining time: 23.165615797043
+[2023-10-30 23:28:08.968001] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 37,866 / 42,393
+[2023-10-30 23:28:09.131852] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:09.132352] [DEBUG] Lastrun in : 0.14953279495239 seconds - response size throttle: 137813 and remaining time: 23.001171827316
+[2023-10-30 23:28:09.132512] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 37,921 / 42,393
+[2023-10-30 23:28:09.284702] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:09.285534] [DEBUG] Lastrun in : 0.1409809589386 seconds - response size throttle: 144704 and remaining time: 22.84799695015
+[2023-10-30 23:28:09.285755] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 37,946 / 42,393
+[2023-10-30 23:28:09.447172] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:09.448918] [DEBUG] Lastrun in : 0.1495201587677 seconds - response size throttle: 151940 and remaining time: 22.684610843658
+[2023-10-30 23:28:09.449822] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 37,985 / 42,393
+[2023-10-30 23:28:09.614217] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:09.616832] [DEBUG] Lastrun in : 0.15107107162476 seconds - response size throttle: 159537 and remaining time: 22.516702890396
+[2023-10-30 23:28:09.617317] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 38,007 / 42,393
+[2023-10-30 23:28:09.768597] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:09.769102] [DEBUG] Lastrun in : 0.12685489654541 seconds - response size throttle: 167514 and remaining time: 22.364419937134
+[2023-10-30 23:28:09.769166] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 38,031 / 42,393
+[2023-10-30 23:28:09.935900] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:09.936219] [DEBUG] Lastrun in : 0.15892386436462 seconds - response size throttle: 175890 and remaining time: 22.197307825089
+[2023-10-30 23:28:09.936488] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 38,056 / 42,393
+[2023-10-30 23:28:10.127468] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:10.127690] [DEBUG] Lastrun in : 0.17573618888855 seconds - response size throttle: 184685 and remaining time: 22.005832910538
+[2023-10-30 23:28:10.127789] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 38,082 / 42,393
+[2023-10-30 23:28:10.313226] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:10.313809] [DEBUG] Lastrun in : 0.16112089157104 seconds - response size throttle: 193920 and remaining time: 21.819718837738
+[2023-10-30 23:28:10.314118] [INFO] Database progress update: Data: 99.0MB / 111.2MB - Rows: 38,109 / 42,393
+[2023-10-30 23:28:10.500465] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:10.501088] [DEBUG] Lastrun in : 0.16415596008301 seconds - response size throttle: 203616 and remaining time: 21.632445812225
+[2023-10-30 23:28:10.501283] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,161 / 42,393
+[2023-10-30 23:28:10.676045] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:10.676587] [DEBUG] Lastrun in : 0.16206312179565 seconds - response size throttle: 213797 and remaining time: 21.456939935684
+[2023-10-30 23:28:10.676822] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,215 / 42,393
+[2023-10-30 23:28:10.861825] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:10.862821] [DEBUG] Lastrun in : 0.16378808021545 seconds - response size throttle: 224487 and remaining time: 21.270706892014
+[2023-10-30 23:28:10.863385] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,226 / 42,393
+[2023-10-30 23:28:11.042010] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:11.042401] [DEBUG] Lastrun in : 0.15162801742554 seconds - response size throttle: 235712 and remaining time: 21.091122865677
+[2023-10-30 23:28:11.042575] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,239 / 42,393
+[2023-10-30 23:28:11.226024] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:11.226793] [DEBUG] Lastrun in : 0.15816903114319 seconds - response size throttle: 247498 and remaining time: 20.906731843948
+[2023-10-30 23:28:11.227168] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,250 / 42,393
+[2023-10-30 23:28:11.423512] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:11.423810] [DEBUG] Lastrun in : 0.16655898094177 seconds - response size throttle: 259873 and remaining time: 20.709711790085
+[2023-10-30 23:28:11.423931] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,261 / 42,393
+[2023-10-30 23:28:11.632842] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:11.633848] [DEBUG] Lastrun in : 0.19553995132446 seconds - response size throttle: 272867 and remaining time: 20.499679803848
+[2023-10-30 23:28:11.634735] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,282 / 42,393
+[2023-10-30 23:28:11.803205] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:11.803364] [DEBUG] Lastrun in : 0.14781093597412 seconds - response size throttle: 286511 and remaining time: 20.330157995224
+[2023-10-30 23:28:11.803431] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,297 / 42,393
+[2023-10-30 23:28:11.955114] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:11.955315] [DEBUG] Lastrun in : 0.1412239074707 seconds - response size throttle: 300837 and remaining time: 20.178206920624
+[2023-10-30 23:28:11.955398] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,344 / 42,393
+[2023-10-30 23:28:12.112385] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:12.112824] [DEBUG] Lastrun in : 0.14634704589844 seconds - response size throttle: 315879 and remaining time: 20.020701885223
+[2023-10-30 23:28:12.113799] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,375 / 42,393
+[2023-10-30 23:28:12.305719] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:12.307676] [DEBUG] Lastrun in : 0.17496585845947 seconds - response size throttle: 331673 and remaining time: 19.825851917267
+[2023-10-30 23:28:12.307858] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,450 / 42,393
+[2023-10-30 23:28:12.481841] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:12.482335] [DEBUG] Lastrun in : 0.16282296180725 seconds - response size throttle: 348257 and remaining time: 19.651188850403
+[2023-10-30 23:28:12.482502] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,465 / 42,393
+[2023-10-30 23:28:12.676296] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:12.676876] [DEBUG] Lastrun in : 0.16332387924194 seconds - response size throttle: 365670 and remaining time: 19.456647872925
+[2023-10-30 23:28:12.677418] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,481 / 42,393
+[2023-10-30 23:28:12.870494] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:12.870793] [DEBUG] Lastrun in : 0.1820080280304 seconds - response size throttle: 383954 and remaining time: 19.262732982635
+[2023-10-30 23:28:12.871232] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,497 / 42,393
+[2023-10-30 23:28:13.060589] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:13.061745] [DEBUG] Lastrun in : 0.16281700134277 seconds - response size throttle: 403152 and remaining time: 19.071781873703
+[2023-10-30 23:28:13.062390] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,530 / 42,393
+[2023-10-30 23:28:13.255955] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:13.256174] [DEBUG] Lastrun in : 0.1652979850769 seconds - response size throttle: 423310 and remaining time: 18.877347946167
+[2023-10-30 23:28:13.256235] [INFO] Database progress update: Data: 100.1MB / 111.2MB - Rows: 38,567 / 42,393
+[2023-10-30 23:28:13.455063] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:13.455564] [DEBUG] Lastrun in : 0.18970203399658 seconds - response size throttle: 444476 and remaining time: 18.677963972092
+[2023-10-30 23:28:13.455770] [INFO] Database progress update: Data: 101.2MB / 111.2MB - Rows: 38,643 / 42,393
+[2023-10-30 23:28:13.666368] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:13.667093] [DEBUG] Lastrun in : 0.18618702888489 seconds - response size throttle: 466700 and remaining time: 18.46643280983
+[2023-10-30 23:28:13.667885] [INFO] Database progress update: Data: 101.2MB / 111.2MB - Rows: 38,806 / 42,393
+[2023-10-30 23:28:13.935272] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:13.938389] [DEBUG] Lastrun in : 0.23869204521179 seconds - response size throttle: 490035 and remaining time: 18.195149898529
+[2023-10-30 23:28:13.939110] [INFO] Database progress update: Data: 101.2MB / 111.2MB - Rows: 38,971 / 42,393
+[2023-10-30 23:28:14.166454] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:14.167852] [DEBUG] Lastrun in : 0.19703388214111 seconds - response size throttle: 514537 and remaining time: 17.965676784515
+[2023-10-30 23:28:14.168607] [INFO] Database progress update: Data: 102.3MB / 111.2MB - Rows: 39,092 / 42,393
+[2023-10-30 23:28:14.393593] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:14.394049] [DEBUG] Lastrun in : 0.19817805290222 seconds - response size throttle: 540264 and remaining time: 17.739477872849
+[2023-10-30 23:28:14.394179] [INFO] Database progress update: Data: 102.3MB / 111.2MB - Rows: 39,197 / 42,393
+[2023-10-30 23:28:14.592624] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:14.594428] [DEBUG] Lastrun in : 0.18781304359436 seconds - response size throttle: 567278 and remaining time: 17.53911280632
+[2023-10-30 23:28:14.595221] [INFO] Database progress update: Data: 102.3MB / 111.2MB - Rows: 39,350 / 42,393
+[2023-10-30 23:28:14.814449] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:14.814682] [DEBUG] Lastrun in : 0.18833708763123 seconds - response size throttle: 595642 and remaining time: 17.318839788437
+[2023-10-30 23:28:14.815062] [INFO] Database progress update: Data: 103.4MB / 111.2MB - Rows: 39,516 / 42,393
+[2023-10-30 23:28:14.999634] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 270
+[2023-10-30 23:28:15.000076] [DEBUG] Lastrun in : 0.17532396316528 seconds - response size throttle: 625425 and remaining time: 17.133446931839
+[2023-10-30 23:28:15.000208] [INFO] Database progress update: Data: 103.4MB / 111.2MB - Rows: 39,635 / 42,393
+[2023-10-30 23:28:15.209900] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:15.210879] [DEBUG] Lastrun in : 0.19529604911804 seconds - response size throttle: 656697 and remaining time: 16.922645807266
+[2023-10-30 23:28:15.211040] [INFO] Database progress update: Data: 103.4MB / 111.2MB - Rows: 39,755 / 42,393
+[2023-10-30 23:28:15.452140] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:15.455176] [DEBUG] Lastrun in : 0.22608184814453 seconds - response size throttle: 689532 and remaining time: 16.678371906281
+[2023-10-30 23:28:15.457160] [INFO] Database progress update: Data: 104.6MB / 111.2MB - Rows: 39,941 / 42,393
+[2023-10-30 23:28:15.706743] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:15.707629] [DEBUG] Lastrun in : 0.23175406455994 seconds - response size throttle: 724009 and remaining time: 16.425899982452
+[2023-10-30 23:28:15.707782] [INFO] Database progress update: Data: 104.6MB / 111.2MB - Rows: 40,125 / 42,393
+[2023-10-30 23:28:15.896992] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:15.897919] [DEBUG] Lastrun in : 0.17616200447083 seconds - response size throttle: 760210 and remaining time: 16.235607862473
+[2023-10-30 23:28:15.903129] [INFO] Database progress update: Data: 104.6MB / 111.2MB - Rows: 40,174 / 42,393
+[2023-10-30 23:28:16.159418] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:16.160018] [DEBUG] Lastrun in : 0.23395705223083 seconds - response size throttle: 798221 and remaining time: 15.97350692749
+[2023-10-30 23:28:16.160198] [INFO] Database progress update: Data: 104.6MB / 111.2MB - Rows: 40,225 / 42,393
+[2023-10-30 23:28:16.360808] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:16.361655] [DEBUG] Lastrun in : 0.18951010704041 seconds - response size throttle: 838133 and remaining time: 15.771870851517
+[2023-10-30 23:28:16.361851] [INFO] Database progress update: Data: 105.7MB / 111.2MB - Rows: 40,279 / 42,393
+[2023-10-30 23:28:16.755740] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:16.758553] [DEBUG] Lastrun in : 0.38266205787659 seconds - response size throttle: 880040 and remaining time: 15.374985933304
+[2023-10-30 23:28:16.759296] [INFO] Database progress update: Data: 107.9MB / 111.2MB - Rows: 41,127 / 42,393
+[2023-10-30 23:28:17.125947] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:17.127444] [DEBUG] Lastrun in : 0.34944415092468 seconds - response size throttle: 924042 and remaining time: 15.006081819534
+[2023-10-30 23:28:17.127636] [INFO] Database progress update: Data: 109.0MB / 111.2MB - Rows: 41,808 / 42,393
+[2023-10-30 23:28:17.384778] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:17.387001] [DEBUG] Lastrun in : 0.24801898002625 seconds - response size throttle: 970245 and remaining time: 14.746528863907
+[2023-10-30 23:28:17.387319] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 41,981 / 42,393
+[2023-10-30 23:28:17.681101] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:17.682242] [DEBUG] Lastrun in : 0.26715397834778 seconds - response size throttle: 1018758 and remaining time: 14.451293945312
+[2023-10-30 23:28:17.682529] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 42,039 / 42,393
+[2023-10-30 23:28:17.700399] [INFO] Marking table: wp_posts as completed
+[2023-10-30 23:28:17.844335] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:17.844551] [DEBUG] Lastrun in : 0.14509391784668 seconds - response size throttle: 1069696 and remaining time: 14.288970947266
+[2023-10-30 23:28:17.844628] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 42,051 / 42,393
+[2023-10-30 23:28:17.858157] [INFO] New table is started: wp_term_relationships and setting new max response size: 125000
+[2023-10-30 23:28:17.859345] [INFO] Marking table: wp_term_relationships as completed
+[2023-10-30 23:28:17.986084] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:17.986231] [DEBUG] Lastrun in : 0.12794613838196 seconds - response size throttle: 131250 and remaining time: 14.147290945053
+[2023-10-30 23:28:17.986301] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 42,247 / 42,393
+[2023-10-30 23:28:17.997386] [INFO] New table is started: wp_term_taxonomy and setting new max response size: 125000
+[2023-10-30 23:28:17.998250] [INFO] Marking table: wp_term_taxonomy as completed
+[2023-10-30 23:28:18.108776] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:18.108936] [DEBUG] Lastrun in : 0.11143708229065 seconds - response size throttle: 131250 and remaining time: 14.02458691597
+[2023-10-30 23:28:18.109033] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 42,256 / 42,393
+[2023-10-30 23:28:18.120029] [INFO] New table is started: wp_terms and setting new max response size: 125000
+[2023-10-30 23:28:18.120933] [INFO] Marking table: wp_terms as completed
+[2023-10-30 23:28:18.247906] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:18.248289] [DEBUG] Lastrun in : 0.12810778617859 seconds - response size throttle: 131250 and remaining time: 13.885240793228
+[2023-10-30 23:28:18.248442] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 42,265 / 42,393
+[2023-10-30 23:28:18.304745] [INFO] New table is started: wp_usermeta and setting new max response size: 125000
+[2023-10-30 23:28:18.307268] [INFO] Marking table: wp_usermeta as completed
+[2023-10-30 23:28:18.438505] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:18.438686] [DEBUG] Lastrun in : 0.13376617431641 seconds - response size throttle: 131250 and remaining time: 13.69483590126
+[2023-10-30 23:28:18.438761] [INFO] Database progress update: Data: 110.1MB / 111.2MB - Rows: 42,388 / 42,393
+[2023-10-30 23:28:18.446904] [INFO] New table is started: wp_users and setting new max response size: 125000
+[2023-10-30 23:28:18.447833] [INFO] Marking table: wp_users as completed
+[2023-10-30 23:28:18.620479] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:18.620996] [DEBUG] Lastrun in : 0.1739490032196 seconds - response size throttle: 131250 and remaining time: 13.51253080368
+[2023-10-30 23:28:18.621337] [INFO] Database progress update: 
+[2023-10-30 23:28:18.645619] [INFO] Database progress update: 
+[2023-10-30 23:28:18.645748] [INFO] Ending database migration loop with remaining time: 13.487774848938 seconds
+[2023-10-30 23:28:18.656416] [INFO] Ending migration loop - with remaining time: 13.477115869522
+[2023-10-30 23:28:18.764011] [INFO] Starting migration loop - With allotted time: 26.89643406868 seconds
+[2023-10-30 23:28:18.773993] [INFO] Ending migration loop - with remaining time: 26.886450052261
+[2023-10-30 23:28:18.884380] [INFO] Starting migration loop - With allotted time: 26.893149852753 seconds
+[2023-10-30 23:28:18.884838] [INFO] Starting finalize - Remaining time: 26.892679929733
+[2023-10-30 23:28:18.886499] [INFO] Starting database finalize with remaining time: 26.891026973724
+[2023-10-30 23:28:18.886604] [INFO] Prepare SQL queries for database finalize
+[2023-10-30 23:28:18.886659] [INFO] Add sql statement to delete WP Synchro options: DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name LIKE 'wpsynchro\_%'
+[2023-10-30 23:28:18.886699] [INFO] Add sql statement to copy current WP Synchro options to temp table: INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options where option_name like 'wpsynchro_%'
+[2023-10-30 23:28:18.886747] [INFO] Add sql statement to delete options field (db preserve): DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = 'active_plugins'
+[2023-10-30 23:28:18.886783] [INFO] Add sql statement to copy existing value from options table (db preserve): INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = 'active_plugins'
+[2023-10-30 23:28:18.886844] [INFO] Add sql statement to delete options field (db preserve): DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = 'blog_public'
+[2023-10-30 23:28:18.886885] [INFO] Add sql statement to copy existing value from options table (db preserve): INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = 'blog_public'
+[2023-10-30 23:28:18.886921] [INFO] Add sql statement to delete options field (db preserve): DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = ''
+[2023-10-30 23:28:18.886961] [INFO] Add sql statement to copy existing value from options table (db preserve): INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = ''
+[2023-10-30 23:28:18.889005] [DEBUG] Retrieving new masterdata from target
+[2023-10-30 23:28:18.889359] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-10-30 23:28:19.060478] [DEBUG] Retrieving new masterdata completed
+[2023-10-30 23:28:19.060983] [DEBUG] Add drop table in database on wp_commentmeta and rename from wpsyntmp_65403be7d3b58
+[2023-10-30 23:28:19.061054] [DEBUG] Add drop table in database on wp_comments and rename from wpsyntmp_65403be7d3baf
+[2023-10-30 23:28:19.061099] [DEBUG] Add drop table in database on wp_duplicator_packages and rename from wpsyntmp_65403be7d3c28
+[2023-10-30 23:28:19.061195] [DEBUG] Add drop table in database on wp_e_events and rename from wpsyntmp_65403be7d3c38
+[2023-10-30 23:28:19.061232] [DEBUG] Add drop table in database on wp_e_notes and rename from wpsyntmp_65403be7d3c45
+[2023-10-30 23:28:19.061266] [DEBUG] Add drop table in database on wp_e_notes_users_relations and rename from wpsyntmp_65403be7d3c6c
+[2023-10-30 23:28:19.061297] [DEBUG] Add drop table in database on wp_e_submissions and rename from wpsyntmp_65403be7d3c80
+[2023-10-30 23:28:19.061323] [DEBUG] Add drop table in database on wp_e_submissions_actions_log and rename from wpsyntmp_65403be7d3cae
+[2023-10-30 23:28:19.061350] [DEBUG] Add drop table in database on wp_e_submissions_values and rename from wpsyntmp_65403be7d3cd2
+[2023-10-30 23:28:19.061375] [DEBUG] Add drop table in database on wp_jet_search_suggestions and rename from wpsyntmp_65403be7d3ce2
+[2023-10-30 23:28:19.061401] [DEBUG] Add drop table in database on wp_links and rename from wpsyntmp_65403be7d3ced
+[2023-10-30 23:28:19.061427] [DEBUG] Add drop table in database on wp_local_sync_current_process and rename from wpsyntmp_65403be7d3d19
+[2023-10-30 23:28:19.061452] [DEBUG] Add drop table in database on wp_local_sync_delete_list and rename from wpsyntmp_65403be7d3d29
+[2023-10-30 23:28:19.061476] [DEBUG] Add drop table in database on wp_local_sync_inc_exc_contents and rename from wpsyntmp_65403be7d3d36
+[2023-10-30 23:28:19.061500] [DEBUG] Add drop table in database on wp_local_sync_local_site_files and rename from wpsyntmp_65403be7d3d47
+[2023-10-30 23:28:19.061524] [DEBUG] Add drop table in database on wp_local_sync_local_site_new_attachments and rename from wpsyntmp_65403be7d3d56
+[2023-10-30 23:28:19.061549] [DEBUG] Add drop table in database on wp_local_sync_options and rename from wpsyntmp_65403be7d3d63
+[2023-10-30 23:28:19.061573] [DEBUG] Add drop table in database on wp_local_sync_processed_iterator and rename from wpsyntmp_65403be7d3d6d
+[2023-10-30 23:28:19.061599] [DEBUG] Add drop table in database on wp_options and rename from wpsyntmp_65403be7d3d7a
+[2023-10-30 23:28:19.061624] [DEBUG] Add drop table in database on wp_postmeta and rename from wpsyntmp_65403be7d3daa
+[2023-10-30 23:28:19.061653] [DEBUG] Add drop table in database on wp_posts and rename from wpsyntmp_65403be7d3de4
+[2023-10-30 23:28:19.061678] [DEBUG] Add drop table in database on wp_term_relationships and rename from wpsyntmp_65403be7d3e5c
+[2023-10-30 23:28:19.061702] [DEBUG] Add drop table in database on wp_term_taxonomy and rename from wpsyntmp_65403be7d3e7f
+[2023-10-30 23:28:19.061726] [DEBUG] Add drop table in database on wp_termmeta and rename from wpsyntmp_65403be7d3ec0
+[2023-10-30 23:28:19.061750] [DEBUG] Add drop table in database on wp_terms and rename from wpsyntmp_65403be7d3efd
+[2023-10-30 23:28:19.061776] [DEBUG] Add drop table in database on wp_usermeta and rename from wpsyntmp_65403be7d3f2b
+[2023-10-30 23:28:19.061800] [DEBUG] Add drop table in database on wp_users and rename from wpsyntmp_65403be7d3f59
+[2023-10-30 23:28:19.061828] [DEBUG] Finalize SQL queries:
+
+Array
+(
+    [0] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_options`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d7a` TO `wp_options`
+        )
+
+    [1] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_usermeta`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3f2b` TO `wp_usermeta`
+        )
+
+    [2] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_users`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3f59` TO `wp_users`
+        )
+
+    [3] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_terms`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3efd` TO `wp_terms`
+        )
+
+    [4] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_termmeta`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3ec0` TO `wp_termmeta`
+        )
+
+    [5] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_term_taxonomy`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3e7f` TO `wp_term_taxonomy`
+        )
+
+    [6] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_term_relationships`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3e5c` TO `wp_term_relationships`
+        )
+
+    [7] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_posts`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3de4` TO `wp_posts`
+        )
+
+    [8] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_postmeta`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3daa` TO `wp_postmeta`
+        )
+
+    [9] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_processed_iterator`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d6d` TO `wp_local_sync_processed_iterator`
+        )
+
+    [10] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_options`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d63` TO `wp_local_sync_options`
+        )
+
+    [11] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_local_site_new_attachments`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d56` TO `wp_local_sync_local_site_new_attachments`
+        )
+
+    [12] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_local_site_files`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d47` TO `wp_local_sync_local_site_files`
+        )
+
+    [13] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_inc_exc_contents`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d36` TO `wp_local_sync_inc_exc_contents`
+        )
+
+    [14] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_delete_list`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d29` TO `wp_local_sync_delete_list`
+        )
+
+    [15] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_local_sync_current_process`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3d19` TO `wp_local_sync_current_process`
+        )
+
+    [16] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_links`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3ced` TO `wp_links`
+        )
+
+    [17] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_jet_search_suggestions`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3ce2` TO `wp_jet_search_suggestions`
+        )
+
+    [18] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_e_submissions_values`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3cd2` TO `wp_e_submissions_values`
+        )
+
+    [19] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_e_submissions_actions_log`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3cae` TO `wp_e_submissions_actions_log`
+        )
+
+    [20] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_e_submissions`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3c80` TO `wp_e_submissions`
+        )
+
+    [21] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_e_notes_users_relations`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3c6c` TO `wp_e_notes_users_relations`
+        )
+
+    [22] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_e_notes`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3c45` TO `wp_e_notes`
+        )
+
+    [23] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_e_events`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3c38` TO `wp_e_events`
+        )
+
+    [24] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_duplicator_packages`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3c28` TO `wp_duplicator_packages`
+        )
+
+    [25] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_comments`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3baf` TO `wp_comments`
+        )
+
+    [26] => Array
+        (
+            [0] => DROP TABLE IF EXISTS `wp_commentmeta`
+            [1] => RENAME TABLE `wpsyntmp_65403be7d3b58` TO `wp_commentmeta`
+        )
+
+    [27] => Array
+        (
+            [0] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name LIKE 'wpsynchro\_%'
+            [1] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options where option_name like 'wpsynchro_%'
+            [2] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = 'active_plugins'
+            [3] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = 'active_plugins'
+            [4] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = 'blog_public'
+            [5] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = 'blog_public'
+            [6] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = ''
+            [7] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = ''
+        )
+
+)
+
+[2023-10-30 23:28:19.061897] [INFO] Done preparing SQL queries for database finalize
+[2023-10-30 23:28:19.071970] [INFO] Ending migration loop - with remaining time: 26.705561876297
+[2023-10-30 23:28:19.183067] [INFO] Starting migration loop - With allotted time: 26.89465379715 seconds
+[2023-10-30 23:28:19.183474] [INFO] Starting finalize - Remaining time: 26.894232988358
+[2023-10-30 23:28:19.184709] [INFO] Starting database finalize with remaining time: 26.893007993698
+[2023-10-30 23:28:19.184818] [DEBUG] Calling remote client db service with 8 SQL statements:
+
+Array
+(
+    [0] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name LIKE 'wpsynchro\_%'
+    [1] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options where option_name like 'wpsynchro_%'
+    [2] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = 'active_plugins'
+    [3] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = 'active_plugins'
+    [4] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = 'blog_public'
+    [5] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = 'blog_public'
+    [6] => DELETE FROM `wpsyntmp_65403be7d3d7a`  WHERE option_name = ''
+    [7] => INSERT INTO `wpsyntmp_65403be7d3d7a` (option_name,option_value,autoload) SELECT option_name,option_value,autoload FROM wp_options WHERE option_name = ''
+)
+
+[2023-10-30 23:28:19.318011] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:19.326466] [INFO] Ending migration loop - with remaining time: 26.751251935959
+[2023-10-30 23:28:19.426739] [INFO] Starting migration loop - With allotted time: 26.903692007065 seconds
+[2023-10-30 23:28:19.426977] [INFO] Starting finalize - Remaining time: 26.903445005417
+[2023-10-30 23:28:19.427946] [INFO] Starting database finalize with remaining time: 26.902477025986
+[2023-10-30 23:28:19.427996] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_commentmeta`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3b58` TO `wp_commentmeta`
+)
+
+[2023-10-30 23:28:19.560017] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:19.572419] [INFO] Ending migration loop - with remaining time: 26.758013010025
+[2023-10-30 23:28:19.668031] [INFO] Starting migration loop - With allotted time: 26.908568143845 seconds
+[2023-10-30 23:28:19.668285] [INFO] Starting finalize - Remaining time: 26.908306121826
+[2023-10-30 23:28:19.669268] [INFO] Starting database finalize with remaining time: 26.907325029373
+[2023-10-30 23:28:19.669329] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_comments`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3baf` TO `wp_comments`
+)
+
+[2023-10-30 23:28:19.817106] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:19.829256] [INFO] Ending migration loop - with remaining time: 26.74735212326
+[2023-10-30 23:28:19.936195] [INFO] Starting migration loop - With allotted time: 26.898242950439 seconds
+[2023-10-30 23:28:19.936462] [INFO] Starting finalize - Remaining time: 26.897963047028
+[2023-10-30 23:28:19.937513] [INFO] Starting database finalize with remaining time: 26.896912097931
+[2023-10-30 23:28:19.937562] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_duplicator_packages`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3c28` TO `wp_duplicator_packages`
+)
+
+[2023-10-30 23:28:20.068228] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:20.076605] [INFO] Ending migration loop - with remaining time: 26.757832050323
+[2023-10-30 23:28:20.170804] [INFO] Starting migration loop - With allotted time: 26.909282922745 seconds
+[2023-10-30 23:28:20.171037] [INFO] Starting finalize - Remaining time: 26.90904378891
+[2023-10-30 23:28:20.171946] [INFO] Starting database finalize with remaining time: 26.908133983612
+[2023-10-30 23:28:20.171999] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_events`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3c38` TO `wp_e_events`
+)
+
+[2023-10-30 23:28:20.306500] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:20.317984] [INFO] Ending migration loop - with remaining time: 26.762103796005
+[2023-10-30 23:28:20.425715] [INFO] Starting migration loop - With allotted time: 26.906306028366 seconds
+[2023-10-30 23:28:20.425916] [INFO] Starting finalize - Remaining time: 26.906096935272
+[2023-10-30 23:28:20.426778] [INFO] Starting database finalize with remaining time: 26.905235052109
+[2023-10-30 23:28:20.426817] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_notes`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3c45` TO `wp_e_notes`
+)
+
+[2023-10-30 23:28:20.562638] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:20.575379] [INFO] Ending migration loop - with remaining time: 26.756644964218
+[2023-10-30 23:28:20.679000] [INFO] Starting migration loop - With allotted time: 26.904816865921 seconds
+[2023-10-30 23:28:20.679224] [INFO] Starting finalize - Remaining time: 26.904587030411
+[2023-10-30 23:28:20.680096] [INFO] Starting database finalize with remaining time: 26.903713941574
+[2023-10-30 23:28:20.680143] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_notes_users_relations`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3c6c` TO `wp_e_notes_users_relations`
+)
+
+[2023-10-30 23:28:20.804131] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:20.814236] [INFO] Ending migration loop - with remaining time: 26.769590854645
+[2023-10-30 23:28:20.907982] [INFO] Starting migration loop - With allotted time: 26.90949010849 seconds
+[2023-10-30 23:28:20.908274] [INFO] Starting finalize - Remaining time: 26.90918803215
+[2023-10-30 23:28:20.909366] [INFO] Starting database finalize with remaining time: 26.908095121384
+[2023-10-30 23:28:20.909414] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_submissions`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3c80` TO `wp_e_submissions`
+)
+
+[2023-10-30 23:28:21.048268] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:21.063105] [INFO] Ending migration loop - with remaining time: 26.754365205765
+[2023-10-30 23:28:21.164467] [INFO] Starting migration loop - With allotted time: 26.907378911972 seconds
+[2023-10-30 23:28:21.164666] [INFO] Starting finalize - Remaining time: 26.90717291832
+[2023-10-30 23:28:21.165578] [INFO] Starting database finalize with remaining time: 26.906260967255
+[2023-10-30 23:28:21.165627] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_submissions_actions_log`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3cae` TO `wp_e_submissions_actions_log`
+)
+
+[2023-10-30 23:28:21.287546] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:21.301454] [INFO] Ending migration loop - with remaining time: 26.770390987396
+[2023-10-30 23:28:21.409515] [INFO] Starting migration loop - With allotted time: 26.908934116364 seconds
+[2023-10-30 23:28:21.409754] [INFO] Starting finalize - Remaining time: 26.908685207367
+[2023-10-30 23:28:21.410704] [INFO] Starting database finalize with remaining time: 26.907735109329
+[2023-10-30 23:28:21.410753] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_e_submissions_values`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3cd2` TO `wp_e_submissions_values`
+)
+
+[2023-10-30 23:28:21.541827] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:21.558625] [INFO] Ending migration loop - with remaining time: 26.759824991226
+[2023-10-30 23:28:21.659275] [INFO] Starting migration loop - With allotted time: 26.910524129868 seconds
+[2023-10-30 23:28:21.659478] [INFO] Starting finalize - Remaining time: 26.910315990448
+[2023-10-30 23:28:21.660391] [INFO] Starting database finalize with remaining time: 26.909402132034
+[2023-10-30 23:28:21.660434] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_jet_search_suggestions`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3ce2` TO `wp_jet_search_suggestions`
+)
+
+[2023-10-30 23:28:21.799759] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:21.809855] [INFO] Ending migration loop - with remaining time: 26.759948015213
+[2023-10-30 23:28:21.905535] [INFO] Starting migration loop - With allotted time: 26.907878160477 seconds
+[2023-10-30 23:28:21.905733] [INFO] Starting finalize - Remaining time: 26.907673120499
+[2023-10-30 23:28:21.906648] [INFO] Starting database finalize with remaining time: 26.906759023666
+[2023-10-30 23:28:21.906695] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_links`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3ced` TO `wp_links`
+)
+
+[2023-10-30 23:28:22.039965] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:22.053641] [INFO] Ending migration loop - with remaining time: 26.75977396965
+[2023-10-30 23:28:22.159281] [INFO] Starting migration loop - With allotted time: 26.904083013535 seconds
+[2023-10-30 23:28:22.159521] [INFO] Starting finalize - Remaining time: 26.903834104538
+[2023-10-30 23:28:22.160451] [INFO] Starting database finalize with remaining time: 26.902903079987
+[2023-10-30 23:28:22.160493] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_current_process`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d19` TO `wp_local_sync_current_process`
+)
+
+[2023-10-30 23:28:22.281302] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:22.292286] [INFO] Ending migration loop - with remaining time: 26.7710750103
+[2023-10-30 23:28:22.405025] [INFO] Starting migration loop - With allotted time: 26.908798933029 seconds
+[2023-10-30 23:28:22.405223] [INFO] Starting finalize - Remaining time: 26.908593893051
+[2023-10-30 23:28:22.406127] [INFO] Starting database finalize with remaining time: 26.907688856125
+[2023-10-30 23:28:22.406168] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_delete_list`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d29` TO `wp_local_sync_delete_list`
+)
+
+[2023-10-30 23:28:22.541669] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:22.555439] [INFO] Ending migration loop - with remaining time: 26.75838303566
+[2023-10-30 23:28:22.663451] [INFO] Starting migration loop - With allotted time: 26.900156021118 seconds
+[2023-10-30 23:28:22.663675] [INFO] Starting finalize - Remaining time: 26.899924993515
+[2023-10-30 23:28:22.664577] [INFO] Starting database finalize with remaining time: 26.899022817612
+[2023-10-30 23:28:22.664617] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_inc_exc_contents`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d36` TO `wp_local_sync_inc_exc_contents`
+)
+
+[2023-10-30 23:28:22.806648] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:22.819866] [INFO] Ending migration loop - with remaining time: 26.74374294281
+[2023-10-30 23:28:22.916988] [INFO] Starting migration loop - With allotted time: 26.907018899918 seconds
+[2023-10-30 23:28:22.917225] [INFO] Starting finalize - Remaining time: 26.906775951385
+[2023-10-30 23:28:22.918163] [INFO] Starting database finalize with remaining time: 26.905838012695
+[2023-10-30 23:28:22.918212] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_local_site_files`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d47` TO `wp_local_sync_local_site_files`
+)
+
+[2023-10-30 23:28:23.045525] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:23.059480] [INFO] Ending migration loop - with remaining time: 26.764532089233
+[2023-10-30 23:28:23.176696] [INFO] Starting migration loop - With allotted time: 26.90345788002 seconds
+[2023-10-30 23:28:23.176894] [INFO] Starting finalize - Remaining time: 26.903252840042
+[2023-10-30 23:28:23.177759] [INFO] Starting database finalize with remaining time: 26.902387857437
+[2023-10-30 23:28:23.177799] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_local_site_new_attachments`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d56` TO `wp_local_sync_local_site_new_attachments`
+)
+
+[2023-10-30 23:28:23.316118] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:23.327769] [INFO] Ending migration loop - with remaining time: 26.752384901047
+[2023-10-30 23:28:23.429390] [INFO] Starting migration loop - With allotted time: 26.906172990799 seconds
+[2023-10-30 23:28:23.429636] [INFO] Starting finalize - Remaining time: 26.905918836594
+[2023-10-30 23:28:23.430587] [INFO] Starting database finalize with remaining time: 26.904968976974
+[2023-10-30 23:28:23.430634] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_options`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d63` TO `wp_local_sync_options`
+)
+
+[2023-10-30 23:28:23.551435] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:23.562359] [INFO] Ending migration loop - with remaining time: 26.773201942444
+[2023-10-30 23:28:23.673248] [INFO] Starting migration loop - With allotted time: 26.904961109161 seconds
+[2023-10-30 23:28:23.673461] [INFO] Starting finalize - Remaining time: 26.904741048813
+[2023-10-30 23:28:23.674344] [INFO] Starting database finalize with remaining time: 26.903858184814
+[2023-10-30 23:28:23.674386] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_local_sync_processed_iterator`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d6d` TO `wp_local_sync_processed_iterator`
+)
+
+[2023-10-30 23:28:23.805359] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:23.815098] [INFO] Ending migration loop - with remaining time: 26.763111114502
+[2023-10-30 23:28:23.905231] [INFO] Starting migration loop - With allotted time: 26.913213968277 seconds
+[2023-10-30 23:28:23.905441] [INFO] Starting finalize - Remaining time: 26.912996053696
+[2023-10-30 23:28:23.906312] [INFO] Starting database finalize with remaining time: 26.912124872208
+[2023-10-30 23:28:23.906350] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_postmeta`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3daa` TO `wp_postmeta`
+)
+
+[2023-10-30 23:28:24.105354] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:24.123437] [INFO] Ending migration loop - with remaining time: 26.695011854172
+[2023-10-30 23:28:24.250351] [INFO] Starting migration loop - With allotted time: 26.897552967072 seconds
+[2023-10-30 23:28:24.250558] [INFO] Starting finalize - Remaining time: 26.897337913513
+[2023-10-30 23:28:24.251474] [INFO] Starting database finalize with remaining time: 26.896420955658
+[2023-10-30 23:28:24.251515] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_posts`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3de4` TO `wp_posts`
+)
+
+[2023-10-30 23:28:24.398582] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:24.412981] [INFO] Ending migration loop - with remaining time: 26.734922885895
+[2023-10-30 23:28:24.517569] [INFO] Starting migration loop - With allotted time: 26.907315969467 seconds
+[2023-10-30 23:28:24.517775] [INFO] Starting finalize - Remaining time: 26.90710401535
+[2023-10-30 23:28:24.518673] [INFO] Starting database finalize with remaining time: 26.906205892563
+[2023-10-30 23:28:24.518722] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_term_relationships`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3e5c` TO `wp_term_relationships`
+)
+
+[2023-10-30 23:28:24.647231] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:24.660638] [INFO] Ending migration loop - with remaining time: 26.764247894287
+[2023-10-30 23:28:24.763963] [INFO] Starting migration loop - With allotted time: 26.906319141388 seconds
+[2023-10-30 23:28:24.764162] [INFO] Starting finalize - Remaining time: 26.906113147736
+[2023-10-30 23:28:24.765084] [INFO] Starting database finalize with remaining time: 26.90519118309
+[2023-10-30 23:28:24.765122] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_term_taxonomy`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3e7f` TO `wp_term_taxonomy`
+)
+
+[2023-10-30 23:28:24.896130] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:24.909707] [INFO] Ending migration loop - with remaining time: 26.760576963425
+[2023-10-30 23:28:25.013184] [INFO] Starting migration loop - With allotted time: 26.906344175339 seconds
+[2023-10-30 23:28:25.013438] [INFO] Starting finalize - Remaining time: 26.906081199646
+[2023-10-30 23:28:25.014410] [INFO] Starting database finalize with remaining time: 26.905107975006
+[2023-10-30 23:28:25.014455] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_termmeta`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3ec0` TO `wp_termmeta`
+)
+
+[2023-10-30 23:28:25.143437] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:25.157207] [INFO] Ending migration loop - with remaining time: 26.762319087982
+[2023-10-30 23:28:25.260962] [INFO] Starting migration loop - With allotted time: 26.907397031784 seconds
+[2023-10-30 23:28:25.261171] [INFO] Starting finalize - Remaining time: 26.907181978226
+[2023-10-30 23:28:25.262126] [INFO] Starting database finalize with remaining time: 26.906226873398
+[2023-10-30 23:28:25.262169] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_terms`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3efd` TO `wp_terms`
+)
+
+[2023-10-30 23:28:25.394499] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:25.409609] [INFO] Ending migration loop - with remaining time: 26.758754968643
+[2023-10-30 23:28:25.510395] [INFO] Starting migration loop - With allotted time: 26.908141851425 seconds
+[2023-10-30 23:28:25.510669] [INFO] Starting finalize - Remaining time: 26.907859802246
+[2023-10-30 23:28:25.511552] [INFO] Starting database finalize with remaining time: 26.906976938248
+[2023-10-30 23:28:25.511608] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_users`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3f59` TO `wp_users`
+)
+
+[2023-10-30 23:28:25.644325] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:25.658986] [INFO] Ending migration loop - with remaining time: 26.759552955627
+[2023-10-30 23:28:25.760542] [INFO] Starting migration loop - With allotted time: 26.906772136688 seconds
+[2023-10-30 23:28:25.760773] [INFO] Starting finalize - Remaining time: 26.906533002853
+[2023-10-30 23:28:25.761661] [INFO] Starting database finalize with remaining time: 26.905645132065
+[2023-10-30 23:28:25.761707] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_usermeta`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3f2b` TO `wp_usermeta`
+)
+
+[2023-10-30 23:28:25.899664] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:25.914695] [INFO] Ending migration loop - with remaining time: 26.752624034882
+[2023-10-30 23:28:26.012842] [INFO] Starting migration loop - With allotted time: 26.906297922134 seconds
+[2023-10-30 23:28:26.013091] [INFO] Starting finalize - Remaining time: 26.906038045883
+[2023-10-30 23:28:26.014052] [INFO] Starting database finalize with remaining time: 26.905076980591
+[2023-10-30 23:28:26.014095] [DEBUG] Calling remote client db service with 2 SQL statements:
+
+Array
+(
+    [0] => DROP TABLE IF EXISTS `wp_options`
+    [1] => RENAME TABLE `wpsyntmp_65403be7d3d7a` TO `wp_options`
+)
+
+[2023-10-30 23:28:26.161158] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 254
+[2023-10-30 23:28:26.177047] [INFO] Ending migration loop - with remaining time: 26.742095947266
+[2023-10-30 23:28:26.296575] [INFO] Starting migration loop - With allotted time: 26.901421070099 seconds
+[2023-10-30 23:28:26.296801] [INFO] Starting finalize - Remaining time: 26.901188135147
+[2023-10-30 23:28:26.297738] [INFO] Starting database finalize with remaining time: 26.900251150131
+[2023-10-30 23:28:26.298158] [DEBUG] Retrieving new masterdata from target
+[2023-10-30 23:28:26.298390] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-10-30 23:28:26.527007] [DEBUG] Retrieving new masterdata completed
+[2023-10-30 23:28:26.527369] [DEBUG] No excess temp tables to delete
+[2023-10-30 23:28:26.547687] [INFO] Ending migration loop - with remaining time: 26.650318145752
+[2023-10-30 23:28:26.662661] [INFO] Starting migration loop - With allotted time: 26.895854949951 seconds
+[2023-10-30 23:28:26.662873] [INFO] Starting finalize - Remaining time: 26.895636081696
+[2023-10-30 23:28:26.663765] [INFO] Starting database finalize with remaining time: 26.894743919373
+[2023-10-30 23:28:26.664067] [DEBUG] Retrieving new masterdata from target
+[2023-10-30 23:28:26.664157] [DEBUG] Calling masterdata service on: https://irec.wherewego.org/ with intent to user as 'target'
+[2023-10-30 23:28:26.812690] [DEBUG] Retrieving new masterdata completed
+[2023-10-30 23:28:26.821398] [INFO] Ending migration loop - with remaining time: 26.737118005753
+[2023-10-30 23:28:26.920344] [INFO] Starting migration loop - With allotted time: 26.911490917206 seconds
+[2023-10-30 23:28:26.920558] [INFO] Starting finalize - Remaining time: 26.911269903183
+[2023-10-30 23:28:26.920597] [INFO] Completed finalize - remaining time: 26.911231040955
+[2023-10-30 23:28:26.920630] [INFO] Execute last actions on target - remaining time: 26.911197900772
+[2023-10-30 23:28:27.054644] [INFO] Completed last actions on target - remaining time: 26.777193069458
+[2023-10-30 23:28:27.070220] [INFO] Ending migration loop - with remaining time: 26.761614084244

@@ -11,7 +11,6 @@ use WPSynchro\Utilities\Actions\Action;
 
 class ClearTransients implements Action
 {
-
     /**
      * Initialize
      */

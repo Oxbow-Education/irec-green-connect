@@ -11,7 +11,6 @@ use WPSynchro\Utilities\Actions\Action;
 
 class ClearCachesOnSuccess implements Action
 {
-
     /**
      * Initialize
      * @since 1.6.0
@@ -41,7 +40,7 @@ class ClearCachesOnSuccess implements Action
         if (function_exists('w3tc_flush_all')) {
             @\w3tc_flush_all();
         }
-        
+
         // WP Fastest cache - Not supported yet
         if (false) {
         }
@@ -50,9 +49,9 @@ class ClearCachesOnSuccess implements Action
         if (class_exists("\WebSharks\CometCache\Classes\ApiBase", false) && method_exists(\WebSharks\CometCache\Classes\ApiBase::class, "clear")) {
             @\WebSharks\CometCache\Classes\ApiBase::clear();
             @\WebSharks\CometCache\Classes\ApiBase::wipe();
-            @\WebSharks\CometCache\Classes\ApiBase::purge();     
+            @\WebSharks\CometCache\Classes\ApiBase::purge();
         }
-            
+
         // WordPress object cache
         wp_cache_flush();
     }

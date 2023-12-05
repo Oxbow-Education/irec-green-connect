@@ -2,7 +2,8 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Database\DatabaseSync;
 use WPSynchro\Database\Table;
 use WPSynchro\Database\TableColumns;
 use WPSynchro\Transport\ReturnResult;
@@ -16,7 +17,6 @@ use WPSynchro\Utilities\DebugInformation;
  */
 class MasterData extends WPSynchroService
 {
-
     // Column types - in how they are inserted into database
     public $string_columns_types = ["decimal", "dec", "fixed", "numeric", "json", "date", "datetime", "timestamp", "time", "year", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "enum", "set"];
     public $numeric_column_types = ["tinyint", "smallint", "mediumint", "int", "bigint", "float", "double", "real"];
@@ -24,8 +24,6 @@ class MasterData extends WPSynchroService
     public $binary_column_types = ["blob", "tinyblob", "mediumblob", "longblob", "binary", "varbinary", "point", "geometry", "linestring", "polygon", "multipoint", "multilinestring", "multipolygon", "geometrycollection"];
     // Tables to exclude
     public $tables_to_exclude = ["wpsynchro_sync_list", "wpsynchro_file_population_list"];
-    //
-    public $db_temp_table_prefix = null;
 
     public function service()
     {
@@ -34,7 +32,6 @@ class MasterData extends WPSynchroService
         // Check php/mysql/wp requirements
         $commonfunctions = new CommonFunctions();
         $compat_errors = $commonfunctions->checkEnvCompatability();
-        $this->db_temp_table_prefix = $commonfunctions->getDBTempTableName();
 
         if (count($compat_errors) > 0) {
             // @codeCoverageIgnoreStart
@@ -144,7 +141,7 @@ class MasterData extends WPSynchroService
         // MySQL version
         $result->sql_version = $wpdb->get_var("select VERSION()");
         // WP Synchro plugin version
-        $result->plugin_version = WPSYNCHRO_VERSION . " " . (\WPSynchro\CommonFunctions::isPremiumVersion() ? 'PRO' : 'FREE');
+        $result->plugin_version = WPSYNCHRO_VERSION . " " . (\WPSynchro\Utilities\CommonFunctions::isPremiumVersion() ? 'PRO' : 'FREE');
         // WP version
         include ABSPATH . WPINC . '/version.php';
         $result->wp_version = $wp_version;
@@ -211,7 +208,7 @@ class MasterData extends WPSynchroService
         $tables = [];
         foreach ($tables_sql as $tablename) {
             // If temp table, just skip it
-            if (strpos($tablename, $this->db_temp_table_prefix) === 0) {
+            if (strpos($tablename, DatabaseSync::TMP_TABLE_PREFIX) === 0) {
                 continue;
             }
             // Check if table should be excluded, such as WP Synchro tables
@@ -234,14 +231,13 @@ class MasterData extends WPSynchroService
         $tables_details = [];
         $table_tmptables_details = [];
         foreach ($tables_sql as $tb) {
-
             // Check if table should be excluded, such as WP Synchro tables
             if ($this->shouldTableBeExcluded($tb->Name)) {
                 continue;
             }
 
             // Get the actual count on rows, because show table status is not precise
-            $exactrows = $wpdb->get_var("select count(*) from `" . $tb->Name . "`");
+            $exactrows = $wpdb->get_var("SELECT COUNT(*) FROM `" . $tb->Name . "`");
             $new_table = new Table();
             $new_table->name = $tb->Name;
             $new_table->rows = intval($exactrows);
@@ -249,8 +245,13 @@ class MasterData extends WPSynchroService
             $new_table->row_avg_bytes = $tb->Avg_row_length;
             $new_table->data_total_bytes = $tb->Data_length;
 
+            // Fix some cases, where row_avg_bytes are reported to be 0, even if there is some rows
+            if ($new_table->rows > 0 && $new_table->row_avg_bytes == 0) {
+                $new_table->row_avg_bytes = 8192;
+            }
+
             // If temp table, add to seperate array (mostly used in finalize)
-            if (strpos($new_table->name, $this->db_temp_table_prefix) === 0) {
+            if (strpos($new_table->name, DatabaseSync::TMP_TABLE_PREFIX) === 0) {
                 $table_tmptables_details[] = $new_table;
             } else {
                 $tables_details[] = $new_table;
@@ -402,7 +403,7 @@ class MasterData extends WPSynchroService
     {
         $exclude_this_table = false;
 
-        if (strpos($tablename, $this->db_temp_table_prefix) === 0) {
+        if (strpos($tablename, DatabaseSync::TMP_TABLE_PREFIX) === 0) {
             return false;
         }
 
@@ -467,6 +468,7 @@ class MasterData extends WPSynchroService
                     if ($columntype == $search) {
                         $found = true;
                         $columns->string[$colname] = $colname;
+                        $columns->addColumnTypeUsed($columntype);
                         break;
                     }
                 }
@@ -480,6 +482,7 @@ class MasterData extends WPSynchroService
                     if ($columntype == $search) {
                         $found = true;
                         $columns->numeric[$colname] = $colname;
+                        $columns->addColumnTypeUsed($columntype);
                         break;
                     }
                 }
@@ -493,6 +496,7 @@ class MasterData extends WPSynchroService
                     if ($columntype == $search) {
                         $found = true;
                         $columns->binary[$colname] = $colname;
+                        $columns->addColumnTypeUsed($columntype);
                         break;
                     }
                 }
@@ -506,6 +510,7 @@ class MasterData extends WPSynchroService
                     if ($columntype == $search) {
                         $found = true;
                         $columns->bit[$colname] = $colname;
+                        $columns->addColumnTypeUsed($columntype);
                         break;
                     }
                 }

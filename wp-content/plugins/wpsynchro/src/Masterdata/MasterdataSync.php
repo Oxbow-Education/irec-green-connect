@@ -2,7 +2,13 @@
 
 namespace WPSynchro\Masterdata;
 
+use WPSynchro\Database\DatabaseSync;
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Transport\Destination;
+use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Utilities\Licensing\Licensing;
+use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling the masterdata of the sync
@@ -11,20 +17,22 @@ use WPSynchro\Transport\Destination;
  */
 class MasterdataSync
 {
-
     // Base data
     public $starttime = 0;
     public $migration = null;
     public $job = null;
     public $remote_wpdb = null;
+    // Dependencies
     public $logger = null;
     public $timer = null;
 
     /**
      *  Constructor
      */
-    public function __construct()
+    public function __construct(LoggerInterface $logger = null)
     {
+        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->timer = SyncTimerList::getInstance();
     }
 
     /**
@@ -33,16 +41,11 @@ class MasterdataSync
      */
     public function runMasterdataStep(&$migration, &$job)
     {
-
-        // Start timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get("class.SyncTimerList");
         $masterdata_timer = $this->timer->startTimer("masterdata", "overall", "timer");
 
         $this->migration = &$migration;
         $this->job = &$job;
 
-        $this->logger = $wpsynchro_container->get("class.Logger");
         $this->logger->log("INFO", "Getting masterdata from source and target with remaining time:" . $this->timer->getRemainingSyncTime());
 
         // Figure out what data is needed
@@ -72,6 +75,12 @@ class MasterdataSync
         // Handle system search replaces depending on setup
         $this->findSystemSearchReplaces();
 
+        // Initize some configuration in the job object
+        $this->inititializeConfigurations();
+
+        // Check that the migration is compatible with the masterdata gotten
+        $this->checkMigrationCompatibility();
+
         if (count($this->job->errors) == 0) {
             // Check that plugin versions are identical on both sides, otherwise raise error
             if ($this->job->from_plugin_version != $this->job->to_plugin_version) {
@@ -96,9 +105,8 @@ class MasterdataSync
             }
 
             // Check licensing
-            if (\WPSynchro\CommonFunctions::isPremiumVersion() && count($this->job->errors) === 0) {
-                global $wpsynchro_container;
-                $licensing = $wpsynchro_container->get("class.Licensing");
+            if (CommonFunctions::isPremiumVersion() && count($this->job->errors) === 0) {
+                $licensing = new Licensing();
                 $licens_sync_result = $licensing->verifyLicenseForMigration($this->job->from_client_home_url, $this->job->to_client_home_url);
 
                 if ($licens_sync_result->state === false) {
@@ -111,6 +119,28 @@ class MasterdataSync
 
         if (count($this->job->errors) === 0) {
             $this->job->masterdata_completed = true;
+        }
+    }
+
+    /**
+     *  Check that the masterdata is compatible with the migration requested
+     */
+    public function checkMigrationCompatibility()
+    {
+        // Database migration checks
+        if ($this->migration->sync_database) {
+            // Make sure no tables using "json" column type is migrated to a pre 5.7 version.
+            foreach ($this->job->from_dbmasterdata as $table) {
+                if (version_compare($this->job->to_sql_version, '5.7', '<')) {
+                    if ($table->column_types->isColumnTypeUsed('json')) {
+                        $this->job->errors[] = sprintf(
+                            __('The database table "%s" is not supported on the target database version (%s) and therefore it can not be migrated. To fix this error, either exclude the table from migration or upgrade the target database to a newer version.', 'wpsynchro'),
+                            $table->name,
+                            $this->job->to_sql_version
+                        );
+                    }
+                }
+            }
         }
     }
 
@@ -223,14 +253,11 @@ class MasterdataSync
      */
     public function retrieveMasterdata(Destination $destination, $slugs_to_retrieve = [])
     {
-        global $wpsynchro_container;
-        $logger = $wpsynchro_container->get("class.Logger");
-
         // Get masterdata retrival object
         $retrieval = new MasterdataRetrieval($destination);
         $retrieval->setDataToRetrieve($slugs_to_retrieve);
 
-        $logger->log("DEBUG", "Calling masterdata service on: " .  $destination->getFullURL() . " with intent to user as '" . $destination->getDestination() . "'");
+        $this->logger->log("DEBUG", "Calling masterdata service on: " .  $destination->getFullURL() . " with intent to user as '" . $destination->getDestination() . "'");
         $result = $retrieval->getMasterdata();
 
         // Check for errors
@@ -245,6 +272,87 @@ class MasterdataSync
     }
 
     /**
+     *  Initialize some configurations based on the data retrieved from masterdata
+     *  @since 1.10.0
+     */
+    public function inititializeConfigurations()
+    {
+        // Add system search/replaces
+        $this->job->db_search_replaces = array_merge($this->migration->searchreplaces, $this->job->db_system_search_replaces);
+
+        // Ignore all search/replaces - Only used for testing purposes
+        if ($this->migration->ignore_all_search_replaces) {
+            $this->job->db_search_replaces = [];
+        }
+
+        // Clear duplicates from search/replaces
+        $this->job->db_search_replaces = $this->removeDuplicatesFromSearchReplaces($this->job->db_search_replaces);
+
+        // Remove tables from dbdata, if not all tables should be synced
+        if ($this->migration->include_all_database_tables === false) {
+            $onlyinclude = $this->migration->only_include_database_table_names;
+            $newdbdata = [];
+            foreach ($this->job->from_dbmasterdata as $table) {
+                if (in_array($table->name, $onlyinclude)) {
+                    $newdbdata[] = $table;
+                }
+            }
+            $this->job->from_dbmasterdata = $newdbdata;
+        }
+
+        // Check if any of the tables are actually views, to be handled in a special way
+        $views = [];
+        $this->job->from_dbmasterdata = array_filter($this->job->from_dbmasterdata, function ($table_obj) use (&$views) {
+            if ($table_obj->is_view) {
+                $views[] = $table_obj;
+                return false;
+            }
+            return true;
+        });
+        $this->job->db_views_to_be_synced = $views;
+
+        // Check if tables have 0 rows, so we mark them complete
+        foreach ($this->job->from_dbmasterdata as &$table) {
+            if ($table->rows == 0) {
+                $table->is_completed = true;
+            }
+        }
+
+        // Remove any temporary tables
+        $this->job->from_dbmasterdata = array_filter($this->job->from_dbmasterdata, function ($table_obj) {
+            if (strpos($table_obj->name, DatabaseSync::TMP_TABLE_PREFIX) === 0) {
+                return false;
+            }
+            return true;
+        });
+
+        // Set max packet size we can send to SQL server at a time
+        $this->job->masterdata_max_sql_packet_bytes = min($this->job->from_max_allowed_packet_size, $this->job->to_max_allowed_packet_size);
+        // Set max size request data that can be POST'ed to a remote service, based on the lowest on both clients
+        $this->job->masterdata_max_tcp_request_bytes = min($this->job->from_max_post_size, $this->job->to_max_post_size) * 0.9;
+        // Set the memory limit, based on the lowest on both clients
+        $this->job->masterdata_max_memory_limit_bytes = round((min($this->job->from_memory_limit, $this->job->to_memory_limit) - memory_get_usage()) * 0.7);
+    }
+
+    /**
+     *  Clear duplicates for search/replaces
+     *  @since 1.7.2
+     */
+    public function removeDuplicatesFromSearchReplaces($search_replaces)
+    {
+        $new_search_replaces = [];
+        $search_replace_hashes = [];
+        foreach ($search_replaces as $search_replace) {
+            $hash = md5($search_replace->to . '-' . $search_replace->from);
+            if ($search_replace->to != $search_replace->from && !isset($search_replace_hashes[$hash])) {
+                $new_search_replaces[] = $search_replace;
+            }
+            $search_replace_hashes[$hash] = true;
+        }
+        return $new_search_replaces;
+    }
+
+    /**
      *  Find needed system search/replaces
      *  @since 1.6.0
      */
@@ -253,7 +361,6 @@ class MasterdataSync
 
         // Check for multisite and if we need any search/replaces
         if ($this->job->from_is_multisite || $this->job->to_is_multisite) {
-
             // Exclude WP Synchro on these locations also
             $this->job->files_population_source_excludes[] = $this->job->from_files_uploads_dir . "/wpsynchro";
             $this->job->files_population_target_excludes[] = $this->job->to_files_uploads_dir . "/wpsynchro";
@@ -264,7 +371,6 @@ class MasterdataSync
 
             // Multisite subsite to singlesize or other way around
             if (($this->job->from_is_multisite && !$this->job->to_is_multisite) || (!$this->job->from_is_multisite && $this->job->to_is_multisite)) {
-
                 // If the source is a multisite and not the main site, exclude all other sites uploads folder
                 if ($this->job->from_is_multisite && !$this->job->from_is_multisite_main_site) {
                     $uploads_sites_folder_on_source = dirname(dirname(trailingslashit($this->job->from_files_uploads_dir))) . "/sites/";
