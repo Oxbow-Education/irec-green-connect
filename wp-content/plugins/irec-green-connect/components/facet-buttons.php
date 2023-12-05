@@ -56,3 +56,23 @@ sort($tags);
   <?php endforeach; ?>
   <button id="clear-tags-button" data-tag="<?php if (!$is_workers) echo 'org'; ?>">Show All</button>
 </div>
+
+<script>
+  jQuery(document).ready(function($) {
+    const page = <?php echo $is_workers ?> ? 'individuals' : 'organizations'
+    $('.facet-button').on('click', function() {
+      const value = this.dataset.tag.replace('org-tag', '').replace('org-', '')
+      const isActive = this.classList.contains('active')
+
+      // We don't want to call this if the user is UNclicking the filter
+      if (gtag && !isActive) {
+        gtag('event', 'filter_click', {
+          'event_category': 'resources',
+          'event_label': `resources_filter_click_${page}`,
+          value
+        });
+      }
+    })
+
+  });
+</script>
