@@ -80,3 +80,15 @@
   <div class="_form-thank-you" style="display:none;">
   </div>
 </form>
+
+<script>
+  jQuery(document).ready(function($) {
+    $('#_form_23_').on('submit', function() {
+      gtag('event', 'newsletter_submission', {
+        'event_category': 'engagement',
+        'event_label': `newsletter_submission`,
+        value: true
+      });
+    })
+  });
+</script>
