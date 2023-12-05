@@ -44,8 +44,8 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
     'post_type' => 'post',
     'posts_per_page' => $posts_per_page,
     'offset' => $offset,
-    'orderby' => 'title',
-    'order' => 'ASC'
+    'orderby' => 'post_date',
+    'order' => 'DESC'
   );
 
   $meta_query_array = array('relation' => 'AND'); // Initialize the meta query with an 'AND' relation.
