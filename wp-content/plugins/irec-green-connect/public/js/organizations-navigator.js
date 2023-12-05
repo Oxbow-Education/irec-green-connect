@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const lat = results.results[0].geometry.location.lat();
       const lng = results.results[0].geometry.location.lng();
       setPositionQuery(lat, lng);
+      saveToGA(zipcode);
     } catch (err) {
       console.log(err);
     }
@@ -247,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           const zipcode = await getZipCodeFromCoordinates(latitude, longitude);
+          saveToGA(zipcode);
           document.getElementById('zipcode').value = zipcode;
           setPositionQuery(latitude, longitude);
           document.getElementById('clearLocation').classList.remove('hidden');
@@ -321,3 +323,12 @@ document
   .addEventListener('mouseout', function () {
     document.getElementById('tooltip').style.display = 'none';
   });
+
+function saveToGA(value) {
+  console.log(`${value}: saved`);
+  gtag('event', 'user_location', {
+    event_category: 'user_data',
+    event_label: 'connect_now_form_submission',
+    value,
+  });
+}
