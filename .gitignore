@@ -50,3 +50,6 @@ wp-config.php
 # # Note: If you wish to whitelist themes,
 # # uncomment the next line
 # #/wp-content/themes
+
+# service account credentials
+wp-content/plugins/irec-green-connect/admin/anaytics/service-account-credentials.json
