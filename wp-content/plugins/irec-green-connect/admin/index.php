@@ -1060,3 +1060,20 @@ function update_tags_based_on_who_is_it_for($post_id)
 
 // Hook into the save_post action
 add_action('save_post', 'update_tags_based_on_who_is_it_for');
+
+function my_google_analytics_menu()
+{
+  add_menu_page(
+    'Google Analytics', // Page title
+    'Google Analytics', // Menu title
+    'manage_options',   // Capability
+    'my-google-analytics', // Menu slug
+    'my_google_analytics_page' // Function to display the page
+  );
+}
+add_action('admin_menu', 'my_google_analytics_menu');
+
+function my_google_analytics_page()
+{
+  include(plugin_dir_path(__FILE__) . 'analytics/hello_analytics.php');
+}
