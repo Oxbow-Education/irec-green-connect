@@ -325,10 +325,10 @@ document
   });
 
 function saveToGA(value) {
-  console.log(`${value}: saved`);
+  if (!gtag) return;
   gtag('event', 'user_location', {
-    event_category: 'user_data',
-    event_label: 'connect_now_form_submission',
+    event_category: 'connect_now',
+    event_label: 'connect_now_location_input',
     value,
   });
 }
