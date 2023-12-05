@@ -1,0 +1,63 @@
+.wage-data {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  margin: 1rem 0;
+}
+.wage-data-title {
+  display: grid;
+  grid-template-columns: 50px auto 200px;
+  align-items: center;
+  cursor: pointer;
+}
+.wage-data-title img {
+  height: 25px;
+  width: 25px;
+  justify-self: center;
+}
+
+.wage-data-title h2 {
+  color: #16577b;
+  font-family: 'proxima-nova';
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 700;
+}
+
+.wage-data-title p {
+  color: #363636;
+  font-family: 'proxima-nova';
+  font-size: 22px;
+  line-height: 27px;
+  padding: 0;
+  margin: 0;
+}
+
+.wage-data-description {
+  padding: 2rem 2rem 0 2rem;
+  padding-left: calc(50px);
+}
+
+.hits-divider {
+  border: none;
+  border-top: 1px solid #ffffff55;
+  margin: 0rem 3rem 2rem 3rem !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wage-data-title {
+    grid-template-columns: 50px auto 100px;
+  }
+  .wage-data-title img {
+    height: 15px;
+    width: 15px;
+  }
+  .wage-data-title h2 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .wage-data-title p {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}

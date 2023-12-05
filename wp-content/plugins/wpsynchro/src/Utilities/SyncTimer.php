@@ -1,4 +1,5 @@
 <?php
+
 namespace WPSynchro\Utilities;
 
 /**
@@ -8,15 +9,13 @@ namespace WPSynchro\Utilities;
  */
 class SyncTimer
 {
-
     public $desc = null;
     public $time_start = null;
     public $time_end = null;
     public $elapsed = 0;
 
-    function __construct()
+    public function __construct()
     {
-        
     }
 
     public function setStart($time_as_float)

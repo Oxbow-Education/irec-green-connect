@@ -1,16 +1,15 @@
 === WP Synchro - WordPress Migration Plugin for Database & Files ===
 Contributors: wpsynchro
 Donate link: https://wpsynchro.com/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=donate
-Tags: migrate,clone,files,media,migration
-Requires at least: 4.9
-Tested up to: 6.2
-Stable tag: 1.9.1
+Tags: migrate,clone,files,database,migration
+Requires at least: 5.2
+Tested up to: 6.4
+Stable tag: 1.11.2
 Requires PHP: 7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0
 
-WordPress migration plugin that migrates database tables, media, plugins, themes and whatever you want.
-Fully customizable. Setup once and run as many times as you want.
+WordPress migration plugin that migrates files, database, media, plugins, themes and whatever you want.
 
 == Description ==
 
@@ -95,9 +94,9 @@ If you have an idea for improving WP Synchro or found a bug in WP Synchro, we wo
 Currently we do automated testing on more than 300 different hosting environments with combinations of WordPress/PHP/Database versions.
 
 WP Synchro is tested on :
- * MySQL 5.5 up to MySQL 8.0 and MariaDB from 5.5 to 10.7.
+ * MySQL 5.5 up to MySQL 8.0 and MariaDB from 10.0 to 10.7.
  * PHP 7.0 up to latest version
- * WordPress from 4.9 to latest version.
+ * WordPress from 5.2 to latest version.
 
 = Do you support multisite? =
 
@@ -114,29 +113,36 @@ It is currently planned for one of the next releases to support it.
 
 == Changelog ==
 
-= 1.9.1 =
- * Bump support for WP 6.2
- * Improvement: API now flushes data before returning
+= 1.11.2 =
+ * Bugfix: Fix PHP timeout issue caused by serialized data, kinda like 1.11.1 hotfix, but caused by another data.
+ * Improvement: Added more safety against timeout issues in serialized data, so it wont happen again
 
-= 1.9.0 =
- * Bug: Fix issue where MU plugin did not load properly
- * Improvement: Ensure WP 6.1 and PHP 8.1 compatibility
- * Improvement: Improve the warning message when different versions of WP is used
- * Improvement: Add search/replaces for db for cases where the protocol part of the url is wrong in db
- * Improvement: Add check for MU plugin enabled on the target site, when file migration is done, to ensure performance and result
- * Improvement: Add "resume" button when migrations fail, which can used to attempt resume, in such cases where a simple timeout is the problem
+= 1.11.1 =
+ * Bugfix: Fix PHP timeout issue caused by serialized string search/replace handler, that goes into endless loop for defective serialized strings
+ * Bugfix: Fix issue with some tables not being migrated when source database is MariaDB and when table does not have a primary key
+ * Improvement: Improve the error reporting when database server gives errors
 
-= 1.8.4 =
- * Hotfix: (Only released for FREE version) Fix php warning because of files only present in PRO version.
+= 1.11.0 =
+ * Bugfix: No longer have problems with migration of WordFence database tables
+ * Bugfix: Make it possible to resume migrations again, as it was disabled as a mistake
+ * Bugfix: No longer block connections to remote sites that do redirects, but instead just give a warning
+ * Bugfix: Fix health check where PHP function get_headers() was being blocked by ModSecurity on some sites
+ * Bugfix: Give error when trying to migrate "json" data type to MySQL before version 5.7, where it is not supported
+ * Bugfix: Fix licensing code, that was giving PHP notices on PHP 8.2
+ * Bugfix: Improve database migration, so timeouts should be much less likely to happen
+ * Improvement: Improve licensing code to use database option instead of transient, to prevent license server from being overrun by requests
+ * Improvement: Bump support for WP 6.4
 
-= 1.8.3 =
- * Hotfix: Fix issue when running one of the sites in a subdir, like http://domain.test/mysite1/. Error was like this: "Cannot read properties of undefined (reading 'dbtables')"
-
-= 1.8.2 =
- * Bug: In some cases no search/replaces were done, when using the pre-configured migrations (the affected migrations will be deleted when updating to this version, to prevent problems)
- * Bug: Certain MySQL version in 8.0.x range gave problems when migrating to MariaDB, which is now fixed by WP Synchro
- * Bug: Table prefix re-write failed, when there was already data in table with that prefix
- * Improvement: License information is now included with log files
-
+= 1.10.0 =
+ * Improvement: Support for WP 6.3
+ * Improvement: Bump PHP support to minimum 7.0, instead of 5.6. Like WP core did at long last.
+ * Improvement: Support for PHP 8.2 without deprecation notices
+ * Improvement: Bump MariaDB version support to minimum 10.0, from 5.5
+ * Improvement: Added WordPress nonces to all actions for added security
+ * Improvement: Support for restrictive CSP header (Content Security Policy)
+ * Improvement: Handle when remote site redirects to another location, such as WPML redirecting to a specific language subdir
+ * Improvement: Handle when migrating database from MySQL 8 with collation utf8mb4_0900_ai_ci to an older version MySQL server
+ * Improvement: Improve search/replace in very large serialized data, to prevent out of memory errors and vastly improved performance
+ * Improvement: Optimize the way database migration was done to better handle large datasets in rows
 
 ** Only showing the last few releases - See rest of changelog in changelog.txt or in menu "Changelog" **

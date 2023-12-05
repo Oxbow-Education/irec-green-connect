@@ -11,11 +11,11 @@ namespace WPSynchro\API;
 use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\Files\PopulateFileListState;
 use WPSynchro\Transport\ReturnResult;
+use WPSynchro\Transport\Transfer;
 use WPSynchro\Transport\TransferFile;
 
 class PopulateFileListStatus extends WPSynchroService
 {
-
     public $state = null;
     public $basepath = null;
     // Result to be send back
@@ -32,8 +32,7 @@ class PopulateFileListStatus extends WPSynchroService
     public function service()
     {
         // Get transfer object, so we can get data
-        global $wpsynchro_container;
-        $transfer = $wpsynchro_container->get("class.Transfer");
+        $transfer = new Transfer();
         $transfer->setEncryptionKey(TransferAccessKey::getAccessKey());
         $transfer->populateFromString($this->getRequestBody());
         $body = $transfer->getDataObject();
@@ -78,7 +77,7 @@ class PopulateFileListStatus extends WPSynchroService
      * Get file list on completion, in parts
      * @since 1.4.0
      */
-    public function getFileList($max_count = 990, $id_offset)
+    public function getFileList($max_count, $id_offset)
     {
         global $wpdb;
         $filelist = [];

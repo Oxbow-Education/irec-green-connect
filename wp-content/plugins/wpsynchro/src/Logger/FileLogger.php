@@ -1,11 +1,15 @@
 <?php
+
 namespace WPSynchro\Logger;
 
+use WPSynchro\Utilities\SingletonTrait;
+
 /**
- * Class Logger - Used to log migration runs
+ *  File Logger - Used to log migration runs
  */
-class FileLogger implements Logger
+class FileLogger implements LoggerInterface
 {
+    use SingletonTrait;
 
     public $filename = "";
     public $filename_prefix = "";
@@ -23,14 +27,14 @@ class FileLogger implements Logger
     ];
     public $log_level_threshold = "DEBUG";
 
-    public function __construct()
+    private function instanceInit()
     {
-
+        $logpath = wp_upload_dir()['basedir'] . "/wpsynchro/";
+        $this->setFilePath($logpath);
     }
 
     public function setFilePath($path)
     {
-
         if ($path == $this->filepath) {
             return;
         }
@@ -59,7 +63,9 @@ class FileLogger implements Logger
 
         // If context, print that on newline
         if (is_array($context) || is_object($context)) {
-            $formatted_msg .= PHP_EOL . print_r($context, true) . PHP_EOL;
+            $formatted_msg .= PHP_EOL . esc_html(print_r($context, true)) . PHP_EOL;
+        } elseif (is_string($context) && strlen($context) > 0) {
+            $formatted_msg .= esc_html($context) . PHP_EOL;
         }
         $complete_path = $this->filepath . $this->filename_prefix . $this->filename;
 

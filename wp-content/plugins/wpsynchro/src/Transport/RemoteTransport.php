@@ -2,8 +2,12 @@
 
 namespace WPSynchro\Transport;
 
-use WPSynchro\Job;
+use WPSynchro\Migration\Job;
+use WPSynchro\Logger\FileLogger;
+use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
+use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling transport of data between sites in WP Synchro
@@ -25,7 +29,18 @@ class RemoteTransport implements RemoteConnection
     public $encryption_key = null;
     // Configuration
     public $max_retries = 5;
+    public $max_redirection = 2;
     public $seconds_sleep_between_retries = 1;
+    // Dependencies
+    private $logger;
+
+    /**
+     *  Constructor
+     */
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger ?? FileLogger::getInstance();
+    }
 
     /**
      *  Set request destination
@@ -59,14 +74,22 @@ class RemoteTransport implements RemoteConnection
     }
 
     /**
+     *  Set no redirection
+     *  @since 1.6.0
+     */
+    public function setNoRedirection()
+    {
+        $this->max_redirection = 0;
+    }
+
+    /**
      *  Initialize request object
      *  @since 1.3.0
      */
     public function init()
     {
         // Get needed objects
-        global $wpsynchro_container;
-        $sync_controller = $wpsynchro_container->get("class.MigrationController");
+        $sync_controller = MigrationController::getInstance();
         if (is_null($this->job)) {
             $this->job = $sync_controller->job;
         }
@@ -75,20 +98,17 @@ class RemoteTransport implements RemoteConnection
         }
 
         // Get timer
-        global $wpsynchro_container;
-        $this->timer = $wpsynchro_container->get("class.SyncTimerList");
+        $this->timer = SyncTimerList::getInstance();
 
         // Get transfer object and setup it up
-        global $wpsynchro_container;
-        $this->transfer = $wpsynchro_container->get("class.Transfer");
+        $this->transfer = new Transfer();
         $this->transfer->setShouldEncrypt(true);
         $this->transfer->setShouldDeflate(true);
-
 
         // Setup WP remote post args
         $this->args = [
             'method' => 'POST',
-            'redirection' => 2,
+            'redirection' => $this->max_redirection,
             'httpversion' => '1.0',
             'sslverify' => $this->destination->shouldVerifySSL(),
             'headers' => [
@@ -192,9 +212,6 @@ class RemoteTransport implements RemoteConnection
             return false;
         }
 
-        global $wpsynchro_container;
-        $logger = $wpsynchro_container->get("class.Logger");
-
         if (!file_exists($file->filename) || !is_readable($file->filename)) {
             $file->is_error = true;
             return true;
@@ -204,10 +221,10 @@ class RemoteTransport implements RemoteConnection
         $filesize = filesize($file->filename);
 
         if (($filesize + $current_request_size + $overhead_per_file) > $this->max_requestsize || $file->is_partial) {
-            $logger->log("DEBUG", "No space for entire file, will chunk it: " . $file->filename);
+            $this->logger->log("DEBUG", "No space for entire file, will chunk it: " . $file->filename);
             // Check if file is under mu-plugins, which causes troubles when being chunked
             if (strpos($file->filename, 'mu-plugins') !== false) {
-                $logger->log("DEBUG", "File under mu-plugins should not be chunked, so skipping. File: " . $file->filename);
+                $this->logger->log("DEBUG", "File under mu-plugins should not be chunked, so skipping. File: " . $file->filename);
                 $file->error_msg = "One of the mu-plugin files could not be contained in one request, so we have skipped it. A partial mu-plugin file would take down the site. You need to copy it manually or increase 'post_max_size' in PHP settings. The file is: " . $file->filename;
                 $file->is_error = true;
                 return true;
@@ -220,11 +237,11 @@ class RemoteTransport implements RemoteConnection
                 if ($file->is_partial) {
                     // Already chunked, so continue from last position
                     $already_transferred_bytes = $file->partial_start;
-                    $logger->log("DEBUG", "Already chunked, start position: " . $already_transferred_bytes . " and available: " . $available_space_for_chunk);
+                    $this->logger->log("DEBUG", "Already chunked, start position: " . $already_transferred_bytes . " and available: " . $available_space_for_chunk);
                     $file->data = file_get_contents($file->filename, false, null, $already_transferred_bytes, $available_space_for_chunk);
                 } else {
                     // First read of chunked part, so start from 0
-                    $logger->log("DEBUG", "First chunk, start position: 0 and available: " . $available_space_for_chunk);
+                    $this->logger->log("DEBUG", "First chunk, start position: 0 and available: " . $available_space_for_chunk);
                     if ($file->is_dir) {
                         // dir
                         $file->data = "";
@@ -241,7 +258,7 @@ class RemoteTransport implements RemoteConnection
             // Check if file
             if (!$file->is_dir) {
                 // File can fit
-                $logger->log("DEBUG", "File can be contained fully in request: " . $file->filename);
+                $this->logger->log("DEBUG", "File can be contained fully in request: " . $file->filename);
                 $file->data = file_get_contents($file->filename);
             }
         }
@@ -350,7 +367,6 @@ class RemoteTransport implements RemoteConnection
         $wpremoteresult->debugs[] = sprintf(__("Entering retry with remaining time %f", "wpsynchro"), $this->timer->getRemainingSyncTime());
         // Unexpected response, so retry
         while ($retries < $this->max_retries) {
-
             // Check if it is possible within timeframe
             if (!$this->timer->shouldContinueWithLastrunTime($min_time_to_retry)) {
                 $wpremoteresult->debugs[] = sprintf(__("Aborting retries because we dont have enough time - Tried %d times ", "wpsynchro"), $retries);

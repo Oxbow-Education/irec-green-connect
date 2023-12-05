@@ -5,9 +5,11 @@ namespace WPSynchro\API;
 use WPSynchro\Initiate\InitiateTokenRetrieval;
 use WPSynchro\Masterdata\MasterdataRetrieval;
 use WPSynchro\Logger\NullLogger;
-use WPSynchro\Job;
-use WPSynchro\Migration;
+use WPSynchro\Migration\Job;
+use WPSynchro\Migration\Migration;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\Destination;
+use WPSynchro\Transport\RemoteTransport;
 use WPSynchro\Transport\TransferToken;
 use WPSynchro\Transport\TransferAccessKey;
 
@@ -37,8 +39,6 @@ class VerifyMigration extends WPSynchroService
 
     public function service()
     {
-        global $wpsynchro_container;
-
         // Get data to check on
         $body = json_decode($this->getRequestBody());
         $migration = Migration::map($body);
@@ -56,8 +56,36 @@ class VerifyMigration extends WPSynchroService
         /**
          *  Step1: Verify that we can connect to url and get a remote token
          */
+        // Check the headers, to make sure redirects are not done
         $remote_destination = new Destination(Destination::REMOTE);
         $remote_destination->setMigration($migration);
+
+        $remotetransport = new RemoteTransport();
+        $remotetransport->setNoRetries();
+        $remotetransport->setNoRedirection();
+        $remotetransport->setDestination($remote_destination);
+        $remotetransport->init();
+        $remotetransport->setUrl($remote_destination->getFullURL());
+        $remotetransport->setEncryptionKey($remote_destination->getAccessKey());
+
+        $sync_request_result = $remotetransport->remotePOST();
+        $http_status_code_first = substr($sync_request_result->statuscode, 0, 1);
+
+        // Check if headers are 3xx
+        if ($http_status_code_first == '3') {
+            // Redirect
+            $new_location = $sync_request_result->getHeader('location');
+            if ($new_location !== false) {
+                $this->response->warnings[] = sprintf(__("The remote URL is responding with a redirect to %s, which may or may not cause problems connecting with WP Synchro API services.", "wpsynchro"), $new_location);
+            } else {
+                $this->response->warnings[] = __("The remote URL is responding with a redirect http code (3xx) to another url, which may or may not cause problems connecting with WP Synchro API services.", "wpsynchro");
+            }
+        } elseif ($http_status_code_first != '2') {
+            // Something not in the 2xx range, which is probably an error of some kind
+            $this->response->warnings[] = sprintf(__("The remote URL is responding with a non-successful response (HTTP %d), which may or may not cause problems connecting with WP Synchro API services.", "wpsynchro"), $sync_request_result->statuscode);
+        }
+
+        // Try to fetch initiate token
         $remote_token = $this->doInitiateOnRemote($remote_destination);
         $this->job->remote_transfer_token = TransferToken::getTransferToken($migration->access_key, $remote_token);
         $this->response->remote_transfer_token = $this->job->remote_transfer_token;
@@ -80,13 +108,10 @@ class VerifyMigration extends WPSynchroService
             return;
         }
 
-
-
         /**
          *  Set data in job object
          */
-        global $wpsynchro_container;
-        $sync_controller = $wpsynchro_container->get("class.MigrationController");
+        $sync_controller = MigrationController::getInstance();
         $sync_controller->job = $this->job;
 
         if ($migration->type === 'pull') {
@@ -178,7 +203,7 @@ class VerifyMigration extends WPSynchroService
 
         if ($result && isset($initiate_retrieval->token) && strlen($initiate_retrieval->token) > 0) {
             return $initiate_retrieval->token;
-        } else if (count($initiate_errors) > 0) {
+        } elseif (count($initiate_errors) > 0) {
             $this->response->errors[] = $initialize_default_error;
             foreach ($initiate_errors as $error) {
                 $this->response->errors[] = $error;

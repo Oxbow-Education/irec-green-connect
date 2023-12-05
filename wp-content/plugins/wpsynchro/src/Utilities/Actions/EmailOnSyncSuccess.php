@@ -3,8 +3,8 @@
 namespace WPSynchro\Utilities\Actions;
 
 use WPSynchro\Utilities\Actions\Action;
-use WPSynchro\MigrationFactory;
-use WPSynchro\Job;
+use WPSynchro\Migration\MigrationFactory;
+use WPSynchro\Migration\Job;
 
 /**
  * Action: Send success email
@@ -12,7 +12,6 @@ use WPSynchro\Job;
  */
 class EmailOnSyncSuccess implements Action
 {
-
     /**
      * Initialize
      * @since 1.6.0
@@ -38,7 +37,7 @@ class EmailOnSyncSuccess implements Action
         $job_id = $params[1];
 
         // Get migration
-        $migration_factory = new MigrationFactory();
+        $migration_factory = MigrationFactory::getInstance();
         $migration = $migration_factory->retrieveMigration($migration_id);
         if (!$migration) {
             return;

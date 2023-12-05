@@ -2,6 +2,9 @@
 
 namespace WPSynchro\Status;
 
+use WPSynchro\Migration\Job;
+use WPSynchro\Migration\MigrationFactory;
+
 /**
  * Class for serving migration status to the frontend
  * Called from status service
@@ -10,7 +13,6 @@ namespace WPSynchro\Status;
  */
 class MigrateStatus
 {
-
     // Data id's
     public $migration_id;
     public $job_id;
@@ -31,17 +33,15 @@ class MigrateStatus
      */
     public function setup($migration_id, $job_id)
     {
-
-        global $wpsynchro_container;
         $this->migration_id = $migration_id;
         $this->job_id = $job_id;
 
         // Get job data
-        $this->job = $wpsynchro_container->get('class.Job');
+        $this->job = new Job();
         $this->job->load($this->migration_id, $this->job_id);
 
         // Get migration
-        $migrationFactory = $wpsynchro_container->get('class.MigrationFactory');
+        $migrationFactory = MigrationFactory::getInstance();
         $this->migration = $migrationFactory->retrieveMigration($this->migration_id);
 
         $this->setupStages();

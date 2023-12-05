@@ -2,8 +2,9 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Database\DatabaseSync;
+use WPSynchro\Migration\Job;
 use WPSynchro\Transport\ReturnResult;
 use WPSynchro\Transport\Transfer;
 use WPSynchro\Transport\TransferAccessKey;
@@ -84,12 +85,16 @@ class DatabaseBackup extends WPSynchroService
 
         // Execute and check result
         $data = $wpdb->get_results($sql_stmt);
+        if (strlen($wpdb->last_error) > 0) {
+            $result->errors[] = $wpdb->last_error;
+            $wpdb->last_error = '';
+        }
 
         // Get databasesync object
         $databasesync = new DatabaseSync();
-        $databasesync->memory_limit = $memory_limit;
-        $databasesync->job = new \stdClass();
+        $databasesync->job = new Job();
         $databasesync->job->warnings = &$result->warnings;
+        $databasesync->job->masterdata_max_memory_limit_bytes = $memory_limit;
 
         // Check if there is more than X backups and delete the oldest, this needs to be done before the first data is written to file - should only run once
         if (!file_exists($filepath)) {

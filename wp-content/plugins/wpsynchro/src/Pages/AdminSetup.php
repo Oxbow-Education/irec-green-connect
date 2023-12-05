@@ -2,14 +2,12 @@
 
 /**
  * Class for handling what to show when clicking on setup in the menu in wp-admin
- *
  * @since 1.0.0
  */
 
 namespace WPSynchro\Pages;
 
-use WPSynchro\Utilities\Compatibility\MUPluginHandler;
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 
 class AdminSetup
@@ -23,7 +21,7 @@ class AdminSetup
      */
     public static function render()
     {
-        $instance = new self;
+        $instance = new self();
         // Handle post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->handlePOST();
@@ -37,6 +35,12 @@ class AdminSetup
      */
     private function handlePOST()
     {
+        $nonce = $_POST['nonce'] ?? '';
+        if (!wp_verify_nonce($nonce, 'wpsynchro_save_setup')) {
+            echo "<div class='notice wpsynchro-notice notice-error'><p>" . __('Security token is no longer valid - Try again.', 'wpsynchro') . '</p></div>';
+            return false;
+        }
+
         $this->show_update_settings_notice = true;
 
         // Plugin configuration
@@ -93,38 +97,40 @@ class AdminSetup
         // Usage reporting
         $usage_reporting = $plugin_configuration->getUsageReportingSetting();
 
-?>
+        // Save nonce
+        $nonce = wp_create_nonce('wpsynchro_save_setup');
+
+        ?>
 
         <div class="wrap wpsynchro-setup wpsynchro">
-            <h2 class="wpsynchro-page-header-title"><img src="<?= $commonfunctions->getAssetUrl("icon.png") ?>" width="35" height="35" /> WP Synchro <?= WPSYNCHRO_VERSION ?> <?php echo (\WPSynchro\CommonFunctions::isPremiumVersion() ? 'PRO' : 'FREE'); ?> - <?php _e('Setup', 'wpsynchro'); ?></h2>
+            <h2 class="wpsynchro-page-header-title"><img src="<?= $commonfunctions->getAssetUrl("icon.png") ?>" width="35" height="35" /> WP Synchro <?= WPSYNCHRO_VERSION ?> <?php echo (\WPSynchro\Utilities\CommonFunctions::isPremiumVersion() ? 'PRO' : 'FREE'); ?> - <?php _e('Setup', 'wpsynchro'); ?></h2>
 
             <?php
             if ($this->show_update_settings_notice) {
                 if (count($this->notices) > 0) {
-            ?>
+                    ?>
                     <div class="notice notice-error wpsynchro-notice">
                         <?php
                         foreach ($this->notices as $notice) {
                             echo '<p>' . $notice . '</p>';
                         } ?>
                     </div>
-                <?php
+                    <?php
                 } else {
-                ?>
+                    ?>
                     <div class="notice notice-success wpsynchro-notice">
                         <p><?php _e('WP Synchro settings are now updated', 'wpsynchro'); ?></p>
                     </div>
-            <?php
+                    <?php
                 }
             } ?>
 
-            <p><?php _e('The general configuration of WP Synchro.', 'wpsynchro'); ?></p>
-
             <form id="wpsynchro-setup-form" method="POST">
+                <input type="hidden" name="nonce" value="<?= $nonce ?>" />
                 <div class="sectionheader"><span class="dashicons dashicons-admin-tools"></span> <?php _e('Configure settings', 'wpsynchro'); ?></div>
                 <table class="">
                     <tr>
-                        <td><label for="name"><?php _e('Access key', 'wpsynchro'); ?></label> <span title="<?= __('Configure the access key used for accessing this migration from remote. Treat the access key like a password and keep it safe from others.', 'wpsynchro') ?>" class="dashicons dashicons-editor-help"></span></td>
+                        <td><label for="wp-synchro-accesskey"><?php _e('Access key', 'wpsynchro'); ?></label> <span title="<?= __('Configure the access key used for accessing this migration from remote. Treat the access key like a password and keep it safe from others.', 'wpsynchro') ?>" class="dashicons dashicons-editor-help"></span></td>
                         <td>
                             <input type="text" name="accesskey" id="wp-synchro-accesskey" value="<?php echo $accesskey; ?>" class="regular-text ltr" readonly>
                             <button id="copy-access-key" class="wpsynchrobutton"><?php _e('Copy', 'wpsynchro'); ?></button>
@@ -173,6 +179,6 @@ class AdminSetup
             </form>
 
         </div>
-<?php
+        <?php
     }
 }

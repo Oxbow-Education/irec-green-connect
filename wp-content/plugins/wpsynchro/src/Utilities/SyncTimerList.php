@@ -1,7 +1,7 @@
 <?php
+
 namespace WPSynchro\Utilities;
 
-use Composer\Installers\Plugin;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 
 /**
@@ -11,21 +11,20 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
  */
 class SyncTimerList
 {
+    use SingletonTrait;
 
     // Over sync timer
     public $overall_sync_timer = null;
+
     // Max execution constants
     public $php_max_execution_time = null;
     public $sync_max_execution_time = null;
+
     // Other timers
     public $timers = [];
 
     // Constants
     const MAX_SYNC_TIME_LIMIT = 30;
-
-    public function __construct()
-    {
-    }
 
     /**
      *  Initialize overall timer and set max execution time for sync and max for PHP
@@ -67,7 +66,8 @@ class SyncTimerList
             return 0;
         }
         if ($timelimit > self::MAX_SYNC_TIME_LIMIT) {
-            $timelimit = self::MAX_SYNC_TIME_LIMIT;   // We set it to max X seconds
+            // We set it to max X seconds
+            $timelimit = self::MAX_SYNC_TIME_LIMIT;
         }
 
         $timelimit = PluginConfiguration::factory()->getOverallTimeMargin() * $timelimit;
@@ -106,7 +106,8 @@ class SyncTimerList
     public function getRemainingSyncTime()
     {
         if ($this->overall_sync_timer == null) {
-            return self::MAX_SYNC_TIME_LIMIT * 0.8;  // Default if just called outside the normal flow
+            // Default if just called outside the normal flow
+            return self::MAX_SYNC_TIME_LIMIT * 0.8;
         }
         $remainingtime = $this->sync_max_execution_time - $this->overall_sync_timer->getTimeUntilNow();
         if ($remainingtime < 0) {
@@ -183,7 +184,8 @@ class SyncTimerList
      *  Get elapsed for overall timer
      *  @since 1.6.0
      */
-    public function getElapsedOverallTimer() {
+    public function getElapsedOverallTimer()
+    {
         return $this->overall_sync_timer->getTimeUntilNow();
     }
 }

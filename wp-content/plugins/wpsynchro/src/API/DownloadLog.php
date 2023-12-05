@@ -2,8 +2,9 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\CommonFunctions;
-use WPSynchro\MigrationFactory;
+use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Migration\MigrationFactory;
+use WPSynchro\Utilities\Licensing\Licensing;
 
 /**
  * Class for handling service to download logs
@@ -13,10 +14,8 @@ use WPSynchro\MigrationFactory;
  */
 class DownloadLog extends WPSynchroService
 {
-
     public function service()
     {
-
         if (!isset($_REQUEST['job_id']) || strlen($_REQUEST['job_id']) == 0) {
             $result = new \StdClass();
             echo json_encode($result);
@@ -34,13 +33,12 @@ class DownloadLog extends WPSynchroService
         $migration_id = $_REQUEST['migration_id'];
 
         $common = new CommonFunctions();
-        $migration_factory = new MigrationFactory();
+        $migration_factory = MigrationFactory::getInstance();
 
         $logpath = $common->getLogLocation();
         $filename = $common->getLogFilename($job_id);
 
         if (file_exists($logpath . $filename)) {
-
             $logcontents = "";
 
             // Intro
@@ -48,8 +46,8 @@ class DownloadLog extends WPSynchroService
 
             // Licensing
             if (CommonFunctions::isPremiumVersion()) {
-                $licensing = new \WPSynchro\Licensing();
-                $logcontents .= print_r($licensing->getLicenseDetails(), true);
+                $licensing = new Licensing();
+                $logcontents .= print_r($licensing->getLicenseState(), true);
                 $logcontents .= PHP_EOL;
             } else {
                 $logcontents .= PHP_EOL . "License key:  FREE version" . PHP_EOL;

@@ -7,11 +7,10 @@
 
 namespace WPSynchro\Utilities\JSData;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 
 class HealthCheckData
 {
-
     /**
      *  Load the JS data for Health Check Vue component
      */

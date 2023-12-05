@@ -91,6 +91,7 @@ class Widgets_Manager {
 			'menu-anchor',
 			'sidebar',
 			'read-more',
+			'rating',
 		];
 
 		$this->_widget_types = [];
@@ -212,7 +213,7 @@ class Widgets_Manager {
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 * @deprecated 3.5.0 Use `$this->register()` instead.
+	 * @deprecated 3.5.0 Use `register()` method instead.
 	 *
 	 * @param Widget_Base $widget Elementor widget.
 	 *
@@ -222,7 +223,7 @@ class Widgets_Manager {
 		Plugin::$instance->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
 			__METHOD__,
 			'3.5.0',
-			'register'
+			'register()'
 		);
 
 		return $this->register( $widget );
@@ -248,10 +249,10 @@ class Widgets_Manager {
 		return true;
 	}
 
-	/** register promoted widgets
+	/** Register promoted widgets
 	 *
 	 * Since we cannot allow widgets to place themselves is a specific
-	 * location on our widgets panel we need to use an hard coded solution fort his
+	 * location on our widgets panel we need to use a hard coded solution for this.
 	 *
 	 * @return void
 	 */
@@ -273,7 +274,7 @@ class Widgets_Manager {
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 * @deprecated 3.5.0 Use `$this->unregister()` instead.
+	 * @deprecated 3.5.0 Use `unregister()` method instead.
 	 *
 	 * @param string $name Widget name.
 	 *
@@ -283,7 +284,7 @@ class Widgets_Manager {
 		Plugin::$instance->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
 			__METHOD__,
 			'3.5.0',
-			'unregister'
+			'unregister()'
 		);
 
 		return $this->unregister( $name );

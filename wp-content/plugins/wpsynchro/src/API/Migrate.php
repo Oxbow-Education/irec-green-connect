@@ -2,7 +2,7 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\MigrationController;
+use WPSynchro\Migration\MigrationController;
 
 /**
  * Class for handling service "migrate"
@@ -12,7 +12,6 @@ use WPSynchro\MigrationController;
  */
 class Migrate extends WPSynchroService
 {
-
     public function service()
     {
         // Extract parameters
@@ -35,8 +34,7 @@ class Migrate extends WPSynchroService
             $migration_restart = false;
         }
 
-        global $wpsynchro_container;
-        $migrate = $wpsynchro_container->get('class.MigrationController');
+        $migrate = MigrationController::getInstance();
         $migrate->setup($migration_id, $job_id);
 
         // If we should restart a failed migration and try to continue

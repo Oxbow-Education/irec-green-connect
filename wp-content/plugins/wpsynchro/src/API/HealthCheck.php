@@ -2,17 +2,17 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\CommonFunctions;
+use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Masterdata\MasterdataRetrieval;
 use WPSynchro\Transport\TransferToken;
 use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\API\MasterData;
 use WPSynchro\Logger\NullLogger;
 use WPSynchro\Initiate\InitiateTokenRetrieval;
-use WPSynchro\Licensing;
 use WPSynchro\Transport\BasicAuth;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
+use WPSynchro\Utilities\Licensing\Licensing;
 
 /**
  * Class for handling service to do healthcheck
@@ -24,6 +24,7 @@ class HealthCheck extends WPSynchroService
 {
     public $healthcheck_errors;
     private $healthcheck_documentation_url = 'https://wpsynchro.com/documentation/health-check-errors';
+    private $healthcheck;
 
     public function __construct()
     {
@@ -183,7 +184,7 @@ class HealthCheck extends WPSynchroService
      */
     public function checkLicenseIfPRO()
     {
-        if (\WPSynchro\CommonFunctions::isPremiumVersion()) {
+        if (CommonFunctions::isPremiumVersion()) {
             $licensing = new Licensing();
             if ($licensing->hasProblemWithLicensing()) {
                 $this->healthcheck->errors[] = $licensing->getLicenseErrorMessage();
@@ -309,7 +310,6 @@ class HealthCheck extends WPSynchroService
         }
 
         if ($initiate_server_okay) {
-
             // Create a transfer token based on the token we just got
             $transfer_token = TransferToken::getTransferToken(TransferAccessKey::getAccessKey(), $initiate_token);
 
@@ -350,7 +350,7 @@ class HealthCheck extends WPSynchroService
      */
     public function checkRelevantDirsForWritable()
     {
-        if (!\WPSynchro\CommonFunctions::isPremiumVersion()) {
+        if (!\WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
             return;
         }
         $paths_check = [
