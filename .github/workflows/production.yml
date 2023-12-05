@@ -76,5 +76,5 @@ jobs:
           server: gvam1064.siteground.biz
           username: nina@greenworkforceconnect.org
           password: ${{ secrets.FTP_PROD_PASSWORD }}
-          server-dir: greenworkforceconnect.org/public_html/test/
+          server-dir: greenworkforceconnect.org/public_html/
           port: 21
