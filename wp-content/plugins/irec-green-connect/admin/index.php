@@ -1071,7 +1071,7 @@ function my_google_analytics_menu()
     'my_google_analytics_page' // Function to display the page
   );
 }
-add_action('admin_menu', 'my_google_analytics_menu');
+// add_action('admin_menu', 'my_google_analytics_menu');
 
 function my_google_analytics_page()
 {
