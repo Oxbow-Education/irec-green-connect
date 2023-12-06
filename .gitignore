@@ -16,6 +16,7 @@
 # /readme.html
 # /wp-*.php
 # /xmlrpc.php
+wp-content/plugins/irec-green-connect/admin/analytics/service-account-credentials.json
 
 # # Configuration
 wp-config.php
@@ -52,4 +53,3 @@ wp-config.php
 # #/wp-content/themes
 
 # service account credentials
-wp-content/plugins/irec-green-connect/admin/anaytics/service-account-credentials.json
