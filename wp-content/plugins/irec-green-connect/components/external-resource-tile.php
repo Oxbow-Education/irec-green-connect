@@ -3,8 +3,19 @@ $post_id = get_the_ID();
 $tag_array = $is_workers ?  get_post_meta($post_id, 'worker_tags', true) : get_post_meta($post_id, 'organization_tags', true);
 $post_text = get_post_meta($post_id, 'long_description', true);
 require __DIR__ . '/external-resource-modal.php';
+
 ?>
-<div class="external-resource-tile resource-tile" data-tag="<?php echo $post_id; ?>">
+
+<script>
+  function sendExternalEvent() {
+    gtag('event', 'resource_click', {
+      'event_category': 'resources',
+      'event_label': 'user_clicked_external_resource',
+      value: this.closest(".resource-title").text
+    });
+  }
+</script>
+<div onclick="sendExternalEvent(this)" class="external-resource-tile resource-tile" data-tag="<?php echo $post_id; ?>">
   <div class="resource-tile-text">
     <h5 class="resource-title clamp-2"><?php the_title(); ?></h5>
     <div>

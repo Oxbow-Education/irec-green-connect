@@ -3,8 +3,17 @@ $post_id = get_the_ID();
 $tag_array = $is_workers ?  get_post_meta($post_id, 'worker_tags', true) : get_post_meta($post_id, 'organization_tags', true);
 $post_permalink = get_permalink($post_id);
 ?>
-
-<div class="internal-resource-tile resource-tile" data-tag="<?php echo get_the_permalink($post_id); ?>">
+<script>
+  function sendEvent() {
+    this.preventDefault()
+    gtag('event', 'resource_click', {
+      'event_category': 'resources',
+      'event_label': 'user_clicked_external_resource',
+      value: this.closest(".resource-title").text
+    });
+  }
+</script>
+<div onclick="sendEvent(this)" class="internal-resource-tile resource-tile" data-tag="<?php echo get_the_permalink($post_id); ?>">
   <div>
     <?php the_post_thumbnail(); ?>
     <div class="resource-tile-text">
@@ -22,7 +31,7 @@ $post_permalink = get_permalink($post_id);
     </div>
   </div>
   <button class="read-more-button" data-tag="<?php echo $post_id; ?>">
-    <a class="read-more-button" href="<?php echo get_the_permalink($post_id); ?>"             >
+    <a class="read-more-button" href="<?php echo get_the_permalink($post_id); ?>">
       Read More
     </a>
   </button>
