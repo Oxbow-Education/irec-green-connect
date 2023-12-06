@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       templates: {
         item: (item) => {
           return `<div class="organization-card">
-          <h6>${item.organization}</h6>
+          <h6 class="organization-tite">${item.organization}</h6>
           <div class="organization-image">
             <img src="${
               !item.is_training_provider
@@ -183,9 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${item.email}</p>
                 <p>${item.city}, ${item.state}</p>
               </div>
-              <a class="organization-link" href="${
-                item.link
-              }" target="_blank">Get Started 
+              <a data-organization="${
+                item.organization
+              }" onclick="saveOrgToGa(this)" class="organization-link" href="${
+            item.link
+          }" target="_blank">Get Started 
               <img src="/wp-content/plugins/irec-green-connect/public/img/link.png" />
               </a>
             </div>
@@ -227,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const lat = results.results[0].geometry.location.lat();
       const lng = results.results[0].geometry.location.lng();
       setPositionQuery(lat, lng);
+      saveToGA(zipcode);
     } catch (err) {
       console.log(err);
     }
@@ -247,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           const zipcode = await getZipCodeFromCoordinates(latitude, longitude);
+          saveToGA(zipcode);
           document.getElementById('zipcode').value = zipcode;
           setPositionQuery(latitude, longitude);
           document.getElementById('clearLocation').classList.remove('hidden');
@@ -321,3 +325,24 @@ document
   .addEventListener('mouseout', function () {
     document.getElementById('tooltip').style.display = 'none';
   });
+
+function saveToGA(value) {
+  if (!gtag) return;
+  gtag('event', 'user_location', {
+    event_category: 'connect_now',
+    event_label: 'connect_now_location_input',
+    value,
+  });
+}
+
+function saveOrgToGa(link) {
+  const organization = link.dataset.organization;
+  gtag('event', 'organization_link', {
+    event_category: 'connect_now',
+    event_label: 'connect_now_organization_referral',
+    value: {
+      href: link.getAttribute('href'),
+      organization,
+    },
+  });
+}
