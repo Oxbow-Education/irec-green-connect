@@ -36,11 +36,10 @@ function getFirstProfileId($analytics)
   if (count($accounts->getItems()) > 0) {
     $items = $accounts->getItems();
     $firstAccountId = $items[0]->getId();
-
     // Get the list of properties for the authorized user.
     $properties = $analytics->management_webproperties
       ->listManagementWebproperties($firstAccountId);
-
+    var_dump($properties);
     if (count($properties->getItems()) > 0) {
       $items = $properties->getItems();
       $firstPropertyId = $items[0]->getId();
