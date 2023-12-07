@@ -11,7 +11,7 @@ require __DIR__ . '/external-resource-modal.php';
     gtag('event', 'resource_click', {
       'event_category': 'resources',
       'event_label': 'user_clicked_external_resource',
-      value: clickedEl.closest(".resource-title").innerText
+      resource_title: clickedEl.closest(".resource-title").innerText
     });
   }
 </script>
