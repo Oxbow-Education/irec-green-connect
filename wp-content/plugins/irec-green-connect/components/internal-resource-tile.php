@@ -5,12 +5,12 @@ $post_permalink = get_permalink($post_id);
 ?>
 <script>
   function sendEvent(clickedEl) {
-    this.preventDefault()
     gtag('event', 'resource_click', {
-      'event_category': 'resources',
-      'event_label': 'user_clicked_internal_resource',
-      resource_title: clickedEl.closest(".resource-title").text
+      'resource_category': 'resources', // Custom parameter
+      'click_label': 'user_clicked_internal_resource', // Custom parameter
+      'resource_title': clickedEl.closest(".resource-title").text // Custom parameter
     });
+
   }
 </script>
 <div onclick="sendEvent(this)" class="internal-resource-tile resource-tile" data-tag="<?php echo get_the_permalink($post_id); ?>">
