@@ -9,7 +9,7 @@ $post_permalink = get_permalink($post_id);
     gtag('event', 'resource_click', {
       'event_category': 'resources',
       'event_label': 'user_clicked_internal_resource',
-      value: clickedEl.closest(".resource-title").text
+      resource_title: clickedEl.closest(".resource-title").text
     });
   }
 </script>

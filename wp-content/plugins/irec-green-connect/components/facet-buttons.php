@@ -69,7 +69,7 @@ sort($tags);
         gtag('event', 'filter_click', {
           'event_category': 'resources',
           'event_label': `resources_filter_click_${page}`,
-          value
+          'resource_filter_label': value
         });
       }
     })
