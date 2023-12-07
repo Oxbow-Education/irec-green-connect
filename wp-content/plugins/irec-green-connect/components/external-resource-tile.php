@@ -7,11 +7,11 @@ require __DIR__ . '/external-resource-modal.php';
 ?>
 
 <script>
-  function sendExternalEvent() {
+  function sendExternalEvent(clickedEl) {
     gtag('event', 'resource_click', {
       'event_category': 'resources',
       'event_label': 'user_clicked_external_resource',
-      value: this.closest(".resource-title").text
+      value: clickedEl.closest(".resource-title").innerText
     });
   }
 </script>

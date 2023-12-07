@@ -4,12 +4,12 @@ $tag_array = $is_workers ?  get_post_meta($post_id, 'worker_tags', true) : get_p
 $post_permalink = get_permalink($post_id);
 ?>
 <script>
-  function sendEvent() {
+  function sendEvent(clickedEl) {
     this.preventDefault()
     gtag('event', 'resource_click', {
       'event_category': 'resources',
-      'event_label': 'user_clicked_external_resource',
-      value: this.closest(".resource-title").text
+      'event_label': 'user_clicked_internal_resource',
+      value: clickedEl.closest(".resource-title").text
     });
   }
 </script>
