@@ -87,7 +87,6 @@
       gtag('event', 'newsletter_submission', {
         'event_category': 'engagement',
         'event_label': `newsletter_submission`,
-        value: true
       });
     })
   });
