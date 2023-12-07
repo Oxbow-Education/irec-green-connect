@@ -85,9 +85,10 @@
   jQuery(document).ready(function($) {
     $('#_form_23_').on('submit', function() {
       gtag('event', 'newsletter_submission', {
-        'event_category': 'engagement',
-        'event_label': `newsletter_submission`,
+        'engagement_category': 'engagement', // Custom parameter
+        'submission_label': 'newsletter_submission' // Custom parameter
       });
+
     })
   });
 </script>
