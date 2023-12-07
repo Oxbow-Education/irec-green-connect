@@ -331,7 +331,7 @@ function saveToGA(value) {
   gtag('event', 'user_location', {
     event_category: 'connect_now',
     event_label: 'connect_now_location_input',
-    value,
+    input: value,
   });
 }
 
@@ -340,9 +340,7 @@ function saveOrgToGa(link) {
   gtag('event', 'organization_link', {
     event_category: 'connect_now',
     event_label: 'connect_now_organization_referral',
-    value: {
-      href: link.getAttribute('href'),
-      organization,
-    },
+    href: link.getAttribute('href'),
+    organization,
   });
 }
