@@ -117,7 +117,6 @@ include __DIR__ . '/facet-buttons.php';
         },
         success: function(response) {
 
-
           const addToExisting = $('.resources-wrapper').length > 0;
           $('.load-more-wrapper').before(response);
 
@@ -248,9 +247,7 @@ include __DIR__ . '/facet-buttons.php';
       page = 0;
 
       const type = e.target.dataset.tag;
-      console.log({
-        type
-      })
+
       $('.resources-wrapper').remove();
       $(`.facet-buttons .facet-button[data-type="${type}"]`).removeClass('active');
       loadMorePosts();
