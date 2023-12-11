@@ -37,7 +37,7 @@ add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts_callback');
 
 function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 10)
 {
-  $offset = $posts_per_page > 10 ? 0 : ($page - 1) * $posts_per_page;
+  $offset = $posts_per_page > 10 ? 0 : ($page - 1) * (1 + $posts_per_page);
   $is_workers = boolval($is_workers);
 
   $args = array(
