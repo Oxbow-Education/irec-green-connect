@@ -67,9 +67,9 @@ sort($tags);
       // We don't want to call this if the user is UNclicking the filter
       if (gtag && !isActive) {
         gtag('event', 'filter_click', {
-          'resource_category': 'resources', // Custom parameter
-          'filter_click_label': `resources_filter_click_${page}`, // Custom parameter
-          'resource_filter_label': value // Custom parameter
+          'category': 'resources', // Custom parameter
+          'click_label': `resources_filter_click_${page}`, // Custom parameter
+          'title': value // Custom parameter
         });
       }
     })

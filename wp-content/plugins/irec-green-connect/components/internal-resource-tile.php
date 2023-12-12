@@ -4,16 +4,16 @@ $tag_array = $is_workers ?  get_post_meta($post_id, 'worker_tags', true) : get_p
 $post_permalink = get_permalink($post_id);
 ?>
 <script>
-  function sendEvent(clickedEl) {
+  function sendEvent(title) {
     gtag('event', 'resource_click', {
-      'resource_category': 'resources', // Custom parameter
-      'click_label': 'user_clicked_internal_resource', // Custom parameter
-      'resource_title': clickedEl.closest(".resource-title").text // Custom parameter
+      'category': 'resources',
+      'click_label': 'user_clicked_internal_resource',
+      'title': title
     });
 
   }
 </script>
-<div onclick="sendEvent(this)" class="internal-resource-tile resource-tile" data-tag="<?php echo get_the_permalink($post_id); ?>">
+<div onclick="sendEvent(<?php the_title(); ?>)" class="internal-resource-tile resource-tile" data-tag="<?php echo get_the_permalink($post_id); ?>">
   <div>
     <?php the_post_thumbnail(); ?>
     <div class="resource-tile-text">
