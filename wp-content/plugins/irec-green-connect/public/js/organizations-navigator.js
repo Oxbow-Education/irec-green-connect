@@ -329,18 +329,18 @@ document
 function saveToGA(value) {
   if (!gtag) return;
   gtag('event', 'user_location', {
-    connect_now_category: 'connect_now', // Custom parameter
-    connect_now_label: 'connect_now_location_input', // Custom parameter
-    input_value: value, // Assuming 'value' is the variable holding the input data
+    category: 'connect_now', // Custom parameter
+    click_label: 'connect_now_location_input', // Custom parameter
+    value: value, // Assuming 'value' is the variable holding the input data
   });
 }
 
 function saveOrgToGa(link) {
   const organization = link.dataset.organization;
   gtag('event', 'organization_link', {
-    connect_now_category: 'connect_now', // Custom parameter
-    connect_now_label: 'connect_now_organization_referral', // Custom parameter
+    category: 'connect_now', // Custom parameter
+    click_label: 'connect_now_organization_referral', // Custom parameter
     href: link.getAttribute('href'), // Custom parameter
-    organization: organization, // Custom parameter
+    title: organization, // Custom parameter
   });
 }

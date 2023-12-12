@@ -7,15 +7,15 @@ require __DIR__ . '/external-resource-modal.php';
 ?>
 
 <script>
-  function sendExternalEvent(clickedEl) {
+  function sendExternalEvent(title) {
     gtag('event', 'resource_click', {
-      'resource_category': 'resources', // Custom parameter
+      'category': 'resources', // Custom parameter
       'click_label': 'user_clicked_external_resource', // Custom parameter
-      'resource_title': clickedEl.closest(".resource-title").innerText // Custom parameter
+      'title': title
     });
   }
 </script>
-<div onclick="sendExternalEvent(this)" class="external-resource-tile resource-tile" data-tag="<?php echo $post_id; ?>">
+<div onclick="sendExternalEvent(<?php the_title() ?>)" class="external-resource-tile resource-tile" data-tag="<?php echo $post_id; ?>">
   <div class="resource-tile-text">
     <h5 class="resource-title clamp-2"><?php the_title(); ?></h5>
     <div>
