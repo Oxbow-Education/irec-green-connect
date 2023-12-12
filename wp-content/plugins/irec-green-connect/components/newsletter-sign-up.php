@@ -85,7 +85,7 @@
   jQuery(document).ready(function($) {
     $('#_form_23_').on('submit', function() {
       gtag('event', 'newsletter_submission', {
-        'engagement_category': 'engagement', // Custom parameter
+        'category': 'engagement',
         'submission_label': 'newsletter_submission' // Custom parameter
       });
 
