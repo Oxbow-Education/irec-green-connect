@@ -8,7 +8,7 @@ $top_resources_args = array(
   'posts_per_page' => -1,
   'orderby'        => 'date',
   'order'          => 'DESC',
-  'status' => 'publish',
+  'post_status' => 'publish',
   'meta_query'     => array(
     'relation' => 'AND',
     array(
