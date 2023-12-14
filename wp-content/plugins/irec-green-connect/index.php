@@ -42,7 +42,7 @@ function get_load_more_posts_query($page, $is_workers, $tags, $posts_per_page = 
 
   $args = array(
     'post_type' => 'post',
-    'status' => 'publish',
+    'post_status' => 'publish',
     'posts_per_page' => $posts_per_page,
     'offset' => $offset,
     'orderby' => 'post_date',
