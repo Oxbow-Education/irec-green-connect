@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="organization-image">
             <img src="${
               !item.is_training_provider
-                ? 'http://irec.wherewego.org/wp-content/uploads/2023/11/1-1.png'
-                : 'http://irec.wherewego.org/wp-content/uploads/2023/11/2-1-1.png'
+                ? '/wp-content/uploads/2023/11/1-1.png'
+                : '/wp-content/uploads/2023/11/2-1-1.png'
             }" />
             <div class="organization-tags">
               ${item.tags.map((tag) => `<span>${tag}</span>`).join('')}
