@@ -292,7 +292,6 @@ button.close-modal-btn {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  transition: transform 100ms ease-in-out;
 }
 
 .resource-tile:hover {
@@ -301,6 +300,7 @@ button.close-modal-btn {
   z-index: 10;
   height: auto;
 }
+
 .internal-resource-tile:hover {
   min-height: 24rem;
 }
@@ -308,9 +308,9 @@ button.close-modal-btn {
   min-height: 12rem;
 }
 
-.swiper-slide .resource-tile:hover {
-  transform: scale(1);
-}
+/* .swiper-slide .resource-tile {
+  transform: scale(1.1);
+} */
 
 div:not(.swiper-slide) .resource-tile:hover .resource-title,
 div:not(.swiper-slide) .resource-tile:hover .resource-description {
