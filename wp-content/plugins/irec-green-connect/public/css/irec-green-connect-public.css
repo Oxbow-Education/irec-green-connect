@@ -301,7 +301,7 @@ button.close-modal-btn {
   z-index: 10;
   height: auto;
 }
-.internal-resouce-tile:hover {
+.internal-resource-tile:hover {
   min-height: 24rem;
 }
 .external-resource-tile:hover {
