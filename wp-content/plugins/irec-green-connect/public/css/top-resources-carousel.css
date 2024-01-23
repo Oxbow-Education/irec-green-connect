@@ -16,14 +16,17 @@
 
 .top-resources-container .swiper-container {
   overflow: hidden;
-  width: calc(100% - 0px);
-  max-width: 100%;
+  width: calc(100% + 4rem);
+  padding: 2rem;
+  max-width: calc(100% + 4rem);
   max-height: 100vh;
   min-height: 0;
   min-width: 0;
   --widgets-spacing: 0 !important;
 }
-
+.top-resources-container .swiper-slide:hover {
+  overflow: visible;
+}
 .top-resources-container .external-resource-tile {
   z-index: 100;
 }
