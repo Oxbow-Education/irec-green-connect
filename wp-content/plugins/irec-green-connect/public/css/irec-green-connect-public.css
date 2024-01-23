@@ -294,18 +294,19 @@ button.close-modal-btn {
   position: relative;
 }
 
-.resource-tile:hover {
-  transform: scale(1.1);
-  transition: transform 100ms ease-in-out;
-  z-index: 10;
-  height: auto;
-}
-
-.internal-resource-tile:hover {
-  min-height: 24rem;
-}
-.external-resource-tile:hover {
-  min-height: 12rem;
+@media screen and (min-width: 767px) {
+  .resource-tile:hover {
+    transform: scale(1.1);
+    transition: transform 100ms ease-in-out;
+    z-index: 10;
+    height: auto;
+  }
+  .internal-resource-tile:hover {
+    min-height: 24rem;
+  }
+  .external-resource-tile:hover {
+    min-height: 12rem;
+  }
 }
 
 /* .swiper-slide .resource-tile {
@@ -370,7 +371,7 @@ div:not(.swiper-slide) .resource-tile:hover .resource-description {
 .skeleton-grid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: repeat(100, auto);
   grid-gap: 2rem;
   margin: 0 2rem;
 }
