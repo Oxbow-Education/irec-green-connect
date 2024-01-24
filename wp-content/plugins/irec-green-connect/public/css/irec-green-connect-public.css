@@ -371,7 +371,6 @@ div:not(.swiper-slide) .resource-tile:hover .resource-description {
 .skeleton-grid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(100, auto);
   grid-gap: 2rem;
   margin: 0 2rem;
 }
@@ -492,5 +491,12 @@ div:not(.swiper-slide) .resource-tile:hover .resource-description {
   .external-resource-tile {
     min-height: 12rem;
     height: auto;
+  }
+  .resources-wrapper {
+    grid-template-rows: repeat(100, auto);
+    grid-gap: 0;
+  }
+  .resources-wrapper > .resource-tile {
+    margin: 1rem 0;
   }
 }
