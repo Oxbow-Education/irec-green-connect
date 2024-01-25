@@ -325,7 +325,7 @@ div:not(.swiper-slide) .resource-tile:hover .resource-description {
 }
 
 .internal-resource-tile .resource-tile-text {
-  padding: 0.825rem 1.25rem 1.25rem 1.25rem;
+  padding: 0.825rem 1.25rem 2.5rem 1.25rem;
 }
 
 .resource-tile-text {
@@ -485,9 +485,7 @@ div:not(.swiper-slide) .resource-tile:hover .resource-description {
     min-height: 24rem;
     height: auto;
   }
-  .internal-resource-tile .resource-tile-text {
-    padding: 0.825rem 1.25rem 2.5rem 1.25rem;
-  }
+
   .external-resource-tile {
     min-height: 12rem;
     height: auto;
