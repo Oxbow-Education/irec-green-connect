@@ -90,7 +90,7 @@ a.read-more-button {
 .read-more-button,
 a.read-more-button {
   bottom: 0;
-  padding: 1.25rem;
+  padding: 1rem;
   right: 0;
 }
 
@@ -299,7 +299,7 @@ button.close-modal-btn {
     transform: scale(1.1);
     transition: transform 100ms ease-in-out;
     z-index: 10;
-    height: auto;
+    height: fit-content;
   }
   .internal-resource-tile:hover {
     min-height: 24rem;
@@ -483,12 +483,12 @@ div:not(.swiper-slide) .resource-tile:hover .resource-description {
 
   .internal-resource-tile {
     min-height: 24rem;
-    height: auto;
+    height: fit-content;
   }
 
   .external-resource-tile {
     min-height: 12rem;
-    height: auto;
+    height: fit-content;
   }
   .resources-wrapper {
     grid-template-rows: repeat(100, auto);
