@@ -1077,3 +1077,31 @@ function my_google_analytics_page()
 {
   include(plugin_dir_path(__FILE__) . 'analytics/hello_analytics.php');
 }
+
+add_action('save_post', 'save_organization_lat_lng', 10, 3);
+
+function save_organization_lat_lng($post_id, $post, $update)
+{
+  // Check if it's the correct post type
+  if ($post->post_type != 'organization') {
+    return;
+  }
+
+  // Avoiding infinite loops by checking if the function is currently saving
+  if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+    return;
+  }
+
+  // Assuming you have custom fields for address, city, state, and zip
+  $address_line_1 = get_post_meta($post_id, 'address_line_1', true);
+  $city = get_post_meta($post_id, 'city', true);
+  $state = get_post_meta($post_id, 'state', true);
+  $zip = get_post_meta($post_id, 'zip', true);
+
+
+  // Check if $latlong is not empty and is an array with 'lat' and 'lng' keys
+  $geoData = get_lat_lng_from_address($address_line_1, $city, $state, $zip);
+  if ($geoData) {
+    update_field('_geoloc', $geoData, $post_id);
+  }
+}
