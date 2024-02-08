@@ -78,7 +78,7 @@ function addMarker(item) {
     anchor: new google.maps.Point(25, 50),
   };
   const markerOptions = {
-    position: item._geoloc,
+    ...(item._geoloc?.lat ? { position: item._geoloc } : {}),
     map: map,
     icon: icon,
   };
@@ -91,7 +91,10 @@ function addMarker(item) {
     infoWindow.open(map, marker);
   });
   markers.push(marker);
-  bounds.extend(marker.getPosition());
+  if (item._geoloc?.lat) {
+    bounds.extend(marker.getPosition());
+  }
+
   map.fitBounds(bounds);
 }
 
