@@ -3,6 +3,7 @@ let map;
 let markers = [];
 let bounds;
 let orgsSearch;
+const connectNowWrapper = document.getElementById('connectNow');
 
 // This is just a short term solution. IREC requested that the
 // map auto filter by the state selected.
@@ -17,7 +18,6 @@ const STATE_COORDS = {
   Wisconsin: { lat: 43.7844, lng: -88.7879 },
 };
 function prefilterMapBasedOnLocation() {
-  const connectNowWrapper = document.getElementById('connectNow');
   const state = connectNowWrapper.dataset.state;
   if (STATE_ABREVS[state]) {
     const abbrev = STATE_ABREVS[state];
@@ -296,15 +296,23 @@ document.addEventListener('DOMContentLoaded', () => {
     facet.addEventListener('click', (e) => {
       const wasActive = facet.classList.contains('active');
       filterButtons.forEach((f) => f.classList.remove('active'));
-
+      const state = connectNowWrapper.dataset.state;
+      let abbrev = '';
+      if (STATE_ABREVS[state]) {
+        abbrev = STATE_ABREVS[state];
+      }
       if (wasActive) {
         facet.classList.remove('active');
-        orgsSearch.helper.setQueryParameter('facetFilters', '');
+        orgsSearch.helper.setQueryParameter(
+          'facetFilters',
+          `${abbrev ? `state:${abbrev}` : ''}`,
+        );
       } else {
         facet.classList.add('active');
         const data = facet.dataset.filter;
         orgsSearch.helper.setQueryParameter('facetFilters', [
           `filters:${data}`,
+          `${abbrev ? `state:${abbrev}` : ''}`,
         ]);
       }
       orgsSearch.helper.search();
