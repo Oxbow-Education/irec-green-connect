@@ -409,9 +409,13 @@ class RemoteTransport implements RemoteConnection
             $errormsg = $response->get_error_message();
             $parsedurl = parse_url($this->url);
             if (strpos($errormsg, "cURL error 60") > -1) {
-                $this->job->errors[] = sprintf(__("SSL certificate is not valid or self-signed on host %s. To allow non-valid SSL certificates when running a migration, make sure it is set to allowed.", "wpsynchro"), $parsedurl['host']);
+                if ($this->job) {
+                    $this->job->errors[] = sprintf(__("SSL certificate is not valid or self-signed on host %s. To allow non-valid SSL certificates when running a migration, make sure it is set to allowed.", "wpsynchro"), $parsedurl['host']);
+                }
             } else {
-                $this->job->errors[] = sprintf(__("Service error - Can not reach service on host %s. Error message: %s", "wpsynchro"), $parsedurl['host'], $errormsg);
+                if ($this->job) {
+                    $this->job->errors[] = sprintf(__("Service error - Can not reach service on host %s. Error message: %s", "wpsynchro"), $parsedurl['host'], $errormsg);
+                }
             }
             return false;
         } else {

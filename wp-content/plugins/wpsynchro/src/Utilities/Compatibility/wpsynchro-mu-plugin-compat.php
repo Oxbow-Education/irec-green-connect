@@ -2,10 +2,10 @@
 
 /**
  * Plugin Name: WP Synchro MU plugin
- * Plugin URI:  wpsynchro.com
+ * Plugin URI:  https://daev.tech/wpsynchro
  * Description: Optimizing site compatibility and speed for WP Synchro specific operations
  * Author:      WP Synchro
- * Author URI:  wpsynchro.com
+ * Author URI:  https://daev.tech
  * Version:     1.0.5
  */
 

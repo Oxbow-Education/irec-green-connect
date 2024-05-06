@@ -56,7 +56,7 @@ class CommonFunctions
         $errors = [];
 
         // Check PHP version
-        $required_php_version = "7.0";
+        $required_php_version = "7.2";
         if (version_compare(PHP_VERSION, $required_php_version, '<')) {
             // @codeCoverageIgnoreStart
             $errors[] = sprintf(__("WP Synchro requires PHP version %s or higher - Please update your PHP", "wpsynchro"), $required_php_version);
@@ -65,7 +65,7 @@ class CommonFunctions
 
         // Check MySQL version
         global $wpdb;
-        $required_mysql_version = "5.5";
+        $required_mysql_version = "5.7";
         $mysqlversion = $wpdb->get_var("SELECT VERSION()");
         if (version_compare($mysqlversion, $required_mysql_version, '<')) {
             // @codeCoverageIgnoreStart
@@ -75,7 +75,7 @@ class CommonFunctions
 
         // Check WP version
         global $wp_version;
-        $required_wp_version = "5.2";
+        $required_wp_version = "5.8";
         if (version_compare($wp_version, $required_wp_version, '<')) {
             // @codeCoverageIgnoreStart
             $errors[] = sprintf(__("WP Synchro requires WordPress version %s or higher - Please update your WordPress", "wpsynchro"), $required_wp_version);

@@ -11,6 +11,13 @@
 
 	$label    = $this->_get_html( 'download_label' );
 	$sublabel = $this->_get_html( 'download_sub_label' );
+	$file_name = '';
+
+	if ( $settings['download_file'] && $settings['download_file_name'] ) {
+
+		$attachment_url = wp_get_attachment_url($settings['download_file']);
+		$file_name = basename($attachment_url);
+	}
 
 	if ( $label || $sublabel ) {
 
@@ -19,6 +26,11 @@
 		printf(
 			'<span class="jet-download__label">%s</span>',
 			$this->_format_label( $label, $settings['download_file'] )
+		);
+
+		printf(
+			'<span class="jet-download__file-name">%s</span>',
+			$this->_format_label( $file_name, $settings['download_file'] )
 		);
 
 		printf(
