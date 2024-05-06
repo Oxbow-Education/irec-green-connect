@@ -5,18 +5,18 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'dfb307600c26c043ac336e699b86b75bcee47d7c',
-        'name' => 'wpsynchro/wpsynchro',
+        'reference' => 'be02a5ba7bf17106fe791e8f2bedb332fd567e79',
+        'name' => 'daev/wpsynchro',
         'dev' => false,
     ),
     'versions' => array(
-        'wpsynchro/wpsynchro' => array(
+        'daev/wpsynchro' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'dfb307600c26c043ac336e699b86b75bcee47d7c',
+            'reference' => 'be02a5ba7bf17106fe791e8f2bedb332fd567e79',
             'dev_requirement' => false,
         ),
     ),

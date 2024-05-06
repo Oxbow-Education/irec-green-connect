@@ -1,11 +1,11 @@
 <?php
 /*
   Plugin Name: WP Synchro
-  Plugin URI: https://wpsynchro.com/home
+  Plugin URI: https://daev.tech/wpsynchro
   Description: Professional migration plugin for WordPress - Migration of database and files made easy
-  Version: 1.11.2
-  Author: WPSynchro
-  Author URI: https://wpsynchro.com
+  Version: 1.11.5
+  Author: DAEV.tech
+  Author URI: https://daev.tech
   Domain Path: /languages
   Text Domain: wpsynchro
   License: GPLv3
@@ -13,7 +13,7 @@
  */
 
 /**
- * 	Copyright (C) 2018 WPSynchro (email: support@wpsynchro.com)
+ * 	Copyright (C) 2018 DAEV (email: support@daev.tech)
  *
  * 	This program is free software; you can redistribute it and/or
  * 	modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-define('WPSYNCHRO_VERSION', '1.11.2');
+define('WPSYNCHRO_VERSION', '1.11.5');
 define('WPSYNCHRO_DB_VERSION', '9');
 define('WPSYNCHRO_NEWEST_MU_COMPATIBILITY_VERSION', '1.0.5');
 

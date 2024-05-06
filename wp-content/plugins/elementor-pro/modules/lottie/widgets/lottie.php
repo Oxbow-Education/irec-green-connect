@@ -429,7 +429,7 @@ class Lottie extends Base_Widget {
 				'frontend_available' => true,
 				'render_type' => 'none',
 				'default' => [
-					'size' => '0',
+					'size' => 0,
 					'unit' => '%',
 				],
 				'size_units' => [ '%' ],
@@ -444,7 +444,7 @@ class Lottie extends Base_Widget {
 				'frontend_available' => true,
 				'render_type' => 'none',
 				'default' => [
-					'size' => '100',
+					'size' => 100,
 					'unit' => '%',
 				],
 				'size_units' => [ '%' ],
@@ -539,6 +539,12 @@ class Lottie extends Base_Widget {
 						'min' => 1,
 						'max' => 1000,
 					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
+					],
 					'vw' => [
 						'min' => 1,
 						'max' => 100,
@@ -574,6 +580,12 @@ class Lottie extends Base_Widget {
 						'min' => 1,
 						'max' => 1000,
 					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
+					],
 					'vw' => [
 						'min' => 1,
 						'max' => 100,
@@ -582,14 +594,7 @@ class Lottie extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}}' => '--lottie-container-max-width: {{SIZE}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'separator_panel_style',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
+				'separator' => 'after',
 			]
 		);
 
@@ -665,10 +670,11 @@ class Lottie extends Base_Widget {
 			$this->add_control(
 				'background_hover_transition',
 				[
-					'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
+					'label' => esc_html__( 'Transition Duration', 'elementor-pro' ) . ' (s)',
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
+							'min' => 0,
 							'max' => 3,
 							'step' => 0.1,
 						],
@@ -759,8 +765,13 @@ class Lottie extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
