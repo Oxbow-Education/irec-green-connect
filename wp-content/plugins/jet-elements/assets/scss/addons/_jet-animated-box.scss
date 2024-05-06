@@ -71,12 +71,11 @@
 		align-items: stretch;
 	}
 
-	&__title {
-
-	}
-
+	&__title,
+	&__subtitle,
 	&__description {
-
+		position: relative;
+		z-index: 2;
 	}
 
 	.jet-animated-box__button {

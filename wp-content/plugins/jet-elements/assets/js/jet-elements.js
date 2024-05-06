@@ -70,7 +70,7 @@
 
 		initWidgetsHandlers: function( $selector ) {
 
-			$selector.find( '.elementor-widget-jet-slider, .elementor-widget-jet-testimonials, .elementor-widget-jet-carousel, .elementor-widget-jet-portfolio, .elementor-widget-jet-horizontal-timeline, .elementor-widget-jet-image-comparison, .elementor-widget-jet-posts' ).each( function() {
+			$selector.find( '.elementor-widget-jet-slider, .elementor-widget-jet-testimonials, .elementor-widget-jet-carousel, .elementor-widget-jet-portfolio, .elementor-widget-jet-horizontal-timeline, .elementor-widget-jet-image-comparison, .elementor-widget-jet-posts, .jet-parallax-section' ).each( function() {
 				
 				var $this       = $( this ),
 					elementType = $this.data( 'element_type' );
@@ -763,6 +763,16 @@
 						setTimeout( function() {
 							$this.toggleClass( 'flipped' );
 						}, 10 );
+
+						$this.find( backButton ).on( 'focus', function() { 
+							if ( ! $target.hasClass( 'flipped-stop' ) ) { 
+								$target.addClass( 'flipped' );
+							} } ); 
+							
+						$this.find( backButton ).on( 'focusout', function() { 
+							$target.removeClass( 'flipped' )
+						} );
+
 					} );
 
 					$( document ).on( 'touchend', function( event ) {
@@ -1460,10 +1470,11 @@
 							}
 						}
 					} );
-				}
+				}  
 			} );
 
-			defaultHeight = ( breakpoints['slider_height'] && '' != breakpoints['slider_height']['size'] ) ? breakpoints['slider_height']['size'] + breakpoints['slider_height']['unit'] : '600px';
+			defaultHeight = ( breakpoints['slider_height'] && 'custom' === breakpoints['slider_height']['unit'] ) ? breakpoints['slider_height']['size'] : ( '' != breakpoints['slider_height']['size'] ) ? breakpoints['slider_height']['size'] + breakpoints['slider_height']['unit'] : '600px';
+
 
 			defaultThumbHeight = ( 'thumbnail_height' in breakpoints && '' != breakpoints['thumbnail_height'] ) ? breakpoints['thumbnail_height'] : 80;
 
@@ -1479,7 +1490,7 @@
 
 					var breakpoint = activeBreakpoints[breakpointName].value - offsetfix,
 
-						breakpointHeight = '' != breakpoints['slider_height_' + breakpointName]['size'] ? breakpoints['slider_height_' + breakpointName]['size'] + breakpoints['slider_height_' + breakpointName]['unit'] : defaultHeight,
+					breakpointHeight = ( breakpoints['slider_height_' + breakpointName] && 'custom' === breakpoints['slider_height_' + breakpointName]['unit'] ) ? breakpoints['slider_height']['size'] : ( '' != breakpoints['slider_height_' + breakpointName]['size'] ) ? breakpoints['slider_height_' + breakpointName]['size'] + breakpoints['slider_height_' + breakpointName]['unit'] : defaultHeight,
 
 						breakpointThumbHeight = '' != breakpoints['thumbnail_height_' + breakpointName] ? breakpoints['thumbnail_height_' + breakpointName] : defaultThumbHeight,
 
@@ -1521,7 +1532,7 @@
 						breakpointThumbHeight = breakpoints['thumbnail_height_' + breakpointName] ? breakpoints['thumbnail_height_' + breakpointName] : false,
 						breakpointThumbWidth  = breakpoints['thumbnail_width_' + breakpointName] ? breakpoints['thumbnail_width_' + breakpointName] : false;
 
-						breakpointHeight = breakpoints['slider_height_' + breakpointName]['size'] ? breakpoints['slider_height_' + breakpointName]['size'] + breakpoints['slider_height_' + breakpointName]['unit'] : false;
+						breakpointHeight = ( 'custom' === breakpoints['slider_height_' + breakpointName]['unit'] ) ? breakpoints['slider_height_' + breakpointName]['size'] : ( '' != breakpoints['slider_height_' + breakpointName]['size'] ) ? breakpoints['slider_height_' + breakpointName]['size'] + breakpoints['slider_height_' + breakpointName]['unit'] : false;
 
 					if ( breakpointHeight || breakpointThumbHeight || breakpointThumbWidth ) {
 						breakpointsSettings[breakpoint] = {};
@@ -1582,6 +1593,8 @@
 
 						fraction_nav.html( '<span class="current">' + i + '</span>' + '<span class="separator">/</span>' + '<span class="total">' + this.getTotalSlides() + '</span>');
 					}
+
+					elementorFrontend.elements.$window.trigger("elementor/bg-video/recalc");
 				},
 				update: function() {
 					if ( true === settings['fractionPag'] ) {
@@ -1651,8 +1664,7 @@
 			if ( ! $target.length ) {
 				return;
 			}
-
-			window.juxtapose.scanPage( '.jet-juxtapose' );
+			                                                                                                                    			window.juxtapose.scanPage( '.jet-juxtapose' );
 
 			settings.draggable = false;
 			settings.infinite = false;
@@ -1722,7 +1734,6 @@
 
 			if ( $target.hasClass( 'jet-image-comparison__instance' ) ) {
 				accessibility = false;
-
 				setTimeout( function() {
 					$target.on( 'beforeChange', function() {
 						var _this = $( this );
@@ -1931,7 +1942,8 @@
 
 					if ( 'widescreen' === breakpointName ) {
 						breakpointSetting.settings.slidesToShow   = +breakpoints['slides_to_show'];
-						breakpointSetting.settings.slidesToScroll = +breakpoints['slides_to_scroll'];
+						breakpointSetting.settings.slidesToScroll = +breakpoints['slides_to_scroll'] ? +breakpoints['slides_to_scroll']: 1;
+
 					} else {
 						breakpointSetting.settings.slidesToShow = breakpoints['slides_to_show_' + breakpointName] ? +breakpoints['slides_to_show_' + breakpointName] : prevDeviceToShowValue;
 
@@ -2639,14 +2651,15 @@
 
 		widgetBarChart: function( $scope ) {
 
-			var $chart        = $scope.find( '.jet-bar-chart-container' ),
-				$chart_canvas = $chart.find( '.jet-bar-chart' ),
-				settings      = $chart.data( 'settings' ),
+			var $chart            = $scope.find( '.jet-bar-chart-container' ),
+				$chart_canvas     = $chart.find( '.jet-bar-chart' ),
+				settings          = $chart.data( 'settings' ),
 				tooltip_prefix    = $chart.data( 'tooltip-prefix' ) || '',
 				tooltip_suffix    = $chart.data( 'tooltip-suffix' ) || '',
 				tooltip_separator = $chart.data( 'tooltip-separator' ) || '',
 				bar_type          = settings['type'] || 'bar',
-				axis_separator    = $chart.data( 'axis-separator' ) || '';
+				axis_separator    = $chart.data( 'axis-separator' ) || '',
+				labels_length     = $chart.data( 'labels-length' ) || 50;
 
 				if ( true === settings.options.tooltips.enabled ) {
 					settings.options.tooltips.callbacks = {
@@ -2683,12 +2696,37 @@
 			}
 
 			elementorFrontend.waypoint( $chart_canvas, function() {
-				var $this   = $( this ),
-					ctx     = $this[0].getContext( '2d' ),
-					myChart = new Chart( ctx, settings );
+				var $this         = $( this ),
+					ctx           = $this[0].getContext( '2d' ),
+					wrappedLabels = [];
+
+				var wrap  = (label, limit) => {
+					let words = label.split(" ");
+					let labels = []
+					let concat = []
+					for (let i = 0; i < words.length; i++) {
+						concat.push(words[i])
+						let join = concat.join(' ')
+						if (join.length > limit) {
+							labels.push(join)
+							concat = []
+						}
+					}
+					if (concat.length) {
+						labels.push(concat.join(' ').trim())
+					}
+					return labels
+				}
+
+				settings.data.labels.forEach(function(label) {
+					wrappedLabels.push(wrap(label, labels_length));
+				});
+				settings.data.labels = wrappedLabels;
+
+				var myChart = new Chart( ctx, settings );
+
 			}, JetElements.prepareWaypointOptions( $scope, {
 				offset: 'bottom-in-view'
-
 			} ) );
 		},
 		widgetLineChart: function( $scope ) {
@@ -3923,6 +3961,16 @@
 		 * @return {[type]} [description]
 		 */
 		self.waypointHandler = function() {
+			$( window ).on( 'resize scroll', function() {
+				for ( var section in sections ) {
+					let $section  = sections[section].selector,
+						sectionId = $section.attr( 'id' );
+
+					if ( ! $('#' + sectionId  ).isInViewport() ) {
+						$( '[data-anchor=' + sectionId + ']', $instance ).removeClass( 'active' );
+					}
+				};
+			} );
 
 			for ( var section in sections ) {
 				var $section = sections[section].selector;
@@ -4172,7 +4220,12 @@
 				newSectionId    = false,
 				prevSectionId   = false,
 				nextSectionId   = false,
-				windowScrollTop = $window.scrollTop();
+				windowScrollTop = $window.scrollTop(),
+				mapListing      = $target.closest('.jet-map-listing').length;
+
+			if( mapListing ){
+				return;
+			}
 
 			if ( sectionId && sections.hasOwnProperty( sectionId ) ) {
 
@@ -4258,6 +4311,15 @@
 			return check;
 		};
 
+		$.fn.isInViewport = function() {
+			let elementTop     = $( this ).offset().top,
+				elementBottom  = elementTop + $( this ).outerHeight(),
+				viewportTop    = $( window ).scrollTop(),
+				viewportBottom = viewportTop + $( window ).height();
+
+			return elementBottom > viewportTop && elementTop < viewportBottom;
+		};
+
 	}
 
 	/**
@@ -4292,7 +4354,7 @@
 				settings = $target.data('settings') || false;
 				settings = false != settings ? settings['jet_parallax_layout_list'] : false;
 			} else {
-				settings = self.generateEditorSettings( sectionId );
+				settings = self.generateEditorSettings( $target );
 			}
 
 			if ( ! settings ) {
@@ -4315,7 +4377,7 @@
 			self.scrollUpdate();
 		};
 
-		self.generateEditorSettings = function( sectionId ) {
+		self.generateEditorSettings = function( $target ) {
 			var editorElements      = null,
 				sectionsData        = {},
 				sectionData         = {},
@@ -4326,26 +4388,16 @@
 				return false;
 			}
 
-			editorElements = window.elementor.elements;
-
-			if ( ! editorElements.models ) {
-				return false;
-			}
-
-			$.each( editorElements.models, function( index, obj ) {
-				if ( sectionId == obj.id ) {
-					sectionData = obj.attributes.settings.attributes;
-				}
-			} );
+			sectionData = JetElementsTools.getElementorElementSettings( $target );
 
 			if ( ! sectionData.hasOwnProperty( 'jet_parallax_layout_list' ) || 0 === Object.keys( sectionData ).length ) {
 				return false;
 			}
 
-			sectionParallaxData = sectionData[ 'jet_parallax_layout_list' ].models;
+			sectionParallaxData = sectionData[ 'jet_parallax_layout_list' ];
 
 			$.each( sectionParallaxData, function( index, obj ) {
-				settings.push( obj.attributes );
+				settings.push( obj );
 			} );
 
 			if ( 0 !== settings.length ) {
@@ -4784,6 +4836,7 @@
 
 			if ( 'masonry' == settings['layoutType'] || 'justify' == settings['layoutType'] ) {
 				$masonryInstance = $instanceList.masonry( masonryOptions );
+				
 			}
 
 			if ( $.isFunction( $.fn.imagesLoaded ) ) {

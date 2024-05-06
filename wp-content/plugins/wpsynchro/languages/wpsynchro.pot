@@ -1,15 +1,15 @@
-# Copyright (C) 2023 WPSynchro
+# Copyright (C) 2024 DAEV.tech
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Synchro 1.11.1\n"
+"Project-Id-Version: WP Synchro 1.11.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpsynchro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-04T13:48:27+00:00\n"
+"POT-Creation-Date: 2024-03-19T20:37:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wpsynchro\n"
@@ -19,7 +19,7 @@ msgid "WP Synchro"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://wpsynchro.com/home"
+msgid "https://daev.tech/wpsynchro"
 msgstr ""
 
 #. Description of the plugin
@@ -27,108 +27,108 @@ msgid "Professional migration plugin for WordPress - Migration of database and f
 msgstr ""
 
 #. Author of the plugin
-msgid "WPSynchro"
+msgid "DAEV.tech"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://wpsynchro.com"
+msgid "https://daev.tech"
 msgstr ""
 
 #: src/API/ClientSyncDatabase.php:36
 msgid "Error from database sync service - Check the log file for further information."
 msgstr ""
 
-#: src/API/DatabaseBackup.php:105
+#: src/API/DatabaseBackup.php:109
 msgid "Appending create table for database backup to %s failed."
 msgstr ""
 
-#: src/API/DatabaseBackup.php:129
+#: src/API/DatabaseBackup.php:133
 msgid "Appending databasebackup to %s failed."
 msgstr ""
 
-#: src/API/HealthCheck.php:84
+#: src/API/HealthCheck.php:83
 msgid "WP Synchro MU-plugin is enabled in Setup, but is not loading. That can cause problems and bad performance in migrations. Try to disable it and re-enable it in WP Synchro > Setup menu and see if this error persist."
 msgstr ""
 
-#: src/API/HealthCheck.php:86
+#: src/API/HealthCheck.php:85
 msgid "WP Synchro MU-plugin is not currently loaded - You should really consider enabling it in WP Synchro > Setup menu, as it boosts performance and cause much less problems during migrations."
 msgstr ""
 
-#: src/API/HealthCheck.php:98
+#: src/API/HealthCheck.php:97
 msgid "Empty database table prefix is not supported by WP Synchro (or by WordPress in newer versions) - To fix this, you must set a table prefix"
 msgstr ""
 
-#: src/API/HealthCheck.php:124
+#: src/API/HealthCheck.php:123
 msgid "WP Synchro database version is newer than the currently installed plugin version - Please upgrade plugin to newest version - Continue at own risk"
 msgstr ""
 
-#: src/API/HealthCheck.php:135
+#: src/API/HealthCheck.php:134
 msgid "Access key for this site is not set - This needs to be configured for WP Synchro to work."
 msgstr ""
 
-#: src/API/HealthCheck.php:153
+#: src/API/HealthCheck.php:152
 msgid "Missing PHP extensions for WP Synchro to work. Enable extension(s) '%s' to php.ini and reload."
 msgstr ""
 
-#: src/API/HealthCheck.php:166
+#: src/API/HealthCheck.php:165
 msgid "Your database server is misconfigured - The setting 'max_allowed_packet' is too low. It is currently set to: %d. Check out the documentation for the SQL server you are using and correct this setting."
 msgstr ""
 
-#: src/API/HealthCheck.php:178
+#: src/API/HealthCheck.php:177
 msgid "SAVEQUERIES constant is set. This is normally only for debugging. It will generate out of memory errors with WP Synchro migrations"
 msgstr ""
 
-#: src/API/HealthCheck.php:236
+#: src/API/HealthCheck.php:235
 msgid "Service test error - Tried making %d consecutive requests (with HTTP %s) to a test service on this site - %d of them failed."
 msgstr ""
 
-#: src/API/HealthCheck.php:249
+#: src/API/HealthCheck.php:248
 msgid "Error from request (number %d):"
 msgstr ""
 
-#: src/API/HealthCheck.php:255
+#: src/API/HealthCheck.php:254
 msgid ""
 "This site is protected by Basic Authentication, which requires a username and password.\n"
 "                        You can add the correct username/password in the 'Setup' menu."
 msgstr ""
 
-#: src/API/HealthCheck.php:261
+#: src/API/HealthCheck.php:260
 msgid "Got spaces in the response from API, either before or after the expected content. This is an indication that there is a problem somewhere in your code. Can sometimes be fixed by reinstalling WordPress files. Otherwise looks for spaces after closing PHP tags. This can cause problems for WP Synchro and other plugins also, so you should get that fixed."
 msgstr ""
 
-#: src/API/HealthCheck.php:265
+#: src/API/HealthCheck.php:264
 msgid "The response length is different from expected length. This is often because of invalid characters before or after the expected response. This often comes from errors in the code other places on the site - Expected '%s' - Got: '%s'"
 msgstr ""
 
-#: src/API/HealthCheck.php:270
+#: src/API/HealthCheck.php:269
 msgid "Error from request (number %d) - Got wrong data in response from webservice - Expected '%s' - Got: '%s' - This means that somewhere in the code, extra characters are being sent, most likely as an error. Look for characters or spaces after closing PHP tags."
 msgstr ""
 
-#: src/API/HealthCheck.php:278
-msgid "The pattern of errors suggest you are using LocalWP as development environment. It contains a bug where 50% of remote requests fail, when called from the code. That is why request 2 and 4 fails, but 1,3 and 5 succeed. Read more on https://wpsynchro.com/documentation/local-by-flywheel-localwp"
+#: src/API/HealthCheck.php:277
+msgid "The pattern of errors suggest you are using LocalWP as development environment. It contains a bug where 50% of remote requests fail, when called from the code. That is why request 2 and 4 fails, but 1,3 and 5 succeed. Read more about it in our documentation."
 msgstr ""
 
-#: src/API/HealthCheck.php:281
-msgid "This issue is most likely caused by a misconfiguration of the hosting environment. Most often because of too few available worker processes. See more documentation on this here: %s"
+#: src/API/HealthCheck.php:279
+msgid "This issue is most likely caused by a misconfiguration of the hosting environment. Most often because of too few available worker processes. See more documentation on this in our documentation."
 msgstr ""
 
-#: src/API/HealthCheck.php:309
+#: src/API/HealthCheck.php:305
 msgid "Service error - Can not reach 'initiate' service - Check that services is accessible and not being blocked"
 msgstr ""
 
-#: src/API/HealthCheck.php:326
+#: src/API/HealthCheck.php:322
 msgid "Service error - Masterdata service returns improper response - Data was not returned in usable way - Check PHP error log"
 msgstr ""
 
-#: src/API/HealthCheck.php:329
+#: src/API/HealthCheck.php:325
 msgid "Service error - Can not reach 'masterdata' service - Check that WP Synchro is activated and service accessible"
 msgstr ""
 
-#: src/API/HealthCheck.php:344
+#: src/API/HealthCheck.php:340
 msgid "WP Synchro log dir is not writable for PHP - Path: %s "
 msgstr ""
 
-#: src/API/HealthCheck.php:366
+#: src/API/HealthCheck.php:362
 msgid "Path that WP Synchro might use for migration is not writable- Path: %s -  This can be caused by PHP's open_basedir setting or file permissions"
 msgstr ""
 
@@ -144,7 +144,7 @@ msgstr ""
 msgid "Remote host does not allow that - Make sure it is same WP Synchro version"
 msgstr ""
 
-#: src/API/LoadAPI.php:181
+#: src/API/LoadAPI.php:195
 msgid "You do not have access to this service or security token is no longer valid - Go back and try again."
 msgstr ""
 
@@ -261,11 +261,11 @@ msgid "Migration aborted, due to a SQL query failing. See WP Synchro log (found 
 msgstr ""
 
 #: src/Database/DatabaseHelperFunctions.php:59
-msgid "That means that the key was longer than supported on the target database. The table need to be fixed or excluded from migration. See documentation on wpsynchro.com for further help."
+msgid "That means that the key was longer than supported on the target database. The table need to be fixed or excluded from migration. See documentation for further help."
 msgstr ""
 
 #: src/Database/DatabaseHelperFunctions.php:62
-msgid "That means that the charset/collation used is not supported by the target database engine. The table charset/collations needs to be changed into a supported charset/collation for the target database or excluded from migration. See documentation on wpsynchro.com for further help."
+msgid "That means that the charset/collation used is not supported by the target database engine. The table charset/collations needs to be changed into a supported charset/collation for the target database or excluded from migration. See documentation for further help."
 msgstr ""
 
 #: src/Database/DatabaseHelperFunctions.php:65
@@ -276,19 +276,19 @@ msgstr ""
 msgid "If you need help, contact WP Synchro support."
 msgstr ""
 
-#: src/Database/DatabaseSync.php:291
+#: src/Database/DatabaseSync.php:297
 msgid "Database migration failed with error, which means we can not continue the migration."
 msgstr ""
 
-#: src/Database/DatabaseSync.php:426
+#: src/Database/DatabaseSync.php:436
 msgid "Large row with binary column ignored from table: %s - Size of value: %d - Max size %d bytes - Increase memory limit on server"
 msgstr ""
 
-#: src/Database/DatabaseSync.php:452
+#: src/Database/DatabaseSync.php:462
 msgid "Large row ignored from table: %s - Size: %d - This happens when a table row is larger than your system limits allows. These limits are a combination of max SQL packet size, memory limits and PHP max_post_size on both ends of the migration."
 msgstr ""
 
-#: src/Database/DatabaseSync.php:684
+#: src/Database/DatabaseSync.php:698
 msgid "Data: %s / %s - Rows: %s / %s"
 msgstr ""
 
@@ -582,7 +582,7 @@ msgid "Insert your license key for your PRO version, so you can use the full fun
 msgstr ""
 
 #: src/Pages/AdminLicensing.php:92
-msgid "Your license key can be found on <a href=\"https://wpsynchro.com\" target=\"_blank\">https://wpsynchro.com</a> on My Account after login in with your credentials."
+msgid "Your license key can be found on <a href=\"https://daev.tech\" target=\"_blank\">https://daev.tech</a> on My Account after login in with your credentials."
 msgstr ""
 
 #: src/Pages/AdminLicensing.php:92
@@ -614,7 +614,7 @@ msgid "Last retry was %s minutes ago and we will retry with ~%d min intervals up
 msgstr ""
 
 #: src/Pages/AdminLicensing.php:117
-msgid "Make sure it is possible to connect out of this webserver to license server at wpsynchro.com."
+msgid "Make sure it is possible to connect out of this webserver to license server at daev.tech domain."
 msgstr ""
 
 #: src/Pages/AdminLicensing.php:121
@@ -1068,11 +1068,11 @@ msgstr ""
 msgid "Could not connect to %s service (HTTP statuscode: %d)"
 msgstr ""
 
-#: src/Transport/RemoteTransport.php:412
+#: src/Transport/RemoteTransport.php:413
 msgid "SSL certificate is not valid or self-signed on host %s. To allow non-valid SSL certificates when running a migration, make sure it is set to allowed."
 msgstr ""
 
-#: src/Transport/RemoteTransport.php:414
+#: src/Transport/RemoteTransport.php:417
 msgid "Service error - Can not reach service on host %s. Error message: %s"
 msgstr ""
 
@@ -1277,7 +1277,7 @@ msgid "%s uses a WP Synchro PRO version that can not be validated using the curr
 msgstr ""
 
 #: src/Utilities/Licensing/Licensing.php:212
-msgid "Migration was denied by WP Synchro license server, which can be caused by invalid license key or not having enough available sites on your current subscription. Log into https://wpsynchro.com to check out your subscription state."
+msgid "Migration was denied by WP Synchro license server, which can be caused by invalid license key or not having enough available sites on your current subscription. Log into https://daev.tech to check out your subscription state."
 msgstr ""
 
 #: src/WPSynchroBootstrap.php:141
@@ -1316,7 +1316,7 @@ msgid "Send feedback and deactivate"
 msgstr ""
 
 #: dist/deactivation.js:1
-msgid "Privacy information: Feedback will be sent to webservice at wpsynchro.com from your browser - Will contain the selected reason for deactivation, the comment, site language, WordPress version, WP Synchro version and if it is FREE or PRO version. Nothing else will be sent or saved."
+msgid "Privacy information: Feedback will be sent to webservice at daev.tech from your browser - Will contain the selected reason for deactivation, the comment, site language, WordPress version, WP Synchro version and if it is FREE or PRO version. Nothing else will be sent or saved."
 msgstr ""
 
 #: dist/deactivation.js:1
@@ -1449,7 +1449,7 @@ msgid "One of the sites seem to be using a non-standard location for WordPress c
 msgstr ""
 
 #: dist/wpsynchro.js:2
-msgid "The web root for the {0} site is overlapping with the {1} site web root. This is not a problem if it is on a different server, but if they have overlapping paths on the same server, it will create problems if you try to migrate all files. To prevent problems, make sure each site has its own location with no other sites inside. Database migration will work without problems. For more information, see the documentation on sub directory sites on wpsynchro.com"
+msgid "The web root for the {0} site is overlapping with the {1} site web root. This is not a problem if it is on a different server, but if they have overlapping paths on the same server, it will create problems if you try to migrate all files. To prevent problems, make sure each site has its own location with no other sites inside. Database migration will work without problems. For more information, see the documentation on sub directory sites on daev.tech"
 msgstr ""
 
 #: dist/wpsynchro.js:2
