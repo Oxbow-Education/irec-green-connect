@@ -20,9 +20,9 @@ $value = 0;
 if ( 'percent' === $settings['values_type'] ) {
 	$value = 100 <= $settings['percent_value']['size'] ? 100 : $settings['percent_value']['size'];
 } elseif ( 0 !== absint( $settings['absolute_value_max'] ) ) {
-	$curr  = $settings['absolute_value_curr'];
 	$max   = $settings['absolute_value_max'];
-	$value = round( ( ( absint( $curr ) * 100 ) / absint( $max ) ), 0 );
+	$curr  = is_string( $settings['absolute_value_curr'] ) ? str_replace(",", "", $settings['absolute_value_curr']) : $settings['absolute_value_curr'];
+	$value = round( ( ( floatval( $curr ) * 100 ) / floatval( $max ) ), 0 );
 }
 
 $circumference = 2 * M_PI * $radius;

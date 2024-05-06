@@ -2606,7 +2606,6 @@ class Jet_Elements_Testimonials extends Jet_Elements_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} ' . $css_scheme['dots'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'separator' => 'after',
 			),
 			50
 		);

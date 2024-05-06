@@ -47,7 +47,7 @@ class AdminAddEdit
             'nonce' => wp_create_nonce('wpsynchro-addedit'),
             'compat_errors' => $compat_errors,
             'migration' => $migration,
-            'overview_url' => menu_page_url('wpsynchro_overview', false),
+            'overview_url' => menu_page_url('wpsynchro_menu', false),
             'is_pro' => $is_pro,
             'home_url' => trailingslashit(get_home_url()),
 

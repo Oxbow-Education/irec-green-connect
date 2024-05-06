@@ -36,7 +36,7 @@ class AdminRunSync
 
         $nonce = $_REQUEST['nonce'] ?? '';
         if (!wp_verify_nonce($nonce, 'wpsynchro_run_migration')) {
-            echo "<div class='notice wpsynchro-notice'><p>" . __('Security token is no longer valid - Go to overview page and try again', 'wpsynchro') . ' - <a href="' . menu_page_url('wpsynchro_overview', false) . '">' . __('Overview', 'wpsynchro') . '</a></p></div>';
+            echo "<div class='notice wpsynchro-notice'><p>" . __('Security token is no longer valid - Go to overview page and try again', 'wpsynchro') . ' - <a href="' . menu_page_url('wpsynchro_menu', false) . '">' . __('Overview', 'wpsynchro') . '</a></p></div>';
             return;
         }
 
