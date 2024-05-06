@@ -484,3 +484,11 @@ function newsletter_sign_up_shortcode()
   return ob_get_clean();
 }
 add_shortcode('newsletter_sign_up', 'newsletter_sign_up_shortcode');
+
+add_filter('redirect_canonical', 'pif_disable_redirect_canonical');
+
+function pif_disable_redirect_canonical($redirect_url)
+{
+  if (is_singular()) $redirect_url = false;
+  return $redirect_url;
+}
