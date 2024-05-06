@@ -1,11 +1,11 @@
 === WP Synchro - WordPress Migration Plugin for Database & Files ===
 Contributors: wpsynchro
-Donate link: https://wpsynchro.com/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=donate
+Donate link: https://daev.tech/wpsynchro/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=donate
 Tags: migrate,clone,files,database,migration
-Requires at least: 5.2
-Tested up to: 6.4
-Stable tag: 1.11.2
-Requires PHP: 7.0
+Requires at least: 5.8
+Tested up to: 6.5
+Stable tag: 1.11.5
+Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0
 
@@ -44,7 +44,7 @@ You can also push data from your staging or local development enviornment to you
 *   Database backup before migration
 *   WP CLI command to schedule migrations via cron or other trigger
 *   Pretty much the ultimate tool for doing WordPress migrations
-*   14 day trial is waiting for you to get started at [WPSynchro.com](https://wpsynchro.com/ "WP Synchro PRO")
+*   14 day trial is waiting for you to get started at [daev.tech](https://daev.tech/wpsynchro "WP Synchro PRO")
 
 **Typical use for WP Synchro:**
 
@@ -55,7 +55,7 @@ You can also push data from your staging or local development enviornment to you
 **WP Synchro PRO version:**
 
 Pro version gives you more features, such as synchronizing files, database backup, notifications, support for basic authentication, WP CLI command and much faster support.
-Check out how to get PRO version at [WPSynchro.com](https://wpsynchro.com/ "WP Synchro PRO")
+Check out how to get PRO version at [daev.tech](https://daev.tech/wpsynchro "WP Synchro PRO")
 We have a 14 day trial waiting for you and 30 day money back guarantee. So why not try the PRO version?
 
 == Installation ==
@@ -76,9 +76,9 @@ We have a 14 day trial waiting for you and 30 day money back guarantee. So why n
 = Do you offer support? =
 
 Yes we do, for both free and PRO version. But PRO version users always get priority support, so support requests for the free version will normally take some time.
-Check out how to get PRO version at [WPSynchro.com](https://wpsynchro.com/ "WP Synchro site")
+Check out how to get PRO version at [daev.tech](https://daev.tech/wpsynchro "WP Synchro site")
 
-You can contact us at <support@wpsynchro.com> for support. Also check out the "Support" menu in WP Synchro, that provides information needed for the support request.
+You can contact us at <support@daev.tech> for support. Also check out the "Support" menu in WP Synchro, that provides information needed for the support request.
 
 = Does WP Synchro do database merge? =
 
@@ -87,16 +87,16 @@ No. We do not merge data in database. We only migrate the data and overwrite the
 = Where can i contact you with new ideas and bugs? =
 
 If you have an idea for improving WP Synchro or found a bug in WP Synchro, we would love to hear from you on:
-<support@wpsynchro.com>
+<support@daev.tech>
 
 = What is WP Synchro tested on? (WP Version, PHP, Databases)=
 
 Currently we do automated testing on more than 300 different hosting environments with combinations of WordPress/PHP/Database versions.
 
 WP Synchro is tested on :
- * MySQL 5.5 up to MySQL 8.0 and MariaDB from 10.0 to 10.7.
- * PHP 7.0 up to latest version
- * WordPress from 5.2 to latest version.
+ * MySQL 5.6 up to MySQL 8.0 and MariaDB from 10.0 to 10.7.
+ * PHP 7.2 up to latest version
+ * WordPress from 5.8 to latest version.
 
 = Do you support multisite? =
 
@@ -112,6 +112,20 @@ It is currently planned for one of the next releases to support it.
 4. WP Synchro doing a database migration
 
 == Changelog ==
+
+= 1.11.5 =
+ * Bugfix: Fix links for usage reporting dialog, leading to a non-existing page
+
+= 1.11.4 =
+ * Change: Bump minimum PHP requirement to 7.2 from 7.0
+ * Change: Bump minimum WP requirement to 5.8 from 5.2
+ * Change: Bump minimum MySQL requirement to 5.7 from 5.5
+ * Change: Bump supported WP version to 6.5
+ * Bugfix: Fix some issues causing menu to generate PHP deprecation issues, even though it just triggered it in WP core functions
+
+= 1.11.3 =
+ * Change: Change all service urls from wpsynchro.com to daev.tech, as we have moved the plugin there
+ * Bugfix: Fixed a minor csrf issue reported by Patchstack - Not a risk to be worried about.
 
 = 1.11.2 =
  * Bugfix: Fix PHP timeout issue caused by serialized data, kinda like 1.11.1 hotfix, but caused by another data.

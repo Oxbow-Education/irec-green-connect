@@ -1,23 +1,21 @@
 <?php
 
+/**
+ * Class for handling API for WP Synchro
+ */
+
 namespace WPSynchro\API;
 
 use WPSynchro\Transport\TransferToken;
 
-/**
- * Class for handling API for WP Synchro
- * @since 1.8.0
- */
 class LoadAPI
 {
-    private $action_to_handler_mapping = [];
-
     /**
-     *  Constructor
+     *  Get endpoints
      */
-    public function __construct()
+    public function getEndpoints()
     {
-        $this->action_to_handler_mapping = [
+        return [
             'wpsynchro_initiate' => [
                 'check_permission' => false,
                 'class' => '\WPSynchro\API\Initiate',
@@ -59,6 +57,10 @@ class LoadAPI
                     if ($this->permissionCheck($token)) {
                         return true;
                     } else {
+                        $nonce = $_REQUEST['nonce'] ?? '';
+                        if (!wp_verify_nonce($nonce, 'wpsynchro-addedit')) {
+                            return false;
+                        }
                         return current_user_can('manage_options');
                     }
                 },
@@ -66,6 +68,11 @@ class LoadAPI
             ],
             'wpsynchro_frontend_verify_remote' => [
                 'check_permission' => function ($token) {
+                    // Check nonce
+                    $nonce = $_REQUEST['nonce'] ?? '';
+                    if (!wp_verify_nonce($nonce, 'wpsynchro-addedit')) {
+                        return false;
+                    }
                     return current_user_can('manage_options');
                 },
                 'class' => '\WPSynchro\API\VerifyMigration',
@@ -136,6 +143,11 @@ class LoadAPI
             ],
             'wpsynchro_save_migration' => [
                 'check_permission' => function ($token) {
+                    // Check nonce
+                    $nonce = $_REQUEST['nonce'] ?? '';
+                    if (!wp_verify_nonce($nonce, 'wpsynchro-addedit')) {
+                        return false;
+                    }
                     return current_user_can('manage_options');
                 },
                 'class' => '\WPSynchro\API\SaveMigration',
@@ -160,10 +172,12 @@ class LoadAPI
                 $action = $query_parsed['action'];
             }
 
+            $action_to_handler_mapping = $this->getEndpoints();
+
             // Check if it is known action
-            if (isset($this->action_to_handler_mapping[$action])) {
+            if (isset($action_to_handler_mapping[$action])) {
                 // Get handler
-                $handler = $this->action_to_handler_mapping[$action];
+                $handler = $action_to_handler_mapping[$action];
 
                 // If we need to check permission, do that first
                 if ($handler['check_permission']) {

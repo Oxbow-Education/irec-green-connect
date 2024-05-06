@@ -118,8 +118,8 @@ class AdminOverview
         if (!\WPSynchro\Utilities\CommonFunctions::isPremiumVersion()) {
             $card_content .= $commonfunctions->getTemplateFile("card-pro-version");
         }
-        $card_content .= $commonfunctions->getTemplateFile("card-mailinglist");
-        $card_content .= $commonfunctions->getTemplateFile("card-facebook");
+        //$card_content .= $commonfunctions->getTemplateFile("card-mailinglist");
+        //$card_content .= $commonfunctions->getTemplateFile("card-facebook");
 
         // Nonces
         $run_migration_nonce = wp_create_nonce('wpsynchro_run_migration');
@@ -129,12 +129,12 @@ class AdminOverview
         // Data for JS
         $data_for_js = [
             "isPro" => \WPSynchro\Utilities\CommonFunctions::isPremiumVersion(),
-            "pageUrl" => menu_page_url('wpsynchro_overview', false),
-            "runSyncUrl" => menu_page_url('wpsynchro_run', false),
+            "pageUrl" => menu_page_url('wpsynchro_menu', false),
+            "runSyncUrl" => admin_url('admin.php?page=wpsynchro_run'),
             "runSyncNonce" => $run_migration_nonce,
             'deleteMigrationNonce' => $delete_migration_nonce,
             'duplicateMigrationNonce' => $duplicate_migration_nonce,
-            "AddEditUrl" => menu_page_url('wpsynchro_addedit', false),
+            "AddEditUrl" => admin_url('admin.php?page=wpsynchro_addedit'),
             "compatErrors" => $compat_errors,
             "showReviewNotification" => $show_review_notification,
             "reviewNotificationText" => $review_notification_text,
@@ -142,7 +142,7 @@ class AdminOverview
             "runHealthcheck" => $run_healthcheck,
             "showUsageReporting" => $show_usage_reporting,
             "reviewNotificationDismissUrl" => add_query_arg(['wpsynchro_dismiss_review_request' => 1], admin_url()),
-            "addMigrationUrl" => menu_page_url('wpsynchro_addedit', false),
+            "addMigrationUrl" => admin_url('admin.php?page=wpsynchro_addedit'),
             "migrationData" => $data,
         ];
         wp_localize_script('wpsynchro_admin_js', 'wpsynchro_overview_data', $data_for_js);

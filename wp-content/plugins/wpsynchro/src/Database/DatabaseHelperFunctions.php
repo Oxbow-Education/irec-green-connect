@@ -56,10 +56,10 @@ class DatabaseHelperFunctions
         );
         if (strpos($wpdb->last_error, 'Specified key was too long') !== false) {
             // Too long key
-            $user_errors[] = $base_error . " " . __('That means that the key was longer than supported on the target database. The table need to be fixed or excluded from migration. See documentation on wpsynchro.com for further help.', 'wpsynchro');
+            $user_errors[] = $base_error . " " . __('That means that the key was longer than supported on the target database. The table need to be fixed or excluded from migration. See documentation for further help.', 'wpsynchro');
         } elseif (strpos($wpdb->last_error, 'Unknown collation') !== false) {
             // Not supported collation/charset
-            $user_errors[] = $base_error . " " . __('That means that the charset/collation used is not supported by the target database engine. The table charset/collations needs to be changed into a supported charset/collation for the target database or excluded from migration. See documentation on wpsynchro.com for further help.', 'wpsynchro');
+            $user_errors[] = $base_error . " " . __('That means that the charset/collation used is not supported by the target database engine. The table charset/collations needs to be changed into a supported charset/collation for the target database or excluded from migration. See documentation for further help.', 'wpsynchro');
         } elseif (strpos($wpdb->last_query, 'CREATE VIEW') === 0) {
             // Could not create view. Typically, because the required other tables are not there
             $user_errors[] = $base_error . " " . __('The error was caused by trying to create a view in the database. The error is normally thrown from the database server, when the view references tables that do not exist on the target database, so make sure they are there.', 'wpsynchro');
