@@ -1171,7 +1171,6 @@
       // the field which we query against
       rule: {} // the rule [field, operator, value]
     },
-
     events: {
       change: 'change',
       keyup: 'change',
@@ -1538,7 +1537,6 @@
       // Reference used during "change" event.
       groups: [] // The groups of condition instances.
     },
-
     setup: function (field) {
       // data
       this.data.field = field;
@@ -1592,7 +1590,7 @@
 
       // loop
       this.getGroups().map(function (group) {
-        // igrnore this group if another group passed
+        // ignore this group if another group passed
         if (pass) return;
 
         // find passed
@@ -4255,7 +4253,6 @@
     active: false,
     actions: {
       refresh: 'onRefresh',
-      resize: 'onRefresh',
       close_field_object: 'onCloseFieldObject'
     },
     data: {
@@ -4428,28 +4425,21 @@
       return tab;
     },
     onRefresh: function () {
-      // Don't run on field group tabs.
-      if (['acf_field_settings_tabs', 'acf_field_group_settings_tabs'].includes(this.get('key'))) {
+      // only for left placements
+      if (this.get('placement') !== 'left') {
         return;
       }
 
-      // Block editor needs timeout to run after script is finished.
-      setTimeout(() => {
-        const $list = this.$el.children('ul');
-        let $element = this.$el;
-        let attribute = 'height';
-        let height;
-        if (this.get('placement') === 'left') {
-          $element = this.$el.parent();
-          attribute = $element.is('td') ? 'height' : 'min-height';
+      // vars
+      var $parent = this.$el.parent();
+      var $list = this.$el.children('ul');
+      var attribute = $parent.is('td') ? 'height' : 'min-height';
 
-          // Find height (minus 1 for border-bottom).
-          height = $list.position().top + $list.outerHeight(true) - 1;
-        } else {
-          height = Math.ceil($list.outerHeight(true));
-        }
-        $element.css(attribute, height);
-      }, 0);
+      // find height (minus 1 for border-bottom)
+      var height = $list.position().top + $list.outerHeight(true) - 1;
+
+      // add css
+      $parent.css(attribute, height);
     },
     onCloseFieldObject: function (fieldObject) {
       const tab = this.getVisible().find(item => {
@@ -5446,6 +5436,9 @@
       if (changed) {
         this.prop('hidden', false);
         acf.doAction('show_field', this, context);
+        if (context === 'conditional_logic') {
+          this.setFieldSettingsLastVisible();
+        }
       }
 
       // return
@@ -5459,10 +5452,21 @@
       if (changed) {
         this.prop('hidden', true);
         acf.doAction('hide_field', this, context);
+        if (context === 'conditional_logic') {
+          this.setFieldSettingsLastVisible();
+        }
       }
 
       // return
       return changed;
+    },
+    setFieldSettingsLastVisible: function () {
+      // Ensure this conditional logic trigger has happened inside a field settings tab.
+      var $parents = this.$el.parents('.acf-field-settings-main');
+      if (!$parents.length) return;
+      var $fields = $parents.find('.acf-field');
+      $fields.removeClass('acf-last-visible');
+      $fields.not('.acf-hidden').last().addClass('acf-last-visible');
     },
     enable: function (lockKey, context) {
       // enable field and store result
@@ -6068,6 +6072,17 @@
     onChange: function () {
       // preview hack allows post to save with no title or content
       $('#_acf_changed').val(1);
+      if (acf.isGutenbergPostEditor()) {
+        try {
+          wp.data.dispatch('core/editor').editPost({
+            meta: {
+              _acf_changed: 1
+            }
+          });
+        } catch (error) {
+          console.log('ACF: Failed to update _acf_changed meta', error);
+        }
+      }
     }
   });
   var duplicateFieldsManager = new acf.Model({
@@ -6348,13 +6363,11 @@
       refresh: 'renderGroups'
     },
     renderGroups: function () {
-      // Set timeout so the editor fires at the right time.
-      setTimeout(() => {
-        var self = this;
-        $('.acf-fields:visible').each(function () {
-          self.renderGroup($(this));
-        });
-      }, 0);
+      // loop
+      var self = this;
+      $('.acf-fields:visible').each(function () {
+        self.renderGroup($(this));
+      });
     },
     renderGroup: function ($el) {
       // vars
@@ -8028,6 +8041,7 @@
       ajaxResults: function (json) {
         return json;
       },
+      escapeMarkup: false,
       templateSelection: false,
       templateResult: false,
       dropdownCssClass: '',
@@ -8288,17 +8302,12 @@
         allowClear: this.get('allowNull'),
         placeholder: this.get('placeholder'),
         multiple: this.get('multiple'),
+        escapeMarkup: this.get('escapeMarkup'),
         templateSelection: this.get('templateSelection'),
         templateResult: this.get('templateResult'),
         dropdownCssClass: this.get('dropdownCssClass'),
         suppressFilters: this.get('suppressFilters'),
-        data: [],
-        escapeMarkup: function (markup) {
-          if (typeof markup !== 'string') {
-            return markup;
-          }
-          return acf.escHtml(markup);
-        }
+        data: []
       };
 
       // Clear empty templateSelections, templateResults, or dropdownCssClass.
@@ -8317,7 +8326,7 @@
         if (!options.templateSelection) {
           options.templateSelection = function (selection) {
             var $selection = $('<span class="acf-selection"></span>');
-            $selection.html(acf.escHtml(selection.text));
+            $selection.html(options.escapeMarkup(selection.text));
             $selection.data('element', selection.element);
             return $selection;
           };
@@ -8325,6 +8334,19 @@
       } else {
         delete options.templateSelection;
         delete options.templateResult;
+      }
+
+      // Use a default, filterable escapeMarkup if not provided.
+      if (!options.escapeMarkup) {
+        options.escapeMarkup = function (markup) {
+          if (typeof markup !== 'string') {
+            return markup;
+          }
+          if (this.suppressFilters) {
+            return acf.strEscape(markup);
+          }
+          return acf.applyFilters('select2_escape_markup', acf.strEscape(markup), markup, $select, this.data, field || false, this);
+        };
       }
 
       // multiple

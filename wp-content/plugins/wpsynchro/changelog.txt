@@ -1,3 +1,17 @@
+= 1.11.5 =
+ * Bugfix: Fix links for usage reporting dialog, leading to a non-existing page
+
+= 1.11.4 =
+ * Change: Bump minimum PHP requirement to 7.2 from 7.0
+ * Change: Bump minimum WP requirement to 5.8 from 5.2
+ * Change: Bump minimum MySQL requirement to 5.7 from 5.5
+ * Change: Bump supported WP version to 6.5
+ * Bugfix: Fix some issues causing menu to generate PHP deprecation issues, even though it just triggered it in WP core functions
+
+= 1.11.3 =
+ * Change: Change all service urls from wpsynchro.com to daev.tech, as we have moved the plugin there
+ * Bugfix: Fixed a minor csrf issue reported by Patchstack - Not a risk to be worried about.
+
 = 1.11.2 =
  * Bugfix: Fix PHP timeout issue caused by serialized data, kinda like 1.11.1 hotfix, but caused by another data.
  * Improvement: Added more safety against timeout issues in serialized data, so it wont happen again

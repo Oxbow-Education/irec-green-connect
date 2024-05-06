@@ -1,16 +1,15 @@
 <?php
 
+/**
+ * Class for handling to get file changes for current sync
+ * Call should already be verified by permissions callback
+ */
+
 namespace WPSynchro\API;
 
 use WPSynchro\Files\SyncList;
 use WPSynchro\Migration\Job;
 
-/**
- * Class for handling to get file changes for current sync
- * Call should already be verified by permissions callback
- *
- * @since 1.7.0
- */
 class StatusFileChanges extends WPSynchroService
 {
     public function service()

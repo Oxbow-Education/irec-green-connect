@@ -23,7 +23,6 @@ use WPSynchro\Utilities\Licensing\Licensing;
 class HealthCheck extends WPSynchroService
 {
     public $healthcheck_errors;
-    private $healthcheck_documentation_url = 'https://wpsynchro.com/documentation/health-check-errors';
     private $healthcheck;
 
     public function __construct()
@@ -275,12 +274,9 @@ class HealthCheck extends WPSynchroService
                 $this->healthcheck->errors[] = $problem_found;
                 // Catch LocalWP bug
                 if (isset($error_runs[1]) && isset($error_runs[3]) && count($error_runs) === 2) {
-                    $this->healthcheck->errors[] = __("The pattern of errors suggest you are using LocalWP as development environment. It contains a bug where 50% of remote requests fail, when called from the code. That is why request 2 and 4 fails, but 1,3 and 5 succeed. Read more on https://wpsynchro.com/documentation/local-by-flywheel-localwp", "wpsynchro");
+                    $this->healthcheck->errors[] = __("The pattern of errors suggest you are using LocalWP as development environment. It contains a bug where 50% of remote requests fail, when called from the code. That is why request 2 and 4 fails, but 1,3 and 5 succeed. Read more about it in our documentation.", "wpsynchro");
                 } else {
-                    $this->healthcheck->errors[] = sprintf(
-                        __("This issue is most likely caused by a misconfiguration of the hosting environment. Most often because of too few available worker processes. See more documentation on this here: %s", "wpsynchro"),
-                        $this->healthcheck_documentation_url
-                    );
+                    $this->healthcheck->errors[] = __("This issue is most likely caused by a misconfiguration of the hosting environment. Most often because of too few available worker processes. See more documentation on this in our documentation.", "wpsynchro");
                 }
             }
         }

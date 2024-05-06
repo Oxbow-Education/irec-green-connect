@@ -136,8 +136,8 @@ class WPSynchroBootstrap
             'admin_menu',
             function () {
                 add_menu_page('WP Synchro', 'WP Synchro', 'manage_options', 'wpsynchro_menu', [__NAMESPACE__ . '\\Pages\AdminOverview', 'render'], 'dashicons-update', 76);
-                add_submenu_page('wpsynchro_menu', '', '', 'manage_options', 'wpsynchro_menu', '');
-                add_submenu_page('wpsynchro_menu', __('Overview', 'wpsynchro'), __('Overview', 'wpsynchro'), 'manage_options', 'wpsynchro_overview', [__NAMESPACE__ . '\\Pages\AdminOverview', 'render']);
+
+                add_submenu_page('wpsynchro_menu', __('Overview', 'wpsynchro'), __('Overview', 'wpsynchro'), 'manage_options', 'wpsynchro_menu', [__NAMESPACE__ . '\\Pages\AdminOverview', 'render']);
                 add_submenu_page('wpsynchro_menu', __('Logs', 'wpsynchro'), __('Logs', 'wpsynchro'), 'manage_options', 'wpsynchro_log', [new \WPSynchro\Pages\AdminLog(), 'render']);
                 add_submenu_page('wpsynchro_menu', __('Setup', 'wpsynchro'), __('Setup', 'wpsynchro'), 'manage_options', 'wpsynchro_setup', [__NAMESPACE__ . '\\Pages\AdminSetup', 'render']);
                 add_submenu_page('wpsynchro_menu', __('Support', 'wpsynchro'), __('Support', 'wpsynchro'), 'manage_options', 'wpsynchro_support', [__NAMESPACE__ . '\\Pages\AdminSupport', 'render']);
@@ -147,9 +147,9 @@ class WPSynchroBootstrap
                 add_submenu_page('wpsynchro_menu', __('Changelog', 'wpsynchro'), __('Changelog', 'wpsynchro'), 'manage_options', 'wpsynchro_changelog', [__NAMESPACE__ . '\\Pages\AdminChangelog', 'render']);
 
                 // Run migration page (not in menu)
-                add_submenu_page(null, '', null, 'manage_options', 'wpsynchro_run', [__NAMESPACE__ . '\\Pages\AdminRunSync', 'render']);
+                add_submenu_page('wpsynchro_menu', '', '', 'manage_options', 'wpsynchro_run', [__NAMESPACE__ . '\\Pages\AdminRunSync', 'render']);
                 // Add migration page (not in menu)
-                add_submenu_page(null, '', null, 'manage_options', 'wpsynchro_addedit', [__NAMESPACE__ . '\\Pages\AdminAddEdit', 'render']);
+                add_submenu_page('wpsynchro_menu', '', '', 'manage_options', 'wpsynchro_addedit', [__NAMESPACE__ . '\\Pages\AdminAddEdit', 'render']);
             }
         );
     }

@@ -1105,3 +1105,80 @@ function save_organization_lat_lng($post_id, $post, $update)
     update_field('_geoloc', $geoData, $post_id);
   }
 }
+
+
+function custom_columns_to_resources($defaults)
+{
+
+  // Get the current screen object
+  $screen = get_current_screen();
+
+  // Check if the current post type is 'post'
+  if ($screen->post_type == 'post') {
+    $defaults['worker_tags'] = 'Worker Tags';
+    $defaults['organization_tags'] = 'Organization Tags';
+  }
+  return $defaults;
+}
+add_filter('manage_posts_columns', 'custom_columns_to_resources');
+function remove_posts_columns($columns)
+{
+
+  unset($columns['categories']);
+  unset($columns['tags']);
+  unset($columns['comments']);
+  return $columns;
+}
+add_filter('manage_posts_columns', 'remove_posts_columns');
+function custom_columns_to_resources_content($column_name, $post_id)
+{
+
+  if ($column_name == 'worker_tags' || $column_name == 'organization_tags') {
+    $tags = get_post_meta($post_id, $column_name, true);
+    // Check if the data might be serialized
+    if (is_string($tags)) {
+      $tags = maybe_unserialize($tags);
+    }
+    if (is_array($tags)) {
+      echo implode(', ', $tags);
+    } else {
+      echo $tags ? $tags : '';
+    }
+  }
+}
+
+add_action('manage_posts_custom_column', 'custom_columns_to_resources_content', 10, 2);
+function custom_reorder_posts_columns($columns)
+{
+  // Get the current screen object
+  $screen = get_current_screen();
+
+  // Check if the current post type is 'post'
+  if ($screen->post_type == 'post') {
+    // Initialize a new array to hold the reordered columns
+    $new_columns = [];
+
+    // Add the columns in the desired order
+    $new_columns['cb'] = $columns['cb'];  // Checkbox for bulk actions
+    $new_columns['title'] = $columns['title'];  // Post title
+    $new_columns['author'] = $columns['author'];  // Post author
+
+    // Add custom columns if set
+    if (isset($columns['worker_tags'])) {
+      $new_columns['worker_tags'] = $columns['worker_tags'];
+    }
+    if (isset($columns['organization_tags'])) {
+      $new_columns['organization_tags'] = $columns['organization_tags'];
+    }
+
+    // Date column last
+    $new_columns['date'] = $columns['date'];
+
+    // Return the new column order for posts
+    return $new_columns;
+  }
+
+  // Return the default columns for other post types
+  return $columns;
+}
+add_filter('manage_posts_columns', 'custom_reorder_posts_columns');

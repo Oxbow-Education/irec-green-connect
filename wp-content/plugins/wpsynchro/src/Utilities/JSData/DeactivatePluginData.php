@@ -22,8 +22,8 @@ class DeactivatePluginData
             'wp_synchro_version' => WPSYNCHRO_VERSION,
             'wp_synchro_version_type' => CommonFunctions::isPremiumVersion() ? 'PRO' : 'FREE',
             'wp_language' => get_bloginfo("language"),
-            'get_questions_url' => 'https://wpsynchro.com/api/v1/deactivate-feedback-questions',
-            'post_feedback_url' => 'https://wpsynchro.com/api/v1/deactivate-feedback',
+            'get_questions_url' => 'https://daev.tech/api/wpsynchro/v1/deactivate-feedback-questions',
+            'post_feedback_url' => 'https://daev.tech/api/wpsynchro/v1/deactivate-feedback',
         ];
 
         wp_localize_script('wpsynchro_deactivate_js', 'wpsynchro_deactivation', $jsdata);

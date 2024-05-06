@@ -17,7 +17,7 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
 class UsageReporting
 {
     const VERSION = 1;
-    private $usage_reporting_url = "https://wpsynchro.com/api/v1/usage-reporting";
+    private $usage_reporting_url = "https://daev.tech/api/wpsynchro/v1/usage-reporting";
     private $migration = null;
     // Dependencies
     private $logger;
@@ -48,7 +48,7 @@ class UsageReporting
         $data = $this->getData();
 
         // Log the data in current sync log file, to provide transparency as to what we are sending back
-        $this->logger->log("DEBUG", "Usage reporting data sent to wpsynchro.com server:", $data);
+        $this->logger->log("DEBUG", "Usage reporting data sent to daev.tech server:", $data);
 
         // Send it
         $remotetransport = new RemoteTransport();
