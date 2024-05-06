@@ -1,32 +1,25 @@
 /*
 	Theme Name: Hello Elementor
 	Theme URI: https://elementor.com/hello-theme/?utm_source=wp-themes&utm_campaign=theme-uri&utm_medium=wp-dash
-	Description: A lightweight and minimalist WordPress theme for Elementor page builder.
+	Description: Hello Elementor is a lightweight and minimalist WordPress theme that was built specifically to work seamlessly with the Elementor site builder plugin. The theme is free, open-source, and designed for users who want a flexible, easy-to-use, and customizable website. The theme, which is optimized for performance, provides a solid foundation for users to build their own unique designs using the Elementor drag-and-drop site builder. Its simplicity and flexibility make it a great choice for both beginners and experienced Web Creators.
 	Author: Elementor Team
 	Author URI: https://elementor.com/?utm_source=wp-themes&utm_campaign=author-uri&utm_medium=wp-dash
-	Version: 2.8.1
-	Stable tag: 2.8.1
-	Requires at least: 5.9
-	Tested up to: 6.2
-	Requires PHP: 7.0
+	Version: 3.0.1
+	Stable tag: 3.0.1
+	Requires at least: 6.0
+	Tested up to: 6.4
+	Requires PHP: 7.3
 	License: GNU General Public License v3 or later.
 	License URI: https://www.gnu.org/licenses/gpl-3.0.html
 	Text Domain: hello-elementor
-	Description: A lightweight, plain-vanilla, best suited for building your site using Elementor website builder. Visit https://elementor.com/hello-theme/ to learn more.
 	Tags: accessibility-ready, flexible-header, custom-colors, custom-menu, custom-logo, featured-images, rtl-language-support, threaded-comments, translation-ready,
 */
 /**
- * DO NOT CHANGE THIS FILE!
- * To override any of the settings in this section, add your styling code in the custom directory.
  * Loading first in the style.scss & classic-editor.scss
  */
-/*
- * Inspired by Normalize.css, HTML5 Boilerplate & Bootstrap Reboot Projects under MIT License
- */
 /**
- * Document basic styling
- * DO NOT CHANGE THIS FILE!
- * To override any of the settings in this section, add your styling code in the custom directory.
+* Document basic styling
+* Inspired by Normalize.css, HTML5 Boilerplate & Bootstrap Reboot Projects under MIT License
  */
 /**
  * 1. Correct the line height in all browsers.
@@ -48,9 +41,7 @@ html {
  */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -64,14 +55,9 @@ body {
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
  */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-block-start: 0;
-  margin-block-end: 0;
+h1, h2, h3, h4, h5, h6 {
+  margin-block-start: 0.5rem;
+  margin-block-end: 1rem;
   font-family: inherit;
   font-weight: 500;
   line-height: 1.2;
@@ -134,18 +120,16 @@ pre {
 a {
   background-color: transparent;
   text-decoration: none;
-  color: #cc3366;
+  color: #CC3366;
 }
-a:hover,
-a:active {
+a:hover, a:active {
   color: #333366;
 }
 a:not([href]):not([tabindex]) {
   color: inherit;
   text-decoration: none;
 }
-a:not([href]):not([tabindex]):hover,
-a:not([href]):not([tabindex]):focus {
+a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
   color: inherit;
   text-decoration: none;
 }
@@ -276,14 +260,14 @@ template {
     text-decoration: underline;
   }
   a[href]:after {
-    content: ' (' attr(href) ')';
+    content: " (" attr(href) ")";
   }
   abbr[title]:after {
-    content: ' (' attr(title) ')';
+    content: " (" attr(title) ")";
   }
-  a[href^='#']:after,
-  a[href^='javascript:']:after {
-    content: '';
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
   }
   pre {
     white-space: pre-wrap !important;
@@ -313,8 +297,6 @@ template {
 }
 /**
  * Form styling
- * DO NOT CHANGE THIS FILE!
- * To override any of the settings in this section, add your styling code in the custom directory.
  */
 label {
   display: inline-block;
@@ -337,14 +319,14 @@ textarea {
   margin: 0; /* 2 */
 }
 
-input[type='text'],
-input[type='date'],
-input[type='email'],
-input[type='number'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='url'],
+input[type=text],
+input[type=date],
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=url],
 select,
 textarea {
   width: 100%;
@@ -353,14 +335,14 @@ textarea {
   padding: 0.5rem 1rem;
   transition: all 0.3s;
 }
-input[type='text']:focus,
-input[type='date']:focus,
-input[type='email']:focus,
-input[type='number']:focus,
-input[type='password']:focus,
-input[type='search']:focus,
-input[type='tel']:focus,
-input[type='url']:focus,
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=url]:focus,
 select:focus,
 textarea:focus {
   border-color: #333333;
@@ -371,8 +353,7 @@ textarea:focus {
  * 1. Show the overflow in Edge.
  */
 button,
-input {
-  /* 1 */
+input { /* 1 */
   overflow: visible;
 }
 
@@ -381,8 +362,7 @@ input {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 button,
-select {
-  /* 1 */
+select { /* 1 */
   text-transform: none;
 }
 
@@ -390,9 +370,9 @@ select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+[type=button],
+[type=reset],
+[type=submit] {
   width: auto;
   -webkit-appearance: button;
 }
@@ -401,9 +381,9 @@ button,
  * Remove the inner border and padding in Firefox.
  */
 button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -412,46 +392,45 @@ button::-moz-focus-inner,
  * Restore the focus styles unset by the previous rule.
  */
 button:-moz-focusring,
-[type='button']:-moz-focusring,
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring {
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
 button,
-[type='submit'],
-[type='button'] {
+[type=submit],
+[type=button] {
   display: inline-block;
   font-weight: 400;
-  color: #cc3366;
+  color: #CC3366;
   text-align: center;
   white-space: nowrap;
   user-select: none;
   background-color: transparent;
-  border: 1px solid #cc3366;
+  border: 1px solid #CC3366;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-radius: 3px;
   transition: all 0.3s;
 }
 button:focus,
-[type='submit']:focus,
-[type='button']:focus {
+[type=submit]:focus,
+[type=button]:focus {
   outline: 5px auto -webkit-focus-ring-color;
 }
-button:hover,
-button:focus,
-[type='submit']:hover,
-[type='submit']:focus,
-[type='button']:hover,
-[type='button']:focus {
+button:hover, button:focus,
+[type=submit]:hover,
+[type=submit]:focus,
+[type=button]:hover,
+[type=button]:focus {
   color: #ffffff;
-  background-color: #cc3366;
+  background-color: #CC3366;
   text-decoration: none;
 }
 button:not(:disabled),
-[type='submit']:not(:disabled),
-[type='button']:not(:disabled) {
+[type=submit]:not(:disabled),
+[type=button]:not(:disabled) {
   cursor: pointer;
 }
 
@@ -496,8 +475,8 @@ textarea {
  * 1. Add the correct box sizing in IE 10.
  * 2. Remove the padding in IE 10.
  */
-[type='checkbox'],
-[type='radio'] {
+[type=checkbox],
+[type=radio] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
@@ -505,8 +484,8 @@ textarea {
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -514,7 +493,7 @@ textarea {
  * 1. Correct the odd appearance in Chrome and Safari.
  * 2. Correct the outline style in Safari.
  */
-[type='search'] {
+[type=search] {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
@@ -522,7 +501,7 @@ textarea {
 /**
  * Remove the inner padding in Chrome and Safari on macOS.
  */
-[type='search']::-webkit-search-decoration {
+[type=search]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -541,8 +520,6 @@ select {
 
 /**
  * Table styling
- * DO NOT CHANGE THIS FILE!
- * To override any of the settings in this section, add your styling code in the custom directory.
  */
 table {
   background-color: transparent;
@@ -607,8 +584,6 @@ table tbody + tbody {
 
 /**
  * List styling
- * DO NOT CHANGE THIS FILE!
- * To override any of the settings in this section, add your styling code in the custom directory.
  */
 dl,
 dt,
