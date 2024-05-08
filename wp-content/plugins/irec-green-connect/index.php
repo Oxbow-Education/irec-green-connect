@@ -492,3 +492,5 @@ function pif_disable_redirect_canonical($redirect_url)
   if (is_singular()) $redirect_url = false;
   return $redirect_url;
 }
+
+
