@@ -28,6 +28,11 @@ h6 {
   justify-content: space-between;
   background-color: #236489;
   padding: 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
 .connect-now .location,
@@ -232,9 +237,10 @@ h6 {
   grid-template-columns: 3fr 2fr;
   grid-template-rows: 1fr;
   background-color: white;
+  height: calc(100vh - 118px);
+  overflow-y: scroll;
 }
-.connect-now__main {
-}
+
 .results {
 }
 .results__meta {
@@ -256,6 +262,8 @@ h6 {
 
 .map {
   background-color: blue;
+  height: 100%;
+  overflow: hidden;
 }
 .organization {
   background-color: white;
