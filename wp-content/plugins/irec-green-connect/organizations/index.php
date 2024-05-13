@@ -146,6 +146,7 @@ function connect_now_2_0()
 {
   ob_start();
   include __DIR__ . "/connect-now-2.0.php";
+  wp_enqueue_style('connect-now-2.0', "/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.css");
   return ob_get_clean();
 }
 add_shortcode('connect_now_2_0', 'connect_now_2_0');
