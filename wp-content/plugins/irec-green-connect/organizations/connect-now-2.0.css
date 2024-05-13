@@ -16,6 +16,8 @@ button:hover {
 .connect-now .connect-now__header {
   display: flex;
   justify-content: space-between;
+  background-color: #236489;
+  padding: 20px;
 }
 
 .connect-now .location,
@@ -25,8 +27,6 @@ button:hover {
 
 .connect-now .location__form {
   position: relative;
-  height: 58px;
-  width: 375px;
   display: grid;
   grid-template-columns: 1fr 45px 90px;
   grid-template-rows: 1fr;
@@ -41,6 +41,8 @@ button:hover {
   grid-row: 1/2;
   align-self: stretch;
   font-size: 22px;
+  height: 58px;
+  width: 375px;
 }
 
 .connect-now .location__input::placeholder,
@@ -213,4 +215,22 @@ button:hover {
   position: absolute;
   top: 12px;
   right: -7px;
+}
+
+.connect-now__main {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 1fr;
+  background-color: white;
+}
+.results {
+  padding: 20px;
+}
+.results h2 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.map {
+  background-color: blue;
 }

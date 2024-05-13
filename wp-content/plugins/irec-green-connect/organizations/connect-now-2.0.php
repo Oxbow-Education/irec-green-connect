@@ -44,5 +44,13 @@
     </div>
   </div>
 
+  <div class="connect-now__main">
+    <div class="results">
+      <h2>Organizations</h2>
+
+      <div class="results__hits"></div>
+    </div>
+    <div id="map" class=" map"></div>
+  </div>
 </div>
 </div>
