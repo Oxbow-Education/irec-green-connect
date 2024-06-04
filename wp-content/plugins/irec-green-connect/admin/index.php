@@ -999,7 +999,7 @@ function handle_upload_organizations($request)
 function get_lat_lng_from_address($address, $city, $state, $zip)
 {
 
-  $apiKey = 'AIzaSyDmpMknHZCk19dfAumNHIRMIziQb6Ny5Y4';
+  $apiKey = 'AIzaSyC0joQpLnYRyHKaM-FaZ08oQ2vsPkeviz8';
   $fullAddress = urlencode($address . ' ' . $city . ', ' . $state . ' ' . $zip);
   $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$fullAddress}&key={$apiKey}";
 
