@@ -1,23 +1,24 @@
 <div class="connect-now">
   <div class="connect-now__header">
-    <h1>Connect Now </h1>
-    <div class="location">
-      <form class="location__form">
-        <input class="location__input" type="text" placeholder="Enter your zipcode">
-        <button class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
-        <button type="submit" class="location__submit">Go</button>
-      </form>
-      <div class="location__remote">
-        <label for="includeRemote">
-          <span>
-
-            Include Remote
-          </span>
-          <div class="switch">
-            <input id="includeRemote" type="checkbox" class="switch__input">
-            <span class="switch__slider"></span>
-          </div>
-        </label>
+    <div class="connect-now__left">
+      <h1>Connect Now </h1>
+      <div class="location">
+        <form class="location__form">
+          <input class="location__input" type="text" placeholder="Enter your zipcode">
+          <button class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
+          <button type="submit" class="location__submit">Go</button>
+        </form>
+        <div class="location__remote">
+          <label for="includeRemote">
+            <span>
+              Include Remote
+            </span>
+            <div class="switch">
+              <input id="includeRemote" type="checkbox" class="switch__input">
+              <span class="switch__slider"></span>
+            </div>
+          </label>
+        </div>
       </div>
     </div>
     <div class="filters">
