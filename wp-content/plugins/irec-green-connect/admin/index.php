@@ -1182,3 +1182,64 @@ function custom_reorder_posts_columns($columns)
   return $columns;
 }
 add_filter('manage_posts_columns', 'custom_reorder_posts_columns');
+
+// Adds temp page that inserts 40 fake orgs
+// function add_my_custom_menu()
+// {
+//   add_menu_page('Insert Fake Organizations', 'Insert Orgs', 'manage_options', 'insert-fake-orgs', 'insert_fake_organizations', 'dashicons-welcome-add-page', 6);
+// }
+// add_action('admin_menu', 'add_my_custom_menu');
+
+// function insert_fake_organizations()
+// {
+//   if (!current_user_can('manage_options')) {
+//     wp_die('You do not have sufficient permissions to access this page.');
+//   }
+
+//   for ($i = 1; $i <= 40; $i++) {
+//     $post_id = wp_insert_post(array(
+//       'post_type'    => 'organizations-new',
+//       'post_title'   => "Organization $i",
+//       'post_content' => "Description for Organization $i",
+//       'post_status'  => 'publish',
+//     ));
+
+//     // Ensure the post was created
+//     if ($post_id) {
+//       // Update custom fields for the newly created post
+//       update_post_meta($post_id, 'program_name', "Program Name $i");
+//       update_post_meta($post_id, 'organization_name', "Organization Name $i");
+
+//       // Opportunities: Assuming random selection for simplicity
+//       $opportunities = array('Hiring', 'Training', 'Information', 'Bids & Contracts', 'Create an Apprenticeship Program');
+//       $random_opportunities = array_rand(array_flip($opportunities), mt_rand(1, count($opportunities))); // Select 1 or more randomly
+//       update_field('opportunities', $random_opportunities, $post_id);
+
+//       // General Tags: Random selection as well
+//       $tags = array('Youth Program', 'IREC Accredited', 'Weatherization Assistance Program Employer', 'Community Partner', 'Training Provider', 'Registered Apprenticeship', 'Wind Energy', 'Solar Energy', 'Energy Efficiency', 'Electric Vehicles & Battery Storage');
+//       $random_tags = array_rand(array_flip($tags), mt_rand(1, count($tags))); // Select 1 or more randomly
+//       update_field('general_tags', $random_tags, $post_id);
+
+//       // Remote or In-Person
+//       $remote_or_in_person = mt_rand(0, 1) ? 'Remote' : 'In-Person';
+//       update_post_meta($post_id, 'remote_or_in_person', $remote_or_in_person);
+
+//       // Description: Here using a simple description plus the index
+//       update_post_meta($post_id, 'description', "Description of Organization $i, providing multiple services.");
+
+//       // Address: Assuming a fictional address
+//       update_post_meta($post_id, 'address', "123 Fake St, City$i, State, Zip$i");
+
+//       // Phone
+//       update_post_meta($post_id, 'phone', "555-000$i");
+
+//       // Email
+//       update_post_meta($post_id, 'email', "contact$i@example.com");
+
+//       // URL
+//       update_post_meta($post_id, 'url', "http://example$i.com");
+//     }
+//   }
+
+//   echo '<div>Inserted 40 fake organizations.</div>';
+// }
