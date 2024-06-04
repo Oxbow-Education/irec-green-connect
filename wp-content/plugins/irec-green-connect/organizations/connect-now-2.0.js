@@ -104,16 +104,24 @@ function generateOrgHTML(item) {
         <img src="/wp-content/plugins/irec-green-connect/public/img/org-location.svg" />
         ${item.address}
       </div>
-      <div class="organiztion__link">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/phone.svg" />
-        ${item.phone}
-      </div>
-      <div class="organiztion__link">
-      <img src="/wp-content/plugins/irec-green-connect/public/img/email.svg" />
-      ${item.email}
-    </div>
-
-    <a target="_blank" src="${item.url}" class="organization__connect-now">
+      ${
+        item.phone
+          ? `<div class="organiztion__link">
+            <img src="/wp-content/plugins/irec-green-connect/public/img/phone.svg" />
+            ${item.phone}
+          </div>`
+          : ''
+      }
+      ${
+        item.email
+          ? `<div class="organiztion__link">
+            <img src="/wp-content/plugins/irec-green-connect/public/img/email.svg" />
+            ${item.email}
+          </div>`
+          : ''
+      }
+      
+    <a target="_blank" href="${item.url}" class="organization__connect-now">
     Connect Now
     </a>
       
