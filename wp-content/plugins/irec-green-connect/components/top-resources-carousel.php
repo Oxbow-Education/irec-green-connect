@@ -31,7 +31,6 @@ $top_resources_query = new WP_Query($top_resources_args);
 if ($top_resources_query->have_posts()) :
 ?>
   <div class="top-resources-container">
-    <p>test</p>
     <h2 class="top-resources-header">Top Resources</h2>
     <div class="swiper-container">
       <div class="swiper-wrapper">
