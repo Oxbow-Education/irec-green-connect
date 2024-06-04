@@ -21,6 +21,15 @@ h6 {
   color: white;
   font-size: 45px;
   font-weight: bold;
+  display: flex;
+  align-self: center;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1560px) {
+  .connect-now h1 {
+    font-size: 33px;
+  }
 }
 
 .connect-now .connect-now__header {
@@ -33,6 +42,17 @@ h6 {
   left: 0;
   right: 0;
   z-index: 2;
+  gap: 10px;
+}
+@media screen and (max-width: 1560px) {
+  .connect-now .connect-now__header {
+    padding: 15px;
+  }
+}
+
+.connect-now__left {
+  display: flex;
+  gap: 10px;
 }
 
 .connect-now .location,
@@ -46,6 +66,13 @@ h6 {
   grid-template-columns: 1fr 45px 90px;
   grid-template-rows: 1fr;
   padding: 10px;
+  height: 78px;
+}
+
+@media screen and (max-width: 1560px) {
+  .connect-now .location__form {
+    grid-template-columns: 1fr 45px 62px;
+  }
 }
 
 .connect-now .location__input {
@@ -60,9 +87,25 @@ h6 {
   width: 375px;
 }
 
+@media screen and (max-width: 1560px) {
+  .connect-now .location__input {
+    font-size: 16px;
+    width: 300px;
+  }
+}
+
 .connect-now .location__input::placeholder,
 .connect-now .search__input::placeholder {
   color: #6f6f6f;
+}
+
+@media screen and (max-width: 1560px) {
+  .connect-now .location__input::placeholder {
+    font-size: 16px;
+  }
+  .connect-now .search__input::placeholder {
+    font-size: 14px;
+  }
 }
 
 .connect-now .location__current {
@@ -98,9 +141,18 @@ h6 {
   background-color: #d4a34c;
 }
 
+@media screen and (max-width: 1560px) {
+  .connect-now .location__submit {
+    font-size: 16px;
+    width: 50px;
+  }
+}
+
 .location__remote {
   display: flex;
+  height: 78px;
 }
+
 .location__remote label {
   display: flex;
   color: white;
@@ -108,7 +160,8 @@ h6 {
   font-size: 16px;
   align-self: center;
   cursor: pointer;
-  gap: 10px;
+  gap: 25px;
+  white-space: nowrap;
 }
 .location__remote label span {
   display: flex;
@@ -164,7 +217,9 @@ h6 {
 }
 
 .filters {
+  align-self: center;
   gap: 10px;
+  height: 58px;
 }
 .opportunity {
   position: relative;
@@ -181,6 +236,12 @@ h6 {
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1560px) {
+  .opportunity .opportunity__select {
+    width: 135px;
+  }
 }
 
 .opportunity .select__arrow {
@@ -208,6 +269,12 @@ h6 {
   justify-content: space-between;
 }
 
+@media screen and (max-width: 1560px) {
+  .more-filters .more-filters__button {
+    width: 145px;
+  }
+}
+
 .more-filters .more-filters__button span {
   display: flex;
   align-items: center;
@@ -218,6 +285,12 @@ h6 {
   width: 301px;
   height: 58px;
   display: flex;
+}
+
+@media screen and (max-width: 1560px) {
+  .connect-now .search {
+    width: 275px;
+  }
 }
 
 .connect-now .search .search__input {
