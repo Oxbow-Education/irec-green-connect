@@ -120,6 +120,58 @@ if (function_exists("register_field_group")) {
         'type' => 'url',
         'required' => 1,
       ),
+      array(
+        'key' => 'field_11',
+        'label' => 'Geolocation',
+        'name' => '_geoloc',
+        'type' => 'group',
+        'layout' => 'block',  // Can be 'block', 'table', or 'row'
+        'sub_fields' => array(
+          array(
+            'key' => 'field_11_1',
+            'label' => 'Latitude',
+            'name' => 'lat',
+            'type' => 'number',
+            'instructions' => 'Enter the latitude.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => 0,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '-90',
+            'max' => '90',
+            'step' => '0.000001', // Precision up to 6 decimal places
+          ),
+          array(
+            'key' => 'field_11_2',
+            'label' => 'Longitude',
+            'name' => 'lng',
+            'type' => 'number',
+            'instructions' => 'Enter the longitude.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => 0,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '-180',
+            'max' => '180',
+            'step' => '0.000001', // Precision up to 6 decimal places
+          )
+        )
+      )
+
     ),
     'location' => array(
       array(
@@ -131,6 +183,7 @@ if (function_exists("register_field_group")) {
           'group_no' => 0,
         ),
       ),
+
     ),
     'options' => array(
       'position' => 'normal',
@@ -158,17 +211,72 @@ add_shortcode('connect_now_2_0', 'connect_now_2_0');
 
 
 
+add_action('save_post', 'save_organization_new_lat_lng', 10, 3);
+
+function save_organization_new_lat_lng($post_id, $post, $update)
+{
+  return;
+  // Check if it's the correct post type
+  if ($post->post_type != 'organizations-new') {
+    return;
+  }
+
+  // Avoiding infinite loops by checking if the function is currently saving
+  if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+    return;
+  }
+
+  // Assuming you have custom fields for address, city, state, and zip
+  $address_line_1 = get_post_meta($post_id, 'address', true);
+
+  // Check if $latlong is not empty and is an array with 'lat' and 'lng' keys
+  $geoData = get_lat_lng_from_address($address_line_1, '', '', '', '');
+  if ($geoData) {
+    update_field('_geoloc', $geoData, $post_id);
+  }
+}
+
+
+
+
+
 /** DEVELOPMENT HELPER FUNCTIONS */
+function get_random_city_state()
+{
+  $locations = [
+    ['city' => 'New York', 'state' => 'NY', 'lat' => 40.712776, 'lng' => -74.005974],
+    ['city' => 'Los Angeles', 'state' => 'CA', 'lat' => 34.052235, 'lng' => -118.243683],
+    ['city' => 'Chicago', 'state' => 'IL', 'lat' => 41.878113, 'lng' => -87.629799],
+    ['city' => 'Houston', 'state' => 'TX', 'lat' => 29.760427, 'lng' => -95.369804],
+    ['city' => 'Phoenix', 'state' => 'AZ', 'lat' => 33.448376, 'lng' => -112.074036],
+    ['city' => 'Philadelphia', 'state' => 'PA', 'lat' => 39.952584, 'lng' => -75.165222],
+    ['city' => 'San Antonio', 'state' => 'TX', 'lat' => 29.424122, 'lng' => -98.493628],
+    ['city' => 'San Diego', 'state' => 'CA', 'lat' => 32.715738, 'lng' => -117.161084],
+    ['city' => 'Dallas', 'state' => 'TX', 'lat' => 32.776664, 'lng' => -96.796988],
+    ['city' => 'San Jose', 'state' => 'CA', 'lat' => 37.338208, 'lng' => -121.886329],
+    ['city' => 'Austin', 'state' => 'TX', 'lat' => 30.267153, 'lng' => -97.743061],
+    ['city' => 'Jacksonville', 'state' => 'FL', 'lat' => 30.332184, 'lng' => -81.655651],
+    ['city' => 'Fort Worth', 'state' => 'TX', 'lat' => 32.755488, 'lng' => -97.330766],
+    ['city' => 'Columbus', 'state' => 'OH', 'lat' => 39.961176, 'lng' => -82.998794],
+    ['city' => 'Charlotte', 'state' => 'NC', 'lat' => 35.227087, 'lng' => -80.843127]
+
+  ];
+
+  return $locations[array_rand($locations)];
+}
+
 function generate_fake_organizations()
 {
   $num_organizations = 40; // Number of organizations to generate
   for ($i = 0; $i < $num_organizations; $i++) {
+    $location = get_random_city_state();  // Get random location data
+
     // Create post array
     $postarr = array(
       'post_title'    => 'Organization ' . wp_generate_password(8, false),
       'post_status'   => 'publish',
       'post_type'     => 'organizations-new',
-      'post_content'  => 'This is a sample description.',
+      'post_content'  => 'This is a sample description for organization in ' . $location['city'] . ', ' . $location['state'] . '.',
     );
 
     // Insert the post into the database
@@ -183,10 +291,18 @@ function generate_fake_organizations()
       update_post_meta($post_id, 'general_tags', ['Youth Program', 'Solar Energy']);
       update_post_meta($post_id, 'remote_or_in_person', 'Remote');
       update_post_meta($post_id, 'description', 'Lorem ipsum dolor sit amet...');
-      update_post_meta($post_id, 'address', '123 Fake St');
+      update_post_meta($post_id, 'address', $location['city'] . ', ' . $location['state']);
       update_post_meta($post_id, 'phone', '555-1234');
       update_post_meta($post_id, 'email', 'info@example.com');
       update_post_meta($post_id, 'url', 'http://www.example.com');
+      // Assuming $post_id is the ID of the post you're updating
+      $geoloc_value = array(
+        'lat' => $location['lat'],
+        'lng' => $location['lng']
+      );
+
+      // Use ACF's update_field function instead of update_post_meta for compatibility
+      update_field('_geoloc', $geoloc_value, $post_id);
     }
   }
 
@@ -194,6 +310,7 @@ function generate_fake_organizations()
   wp_redirect(admin_url('edit.php?post_type=organizations-new'));
   exit;
 }
+
 
 function add_generate_organizations_button()
 {
