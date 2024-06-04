@@ -425,10 +425,11 @@ h6 {
 .organization__quick-links {
   background-color: #f5f7f8;
   border-radius: 10px;
-  padding: 20px 40px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   max-width: 256px;
+  width: 256px;
   max-height: 209px;
   margin-left: auto;
   gap: 10px;
@@ -458,4 +459,10 @@ h6 {
   justify-content: center;
   cursor: pointer;
   margin: 10px auto;
+}
+
+#map,
+.results {
+  max-height: calc(100vh - 140px);
+  overflow-y: scroll;
 }

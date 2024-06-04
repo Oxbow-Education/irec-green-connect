@@ -54,7 +54,7 @@
 
       <div class="results__hits"></div>
     </div>
-    <div id="map" class=" map"></div>
+    <div id="map" class="map"></div>
   </div>
 </div>
 </div>
