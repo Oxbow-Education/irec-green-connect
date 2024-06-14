@@ -338,6 +338,13 @@ h6 {
   top: 12px;
   right: 0px;
 }
+.connect-now .search .search__clear {
+  display: none;
+}
+
+.connect-now .search .search__input:valid + .search__clear {
+  display: block;
+}
 
 .connect-now .search .search__clear {
   position: absolute;
