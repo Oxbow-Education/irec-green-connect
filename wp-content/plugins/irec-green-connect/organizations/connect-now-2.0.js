@@ -82,7 +82,9 @@ function generateInfoWindowContent(item) {
     <div class="info-window">
       <h1>${item.title}</h1>
       <p>${item.description}</p>
-      <a target="_blank" href="${item.url}">Connect Now</a>
+      <a target="_blank" href="${item.url}">Connect Now
+      <img src="/wp-content/plugins/irec-green-connect/public/img/external-link-white.png" />
+      </a>
     </div>
   `;
 }
