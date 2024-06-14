@@ -1,11 +1,26 @@
+// Global variables
 let geocoder;
 let map;
 let markers = [];
+let infoWindows = [];
 let bounds;
 let orgsSearch;
 let initialSetup = true;
 let boundsChangeTimeout;
 
+// Initialize the map with predefined options and event listeners
+function initMap() {
+  const mapOptions = {
+    zoom: 9,
+    center: { lat: 30.9843, lng: -91.9623 },
+  };
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  bounds = new google.maps.LatLngBounds();
+  setupAlgoliaSearch();
+  map.addListener('bounds_changed', onBoundsChanged);
+}
+
+// Function to handle changes in the map bounds and update Algolia search
 function onBoundsChanged() {
   if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
 
@@ -24,49 +39,126 @@ function onBoundsChanged() {
   }, 500);
 }
 
-function initMap() {
-  const options = {
-    zoom: 9, // Initial zoom level; may adjust later based on bounds
-    center: { lat: 30.9843, lng: -91.9623 }, // Initial center; will adjust based on markers
-  };
-  map = new google.maps.Map(document.getElementById('map'), options);
-  bounds = new google.maps.LatLngBounds();
-  setupAlgoliaSearch(); // Initialize the Algolia Search setup
-  map.addListener('bounds_changed', onBoundsChanged);
-}
-
+// Add a marker to the map for each item
 function addMarker(item) {
-  const position = new google.maps.LatLng(item._geoloc.lat, item._geoloc.lng);
+  const iconOptions = {
+    url: '/wp-content/plugins/irec-green-connect/public/img/marker.svg',
+    scaledSize: new google.maps.Size(50, 50),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(25, 50),
+  };
+
   const marker = new google.maps.Marker({
-    position: position,
+    position: new google.maps.LatLng(item._geoloc.lat, item._geoloc.lng),
     map: map,
-    icon: {
-      url: '/wp-content/plugins/irec-green-connect/public/img/marker.svg',
-      scaledSize: new google.maps.Size(50, 50),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(25, 50),
-    },
+    icon: iconOptions,
   });
 
   const infoWindow = new google.maps.InfoWindow({
-    content: item.organization,
+    content: generateInfoWindowContent(item),
   });
 
-  marker.addListener('click', function () {
-    infoWindow.open(map, marker);
-  });
-
+  marker.addListener('click', () => handleMarkerClick(marker, infoWindow));
   markers.push(marker);
-  bounds.extend(position);
+  bounds.extend(marker.position);
+  infoWindows.push(infoWindow);
 }
 
-function clearMarkers() {
-  for (let marker of markers) {
-    marker.setMap(null); // Remove marker from the map
-  }
-  markers = []; // Clear the markers array
-  bounds = new google.maps.LatLngBounds(); // Reset the bounds
+// Handle clicks on markers
+function handleMarkerClick(marker, infoWindow) {
+  infoWindows.forEach((win) => win.close());
+  markers.forEach((mk) =>
+    mk.setIcon('/wp-content/plugins/irec-green-connect/public/img/marker.svg'),
+  );
+  marker.setIcon(
+    '/wp-content/plugins/irec-green-connect/public/img/marker-selected.svg',
+  );
+  infoWindow.open(map, marker);
 }
+
+// Generate HTML content for the info window
+function generateInfoWindowContent(item) {
+  return `
+    <div class="info-window">
+      <h1>${item.title}</h1>
+      <p>${item.description}</p>
+      <a target="_blank" href="${item.url}">Connect Now</a>
+    </div>
+  `;
+}
+
+// Clear all markers from the map
+function clearMarkers() {
+  markers.forEach((marker) => marker.setMap(null));
+  markers = [];
+  infoWindows = [];
+  bounds = new google.maps.LatLngBounds();
+}
+
+// Setup Algolia search after the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  if (!orgsSearch) setupAlgoliaSearch();
+});
+
+// Initialize and configure Algolia search
+function setupAlgoliaSearch() {
+  orgsSearch = instantsearch({
+    indexName: 'organizations-new',
+    searchClient: algoliasearch(
+      'QVXOOP4L7N',
+      'b589196885c2c6d140833e9cb83c4fa0',
+    ),
+  });
+
+  orgsSearch.addWidgets([
+    instantsearch.widgets.configure({ hitsPerPage: 12 }),
+    instantsearch.widgets.infiniteHits({
+      container: '.results__hits',
+      showPrevious: false,
+      templates: {
+        item: (item) => {
+          addMarker(item);
+          return generateOrgHTML(item);
+        },
+        empty: '<p>No organizations found in this area.</p>',
+      },
+    }),
+  ]);
+
+  orgsSearch.on('render', () => {
+    if (markers.length > 0 && initialSetup) {
+      map.fitBounds(bounds);
+      initialSetup = false;
+    }
+  });
+
+  orgsSearch.start();
+}
+
+// Add event listener to handle input changes and update Algolia search
+document.addEventListener('DOMContentLoaded', function () {
+  const searchForm = document.getElementById('algoliaSearch');
+
+  if (searchForm) {
+    const searchInput = searchForm.querySelector('input');
+
+    searchForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      clearMarkers();
+      const query = searchInput.value;
+
+      // Update the Algolia search query
+      orgsSearch.helper.setQuery(query).search();
+
+      // Update the URL with the query parameter
+      const url = new URL(window.location);
+      url.searchParams.set('query', query);
+      history.pushState(null, '', url.toString());
+    });
+  }
+
+  if (!orgsSearch) setupAlgoliaSearch(); // Initialize Algolia search if not already done
+});
 
 function generateOrgHTML(item) {
   return `<div class="organization">
@@ -128,43 +220,4 @@ function generateOrgHTML(item) {
   </div>
 </div>
 `;
-}
-document.addEventListener('DOMContentLoaded', () => {
-  setupAlgoliaSearch(); // Ensure Algolia is set up after the DOM is loaded if not already called in initMap
-});
-
-function setupAlgoliaSearch() {
-  orgsSearch = instantsearch({
-    indexName: 'organizations-new',
-    searchClient: algoliasearch(
-      'QVXOOP4L7N',
-      'b589196885c2c6d140833e9cb83c4fa0',
-    ),
-  });
-
-  orgsSearch.addWidgets([
-    instantsearch.widgets.configure({
-      hitsPerPage: 12,
-    }),
-    instantsearch.widgets.infiniteHits({
-      container: '.results__hits',
-      showPrevious: false,
-      templates: {
-        item: (item) => {
-          addMarker(item);
-          return generateOrgHTML(item); // A function to handle HTML generation
-        },
-        empty: '<p>No organizations found in this area.</p>',
-      },
-    }),
-  ]);
-
-  orgsSearch.on('render', () => {
-    if (markers.length > 0 && initialSetup) {
-      map.fitBounds(bounds);
-      initialSetup = false;
-    }
-  });
-
-  orgsSearch.start();
 }

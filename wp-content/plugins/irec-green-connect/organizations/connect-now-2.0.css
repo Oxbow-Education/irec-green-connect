@@ -536,3 +536,71 @@ h6 {
     max-width: 100%;
   }
 }
+
+.gm-style-iw-chr {
+  position: absolute;
+  right: 0;
+}
+.gm-style-iw-chr button {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.gm-style-iw-chr button span {
+  mask-image: none !important;
+  background-image: url('/wp-content/plugins/irec-green-connect/public/img/info-window-close.png') !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent !important;
+  height: 19px !important;
+  width: 19px !important;
+}
+.gm-ui-hover-effect {
+  opacity: 1;
+}
+.info-window {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 30px 10px 10px;
+}
+.info-window h1 {
+  color: #363636;
+  font-family: Proxima Nova;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: left;
+  align-self: flex-start;
+}
+
+.info-window p {
+  font-family: Proxima Nova;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  text-align: left;
+  color: #363636;
+}
+
+.info-window a {
+  color: white;
+  font-family: Proxima Nova;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  width: 124px;
+  height: 33px;
+  border-radius: 5px;
+  background: #c28c2c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.info-window img {
+  height: 10px;
+  width: 10px;
+}
