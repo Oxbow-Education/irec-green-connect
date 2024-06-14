@@ -38,8 +38,8 @@
 
         <div class="more-filters__container"></div>
       </div>
-      <form class="search">
-        <input class="search__input" type="text" placeholder="Search by Program or Oragnization">
+      <form id="algoliaSearch" class="search">
+        <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
         <button class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt=""></button>
       </form>
     </div>
