@@ -1,10 +1,18 @@
-button {
+button,
+button:hover,
+button:focus,
+button[type='button'],
+button[type='submit'],
+button[type='button']:hover,
+button[type='submit']:hover,
+button[type='button']:focus,
+button[type='submit']:focus {
+  background-color: transparent;
+  outline: none;
+  border: none;
   background-color: transparent;
   border: none;
   color: inherit;
-}
-button:hover {
-  background-color: transparent;
 }
 p,
 h1,
@@ -328,9 +336,18 @@ h6 {
 .connect-now .search .search__icon {
   position: absolute;
   top: 12px;
-  right: -7px;
+  right: 0px;
 }
 
+.connect-now .search .search__clear {
+  position: absolute;
+  top: 12px;
+  right: 30px;
+}
+.connect-now .search .search__clear img {
+  height: 20px;
+  width: 20px;
+}
 .connect-now__main {
   display: grid;
   grid-template-columns: 3fr 2fr;
