@@ -98,7 +98,25 @@ function clearMarkers() {
 // Setup Algolia search after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   if (!orgsSearch) setupAlgoliaSearch();
+  setTimeout(() => {
+    initializeSearchFromURL();
+  }, 200);
 });
+
+// Function to extract the query parameter and initialize the search
+function initializeSearchFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get('query');
+
+  if (query) {
+    const searchInput = document.querySelector('#algoliaSearch input');
+    if (searchInput) {
+      searchInput.value = query; // Set the input field to reflect the query from URL
+    }
+    clearMarkers();
+    orgsSearch.helper.setQuery(query).search(); // Set the initial search query in Algolia
+  }
+}
 
 // Initialize and configure Algolia search
 function setupAlgoliaSearch() {
@@ -141,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (searchForm) {
     const searchInput = searchForm.querySelector('input');
-
+    const clearSearch = searchForm.querySelector('.search__clear');
     searchForm.addEventListener('submit', function (event) {
       event.preventDefault();
       clearMarkers();
@@ -153,6 +171,16 @@ document.addEventListener('DOMContentLoaded', function () {
       // Update the URL with the query parameter
       const url = new URL(window.location);
       url.searchParams.set('query', query);
+      history.pushState(null, '', url.toString());
+    });
+    clearSearch.addEventListener('click', function (event) {
+      // Update the Algolia search query
+      orgsSearch.helper.setQuery('').search();
+      searchInput.value = '';
+
+      // Update the URL with the query parameter
+      const url = new URL(window.location);
+      url.searchParams.remote('query');
       history.pushState(null, '', url.toString());
     });
   }
