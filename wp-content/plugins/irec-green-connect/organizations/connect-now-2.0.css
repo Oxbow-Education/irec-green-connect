@@ -700,6 +700,18 @@ h6 {
   color: #606060;
   white-space: nowrap;
 }
+
+.connect-now h3 {
+  background: #f5f7f8;
+  padding: 20px;
+  margin: 0px -20px;
+  font-family: Proxima Nova;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: left;
+  color: #363636;
+}
 @media screen and (max-width: 768px) {
   .mobile-filters {
     display: grid;
