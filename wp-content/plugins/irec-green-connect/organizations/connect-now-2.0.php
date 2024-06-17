@@ -88,22 +88,32 @@
       <sl-checkbox class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
     </div>
     <h3>Tags</h3>
-    <button>Community Partner</button>
-    <button>Electric Vehicles & Battery Storage</button>
-    <button>Energy Efficiency</button>
-    <button>Registered Apprenticeship</button>
-    <button>Solar Energy</button>
-    <button>Wind Energy</button>
-    <button>Training Provider</button>
-    <button>Weatherization Assistance Program Employer</button>
-    <button>Youth Program</button>
-    <h3>Careers</h3>
-    <form id="algoliaSearch" class="search">
-      <input class="search__input" name="query" required type="text" placeholder="Search by Program or Oragnization">
-      <button type="button" class="search__clear"><img src="/wp-content/plugins/irec-green-connect/public/img/times-2.png" alt="clear search"></button>
-      <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
-    </form>
-    <sl-button slot="footer" variant="primary">Close</sl-button>
+    <div class="mobile-filters__tags-container">
+
+      <button class="tags__button"> Community Partner</button>
+      <button class="tags__button">Electric Vehicles & Battery Storage</button>
+      <button class="tags__button">Energy Efficiency</button>
+      <button class="tags__button">Registered Apprenticeship</button>
+      <button class="tags__button">Solar Energy</button>
+      <button class="tags__button">Wind Energy</button>
+      <button class="tags__button">Training Provider</button>
+      <button class="tags__button">Weatherization Assistance Program Employer</button>
+      <button class="tags__button">Youth Program</button>
+    </div>
+
+
+    <div class="more-filters__footer" slot="footer">
+      <form slot="footer" id="algoliaSearch" class="search">
+        <input class="search__input" name="query" required type="text" placeholder="Search by Program or Oragnization">
+        <button type="button" class="search__clear"><img src="/wp-content/plugins/irec-green-connect/public/img/times-2.png" alt="clear search"></button>
+        <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
+      </form>
+      <sl-divider></sl-divider>
+      <div class="footer__button-container">
+        <button class="footer__reset">Reset All</button>
+        <button class="footer__see-results">See X Results</button>
+      </div>
+    </div>
   </sl-drawer>
 
 </div>
