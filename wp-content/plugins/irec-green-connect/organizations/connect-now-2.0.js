@@ -270,3 +270,14 @@ document.addEventListener('DOMContentLoaded', () => {
     listViewButton.classList.add('hide');
   });
 });
+
+// hook up drawer functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const drawer = document.getElementById('drawer');
+  const openButton = document.getElementById('drawerButton');
+  console.dir(drawer);
+  const closeButton = drawer.querySelector('sl-button[variant="primary"]');
+
+  openButton.addEventListener('click', () => drawer.show());
+  closeButton.addEventListener('click', () => drawer.hide());
+});

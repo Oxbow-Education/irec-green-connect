@@ -647,7 +647,8 @@ h6 {
   width: 1px;
   background-color: white;
 }
-.mobile-filters button {
+.mobile-filters button,
+.mobile-filters sl-button {
   display: flex;
   align-items: center;
   justify-content: center;
