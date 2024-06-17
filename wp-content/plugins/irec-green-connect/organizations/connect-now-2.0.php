@@ -76,16 +76,17 @@
     <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch">Include Remote</sl-switch>
 
     <h3>Opportunity</h3>
-    <sl-checkbox>Hiring</sl-checkbox>
-    <p>Get hired for a job or apprenticeship. </p>
-    <sl-checkbox>Training</sl-checkbox>
-    <p>Get training for a career role. </p>
-    <sl-checkbox>Information</sl-checkbox>
-    <p>Learn more about the energy workforce. </p>
-    <sl-checkbox>Bids & Contracts</sl-checkbox>
-    <p>If you’re a contractor, you can find potential customers.</p>
-    <sl-checkbox>Create an Apprenticeship Program</sl-checkbox>
-    <p>If you’re an employer, you can find potential partners.</p>
+    <div class="mobile-filters__checkbox-container">
+      <sl-checkbox class="checkbox" help-text="Get hired for a job or apprenticeship.">Hiring</sl-checkbox class="checkbox">
+      <sl-divider></sl-divider>
+      <sl-checkbox class="checkbox" help-text="Get training for a career role.">Training</sl-checkbox class="checkbox">
+      <sl-divider></sl-divider>
+      <sl-checkbox class="checkbox" help-text="Learn more about the energy workforce.">Information</sl-checkbox class="checkbox">
+      <sl-divider></sl-divider>
+      <sl-checkbox class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
+      <sl-divider></sl-divider>
+      <sl-checkbox class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+    </div>
     <h3>Tags</h3>
     <button>Community Partner</button>
     <button>Electric Vehicles & Battery Storage</button>

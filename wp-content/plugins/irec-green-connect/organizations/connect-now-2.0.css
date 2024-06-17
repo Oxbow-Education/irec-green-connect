@@ -703,7 +703,7 @@ h6 {
 
 .connect-now h3 {
   background: #f5f7f8;
-  padding: 20px;
+  padding: 25px;
   margin: 0px -20px;
   font-family: Proxima Nova;
   font-size: 16px;
@@ -712,6 +712,39 @@ h6 {
   text-align: left;
   color: #363636;
 }
+.connect-now .mobile-filters__checkbox-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.connect-now .checkbox::part(control) {
+  border-color: #707070;
+}
+
+.connect-now .checkbox::part(control--checked) {
+  background-color: #c28c2c;
+  border-color: #c28c2c;
+}
+
+.connect-now .checkbox::part(label) {
+  font-family: Proxima Nova;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  text-align: left;
+  color: #606060;
+  margin-top: 2px;
+}
+.connect-now .checkbox::part(form-control-help-text) {
+  font-family: Proxima Nova;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  text-align: left;
+  color: #606060;
+}
+
 @media screen and (max-width: 768px) {
   .mobile-filters {
     display: grid;
