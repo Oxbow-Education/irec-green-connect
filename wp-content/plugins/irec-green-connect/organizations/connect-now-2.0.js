@@ -251,3 +251,22 @@ function generateOrgHTML(item) {
 </div>
 `;
 }
+
+// Add button listeners for mobile filters
+document.addEventListener('DOMContentLoaded', () => {
+  const mapViewButton = document.getElementById('mapView');
+  mapViewButton.addEventListener('click', () => {
+    const results = document.querySelector('.results');
+    results.classList.add('hide');
+    mapViewButton.classList.add('hide');
+    listViewButton.classList.remove('hide');
+  });
+
+  const listViewButton = document.getElementById('listView');
+  listViewButton.addEventListener('click', () => {
+    const results = document.querySelector('.results');
+    results.classList.remove('hide');
+    mapViewButton.classList.remove('hide');
+    listViewButton.classList.add('hide');
+  });
+});

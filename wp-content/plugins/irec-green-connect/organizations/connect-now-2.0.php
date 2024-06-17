@@ -58,4 +58,17 @@
     <div id="map" class="map"></div>
   </div>
 </div>
+
+<div class="mobile-filters">
+  <button id="mapView">
+    <img src="/wp-content/plugins/irec-green-connect/public/img/map-icon.png" />
+    Map View</button>
+  <button id="listView" class="hide">
+    <img src="/wp-content/plugins/irec-green-connect/public/img/list-view.png" />
+    List View</button>
+  <div class="mobile-filters__divider"></div>
+  <button>
+    <img src="/wp-content/plugins/irec-green-connect/public/img/filters-icon.png" />
+    Filters</button>
+</div>
 </div>

@@ -366,7 +366,7 @@ h6 {
 
 @media screen and (max-width: 768px) {
   .connect-now__main {
-    grid-template-coluns: 1fr;
+    grid-template-columns: 1fr;
   }
   .results {
     width: 100vw;
@@ -528,6 +528,7 @@ h6 {
   #map {
     width: 100vw;
   }
+
   .organization {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -627,4 +628,45 @@ h6 {
 .info-window img {
   height: 10px;
   width: 10px;
+}
+
+.mobile-filters {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 50px;
+  transform: translateX(-50%);
+  height: 59px;
+  width: 291px;
+  max-width: 100%;
+  background: #c28c2c;
+}
+
+.mobile-filters__divider {
+  height: 20px;
+  width: 1px;
+  background-color: white;
+}
+.mobile-filters button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+}
+
+.mobile-filters img {
+  width: 18px;
+}
+@media screen and (max-width: 768px) {
+  .mobile-filters {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.hide {
+  display: none !important;
 }
