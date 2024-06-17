@@ -260,7 +260,7 @@ h6 {
   position: relative;
 }
 
-.opportunity .opportunity__select {
+.connect-now .opportunity__trigger {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -271,6 +271,16 @@ h6 {
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
+}
+
+.connect-now .opportunity__dropdown::part(trigger) {
+  border-radius: 5px;
+}
+.connect-now .opportunity__dropdown::part(panel) {
+  background-color: white;
+  width: 313px;
+  border-radius: 15px;
+  padding: 20px 10px;
 }
 
 @media screen and (max-width: 1560px) {
