@@ -187,28 +187,29 @@ h6 {
   font-size: 16px;
   align-self: center;
   cursor: pointer;
-  gap: 25px;
+  gap: 15px;
   white-space: nowrap;
+  margin-left: 10px;
 }
-.location__remote label span {
+.location__remote label {
   display: flex;
   align-items: center;
 }
 
-.switch {
+/* .switch {
   position: relative;
   display: inline-block;
   width: 57px;
   height: 35px;
-}
+} */
 
-.switch__input {
+/* .switch__input {
   opacity: 0;
   width: 0;
   height: 0;
-}
+} */
 
-.switch__slider {
+/* .switch__slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -218,8 +219,8 @@ h6 {
   background-color: #ccc;
   transition: 0.4s;
   border-radius: 35px;
-}
-
+} */
+/* 
 .switch__slider:before {
   position: absolute;
   content: '';
@@ -230,19 +231,19 @@ h6 {
   background-color: white;
   transition: 0.4s;
   border-radius: 50%;
-}
+} */
 
-.switch__input:checked + .switch__slider {
+/* .switch__input:checked + .switch__slider {
   background-color: #c28c2c;
 }
 
 .switch__input:focus + .switch__slider {
   box-shadow: 0 0 1px #c28c2c;
-}
+} */
 
-.switch__input:checked + .switch__slider:before {
+/* .switch__input:checked + .switch__slider:before {
   transform: translateX(22px);
-}
+} */
 
 .filters {
   align-self: center;
@@ -402,6 +403,11 @@ h6 {
   display: grid;
   grid-template-columns: 3fr 2fr;
   cursor: pointer;
+}
+
+.organization__info-img {
+  height: 72px;
+  width: 72px;
 }
 
 .organization--selected {
@@ -673,6 +679,9 @@ h6 {
   padding: 0 20px;
 }
 
+.connect-now .location-remote .switch::part(label) {
+  color: white;
+}
 .connect-now .switch::part(control) {
   background-color: #e7d1ab;
   border-color: #e7d1ab;

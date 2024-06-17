@@ -190,12 +190,31 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!orgsSearch) setupAlgoliaSearch(); // Initialize Algolia search if not already done
 });
 
+function getImageName(opportunities) {
+  if (opportunities.includes('Hiring')) {
+    return 'HIRING';
+  }
+  if (opportunities.includes('Bids & Contracts')) {
+    return 'BIDS & CONTRACTS';
+  }
+  if (opportunities.includes('Information')) {
+    return 'INFORMATION';
+  }
+  if (opportunities.includes('Training')) {
+    return 'TRAINING';
+  }
+  if (opportunities.includes('Create an Apprenticeship Program')) {
+    return 'APPRENTICESHIP';
+  }
+}
 function generateOrgHTML(item) {
+  const orgImageName = getImageName(item.opportunities);
+
   return `<div class="organization">
   <div class="organization__container">
     <div class="organization__info">
       <div class="organization__info-img">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/org-1.png" alt="Organization Image" />  
+        <img src="/wp-content/plugins/irec-green-connect/public/img/${orgImageName}.png" alt="Organization Image" />  
       </div>
       <div class="organization__info-content">
         <h6 class="organization__info-title">${item.program_name}</h6>
