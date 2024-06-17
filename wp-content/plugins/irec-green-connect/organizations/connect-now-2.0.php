@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"></script>
+
 <div class="connect-now">
   <div class="connect-now__header">
     <div class="connect-now__left">
@@ -67,8 +70,13 @@
     <img src="/wp-content/plugins/irec-green-connect/public/img/list-view.png" />
     List View</button>
   <div class="mobile-filters__divider"></div>
-  <button>
+  <button id="drawerButton">
     <img src="/wp-content/plugins/irec-green-connect/public/img/filters-icon.png" />
     Filters</button>
 </div>
+<sl-drawer id="drawer" label="Drawer" placement="bottom" class="drawer-placement-bottom">
+  This drawer slides in from the bottom.
+  <sl-button slot="footer" variant="primary">Close</sl-button>
+</sl-drawer>
+
 </div>
