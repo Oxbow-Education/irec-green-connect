@@ -19,10 +19,24 @@
     </div>
     <div class="filters">
       <div class="opportunity">
-        <select class="opportunity__select" name="opportunity" id="opportunity">
+        <sl-dropdown class="opportunity__dropdown" placement="bottom-center" distance="10">
+          <button class="opportunity__trigger" slot="trigger" caret>Opportunity
+            <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
+          <sl-checkbox class="checkbox" help-text="Get hired for a job or apprenticeship.">Hiring</sl-checkbox class="checkbox">
+          <sl-divider></sl-divider>
+          <sl-checkbox class="checkbox" help-text="Get training for a career role.">Training</sl-checkbox class="checkbox">
+          <sl-divider></sl-divider>
+          <sl-checkbox class="checkbox" help-text="Learn more about the energy workforce.">Information</sl-checkbox class="checkbox">
+          <sl-divider></sl-divider>
+          <sl-checkbox class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
+          <sl-divider></sl-divider>
+          <sl-checkbox class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+        </sl-dropdown>
+
+        <!-- <select class="opportunity__select" name="opportunity" id="opportunity">
           <option value="" disabled selected>Opportunity</option>
-        </select>
-        <span class="select__arrow"><img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt=""></span>
+        </select> -->
+        <!-- <span class="select__arrow"><img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt=""></span> -->
       </div>
       <div class="more-filters">
         <button class="more-filters__button">
