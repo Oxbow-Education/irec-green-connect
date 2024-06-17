@@ -659,6 +659,47 @@ h6 {
 .mobile-filters img {
   width: 18px;
 }
+
+.connect-now .drawer-placement-bottom::part(title) {
+  color: #363636;
+  font-family: 'Proxima Nova';
+  font-size: 16px;
+  font-weight: 700;
+}
+.connect-now .drawer-placement-bottom::part(close-button) {
+  color: #c28c2c;
+}
+.connect-now .drawer-placement-bottom::part(body) {
+  padding: 0 20px;
+}
+
+.connect-now .switch::part(control) {
+  background-color: #e7d1ab;
+  border-color: #e7d1ab;
+}
+.connect-now .switch[checked]::part(control) {
+  background-color: #c28c2c;
+}
+.connect-now .switch::part(thumb) {
+  background-color: #c28c2c;
+  border-color: #c28c2c;
+  height: 15px;
+  width: 15px;
+}
+.connect-now .switch[checked]::part(thumb) {
+  border-color: #e7d1ab;
+  background-color: #e7d1ab;
+}
+
+.connect-now .switch::part(label) {
+  font-family: Proxima Nova;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  text-align: left;
+  color: #606060;
+  white-space: nowrap;
+}
 @media screen and (max-width: 768px) {
   .mobile-filters {
     display: grid;
