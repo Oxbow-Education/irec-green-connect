@@ -11,14 +11,8 @@
           <button type="submit" class="location__submit">Go</button>
         </form>
         <div class="location__remote">
-          <label for="includeRemote">
-            <span>
-              Include Remote
-            </span>
-            <div class="switch">
-              <input id="includeRemote" type="checkbox" class="switch__input">
-              <span class="switch__slider"></span>
-            </div>
+          <label>Include Remote
+            <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch"></sl-switch>
           </label>
         </div>
       </div>
