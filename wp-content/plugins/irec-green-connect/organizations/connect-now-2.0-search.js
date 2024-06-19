@@ -131,14 +131,15 @@ function syncAlgoliaWithURL() {
   const tags = searchParams.get('tags')?.split(',') || [];
   const tagsFacetFilters = tags.map((tag) => `general_tags:${tag}`);
   const query = searchParams.get('query');
-  console.log({ tags, query, opportunities });
   orgsSearch.helper
-    .setQueryParameter('query', query)
+    .setQueryParameter('query', query ?? '')
     .setQueryParameter('facetFilters', [
       ...opportunitiesFacetFilters,
       ...tagsFacetFilters,
     ])
     .search();
+
+  console.log(orgsSearch.helper.state);
 }
 
 function syncNumberOfResults() {
