@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
   syncOpportunityCheckboxesWithURL();
   syncTagsButtonsWithURL();
+  syncSearchInputWithURL();
 });
 
 // Function definitions
@@ -115,7 +116,7 @@ function updateQueryParam(key, value, removeValue = false, single = false) {
 
   // Update the URL in the browser without reloading the page
   window.history.replaceState({ path: url.toString() }, '', url.toString());
-  sendEvent('URL_UPDATED');
+  sendEvent(URL_UPDATED);
 }
 
 function syncOpportunityCheckboxesWithURL() {
@@ -141,6 +142,20 @@ function syncTagsButtonsWithURL() {
       tag.classList.add('tags__button--selected');
     }
   });
+}
+
+function syncSearchInputWithURL() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const query = searchParams.get('query');
+  if (query) {
+    const searchInputs = document.querySelectorAll(
+      'form.search input[type="text"]',
+    );
+    searchInputs.forEach((input) => {
+      input.value = query;
+    });
+  }
 }
 
 function handleTagsButtonSelection() {
