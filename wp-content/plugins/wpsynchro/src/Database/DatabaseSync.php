@@ -5,13 +5,13 @@ namespace WPSynchro\Database;
 use WPSynchro\Database\Exception\SerializedStringException;
 use WPSynchro\Logger\FileLogger;
 use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Transport\RemoteTransport;
 use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling database migration
- * @since 1.0.0
  */
 class DatabaseSync
 {
@@ -23,8 +23,6 @@ class DatabaseSync
     // Timers and limits
     public $timer = null;
     public $max_time_per_sync = 0;
-    // Using mysqli/mysql
-    public $use_mysqli = false;
     // Throttling
     public $has_backed_off_because_of_memory = false;
     // Dependencies
@@ -33,20 +31,15 @@ class DatabaseSync
 
     /**
      * Constructor
-     * @since 1.0.0
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        if (function_exists('mysqli_connect')) {
-            $this->use_mysqli = true;
-        }
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
         $this->serialized_string_handler = new SerializedStringHandler();
     }
 
     /**
      * Start a migration chunk - Returns completion percent
-     * @since 1.0.0
      */
     public function runDatabaseSync(&$migration, &$job)
     {
@@ -125,7 +118,6 @@ class DatabaseSync
 
     /**
      * Prepare and fetch data for sync
-     * @since 1.0.0
      */
     private function prepareSyncData()
     {
@@ -144,7 +136,6 @@ class DatabaseSync
 
     /**
      *  Handle pre processing throttling of rows based on time per sync
-     *  @since 1.0.0
      */
     private function handlePreProcessingThrottling($table)
     {
@@ -160,7 +151,6 @@ class DatabaseSync
     /**
      *  Handle post processing throttling of rows based on time per sync
      *
-     *  @since 1.0.0
      */
     private function handlePostProcessingThrottling($lastrun_time)
     {
@@ -200,7 +190,6 @@ class DatabaseSync
 
     /**
      *  Send data to remote service (used for push)
-     *  @since 1.0.0
      */
     private function sendDataToRemoteService(&$table)
     {
@@ -260,7 +249,6 @@ class DatabaseSync
 
     /**
      *  Call service for executing sql queries
-     *  @since 1.0.0
      */
     public function callRemoteClientDBService(&$body, $to_or_from = 'to')
     {
@@ -300,7 +288,6 @@ class DatabaseSync
 
     /**
      *  Retrieve data from remote service (used for pull)
-     *  @since 1.0.0
      */
     private function retrieveDataFromRemoteService(&$table)
     {
@@ -370,7 +357,6 @@ class DatabaseSync
 
     /**
      *  Generate sql inserts, queued together inside max_packet_allowed gathered from metadata and setup in preparesyncdata method
-     *  @since 1.0.0
      */
     public function generateSQLInserts(&$table, &$rows, $max_packet_length)
     {
@@ -492,26 +478,15 @@ class DatabaseSync
 
     /**
      * Handle SQL escape
-     * @since 1.0.0
      */
     private function escape($data)
     {
         global $wpdb;
-
-        if ($this->use_mysqli) {
-            $escaped = \mysqli_real_escape_string($wpdb->__get('dbh'), $data);
-        } else {
-            // @codeCoverageIgnoreStart
-            $escaped = \mysql_real_escape_string($data, $wpdb->__get('dbh'));
-            // @codeCoverageIgnoreEnd
-        }
-
-        return $escaped;
+        return \mysqli_real_escape_string($wpdb->__get('dbh'), $data);
     }
 
     /**
      * Handle in-data search/replace
-     * @since 1.2.0
      */
     public function handleSearchReplace(&$data)
     {
@@ -532,7 +507,6 @@ class DatabaseSync
 
     /**
      *  Create tables on remote (and filter out temp tables)
-     *  @since 1.0.0
      */
     private function createTablesOnRemoteDatabase()
     {
@@ -636,7 +610,6 @@ class DatabaseSync
 
     /**
      *  Calculate completion percent
-     *  @since 1.0.0
      */
     private function updateCompletionStatusPercent()
     {

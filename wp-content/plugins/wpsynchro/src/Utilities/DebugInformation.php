@@ -9,7 +9,6 @@ use WPSynchro\Utilities\Licensing\Licensing;
 
 /**
  * Class for debug information
- * @since 1.0.3
  */
 class DebugInformation
 {

@@ -328,7 +328,7 @@ h6 {
 .connect-now .search {
   position: relative;
   width: 301px;
-  height: 58px;
+  height: 60px;
   display: flex;
 }
 
@@ -343,6 +343,7 @@ h6 {
   width: 100%;
   height: 100%;
   font-size: 14px;
+  border-radius: 5px;
 }
 .connect-now .search .search__icon {
   position: absolute;
@@ -767,7 +768,8 @@ h6 {
 .connect-now .mobile-filters__tags-container {
   padding: 10px 0;
 }
-.connect-now .tags__button {
+.connect-now .tags__button,
+.connect-now .tags__button--long {
   border: 2px solid #dee1e6;
   border-radius: 5px;
   font-family: Proxima Nova;
@@ -778,6 +780,11 @@ h6 {
   text-align: center;
   color: #606060;
   margin: 5px 5px 5px 0;
+}
+.connect-now .tags__button--long {
+  text-align: left;
+  white-space: break-spaces;
+  line-height: 16px;
 }
 
 .connect-now .footer__button-container {

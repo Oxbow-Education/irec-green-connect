@@ -2,7 +2,6 @@
 
 /**
  * Class for providing data for Health check JS
- * @since 1.6.0
  */
 
 namespace WPSynchro\Utilities\JSData;

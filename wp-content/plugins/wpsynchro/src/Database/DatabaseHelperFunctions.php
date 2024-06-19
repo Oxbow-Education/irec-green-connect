@@ -4,13 +4,11 @@ namespace WPSynchro\Database;
 
 /**
  * Database helper functions
- * @since 1.6.0
  */
 class DatabaseHelperFunctions
 {
     /**
      *  Handle table prefix name changes, if needed
-     *  @since 1.3.2
      */
     public static function handleTablePrefixChange($table_name, $source_prefix, $target_prefix)
     {
@@ -27,7 +25,6 @@ class DatabaseHelperFunctions
 
     /**
      *  Check if specific table is being moved, by search for table name ends with X
-     *  @since 1.6.0
      */
     public static function isTableBeingTransferred($tablelist, $table_prefix, $table_ends_with)
     {

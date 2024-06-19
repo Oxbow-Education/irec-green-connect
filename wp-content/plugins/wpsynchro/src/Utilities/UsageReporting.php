@@ -3,8 +3,7 @@
 namespace WPSynchro\Utilities;
 
 use WPSynchro\Utilities\CommonFunctions;
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Transport\RemoteTransport;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
@@ -12,7 +11,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
 /**
  * Usage reporting class
  *
- * @since 1.7.0
  */
 class UsageReporting
 {
@@ -25,9 +23,9 @@ class UsageReporting
     /**
      *  Constructor
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
     }
 
     /**

@@ -2,7 +2,6 @@
 
 /**
  * Action: Clear all transients
- * @since 1.7.1
  */
 
 namespace WPSynchro\Utilities\Actions;

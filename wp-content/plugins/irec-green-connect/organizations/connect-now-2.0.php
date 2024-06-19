@@ -22,31 +22,38 @@
         <sl-dropdown class="opportunity__dropdown" placement="bottom-center" distance="10">
           <button class="opportunity__trigger" slot="trigger" caret>Opportunity
             <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
-          <sl-checkbox class="checkbox" help-text="Get hired for a job or apprenticeship.">Hiring</sl-checkbox class="checkbox">
+          <sl-checkbox name="opportunities" value="Hiring" class="checkbox" help-text="Get hired for a job or apprenticeship.">Hiring</sl-checkbox class="checkbox">
           <sl-divider></sl-divider>
-          <sl-checkbox class="checkbox" help-text="Get training for a career role.">Training</sl-checkbox class="checkbox">
+          <sl-checkbox name="opportunities" value="Training" class="checkbox" help-text="Get training for a career role.">Training</sl-checkbox class="checkbox">
           <sl-divider></sl-divider>
-          <sl-checkbox class="checkbox" help-text="Learn more about the energy workforce.">Information</sl-checkbox class="checkbox">
+          <sl-checkbox name="opportunities" value="Information" class="checkbox" help-text="Learn more about the energy workforce.">Information</sl-checkbox class="checkbox">
           <sl-divider></sl-divider>
-          <sl-checkbox class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
+          <sl-checkbox name="opportunities" value="Bids & Contracts" class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
           <sl-divider></sl-divider>
-          <sl-checkbox class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+          <sl-checkbox name="opportunities" value="Create an Apprenticeship Program" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
         </sl-dropdown>
 
-        <!-- <select class="opportunity__select" name="opportunity" id="opportunity">
-          <option value="" disabled selected>Opportunity</option>
-        </select> -->
-        <!-- <span class="select__arrow"><img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt=""></span> -->
+
       </div>
       <div class="more-filters">
-        <button class="more-filters__button">
-          <span>
-            More Filters
-          </span>
-          <img class="more-filters__icon" src="/wp-content/plugins/irec-green-connect/public/img/more-filters.svg" alt="">
-        </button>
+        <sl-dropdown class="opportunity__dropdown" placement="bottom-center" distance="10">
+          <button class="opportunity__trigger" slot="trigger" caret>Tags
+            <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
+          </button>
+          <div class="more-filters__tags-container">
+            <button class="tags__button"> Community Partner</button>
+            <button class="tags__button">Electric Vehicles & Battery Storage</button>
+            <button class="tags__button">Energy Efficiency</button>
+            <button class="tags__button">Registered Apprenticeship</button>
+            <button class="tags__button">Solar Energy</button>
+            <button class="tags__button">Wind Energy</button>
+            <button class="tags__button">Training Provider</button>
+            <button class="tags__button--long">Weatherization Assistance Program Employer</button>
+            <button class="tags__button">Youth Program</button>
+          </div>
 
-        <div class="more-filters__container"></div>
+        </sl-dropdown>
+
       </div>
       <form id="algoliaSearch" class="search">
         <input class="search__input" name="query" required type="text" placeholder="Search by Program or Oragnization">

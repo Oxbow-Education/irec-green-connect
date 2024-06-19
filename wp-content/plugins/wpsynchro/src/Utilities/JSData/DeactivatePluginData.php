@@ -2,7 +2,6 @@
 
 /**
  * Class for providing data for deactivate modal
- * @since 1.8.0
  */
 
 namespace WPSynchro\Utilities\JSData;

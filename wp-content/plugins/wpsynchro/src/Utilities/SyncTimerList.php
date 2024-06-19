@@ -7,7 +7,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
 /**
  * Class for handling all the timers for a migration
  *
- * @since 1.3.0
  */
 class SyncTimerList
 {
@@ -28,7 +27,6 @@ class SyncTimerList
 
     /**
      *  Initialize overall timer and set max execution time for sync and max for PHP
-     *  @since 1.3.0
      */
     public function init()
     {
@@ -58,7 +56,6 @@ class SyncTimerList
 
     /**
      *  Adjust the max_execution_time limit given, to adjust for limits and buffers
-     *  @since 1.3.0
      */
     public function getAdjustedTimeLimit($timelimit)
     {
@@ -76,7 +73,6 @@ class SyncTimerList
 
     /**
      *  Add another timelimit to the max time - Such as a service needing to take two max_execution_time into account
-     *  @since 1.3.0
      */
     public function addOtherSyncTimeLimit($timelimit)
     {
@@ -86,7 +82,6 @@ class SyncTimerList
 
     /**
      *  End overall sync and stop all other timers
-     *  @since 1.3.0
      */
     public function endSync()
     {
@@ -101,7 +96,6 @@ class SyncTimerList
 
     /**
      *  Return the current remaining time for this PHP execution
-     *  @since 1.3.0
      */
     public function getRemainingSyncTime()
     {
@@ -118,7 +112,6 @@ class SyncTimerList
 
     /**
      *  Get the PHP max execution time
-     *  @since 1.3.0
      */
     public function getSyncMaxExecutionTime()
     {
@@ -127,7 +120,6 @@ class SyncTimerList
 
     /**
      *  Return if task should continue, given that the lastrun of a task was "lastrun_time"
-     *  @since 1.3.0
      */
     public function shouldContinueWithLastrunTime($lastrun_time)
     {
@@ -143,7 +135,6 @@ class SyncTimerList
 
     /**
      *  Start other timer
-     *  @since 1.3.0
      */
     public function startTimer($cat, $subcat = "", $name = "")
     {
@@ -157,7 +148,6 @@ class SyncTimerList
 
     /**
      *  Stop other timer
-     *  @since 1.3.0
      */
     public function endTimer($timer_id)
     {
@@ -169,7 +159,6 @@ class SyncTimerList
 
     /**
      *  Get elapsed for other timer
-     *  @since 1.3.0
      */
     public function getElapsedTimeToNow($timer_id)
     {
@@ -182,7 +171,6 @@ class SyncTimerList
 
     /**
      *  Get elapsed for overall timer
-     *  @since 1.6.0
      */
     public function getElapsedOverallTimer()
     {

@@ -3,7 +3,6 @@
 /**
  * Class for handling service to get status of file population
  * Call should already be verified by permissions callback
- * @since 1.6.0
  */
 
 namespace WPSynchro\API;
@@ -75,7 +74,6 @@ class PopulateFileListStatus extends WPSynchroService
 
     /**
      * Get file list on completion, in parts
-     * @since 1.4.0
      */
     public function getFileList($max_count, $id_offset)
     {
@@ -104,7 +102,6 @@ class PopulateFileListStatus extends WPSynchroService
 
     /**
      * Get errors and debug from file population and add to result
-     * @since 1.6.1
      */
     public function setErrorsAndDebugs()
     {

@@ -2,12 +2,10 @@
 
 namespace WPSynchro\Transport;
 
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationController;
 
 /**
  * Class for handling result of transport
- * @since 1.3.0
  */
 class RemoteTransportResult
 {
@@ -35,9 +33,9 @@ class RemoteTransportResult
     /**
      *  Constructor
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
     }
 
     public function getBody()
@@ -232,7 +230,6 @@ class RemoteTransportResult
 
     /**
      *  Cleanup response body data from posts/gets. Such as remove UTF8 which json_decode pukes over
-     *  @since 1.0.3
      */
     public function cleanRemoteJSONData($response)
     {

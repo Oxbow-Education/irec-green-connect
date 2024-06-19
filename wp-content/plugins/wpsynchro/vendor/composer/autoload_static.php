@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376
+class ComposerStaticInit34b739ca1f279bf6da95bb4280048124
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -25,6 +25,7 @@ class ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376
         'WPSynchro\\API\\ClientSyncDatabase' => __DIR__ . '/../..' . '/src/API/ClientSyncDatabase.php',
         'WPSynchro\\API\\DatabaseBackup' => __DIR__ . '/../..' . '/src/API/DatabaseBackup.php',
         'WPSynchro\\API\\DownloadLog' => __DIR__ . '/../..' . '/src/API/DownloadLog.php',
+        'WPSynchro\\API\\DownloadLogDBBackup' => __DIR__ . '/../..' . '/src/API/DownloadLogDBBackup.php',
         'WPSynchro\\API\\ExecuteAction' => __DIR__ . '/../..' . '/src/API/ExecuteAction.php',
         'WPSynchro\\API\\FileFinalize' => __DIR__ . '/../..' . '/src/API/FileFinalize.php',
         'WPSynchro\\API\\FileTransfer' => __DIR__ . '/../..' . '/src/API/FileTransfer.php',
@@ -37,6 +38,7 @@ class ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376
         'WPSynchro\\API\\Migrate' => __DIR__ . '/../..' . '/src/API/Migrate.php',
         'WPSynchro\\API\\PopulateFileList' => __DIR__ . '/../..' . '/src/API/PopulateFileList.php',
         'WPSynchro\\API\\PopulateFileListStatus' => __DIR__ . '/../..' . '/src/API/PopulateFileListStatus.php',
+        'WPSynchro\\API\\RunScheduledMigration' => __DIR__ . '/../..' . '/src/API/RunScheduledMigration.php',
         'WPSynchro\\API\\SaveMigration' => __DIR__ . '/../..' . '/src/API/SaveMigration.php',
         'WPSynchro\\API\\Status' => __DIR__ . '/../..' . '/src/API/Status.php',
         'WPSynchro\\API\\StatusFileChanges' => __DIR__ . '/../..' . '/src/API/StatusFileChanges.php',
@@ -84,8 +86,11 @@ class ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376
         'WPSynchro\\Pages\\AdminLog' => __DIR__ . '/../..' . '/src/Pages/AdminLog.php',
         'WPSynchro\\Pages\\AdminOverview' => __DIR__ . '/../..' . '/src/Pages/AdminOverview.php',
         'WPSynchro\\Pages\\AdminRunSync' => __DIR__ . '/../..' . '/src/Pages/AdminRunSync.php',
+        'WPSynchro\\Pages\\AdminScheduled' => __DIR__ . '/../..' . '/src/Pages/AdminScheduled.php',
         'WPSynchro\\Pages\\AdminSetup' => __DIR__ . '/../..' . '/src/Pages/AdminSetup.php',
         'WPSynchro\\Pages\\AdminSupport' => __DIR__ . '/../..' . '/src/Pages/AdminSupport.php',
+        'WPSynchro\\Schedule\\ScheduleFactory' => __DIR__ . '/../..' . '/src/Schedule/ScheduleFactory.php',
+        'WPSynchro\\Schedule\\ScheduledMigration' => __DIR__ . '/../..' . '/src/Schedule/ScheduledMigration.php',
         'WPSynchro\\Status\\MigrateStatus' => __DIR__ . '/../..' . '/src/Status/MigrateStatus.php',
         'WPSynchro\\Transport\\BasicAuth' => __DIR__ . '/../..' . '/src/Transport/BasicAuth.php',
         'WPSynchro\\Transport\\Destination' => __DIR__ . '/../..' . '/src/Transport/Destination.php',
@@ -121,6 +126,7 @@ class ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376
         'WPSynchro\\Utilities\\JSData\\UsageReportingData' => __DIR__ . '/../..' . '/src/Utilities/JSData/UsageReportingData.php',
         'WPSynchro\\Utilities\\Licensing\\LicenseState' => __DIR__ . '/../..' . '/src/Utilities/Licensing/LicenseState.php',
         'WPSynchro\\Utilities\\Licensing\\Licensing' => __DIR__ . '/../..' . '/src/Utilities/Licensing/Licensing.php',
+        'WPSynchro\\Utilities\\PluginDirs' => __DIR__ . '/../..' . '/src/Utilities/PluginDirs.php',
         'WPSynchro\\Utilities\\SingletonTrait' => __DIR__ . '/../..' . '/src/Utilities/SingletonTrait.php',
         'WPSynchro\\Utilities\\SyncTimer' => __DIR__ . '/../..' . '/src/Utilities/SyncTimer.php',
         'WPSynchro\\Utilities\\SyncTimerList' => __DIR__ . '/../..' . '/src/Utilities/SyncTimerList.php',
@@ -132,9 +138,9 @@ class ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit6ecf2c9e522c5820f12b748bd63dd376::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit34b739ca1f279bf6da95bb4280048124::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit34b739ca1f279bf6da95bb4280048124::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit34b739ca1f279bf6da95bb4280048124::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -8,39 +8,7 @@ namespace WPSynchro\Utilities;
 class CommonFunctions
 {
     /**
-     * Create log location
-     * @since 1.0.0
-     */
-    public function createLogLocation()
-    {
-        $logdir = $this->getLogLocation();
-        if (!file_exists($logdir)) {
-            mkdir($logdir, 0750, true);
-        }
-        $htaccess_file = trailingslashit($logdir) . ".htaccess";
-        if (!file_exists($htaccess_file)) {
-            $htaccess_content = "order deny,allow" . PHP_EOL . "deny from all";
-            file_put_contents($htaccess_file, $htaccess_content);
-        }
-        $indexphp_file = trailingslashit($logdir) . "index.php";
-        if (!file_exists($indexphp_file)) {
-            $indexphp_content = "<?php " . PHP_EOL . "// silence is golden";
-            file_put_contents($indexphp_file, $indexphp_content);
-        }
-    }
-
-    /**
-     * Get log location
-     * @since 1.0.0
-     */
-    public function getLogLocation()
-    {
-        return wp_upload_dir()['basedir'] . "/wpsynchro/";
-    }
-
-    /**
      * Get log filename
-     * @since 1.0.0
      */
     public function getLogFilename($job_id)
     {
@@ -48,8 +16,15 @@ class CommonFunctions
     }
 
     /**
+     * Get cron log filename
+     */
+    public function getCronLogFilename()
+    {
+        return "cron_" . date('d_m_Y') . ".txt";
+    }
+
+    /**
      * Verify php/mysql/wp compatability
-     * @since 1.0.0
      */
     public function checkEnvCompatability()
     {
@@ -87,7 +62,6 @@ class CommonFunctions
 
     /**
      *  Converts a php.ini settings like 500M to convert to bytes
-     *  @since 1.0.0
      */
     public function convertPHPSizeToBytes($sSize)
     {
@@ -119,7 +93,6 @@ class CommonFunctions
 
     /**
      *  Path fix with convert to forward slash
-     *  @since 1.0.3
      */
     public function fixPath($path)
     {
@@ -132,7 +105,6 @@ class CommonFunctions
 
     /**
      *  Get asset full url
-     *  @since 1.0.3
      */
     public function getAssetUrl($asset)
     {
@@ -150,7 +122,6 @@ class CommonFunctions
 
     /**
      *  Get and output template file
-     *  @since 1.2.0
      */
     public function getTemplateFile($template_filename)
     {
@@ -163,7 +134,6 @@ class CommonFunctions
 
     /**
      *  Get PHP max_execution_time
-     *  @since 1.4.0
      */
     public function getPHPMaxExecutionTime()
     {
@@ -179,7 +149,6 @@ class CommonFunctions
 
     /**
      *   Check if premium version
-     *   @since 1.0.5
      */
     public static function isPremiumVersion()
     {
@@ -195,5 +164,36 @@ class CommonFunctions
         }
 
         return $is_premium;
+    }
+
+    /**
+     * Update last running timestamp in db (to prevent multiple migrations running at the same time)
+     */
+    public function updateLastRunning(): void
+    {
+        update_option('wpsynchro_migration_last_run_timestamp', time(), false);
+    }
+
+    /**
+     * Check if it is safe to start a new migration
+     */
+    public function isSafeToStartNewMigration(): bool
+    {
+        $last_running_timestamp = get_option('wpsynchro_migration_last_run_timestamp');
+        if ($last_running_timestamp === false | empty($last_running_timestamp)) {
+            return true;
+        }
+        $last_running_timestamp = intval($last_running_timestamp);
+
+        // If no jobs have been run
+        if ($last_running_timestamp == 0) {
+            return true;
+        }
+
+        // If the last run was more than 35 seconds ago, as normal time limit is 30 seconds
+        if (($last_running_timestamp + 35) < time()) {
+            return true;
+        }
+        return false;
     }
 }

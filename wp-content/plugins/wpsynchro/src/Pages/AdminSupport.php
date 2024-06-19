@@ -2,7 +2,6 @@
 
 /**
  * Class for handling what to show when clicking on support in the menu in wp-admin
- * @since 1.0.3
  */
 
 namespace WPSynchro\Pages;
@@ -10,6 +9,7 @@ namespace WPSynchro\Pages;
 use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\DebugInformation;
 use WPSynchro\Utilities\Licensing\Licensing;
+use WPSynchro\Utilities\PluginDirs;
 
 class AdminSupport
 {
@@ -17,7 +17,6 @@ class AdminSupport
 
     /**
      *  Called from WP menu to show support
-     *  @since 1.0.3
      */
     public static function render()
     {
@@ -31,7 +30,6 @@ class AdminSupport
 
     /**
      *  Handle the update of data from support screen
-     *  @since 1.0.3
      */
     private function handlePOST()
     {
@@ -42,7 +40,7 @@ class AdminSupport
                 echo "<div class='notice wpsynchro-notice'><p>" . __('Security token is no longer valid - Go back and try again.', 'wpsynchro') . '</p></div>';
                 return;
             }
-            //$this->cleanUpPluginMigration();
+            $this->cleanUpPluginMigration();
             $this->show_delete_settings_notice = true;
             return;
         }
@@ -50,7 +48,6 @@ class AdminSupport
 
     /**
      *  Show WP Synchro support screen
-     *  @since 1.0.3
      */
     private function handleGET()
     {
@@ -83,11 +80,9 @@ class AdminSupport
      */
     public function cleanUpPluginMigration()
     {
-        $common = new CommonFunctions();
-
         // Setup
-        $log_dir = $common->getLogLocation();
-        $db_prefix = 'wpsynchro_';
+        $plugins_dirs = new PluginDirs();
+        $log_dir = $plugins_dirs->getUploadsFilePath();
 
         // Clean files
         @array_map('unlink', glob("$log_dir*.log"));
@@ -102,10 +97,10 @@ class AdminSupport
             'wpsynchro_accesskey',
             'wpsynchro_allowed_methods',
             'wpsynchro_muplugin_enabled',
-            'wpsynchro_debuglogging_enabled',
+            'wpsynchro_uploads_dir_secret'
         ];
 
         global $wpdb;
-        $wpdb->query('delete FROM ' . $wpdb->options . " WHERE option_name like '" . $db_prefix . "%' and option_name not in ('" . implode("','", $options_to_keep) . "') ");
+        $wpdb->query('delete FROM ' . $wpdb->options . " WHERE option_name like 'wpsynchro_%' and option_name not in ('" . implode("','", $options_to_keep) . "') ");
     }
 }
