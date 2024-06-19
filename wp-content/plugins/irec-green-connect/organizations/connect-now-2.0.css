@@ -404,7 +404,18 @@ h6 {
   text-align: left;
   color: #363636;
 }
-.results__hits .ais-infinite-hits {
+.results .ais-infinite-hits--showmore {
+  display: flex;
+  padding: 40px 20px;
+  justify-content: center;
+  align-items: center;
+}
+.results .ais-infinite-hits--showmoreButton {
+  background-color: #c28c2c;
+  border-radius: 5px;
+  color: white;
+}
+:.results__hits.ais-infinite-hits  {
   background-color: #e8e8e8;
   padding: 20px;
   display: flex;
@@ -542,7 +553,7 @@ h6 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 10px auto;
+  margin: 0px auto;
 }
 
 #map,
