@@ -92,15 +92,15 @@
 
     <h3>Opportunity</h3>
     <div class="mobile-filters__checkbox-container">
-      <sl-checkbox class="checkbox" help-text="Get hired for a job or apprenticeship.">Hiring</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Hiring" class="checkbox" help-text="Get hired for a job or apprenticeship.">Hiring</sl-checkbox class="checkbox">
       <sl-divider></sl-divider>
-      <sl-checkbox class="checkbox" help-text="Get training for a career role.">Training</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Training" class="checkbox" help-text="Get training for a career role.">Training</sl-checkbox class="checkbox">
       <sl-divider></sl-divider>
-      <sl-checkbox class="checkbox" help-text="Learn more about the energy workforce.">Information</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Information" class="checkbox" help-text="Learn more about the energy workforce.">Information</sl-checkbox class="checkbox">
       <sl-divider></sl-divider>
-      <sl-checkbox class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Bids & Contracts" class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
       <sl-divider></sl-divider>
-      <sl-checkbox class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Create an Apprenticeship Program" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
     </div>
     <h3>Tags</h3>
     <div class="mobile-filters__tags-container">

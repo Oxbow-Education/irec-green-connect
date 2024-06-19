@@ -46,10 +46,12 @@ function handleDrawerFunctionality() {
   const drawer = document.getElementById('drawer');
   const openButton = document.getElementById('drawerButton');
 
-  // const closeButton = drawer.querySelector('sl-button[variant="primary"]');
+  const closeButtons = [drawer.querySelector('.footer__see-results')];
 
   openButton.addEventListener('click', () => drawer.show());
-  // closeButton.addEventListener('click', () => drawer.hide());
+  closeButtons.forEach((button) =>
+    button.addEventListener('click', () => drawer.hide()),
+  );
 }
 function handleOpportunityCheckboxesFunctionality() {
   const opportunityCheckboxes = document.querySelectorAll(
