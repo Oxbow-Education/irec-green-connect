@@ -388,12 +388,22 @@ h6 {
 .results__meta {
   padding: 20px;
   border-bottom: 1px solid #d5d5d5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .results__meta h2 {
   font-size: 22px;
   font-weight: 500;
 }
 
+.results__meta .results__count {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  text-align: left;
+  color: #363636;
+}
 .results__hits .ais-infinite-hits {
   background-color: #e8e8e8;
   padding: 20px;

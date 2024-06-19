@@ -137,7 +137,19 @@ function syncAlgoliaWithURL() {
     .search();
 }
 
+function syncNumberOfResults() {
+  orgsSearch.on('render', () => {
+    const results = orgsSearch.helper.lastResults;
+    const seeResultsButton = document.querySelector('.footer__see-results');
+    const resultsCount = document.querySelector('.results__count');
+    seeResultsButton.innerText = `See ${results.nbHits} Results`;
+    resultsCount.innerText = `${results.nbHits} Results`;
+  });
+}
 // Listen to URL state and update Algolia parameters to match
 window.addEventListener(URL_UPDATED, syncAlgoliaWithURL);
 // Initialize the algolia query to the url parameters when the search is initialized
-window.addEventListener(ALGOLIA_INITIALIZED, syncAlgoliaWithURL);
+window.addEventListener(ALGOLIA_INITIALIZED, () => {
+  syncAlgoliaWithURL();
+  syncNumberOfResults();
+});

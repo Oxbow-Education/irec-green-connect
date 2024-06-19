@@ -68,6 +68,9 @@
       <div class="results__meta">
 
         <h2>Organizations</h2>
+        <div class="meta__info">
+          <p class="results__count"></p>
+        </div>
       </div>
 
       <div class="results__hits"></div>
