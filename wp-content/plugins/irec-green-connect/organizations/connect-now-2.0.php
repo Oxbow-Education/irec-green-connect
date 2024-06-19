@@ -36,23 +36,25 @@
 
       </div>
       <div class="more-filters">
-        <sl-dropdown class="opportunity__dropdown" placement="bottom-center" distance="10">
-          <button class="opportunity__trigger" slot="trigger" caret>Tags
-            <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
-          </button>
-          <div class="more-filters__tags-container">
-            <button class="tags__button"> Community Partner</button>
-            <button class="tags__button">Electric Vehicles & Battery Storage</button>
-            <button class="tags__button">Energy Efficiency</button>
-            <button class="tags__button">Registered Apprenticeship</button>
-            <button class="tags__button">Solar Energy</button>
-            <button class="tags__button">Wind Energy</button>
-            <button class="tags__button">Training Provider</button>
-            <button class="tags__button tags__button--long">Weatherization Assistance Program Employer</button>
-            <button class="tags__button">Youth Program</button>
-          </div>
+        <div class="tags">
+          <sl-dropdown class="opportunity__dropdown" placement="bottom-center" distance="10">
+            <button class="opportunity__trigger" slot="trigger" caret>Tags
+              <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
+            </button>
+            <div class="more-filters__tags-container">
+              <button class="tags__button"> Community Partner</button>
+              <button class="tags__button">Electric Vehicles & Battery Storage</button>
+              <button class="tags__button">Energy Efficiency</button>
+              <button class="tags__button">Registered Apprenticeship</button>
+              <button class="tags__button">Solar Energy</button>
+              <button class="tags__button">Wind Energy</button>
+              <button class="tags__button">Training Provider</button>
+              <button class="tags__button tags__button--long">Weatherization Assistance Program Employer</button>
+              <button class="tags__button">Youth Program</button>
+            </div>
 
-        </sl-dropdown>
+          </sl-dropdown>
+        </div>
 
       </div>
       <form id="algoliaSearch" class="search">
