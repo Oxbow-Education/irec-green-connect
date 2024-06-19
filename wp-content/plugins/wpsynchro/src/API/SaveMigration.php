@@ -1,14 +1,16 @@
 <?php
 
+/**
+ * Save migration
+ */
+
 namespace WPSynchro\API;
 
 use WPSynchro\Migration\Migration;
 use WPSynchro\Migration\MigrationFactory;
+use WPSynchro\Schedule\ScheduleFactory;
+use WPSynchro\Utilities\CommonFunctions;
 
-/**
- * Save migration
- * @since 1.10.0
- */
 class SaveMigration extends WPSynchroService
 {
     public function service()
@@ -40,6 +42,13 @@ class SaveMigration extends WPSynchroService
         // Save
         $migration_factory = MigrationFactory::getInstance();
         $migration_factory->addMigration($migration);
+
+        // Update all the scheduled migrations according to our migrations
+        if (CommonFunctions::isPremiumVersion()) {
+            $all_migrations = $migration_factory->getAllMigrations();
+            $schedule_factory = ScheduleFactory::getInstance();
+            $schedule_factory->synchronizeWithMigrations($all_migrations);
+        }
 
         // Return the sanitized version
         echo json_encode($migration);

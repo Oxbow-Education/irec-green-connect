@@ -7,7 +7,6 @@ use WPSynchro\Transport\TransferAccessKey;
 /**
  * Class to return data from service (wrapper for Transfer object when returning with data)
  *
- * @since 1.3.0
  */
 class ReturnResult
 {

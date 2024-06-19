@@ -6,7 +6,6 @@ use WPSynchro\Database\Exception\SerializedStringException;
 
 /**
  * Handle serialized strings
- * @since 1.10.0
  */
 class SerializedStringHandler
 {

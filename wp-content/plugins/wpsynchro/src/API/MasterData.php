@@ -13,7 +13,6 @@ use WPSynchro\Utilities\DebugInformation;
  * Class for handling service "masterdata"
  * Call should already be verified by permissions callback
  *
- * @since 1.0.0
  */
 class MasterData extends WPSynchroService
 {
@@ -305,7 +304,6 @@ class MasterData extends WPSynchroService
 
     /**
      *  Clean up create statement
-     *  @since 1.8.2
      */
     public function cleanUpCreateStatement($create_statement)
     {

@@ -8,7 +8,6 @@ use WPSynchro\Migration\MigrationController;
  * Class for handling service "migrate"
  * Call should already be verified by permissions callback
  *
- * @since 1.0.0
  */
 class Migrate extends WPSynchroService
 {

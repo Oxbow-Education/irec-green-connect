@@ -2,7 +2,6 @@
 
 namespace WPSynchro\Utilities;
 
-use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\DatabaseTables;
 use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
@@ -10,13 +9,11 @@ use WPSynchro\Utilities\Upgrade\DatabaseUpgrade;
 
 /**
  * Class for handling activate/deactivate/uninstall tasks for WP Synchro
- * @since 1.0.0
  */
 class Activation
 {
     /**
      *  Activate
-     *  @since 1.0.0
      */
     public static function activate($networkwide)
     {
@@ -39,12 +36,13 @@ class Activation
         /**
          * Create uploads log dir
          */
-        $commonfunctions = new \WPSynchro\Utilities\CommonFunctions();
-        $commonfunctions->createLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $plugins_dirs->getUploadsFilePath();
 
         /**
          * Check PHP/MySQL/WP versions
          */
+        $commonfunctions = new \WPSynchro\Utilities\CommonFunctions();
         $compat_errors = $commonfunctions->checkEnvCompatability();
         // @codeCoverageIgnoreStart
         if (count($compat_errors) > 0) {
@@ -69,14 +67,10 @@ class Activation
         }
 
         /**
-         *  Active the MU plugin if enabled
+         *  Active the MU plugin
          */
         $plugin_configuration = new PluginConfiguration();
-        $enable_muplugin = $plugin_configuration->getMUPluginEnabledState();
-        if ($enable_muplugin) {
-            $mupluginhandler = new \WPSynchro\Utilities\Compatibility\MUPluginHandler();
-            $mupluginhandler->enablePlugin();
-        }
+        $plugin_configuration->setMUPluginEnabledState(true);
 
         /**
          *  Create tables
@@ -88,18 +82,19 @@ class Activation
 
     /**
      *  Deactivation
-     *  @since 1.0.0
      */
     public static function deactivate()
     {
         // Deactivate MU plugin if exists
         $mupluginhandler = new \WPSynchro\Utilities\Compatibility\MUPluginHandler();
         $mupluginhandler->disablePlugin();
+
+        // Clear cron
+        wp_clear_scheduled_hook('wpsynchro_cron_scheduled_migrations');
     }
 
     /**
      *  Uninstall
-     *  @since 1.6.0
      */
     public static function uninstall()
     {
@@ -119,10 +114,13 @@ class Activation
         $wpdb->query('delete FROM ' . $wpdb->options . " WHERE option_name like '%wpsynchro%' ");
 
         // Remove log dir and all files
-        $common = new CommonFunctions();
-        $log_dir = $common->getLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $log_dir = $plugins_dirs->getUploadsFilePath();
         $filelist = scandir($log_dir);
         foreach ($filelist as $file) {
+            if ($file == '..' || $file == '.') {
+                continue;
+            }
             @unlink($log_dir . '/' . $file);
         }
         @rmdir($log_dir);

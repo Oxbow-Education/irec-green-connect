@@ -8,7 +8,6 @@ use WPSynchro\Status\MigrateStatus;
  * Class for handling service "status"
  * Call should already be verified by permissions callback
  *
- * @since 1.0.0
  */
 class Status extends WPSynchroService
 {

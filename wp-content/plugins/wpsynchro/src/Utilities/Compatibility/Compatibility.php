@@ -5,7 +5,6 @@ namespace WPSynchro\Utilities\Compatibility;
 /**
  * Class for handling compatibility
  *
- * @since 1.1.0
  *
  * BEWARE: This is referenced from MU plugin, so handle that if moving it or changing filename etc.
  */
@@ -21,7 +20,6 @@ class Compatibility
 
     /**
      *  Hook into WP filters to change plugins and themes
-     *  @since 1.1.0
      */
     public function init()
     {
@@ -33,7 +31,6 @@ class Compatibility
 
     /**
      *  Make sure only WP Synchro is loaded
-     *  @since 1.1.0
      */
     public function handlePlugins($plugins)
     {
@@ -51,7 +48,6 @@ class Compatibility
 
     /**
      *  Make sure a empty theme is loaded
-     *  @since 1.1.0
      */
     public function handleTheme()
     {

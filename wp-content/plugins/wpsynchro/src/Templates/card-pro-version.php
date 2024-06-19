@@ -6,7 +6,7 @@
 
         <p><b><?php _e('&#128161; Migrate files', 'wpsynchro'); ?></b> - <?php _e('Such as uploads, plugins, themes or even specific files. Only difference in files is transferred, making it really fast.', 'wpsynchro'); ?></p>
         <p><b><?php _e('&#128161; File changes confirmation', 'wpsynchro'); ?></b> - <?php _e('Make sure only the correct files are migrated.', 'wpsynchro'); ?></p>
-        <p><b><?php _e('&#128161; Schedule migrations', 'wpsynchro'); ?></b> - <?php _e('Get the WP-CLI commands to schedule migrations using your system cron.', 'wpsynchro'); ?></p>
+        <p><b><?php _e('&#128161; Schedule migrations', 'wpsynchro'); ?></b> - <?php _e('Run migration via WP Cron or use the WP-CLI commands to schedule migrations using your system cron.', 'wpsynchro'); ?></p>
         <p><b><?php _e('&#128161; Database backup', 'wpsynchro'); ?></b> - <?php _e('Always be on the safe side when doing migrations.', 'wpsynchro'); ?></p>
         <p><b><?php _e('&#128161; Email notifications', 'wpsynchro'); ?></b> - <?php _e('So you know when migrations went well and when they did not.', 'wpsynchro'); ?></p>
         <p><b><?php _e('&#128161; Support for Basic Authentication', 'wpsynchro'); ?></b> - <?php _e('So you can migrate to and from username/password protected sites, such as staging sites.', 'wpsynchro'); ?></p>

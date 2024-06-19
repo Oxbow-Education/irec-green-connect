@@ -4,13 +4,11 @@ namespace WPSynchro\Utilities;
 
 /**
  * Singleton Trait
- * @since 1.10.0
  */
 trait SingletonTrait
 {
     /**
      *  Constructor
-     *  @since 1.0
      */
     private function __construct()
     {
@@ -18,7 +16,6 @@ trait SingletonTrait
 
     /**
      *  Get instance
-     *  @since 1.0
      *  @return static
      */
     public static function getInstance($force_new_instance = false)

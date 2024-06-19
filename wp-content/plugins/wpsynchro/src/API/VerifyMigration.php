@@ -15,7 +15,6 @@ use WPSynchro\Transport\TransferAccessKey;
 
 /**
  * Class for handling service "migration/verify" - Verifying and gathering masterdata from both source and target
- * @since 1.6.0
  */
 class VerifyMigration extends WPSynchroService
 {

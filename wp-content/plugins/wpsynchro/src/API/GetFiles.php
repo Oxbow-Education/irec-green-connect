@@ -9,7 +9,6 @@ use WPSynchro\Transport\TransferAccessKey;
 
 /**
  * Class for handling service "getfiles" - Pulling files from remote
- * @since 1.0.3
  */
 class GetFiles extends WPSynchroService
 {

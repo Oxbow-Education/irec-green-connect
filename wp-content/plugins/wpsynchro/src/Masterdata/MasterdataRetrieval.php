@@ -7,7 +7,6 @@ use WPSynchro\Transport\RemoteTransport;
 
 /**
  * Retrives masterdata retrival
- * @since 1.6.0
  */
 class MasterdataRetrieval
 {
@@ -29,7 +28,6 @@ class MasterdataRetrieval
 
     /**
      *  Set the data to retrieve
-     *  @since 1.6.0
      */
     public function setDataToRetrieve($data_arr)
     {
@@ -38,7 +36,6 @@ class MasterdataRetrieval
 
     /**
      *  Set token on request (optional)
-     *  @since 1.6.0
      */
     public function setToken($token)
     {
@@ -47,7 +44,6 @@ class MasterdataRetrieval
 
     /**
      *  Set encryption key on request (optional)
-     *  @since 1.6.0
      */
     public function setEncryptionKey($key)
     {
@@ -56,7 +52,6 @@ class MasterdataRetrieval
 
     /**
      *  Get masterdata
-     *  @since 1.6.0
      */
     public function getMasterdata()
     {
