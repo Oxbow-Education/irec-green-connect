@@ -121,6 +121,7 @@ function generateOrgHTML(item) {
 }
 
 function syncAlgoliaWithURL() {
+  console.log('sync with algolia');
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const opportunities = searchParams.get('opportunities')?.split(',') || [];
@@ -129,7 +130,10 @@ function syncAlgoliaWithURL() {
   );
   const tags = searchParams.get('tags')?.split(',') || [];
   const tagsFacetFilters = tags.map((tag) => `general_tags:${tag}`);
+  const query = searchParams.get('query');
+  console.log({ tags, query, opportunities });
   orgsSearch.helper
+    .setQueryParameter('query', query)
     .setQueryParameter('facetFilters', [
       ...opportunitiesFacetFilters,
       ...tagsFacetFilters,

@@ -59,7 +59,6 @@
       </div>
       <form class="search">
         <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
-        <!-- <button type="button" class="search__clear"><img src="/wp-content/plugins/irec-green-connect/public/img/times-2.png" alt="clear search"></button> -->
         <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
       </form>
     </div>
@@ -125,7 +124,6 @@
     <div class="more-filters__footer" slot="footer">
       <form slot="footer" class="search">
         <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
-        <!-- <button type="button" class="search__clear"><img src="/wp-content/plugins/irec-green-connect/public/img/times-2.png" alt="clear search"></button> -->
         <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
       </form>
       <sl-divider></sl-divider>
