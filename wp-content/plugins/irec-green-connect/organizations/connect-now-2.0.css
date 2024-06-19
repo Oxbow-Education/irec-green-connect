@@ -768,8 +768,7 @@ h6 {
 .connect-now .mobile-filters__tags-container {
   padding: 10px 0;
 }
-.connect-now .tags__button,
-.connect-now .tags__button--long {
+.connect-now .tags__button {
   border: 2px solid #dee1e6;
   border-radius: 5px;
   font-family: Proxima Nova;
@@ -781,10 +780,17 @@ h6 {
   color: #606060;
   margin: 5px 5px 5px 0;
 }
+
 .connect-now .tags__button--long {
   text-align: left;
   white-space: break-spaces;
   line-height: 16px;
+}
+
+.connect-now .tags__button--selected {
+  background-color: #06aeb3;
+  border-color: #06aeb3;
+  color: white;
 }
 
 .connect-now .footer__button-container {

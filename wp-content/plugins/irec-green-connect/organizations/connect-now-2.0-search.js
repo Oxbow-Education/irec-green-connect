@@ -127,8 +127,13 @@ function syncAlgoliaWithURL() {
   const opportunitiesFacetFilters = opportunities.map(
     (opp) => `opportunities:${opp}`,
   );
+  const tags = searchParams.get('tags')?.split(',') || [];
+  const tagsFacetFilters = tags.map((tag) => `general_tags:${tag}`);
   orgsSearch.helper
-    .setQueryParameter('facetFilters', [...opportunitiesFacetFilters])
+    .setQueryParameter('facetFilters', [
+      ...opportunitiesFacetFilters,
+      ...tagsFacetFilters,
+    ])
     .search();
 }
 
