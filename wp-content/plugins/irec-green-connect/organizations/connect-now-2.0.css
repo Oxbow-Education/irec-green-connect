@@ -39,8 +39,13 @@ h6 {
     font-size: 33px;
   }
 }
+@media screen and (max-width: 1360px) {
+  .connect-now h1 {
+    font-size: 25px;
+  }
+}
 
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 1140px) {
   .connect-now h1 {
     align-self: flex-start;
     margin-left: 10px;
@@ -70,7 +75,7 @@ h6 {
   gap: 10px;
 }
 
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 1140px) {
   .connect-now__left {
     flex-direction: column;
   }
@@ -108,11 +113,29 @@ h6 {
 }
 
 @media screen and (max-width: 1560px) {
+  .connect-now .location__form {
+    grid-template-columns: 1fr 45px 62px;
+  }
   .connect-now .location__input {
     font-size: 16px;
     width: 300px;
   }
 }
+
+@media screen and (max-width: 1360px) {
+  .connect-now .location__input {
+    width: 235px;
+  }
+  .connect-now .location__form {
+    grid-template-columns: 1fr 30px 52px;
+  }
+  .connect-now .location__current {
+    height: 25px;
+    width: 25px;
+    align-self: center;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .connect-now .location__form,
   .connect-now__left,
@@ -175,6 +198,13 @@ h6 {
   }
 }
 
+@media screen and (max-width: 1360px) {
+  .connect-now .location__submit {
+    height: 30px;
+    width: 40px;
+  }
+}
+
 .location__remote {
   display: flex;
   height: 78px;
@@ -196,66 +226,26 @@ h6 {
   align-items: center;
 }
 
-/* .switch {
-  position: relative;
-  display: inline-block;
-  width: 57px;
-  height: 35px;
-} */
-
-/* .switch__input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-} */
-
-/* .switch__slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 35px;
-} */
-/* 
-.switch__slider:before {
-  position: absolute;
-  content: '';
-  height: 27px;
-  width: 27px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-} */
-
-/* .switch__input:checked + .switch__slider {
-  background-color: #c28c2c;
-}
-
-.switch__input:focus + .switch__slider {
-  box-shadow: 0 0 1px #c28c2c;
-} */
-
-/* .switch__input:checked + .switch__slider:before {
-  transform: translateX(22px);
-} */
-
 .filters {
   align-self: center;
   gap: 10px;
   height: 58px;
 }
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 1360px) {
+  .location__remote label {
+    font-size: 14px;
+    gap: 5px;
+    margin-left: 5px;
+  }
+}
+
+@media screen and (max-width: 1140px) {
   .location__remote,
   .connect-now .filters {
     display: none;
   }
 }
+
 .opportunity {
   position: relative;
 }
@@ -284,8 +274,17 @@ h6 {
 }
 
 @media screen and (max-width: 1560px) {
-  .opportunity .opportunity__select {
+  .opportunity .opportunity__select,
+  .tags .opportunity__select {
     width: 135px;
+  }
+}
+@media screen and (max-width: 1360px) {
+  .opportunity .opportunity__trigger {
+    width: 133px;
+  }
+  .tags .opportunity__trigger {
+    width: 115px;
   }
 }
 
@@ -415,7 +414,8 @@ h6 {
   border-radius: 5px;
   color: white;
 }
-:.results__hits.ais-infinite-hits  {
+
+.results__hits .ais-infinite-hits {
   background-color: #e8e8e8;
   padding: 20px;
   display: flex;
@@ -435,6 +435,7 @@ h6 {
   display: grid;
   grid-template-columns: 3fr 2fr;
   cursor: pointer;
+  gap: 30px;
 }
 
 .organization__info-img {
@@ -562,14 +563,35 @@ h6 {
   overflow-y: scroll;
 }
 
-@media screen and (max-width: 768px) {
-  #map {
-    width: 100vw;
+@media screen and (max-width: 1366px) {
+  .organization .organization__info-org,
+  .organization .organization__info-type {
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
   }
-
+  .organization__info-description {
+    font-size: 16px;
+    line-height: 18px;
+    padding: 10px 0;
+  }
+  .organization__divider {
+    margin: 10px 0;
+  }
   .organization {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+  .organization__quick-links {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #map {
+    width: 100vw;
   }
 
   .organization__info-details {
@@ -593,10 +615,6 @@ h6 {
   .organization__info-icon {
     width: 24px;
     height: 24px;
-  }
-  .organization__quick-links {
-    width: 100%;
-    max-width: 100%;
   }
 }
 
@@ -847,7 +865,7 @@ h6 {
   border: 1px solid #d1d1d1;
   width: 100%;
 }
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 1140px) {
   .mobile-filters {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
