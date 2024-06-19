@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   handleDrawerFunctionality();
   handleOpportunityCheckboxesFunctionality();
   handleTagsButtonSelection();
+  handleSearchInput();
 });
 
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
@@ -73,40 +74,48 @@ function sendEvent(eventName) {
   window.dispatchEvent(event);
 }
 
-function updateQueryParam(key, value, removeValue = false) {
+function updateQueryParam(key, value, removeValue = false, single = false) {
   const url = new URL(window.location);
-
-  // Retrieve the current value for the parameter, or null if it doesn't exist
   const currentValue = url.searchParams.get(key);
 
-  if (currentValue) {
-    // Split the current value into an array by commas
-    let values = currentValue.split(',');
-
+  if (single) {
     if (removeValue) {
-      // Remove the specified value from the array
-      values = values.filter((v) => v !== value);
-    } else {
-      // Add the value if it's not already in the array
-      if (!values.includes(value)) {
-        values.push(value);
-      }
-    }
-
-    // Update the parameter with the new array, joined by commas, or delete if empty
-    if (values.length > 0) {
-      url.searchParams.set(key, values.join(','));
-    } else {
+      // If removeValue is true and single is true, simply delete the parameter
       url.searchParams.delete(key);
+    } else {
+      // If single is true, replace the existing value with the new one
+      url.searchParams.set(key, value);
     }
-  } else if (!removeValue) {
-    // If the parameter does not exist and we are not removing, set the new value
-    url.searchParams.set(key, value);
+  } else {
+    // Handling as an array of values
+    if (currentValue) {
+      let values = currentValue.split(',');
+
+      if (removeValue) {
+        // Remove the specified value from the array
+        values = values.filter((v) => v !== value);
+      } else {
+        // Add the value if it's not already in the array
+        if (!values.includes(value)) {
+          values.push(value);
+        }
+      }
+
+      // Update the parameter with the new array, joined by commas, or delete if empty
+      if (values.length > 0) {
+        url.searchParams.set(key, values.join(','));
+      } else {
+        url.searchParams.delete(key);
+      }
+    } else if (!removeValue) {
+      // If the parameter does not exist and we are not removing, set the new value
+      url.searchParams.set(key, value);
+    }
   }
 
   // Update the URL in the browser without reloading the page
   window.history.replaceState({ path: url.toString() }, '', url.toString());
-  sendEvent(URL_UPDATED);
+  sendEvent('URL_UPDATED');
 }
 
 function syncOpportunityCheckboxesWithURL() {
@@ -141,6 +150,26 @@ function handleTagsButtonSelection() {
       button.classList.toggle('tags__button--selected');
       const shouldRemove = !button.classList.contains('tags__button--selected');
       updateQueryParam('tags', button.innerText, shouldRemove);
+    });
+  });
+}
+
+function handleSearchInput() {
+  const searchForms = document.querySelectorAll('form.search');
+  const searchInputs = document.querySelectorAll(
+    'form.search input[type="text"]',
+  );
+  searchForms.forEach((form) => {
+    const input = form.querySelector('input[type="text"]');
+    input.addEventListener('input', () => {
+      searchInputs.forEach((otherInput) => {
+        if (otherInput.value === input.value) return;
+        otherInput.value = input.value;
+      });
+      updateQueryParam('query', input.value, !Boolean(input.value), true);
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
     });
   });
 }
