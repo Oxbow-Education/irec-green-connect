@@ -11,8 +11,21 @@ let currentFacetFilters = [];
 const ALGOLIA_INITIALIZED = 'algolia-initialized';
 const URL_UPDATED = 'url-updated';
 
-// Add button listeners for mobile filters
+// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
+  handleMapViewLisViewToggle();
+  handleDrawerFunctionality();
+  handleOpportunityCheckboxesFunctionality();
+  handleTagsButtonSelection();
+});
+
+window.addEventListener(ALGOLIA_INITIALIZED, () => {
+  syncOpportunityCheckboxesWithURL();
+  syncTagsButtonsWithURL();
+});
+
+// Function definitions
+function handleMapViewLisViewToggle() {
   const mapViewButton = document.getElementById('mapView');
   mapViewButton.addEventListener('click', () => {
     const results = document.querySelector('.results');
@@ -28,10 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mapViewButton.classList.remove('hide');
     listViewButton.classList.add('hide');
   });
-});
-
-// hook up drawer functionality
-document.addEventListener('DOMContentLoaded', () => {
+}
+function handleDrawerFunctionality() {
   const drawer = document.getElementById('drawer');
   const openButton = document.getElementById('drawerButton');
 
@@ -39,9 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   openButton.addEventListener('click', () => drawer.show());
   // closeButton.addEventListener('click', () => drawer.hide());
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+}
+function handleOpportunityCheckboxesFunctionality() {
   const opportunityCheckboxes = document.querySelectorAll(
     '.checkbox[name="opportunities"]',
   );
@@ -54,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateQueryParam(name, value, !isChecked);
     });
   });
-});
+}
 
 function sendEvent(eventName) {
   const event = new Event(eventName);
@@ -110,5 +120,25 @@ function syncOpportunityCheckboxesWithURL() {
     }
   });
 }
+function syncTagsButtonsWithURL() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const tags = searchParams.get('tags')?.split(',') || [];
+  const tagsButtons = document.querySelectorAll('.tags__button');
+  tagsButtons.forEach((tag) => {
+    if (tags.includes(tag.innerText)) {
+      tag.classList.add('tags__button--selected');
+    }
+  });
+}
 
-window.addEventListener(ALGOLIA_INITIALIZED, syncOpportunityCheckboxesWithURL);
+function handleTagsButtonSelection() {
+  const tagsButtons = document.querySelectorAll('.tags__button');
+  tagsButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      button.classList.toggle('tags__button--selected');
+      const shouldRemove = !button.classList.contains('tags__button--selected');
+      updateQueryParam('tags', button.innerText, shouldRemove);
+    });
+  });
+}
