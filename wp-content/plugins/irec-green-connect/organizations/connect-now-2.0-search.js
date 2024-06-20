@@ -138,8 +138,6 @@ function syncAlgoliaWithURL() {
       ...tagsFacetFilters,
     ])
     .search();
-
-  console.log(orgsSearch.helper.state);
 }
 
 function syncNumberOfResults() {

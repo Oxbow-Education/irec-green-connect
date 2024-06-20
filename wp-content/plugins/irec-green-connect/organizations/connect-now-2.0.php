@@ -6,7 +6,7 @@
       <h1>Connect Now </h1>
       <div class="location">
         <form class="location__form">
-          <input class="location__input" type="text" placeholder="Enter your zipcode">
+          <input id="autocomplete" class="location__input" type="text" placeholder="Enter your zipcode">
           <button class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
           <button type="submit" class="location__submit">Go</button>
         </form>
