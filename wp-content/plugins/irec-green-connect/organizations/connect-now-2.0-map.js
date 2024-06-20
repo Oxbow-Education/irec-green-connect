@@ -87,3 +87,32 @@ function clearMarkers() {
   infoWindows = [];
   bounds = new google.maps.LatLngBounds();
 }
+
+function handleAutocomplete() {
+  const input = document.getElementById('autocomplete');
+  const options = {
+    types: ['(regions)'],
+    componentRestrictions: { country: 'US' },
+  };
+
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+  autocomplete.setFields(['geometry']);
+
+  autocomplete.addListener('place_changed', function () {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+      console.error("Autocomplete's returned place contains no geometry!");
+      return;
+    }
+
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+
+    updateQueryParam('lat', lat);
+    updateQueryParam('lng', lng);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  handleAutocomplete();
+});
