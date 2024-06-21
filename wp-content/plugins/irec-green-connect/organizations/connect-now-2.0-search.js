@@ -1,3 +1,55 @@
+const usStateAbbreviations = [
+  'AL',
+  'AK',
+  'AZ',
+  'AR',
+  'CA',
+  'CO',
+  'CT',
+  'DE',
+  'FL',
+  'GA',
+  'HI',
+  'ID',
+  'IL',
+  'IN',
+  'IA',
+  'KS',
+  'KY',
+  'LA',
+  'ME',
+  'MD',
+  'MA',
+  'MI',
+  'MN',
+  'MS',
+  'MO',
+  'MT',
+  'NE',
+  'NV',
+  'NH',
+  'NJ',
+  'NM',
+  'NY',
+  'NC',
+  'ND',
+  'OH',
+  'OK',
+  'OR',
+  'PA',
+  'RI',
+  'SC',
+  'SD',
+  'TN',
+  'TX',
+  'UT',
+  'VT',
+  'VA',
+  'WA',
+  'WV',
+  'WI',
+  'WY',
+];
 // Setup Algolia search after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   if (!orgsSearch) setupAlgoliaSearch();
@@ -27,13 +79,6 @@ function setupAlgoliaSearch() {
       },
     }),
   ]);
-
-  orgsSearch.on('render', () => {
-    if (markers.length > 0 && initialSetup) {
-      map.fitBounds(bounds);
-      initialSetup = false;
-    }
-  });
 
   orgsSearch.start();
   sendEvent(ALGOLIA_INITIALIZED);
@@ -121,7 +166,6 @@ function generateOrgHTML(item) {
 }
 
 function syncAlgoliaWithURL() {
-  console.log('sync with algolia');
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const opportunities = searchParams.get('opportunities')?.split(',') || [];
@@ -131,6 +175,7 @@ function syncAlgoliaWithURL() {
   const tags = searchParams.get('tags')?.split(',') || [];
   const tagsFacetFilters = tags.map((tag) => `general_tags:${tag}`);
   const query = searchParams.get('query');
+
   orgsSearch.helper
     .setQueryParameter('query', query ?? '')
     .setQueryParameter('facetFilters', [
@@ -150,10 +195,16 @@ function syncNumberOfResults() {
   });
 }
 
+function syncMapBoundsWithResults() {
+  orgsSearch.on('render', () => {
+    map.fitBounds(bounds);
+  });
+}
 // Listen to URL state and update Algolia parameters to match
 window.addEventListener(URL_UPDATED, syncAlgoliaWithURL);
 // Initialize the algolia query to the url parameters when the search is initialized
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
   syncAlgoliaWithURL();
   syncNumberOfResults();
+  syncMapBoundsWithResults();
 });
