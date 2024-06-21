@@ -75,7 +75,7 @@
       </div>
 
       <div id="resultsHits" class="results__hits"></div>
-      <div class="results__meta">
+      <div class="results__meta results__meta--remote">
 
         <h2>Remote Organizations</h2>
         <div id="metaInfoRemote" class="meta__info">

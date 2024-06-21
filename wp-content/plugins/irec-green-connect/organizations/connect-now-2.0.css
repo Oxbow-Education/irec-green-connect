@@ -415,12 +415,23 @@ h6 {
   color: white;
 }
 
+
+.results__meta--remote  {
+  background-color: white
+}
 .results__hits .ais-infinite-hits {
-  background-color: #e8e8e8;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+#resultsHits, #resultsHitsRemote {
+  background: #F5F7F8;
+
+}
+#resultsHitsRemote {
+  
 }
 
 .map {
@@ -889,6 +900,6 @@ h6 {
   visibility: hidden;  !important;
 }
 
-.ais-infinite-hits--showmoreButton:disabled {
+.ais-infinite-hits--showmore:has(.ais-infinite-hits--showmoreButton:disabled) {
   display: none;
 }
