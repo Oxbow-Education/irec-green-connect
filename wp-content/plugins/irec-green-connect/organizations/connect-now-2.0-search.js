@@ -195,16 +195,10 @@ function syncNumberOfResults() {
   });
 }
 
-function syncMapBoundsWithResults() {
-  orgsSearch.on('render', () => {
-    map.fitBounds(bounds);
-  });
-}
 // Listen to URL state and update Algolia parameters to match
 window.addEventListener(URL_UPDATED, syncAlgoliaWithURL);
 // Initialize the algolia query to the url parameters when the search is initialized
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
   syncAlgoliaWithURL();
   syncNumberOfResults();
-  syncMapBoundsWithResults();
 });
