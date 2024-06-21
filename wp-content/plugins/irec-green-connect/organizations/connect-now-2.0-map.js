@@ -12,19 +12,26 @@ function initMap() {
 
 // Function to handle changes in the map bounds and update Algolia search
 function onBoundsChanged() {
-  //   if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
-  //   boundsChangeTimeout = setTimeout(() => {
-  //     const bounds = map.getBounds();
-  //     const ne = bounds.getNorthEast(); // North East corner
-  //     const sw = bounds.getSouthWest(); // South West corner
-  //     // Convert bounds to the format expected by Algolia
-  //     const algoliaBounds = [sw.lat(), sw.lng(), ne.lat(), ne.lng()].join();
-  //     // ! TODO separat of concerns -- put this in algolia code
-  //     // Update Algolia search to only show results within the current map bounds
-  //     orgsSearch.helper
-  //       .setQueryParameter('insideBoundingBox', algoliaBounds)
-  //       .search();
-  //   }, 500);
+  if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
+  boundsChangeTimeout = setTimeout(() => {
+    const shouldRebound = true;
+    console.log({
+      shouldRebound,
+      isMobileScreen: isMobileScreen(),
+      isListView,
+    });
+    if (shouldRebound) {
+      const bounds = map.getBounds();
+      const ne = bounds.getNorthEast(); // North East corner
+      const sw = bounds.getSouthWest(); // South West corner
+      // Convert bounds to the format expected by Algolia
+      const algoliaBounds = [sw.lat(), sw.lng(), ne.lat(), ne.lng()].join();
+      console.log({ algoliaBounds });
+      orgsSearch.helper
+        .setQueryParameter('insideBoundingBox', algoliaBounds)
+        .search();
+    }
+  }, 500);
 }
 
 // Add a marker to the map for each item
@@ -48,7 +55,7 @@ function addMarker(item) {
 
   marker.addListener('click', () => handleMarkerClick(marker, infoWindow));
   markers.push(marker);
-  bounds.extend(marker.position);
+  // bounds.extend(marker.position);
   infoWindows.push(infoWindow);
 }
 
@@ -82,7 +89,7 @@ function clearMarkers() {
   markers.forEach((marker) => marker.setMap(null));
   markers = [];
   infoWindows = [];
-  bounds = new google.maps.LatLngBounds();
+  // bounds = new google.maps.LatLngBounds();
 }
 
 function handleAutocomplete() {

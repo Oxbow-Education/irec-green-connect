@@ -8,6 +8,7 @@ let orgsSearch;
 let initialSetup = true;
 let boundsChangeTimeout;
 let currentFacetFilters = [];
+let isListView = true;
 const ALGOLIA_INITIALIZED = 'algolia-initialized';
 const URL_UPDATED = 'url-updated';
 
@@ -34,6 +35,7 @@ function handleMapViewLisViewToggle() {
     results.classList.add('hide');
     mapViewButton.classList.add('hide');
     listViewButton.classList.remove('hide');
+    isListView = true;
   });
 
   const listViewButton = document.getElementById('listView');
@@ -42,6 +44,7 @@ function handleMapViewLisViewToggle() {
     results.classList.remove('hide');
     mapViewButton.classList.remove('hide');
     listViewButton.classList.add('hide');
+    isListView = false;
   });
 }
 function handleDrawerFunctionality() {
@@ -187,4 +190,8 @@ function handleSearchInput() {
       event.preventDefault();
     });
   });
+}
+
+function isMobileScreen() {
+  return window.innerWidth <= 768;
 }

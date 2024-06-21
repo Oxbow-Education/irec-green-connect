@@ -562,6 +562,9 @@ h6 {
   max-height: calc(100vh - 140px);
   overflow-y: scroll;
 }
+.results {
+  background-color: white;
+}
 
 @media screen and (max-width: 1366px) {
   .organization .organization__info-org,
@@ -590,10 +593,17 @@ h6 {
 }
 
 @media screen and (max-width: 768px) {
+  .results {
+    z-index: 2
+  }
   #map {
     width: 100vw;
   }
-
+  #map,
+  .results {
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
   .organization__info-details {
     flex-direction: column;
     align-items: flex-start;
@@ -696,6 +706,7 @@ h6 {
   width: 291px;
   max-width: 100%;
   background: #c28c2c;
+  z-index: 3;
 }
 
 .mobile-filters__divider {
@@ -875,5 +886,5 @@ h6 {
 }
 
 .hide {
-  display: none !important;
+  visibility: hidden;  !important;
 }
