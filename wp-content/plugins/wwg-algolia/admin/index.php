@@ -210,16 +210,13 @@ function register_update_posts_endpoint()
 
 function update_posts_callback($request)
 {
-
   try {
-
     $post_type = $request->get_param('postType');
     $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
     $algolia_app_id = get_option('algolia_sync_plugin_app_id');
     $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
     $index = $client->initIndex($post_type);
     $index->clearObjects()->wait();
-
 
     $args = array(
       'post_type' => $post_type,
@@ -229,21 +226,24 @@ function update_posts_callback($request)
     $posts = get_posts($args);
 
     foreach ($posts as $post) {
+      error_log("Updating post ID: " . $post->ID);
       $hide_from_algolia = get_post_meta($post->ID, '_hide_from_algolia', true);
-      // Example: Update post content
+
+      // Trigger save_post by updating the post
       $updated_post = array(
         'ID' => $post->ID,
-
       );
-      wp_update_post($updated_post);
+
+      wp_update_post($updated_post); // This should trigger save_post
       update_post_meta($post->ID, '_hide_from_algolia', $hide_from_algolia);
     }
 
     return new WP_REST_Response(array('message' => 'Posts updated successfully.'), 200);
   } catch (Exception $e) {
-    return json_encode(array("error" => $e->getMessage()));
+    return new WP_REST_Response(array('error' => $e->getMessage()), 500);
   }
 }
+
 
 
 // Sync posts with Algolia on publish
