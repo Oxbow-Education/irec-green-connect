@@ -18,20 +18,23 @@ function onBoundsChanged() {
   if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
   boundsChangeTimeout = setTimeout(() => {
     const bounds = map.getBounds();
-    const ne = bounds.getNorthEast();
-    const sw = bounds.getSouthWest();
 
-    const algoliaBounds = `${sw.lat()},${sw.lng()},${ne.lat()},${ne.lng()}`;
+    const algoliaBounds = [
+      bounds.getSouthWest().lat().toFixed(20),
+      bounds.getSouthWest().lng().toFixed(20),
+      bounds.getNorthEast().lat().toFixed(20),
+      bounds.getNorthEast().lng().toFixed(20),
+    ].join(',');
 
     orgsSearch.helper
       .setQueryParameter('insideBoundingBox', algoliaBounds)
       .search();
 
+    const autocompleteEl = document.getElementById('autocomplete');
     if (!isProgrammaticChange) {
-      const autocompleteEl = document.getElementById('autocomplete');
       autocompleteEl.value = 'Map Bounds';
       updateQueryParam('location', 'Map Bounds', false, true);
-      updateQueryParam('bounds', algoliaBounds);
+      updateQueryParam('bounds', algoliaBounds, false, true);
     }
 
     isProgrammaticChange = false;
@@ -127,10 +130,11 @@ function handleAutocomplete() {
     const description = place.formatted_address; // This gets the location's formatted text address
 
     updateQueryParam('location', description, false, true);
+    updateQueryParam('bounds', '', false, true);
 
     // Check if the selected place is a state
     if (place.types.includes('administrative_area_level_1')) {
-      getBoundsForState(description);
+      getBoundsForLocation(description);
     } else {
       const center = { lat: lat, lng: lng };
       updateCenterZoom(center, 9);
@@ -142,32 +146,60 @@ function syncMapToURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const description = searchParams.get('location');
-  if (description && description != 'Map Bounds') {
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: description }, function (results, status) {
-      if (status === 'OK' && results[0]) {
-        if (results[0].geometry.bounds) {
-          updateBounds(results[0].geometry.bounds);
-        } else if (results[0].geometry.location) {
-          updateCenterZoom(results[0].geometry.location, 9);
-        }
-      } else {
-        console.error(
-          'Geocode was not successful for the following reason: ' + status,
-        );
-      }
-    });
+  if (description != 'Map Bounds') {
+    getBoundsForLocation(description);
     const autocompleteEl = document.getElementById('autocomplete');
     autocompleteEl.value = description;
   }
+
+  if (description == 'Map Bounds') {
+    const bounds = convertBoundsToGoogleMap(searchParams.get('bounds'));
+    if (bounds) {
+      updateBounds(bounds);
+    } else {
+      updateQueryParam('location', '', true, true);
+    }
+  }
 }
 
-function getBoundsForState(stateName) {
+function convertBoundsToGoogleMap(boundsParam) {
+  // Step 1: Decode the URL-encoded string
+  const decodedBounds = decodeURIComponent(boundsParam);
+
+  // Step 2: Parse the bounds into latitude and longitude values
+  const boundsArray = decodedBounds.split(',').map(Number);
+
+  if (boundsArray.length !== 4) {
+    console.error('Invalid bounds parameter');
+    return null;
+  }
+
+  const [southLat, westLng, northLat, eastLng] = boundsArray;
+
+  // Step 3: Create a google.maps.LatLngBounds object
+  const bounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(southLat, westLng),
+    new google.maps.LatLng(northLat, eastLng),
+  );
+
+  return bounds;
+}
+function getBoundsForLocation(locationName) {
   const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: stateName }, function (results, status) {
-    if (status === 'OK' && results[0] && results[0].geometry.bounds) {
-      const bounds = results[0].geometry.bounds;
-      updateBounds(bounds); // Set map bounds to the state's bounds
+  geocoder.geocode({ address: locationName }, function (results, status) {
+    if (status === 'OK' && results[0]) {
+      const locationTypes = results[0].types;
+
+      if (
+        locationTypes.includes('administrative_area_level_1') &&
+        results[0].geometry.bounds
+      ) {
+        // If the location is a state and has bounds
+        updateBounds(results[0].geometry.bounds);
+      } else if (results[0].geometry.location) {
+        // For all other locations
+        updateCenterZoom(results[0].geometry.location, 12);
+      }
     } else {
       console.error(
         'Geocode was not successful for the following reason: ' + status,

@@ -66,6 +66,7 @@ function handleOpportunityCheckboxesFunctionality() {
 
   opportunityCheckboxes.forEach((cb) => {
     cb.addEventListener('sl-change', (e) => {
+      clearMarkers();
       const isChecked = e.target.checked;
       const value = e.target.value;
       const name = e.target.name;
@@ -83,7 +84,6 @@ function updateQueryParam(key, value, removeValue = false, single = false) {
   const url = new URL(window.location);
   const currentValue = url.searchParams.get(key);
 
-  console.log({ key, value, removeValue, single });
   if (single) {
     if (removeValue) {
       // If removeValue is true and single is true, simply delete the parameter
@@ -167,6 +167,7 @@ function handleTagsButtonSelection() {
   const tagsButtons = document.querySelectorAll('.tags__button');
   tagsButtons.forEach((button) => {
     button.addEventListener('click', () => {
+      clearMarkers();
       button.classList.toggle('tags__button--selected');
       const shouldRemove = !button.classList.contains('tags__button--selected');
       updateQueryParam('tags', button.innerText, shouldRemove);
@@ -186,6 +187,7 @@ function handleSearchInput() {
         if (otherInput.value === input.value) return;
         otherInput.value = input.value;
       });
+      clearMarkers();
       updateQueryParam('query', input.value, !Boolean(input.value), true);
     });
     form.addEventListener('submit', (event) => {
