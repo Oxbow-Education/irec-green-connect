@@ -241,7 +241,24 @@ if (function_exists("register_field_group")) {
             'step' => '0.00000001', // Precision up to 6 decimal places
           )
         )
-      )
+      ),
+      array(
+        'key' => 'field_14',
+        'label' => 'Has Geolocation?',
+        'name' => 'has_geolocation',
+        'type' => 'true_false', // Use 'true_false' for a single checkbox
+        'instructions' => 'Check if the record has geolocation data',
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => array(
+          'width' => '',
+          'class' => '',
+          'id' => '',
+        ),
+        'default_value' => 0,
+        'ui_on_text' => '',
+        'ui_off_text' => '',
+      ),
 
     ),
     'location' => array(
@@ -300,16 +317,24 @@ function save_organization_new_lat_lng($post_id, $post, $update)
     return;
   }
 
-  // Assuming you have custom fields for address, city, state, and zip
+  // Assuming you have custom fields for address
   $address_line_1 = get_post_meta($post_id, 'address', true);
-
-  // Check if $latlong is not empty and is an array with 'lat' and 'lng' keys
-  $geoData = get_lat_lng_from_address($address_line_1, '', '', '', '');
-  if ($geoData) {
-    update_field('_geoloc', $geoData, $post_id);
+  if (!$address_line_1) {
+    update_field('has_geolocation', 0, $post_id);
+    error_log("Updated has_geolocation to 0 for post ID: $post_id");
+  } else {
+    // Check if $geoData is not empty
+    $geoData = get_lat_lng_from_address($address_line_1, '', '', '', '');
+    if ($geoData) {
+      update_field('_geoloc', $geoData, $post_id);
+      update_field('has_geolocation', 1, $post_id);
+      error_log("Updated _geoloc and has_geolocation to 1 for post ID: $post_id");
+    } else {
+      update_field('has_geolocation', 0, $post_id);
+      error_log("Failed to get geolocation data for post ID: $post_id");
+    }
   }
 }
-
 
 
 

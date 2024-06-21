@@ -1,11 +1,14 @@
+let isProgrammaticChange = false;
+
 // Initialize the map with predefined options and event listeners
 function initMap() {
-  const mapOptions = {
-    zoom: 9,
-    center: { lat: 30.9843, lng: -91.9623 },
-  };
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  bounds = new google.maps.LatLngBounds();
+  map = new google.maps.Map(document.getElementById('map'));
+
+  const defaultBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(24.5, -125),
+    new google.maps.LatLng(49, -66),
+  );
+  updateBounds(defaultBounds);
   setupAlgoliaSearch();
   map.addListener('bounds_changed', onBoundsChanged);
 }
@@ -14,23 +17,23 @@ function initMap() {
 function onBoundsChanged() {
   if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
   boundsChangeTimeout = setTimeout(() => {
-    const shouldRebound = true;
-    console.log({
-      shouldRebound,
-      isMobileScreen: isMobileScreen(),
-      isListView,
-    });
-    if (shouldRebound) {
-      const bounds = map.getBounds();
-      const ne = bounds.getNorthEast(); // North East corner
-      const sw = bounds.getSouthWest(); // South West corner
-      // Convert bounds to the format expected by Algolia
-      const algoliaBounds = [sw.lat(), sw.lng(), ne.lat(), ne.lng()].join();
-      console.log({ algoliaBounds });
-      orgsSearch.helper
-        .setQueryParameter('insideBoundingBox', algoliaBounds)
-        .search();
+    const bounds = map.getBounds();
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+    const algoliaBounds = [sw.lat(), sw.lng(), ne.lat(), ne.lng()].join();
+    orgsSearch.helper
+      .setQueryParameter('insideBoundingBox', algoliaBounds)
+      .setQuery('filters', 'remote_or_in_person:Remote OR has_geolocation:true')
+      .search();
+
+    if (!isProgrammaticChange) {
+      const autocompleteEl = document.getElementById('autocomplete');
+      autocompleteEl.value = 'Map Bounds';
+      updateQueryParam('location', 'Map Bounds', false, true);
+      updateQueryParam('bounds', algoliaBounds);
     }
+
+    isProgrammaticChange = false;
   }, 500);
 }
 
@@ -55,7 +58,6 @@ function addMarker(item) {
 
   marker.addListener('click', () => handleMarkerClick(marker, infoWindow));
   markers.push(marker);
-  // bounds.extend(marker.position);
   infoWindows.push(infoWindow);
 }
 
@@ -89,7 +91,6 @@ function clearMarkers() {
   markers.forEach((marker) => marker.setMap(null));
   markers = [];
   infoWindows = [];
-  // bounds = new google.maps.LatLngBounds();
 }
 
 function handleAutocomplete() {
@@ -124,9 +125,8 @@ function handleAutocomplete() {
     if (place.types.includes('administrative_area_level_1')) {
       getBoundsForState(description);
     } else {
-      const bounds = { lat: lat, lng: lng };
-      map.setCenter(bounds);
-      map.setZoom(9);
+      const center = { lat: lat, lng: lng };
+      updateCenterZoom(center, 9);
     }
   });
 
@@ -135,7 +135,7 @@ function handleAutocomplete() {
     geocoder.geocode({ address: stateName }, function (results, status) {
       if (status === 'OK' && results[0] && results[0].geometry.bounds) {
         const bounds = results[0].geometry.bounds;
-        map.fitBounds(bounds); // Set map bounds to the state's bounds
+        updateBounds(bounds); // Set map bounds to the state's bounds
       } else {
         console.error(
           'Geocode was not successful for the following reason: ' + status,
@@ -157,20 +157,15 @@ function syncMapToURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const description = searchParams.get('location');
-  if (description) {
+  if (description && description != 'Map Bounds') {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: description }, function (results, status) {
       if (status === 'OK' && results[0]) {
         if (results[0].geometry.bounds) {
-          map.fitBounds(results[0].geometry.bounds);
+          updateBounds(results[0].geometry.bounds);
         } else if (results[0].geometry.location) {
-          map.setCenter(results[0].geometry.location);
-          map.setZoom(9);
+          updateCenterZoom(results[0].geometry.location, 9);
         }
-        console.log(
-          'Location geocoded on reload with description:',
-          description,
-        );
       } else {
         console.error(
           'Geocode was not successful for the following reason: ' + status,
@@ -180,6 +175,17 @@ function syncMapToURL() {
     const autocompleteEl = document.getElementById('autocomplete');
     autocompleteEl.value = description;
   }
+}
+
+function updateCenterZoom(center, zoom) {
+  isProgrammaticChange = true;
+  map.setCenter(center);
+  map.setZoom(zoom);
+}
+
+function updateBounds(bounds) {
+  isProgrammaticChange = true;
+  map.fitBounds(bounds);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
