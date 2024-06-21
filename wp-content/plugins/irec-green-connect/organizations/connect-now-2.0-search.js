@@ -34,7 +34,7 @@ function setupAlgoliaSearch() {
         },
         empty: `<p>No results for your location.</p>`,
       },
-      showMoreLabel: 'Load More',
+      showMoreLabel: 'Load More Results in Your Location',
     }),
   ]);
 
@@ -49,6 +49,7 @@ function setupAlgoliaSearch() {
         },
         empty: '<p>No remote organizations found with that query.</p>',
       },
+      showMoreLabel: 'Load More Remote Results',
     }),
   ]);
 
@@ -108,10 +109,15 @@ function generateOrgHTML(item) {
     </div>
   </div>
   <div class="organization__quick-links">
-      <div class="organiztion__link">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/org-location.svg" />
-        ${item.address}
-      </div>
+  ${
+    item.address
+      ? ` <div class="organiztion__link">
+    <img src="/wp-content/plugins/irec-green-connect/public/img/org-location.svg" />
+    ${item.address}
+  </div>`
+      : ''
+  }
+     
       ${
         item.phone
           ? `<div class="organiztion__link">

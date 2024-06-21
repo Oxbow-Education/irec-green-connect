@@ -426,12 +426,9 @@ h6 {
   gap: 20px;
 }
 
-#resultsHits, #resultsHitsRemote {
+#resultsHits, #resultsHitsRemote, .results__meta {
   background: #F5F7F8;
 
-}
-#resultsHitsRemote {
-  
 }
 
 .map {

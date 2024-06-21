@@ -83,6 +83,7 @@ function updateQueryParam(key, value, removeValue = false, single = false) {
   const url = new URL(window.location);
   const currentValue = url.searchParams.get(key);
 
+  console.log({ key, value, removeValue, single });
   if (single) {
     if (removeValue) {
       // If removeValue is true and single is true, simply delete the parameter
