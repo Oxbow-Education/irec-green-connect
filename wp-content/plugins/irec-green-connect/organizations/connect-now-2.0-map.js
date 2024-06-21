@@ -160,6 +160,8 @@ function syncMapToURL() {
       updateQueryParam('location', '', true, true);
     }
   }
+  const zoom = map.getZoom();
+  map.setZoom(zoom + 1);
 }
 
 function convertBoundsToGoogleMap(boundsParam) {
