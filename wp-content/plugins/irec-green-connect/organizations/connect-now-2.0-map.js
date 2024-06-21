@@ -20,10 +20,11 @@ function onBoundsChanged() {
     const bounds = map.getBounds();
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
-    const algoliaBounds = [sw.lat(), sw.lng(), ne.lat(), ne.lng()].join();
+
+    const algoliaBounds = `${sw.lat()},${sw.lng()},${ne.lat()},${ne.lng()}`;
+
     orgsSearch.helper
       .setQueryParameter('insideBoundingBox', algoliaBounds)
-      .setQuery('filters', 'remote_or_in_person:Remote OR has_geolocation:true')
       .search();
 
     if (!isProgrammaticChange) {
@@ -115,6 +116,12 @@ function handleAutocomplete() {
       return;
     }
 
+    // Check if "Remote" is selected
+    if (place.formatted_address.toLowerCase() === 'remote') {
+      handleRemoteSelection();
+      return; // Exit the function early if "Remote" is handled separately
+    }
+
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
     const description = place.formatted_address; // This gets the location's formatted text address
@@ -129,28 +136,6 @@ function handleAutocomplete() {
       updateCenterZoom(center, 9);
     }
   });
-
-  function getBoundsForState(stateName) {
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: stateName }, function (results, status) {
-      if (status === 'OK' && results[0] && results[0].geometry.bounds) {
-        const bounds = results[0].geometry.bounds;
-        updateBounds(bounds); // Set map bounds to the state's bounds
-      } else {
-        console.error(
-          'Geocode was not successful for the following reason: ' + status,
-        );
-      }
-    });
-  }
-
-  function updateQueryParam(param, value) {
-    if (history.pushState) {
-      const newurl = new URL(window.location.href);
-      newurl.searchParams.set(param, value);
-      window.history.pushState({ path: newurl.href }, '', newurl.href);
-    }
-  }
 }
 
 function syncMapToURL() {

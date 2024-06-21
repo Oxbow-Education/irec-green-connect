@@ -5,6 +5,7 @@ let markers = [];
 let infoWindows = [];
 let bounds;
 let orgsSearch;
+let remoteOrgsSearch;
 let initialSetup = true;
 let boundsChangeTimeout;
 let currentFacetFilters = [];

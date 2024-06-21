@@ -6,15 +6,15 @@
       <h1>Connect Now </h1>
       <div class="location">
         <form class="location__form">
-          <input id="autocomplete" class="location__input" type="text" placeholder="Enter your zipcode">
+          <input id="autocomplete" class="location__input" type="text" placeholder="Enter zip, city, or state">
           <button class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
           <button type="submit" class="location__submit">Go</button>
         </form>
-        <div class="location__remote">
+        <!-- <div class="location__remote">
           <label>Include Remote
             <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch"></sl-switch>
           </label>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="filters">
@@ -68,15 +68,26 @@
     <div class="results">
       <div class="results__meta">
 
-        <h2>Organizations</h2>
-        <div class="meta__info">
+        <h2>Organizations Near Your Location</h2>
+        <div id="metaInfo" class="meta__info">
           <p class="results__count"></p>
         </div>
       </div>
 
-      <div class="results__hits"></div>
+      <div id="resultsHits" class="results__hits"></div>
+      <div class="results__meta">
+
+        <h2>Remote Organizations</h2>
+        <div id="metaInfoRemote" class="meta__info">
+          <p class="results__count"></p>
+        </div>
+      </div>
+
+      <div id="resultsHitsRemote" class="results__hits"></div>
     </div>
     <div id="map" class="map"></div>
+
+
   </div>
 
   <div class="mobile-filters">
@@ -92,7 +103,7 @@
       Filters</button>
   </div>
   <sl-drawer id="drawer" label="Filter your results" placement="bottom" style="--size: 90vh;" class="drawer-placement-bottom">
-    <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch">Include Remote</sl-switch>
+    <!-- <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch">Include Remote</sl-switch> -->
 
     <h3>Opportunity</h3>
     <div class="mobile-filters__checkbox-container">

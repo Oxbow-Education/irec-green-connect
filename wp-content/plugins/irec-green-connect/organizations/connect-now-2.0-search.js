@@ -1,55 +1,3 @@
-const usStateAbbreviations = [
-  'AL',
-  'AK',
-  'AZ',
-  'AR',
-  'CA',
-  'CO',
-  'CT',
-  'DE',
-  'FL',
-  'GA',
-  'HI',
-  'ID',
-  'IL',
-  'IN',
-  'IA',
-  'KS',
-  'KY',
-  'LA',
-  'ME',
-  'MD',
-  'MA',
-  'MI',
-  'MN',
-  'MS',
-  'MO',
-  'MT',
-  'NE',
-  'NV',
-  'NH',
-  'NJ',
-  'NM',
-  'NY',
-  'NC',
-  'ND',
-  'OH',
-  'OK',
-  'OR',
-  'PA',
-  'RI',
-  'SC',
-  'SD',
-  'TN',
-  'TX',
-  'UT',
-  'VT',
-  'VA',
-  'WA',
-  'WV',
-  'WI',
-  'WY',
-];
 // Setup Algolia search after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   if (!orgsSearch) setupAlgoliaSearch();
@@ -65,22 +13,47 @@ function setupAlgoliaSearch() {
     ),
   });
 
+  remoteOrgsSearch = instantsearch({
+    indexName: 'organizations-new',
+    searchClient: algoliasearch(
+      'QVXOOP4L7N',
+      'b589196885c2c6d140833e9cb83c4fa0',
+    ),
+  });
+
   orgsSearch.addWidgets([
     instantsearch.widgets.configure({ hitsPerPage: 12 }),
     instantsearch.widgets.infiniteHits({
-      container: '.results__hits',
+      container: '#resultsHits',
       showPrevious: false,
+      showMore: true,
       templates: {
         item: (item) => {
           addMarker(item);
           return generateOrgHTML(item);
         },
-        empty: '<p>No organizations found in this area.</p>',
+        empty: `<p>No results for your location.</p>`,
+      },
+      showMoreLabel: 'Load More',
+    }),
+  ]);
+
+  remoteOrgsSearch.addWidgets([
+    instantsearch.widgets.configure({ hitsPerPage: 12 }),
+    instantsearch.widgets.infiniteHits({
+      container: '#resultsHitsRemote',
+      showPrevious: false,
+      templates: {
+        item: (item) => {
+          return generateOrgHTML(item);
+        },
+        empty: '<p>No remote organizations found with that query.</p>',
       },
     }),
   ]);
 
   orgsSearch.start();
+  remoteOrgsSearch.start();
   sendEvent(ALGOLIA_INITIALIZED);
 }
 
@@ -183,15 +156,32 @@ function syncAlgoliaWithURL() {
       ...tagsFacetFilters,
     ])
     .search();
+  remoteOrgsSearch.helper
+    .setQueryParameter('query', query ?? '')
+    .setQueryParameter('facetFilters', [
+      ...opportunitiesFacetFilters,
+      ...tagsFacetFilters,
+      'remote_or_in_person:Remote',
+    ])
+    .search();
 }
 
 function syncNumberOfResults() {
   orgsSearch.on('render', () => {
     const results = orgsSearch.helper.lastResults;
     const seeResultsButton = document.querySelector('.footer__see-results');
-    const resultsCount = document.querySelector('.results__count');
+    const resultsCount = document.querySelector('#metaInfo .results__count');
+
     seeResultsButton.innerText = `See ${results.nbHits} Results`;
     resultsCount.innerText = `${results.nbHits} Results`;
+  });
+
+  remoteOrgsSearch.on('render', () => {
+    const results = remoteOrgsSearch.helper.lastResults;
+    const resultsCountRemote = document.querySelector(
+      '#metaInfoRemote .results__count',
+    );
+    resultsCountRemote.innerText = `${results.nbHits} Results`;
   });
 }
 
