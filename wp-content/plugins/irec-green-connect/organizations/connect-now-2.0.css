@@ -888,3 +888,7 @@ h6 {
 .hide {
   visibility: hidden;  !important;
 }
+
+.ais-infinite-hits--showmoreButton:disabled {
+  display: none;
+}
