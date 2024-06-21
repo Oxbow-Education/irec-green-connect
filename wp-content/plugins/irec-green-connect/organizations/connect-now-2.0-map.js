@@ -126,7 +126,7 @@ function handleAutocomplete() {
     const lng = place.geometry.location.lng();
     const description = place.formatted_address; // This gets the location's formatted text address
 
-    updateQueryParam('location', description);
+    updateQueryParam('location', description, false, true);
 
     // Check if the selected place is a state
     if (place.types.includes('administrative_area_level_1')) {
@@ -160,6 +160,20 @@ function syncMapToURL() {
     const autocompleteEl = document.getElementById('autocomplete');
     autocompleteEl.value = description;
   }
+}
+
+function getBoundsForState(stateName) {
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: stateName }, function (results, status) {
+    if (status === 'OK' && results[0] && results[0].geometry.bounds) {
+      const bounds = results[0].geometry.bounds;
+      updateBounds(bounds); // Set map bounds to the state's bounds
+    } else {
+      console.error(
+        'Geocode was not successful for the following reason: ' + status,
+      );
+    }
+  });
 }
 
 function updateCenterZoom(center, zoom) {
