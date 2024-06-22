@@ -59,9 +59,9 @@ function setupAlgoliaSearch() {
         item: (item) => {
           return generateOrgHTML(item);
         },
-        empty: '<p>No remote organizations found with that query.</p>',
+        empty: '<p>No online organizations found with that query.</p>',
       },
-      showMoreLabel: 'Load More Remote Results',
+      showMoreLabel: 'Load More Online Results',
     }),
   ]);
 
@@ -102,7 +102,7 @@ function generateOrgHTML(item) {
           <p class="organization__info-org">at ${item.organization_name}</p>
           <div class="organization__info-type">
             <div class="organization__info-icon">
-              <img src="/wp-content/plugins/irec-green-connect/public/img/in-person.svg" alt="In-Person or Remote" />
+              <img src="/wp-content/plugins/irec-green-connect/public/img/in-person.svg" alt="In-Person or Online" />
             </div>
             <p>${item.remote_or_in_person}</p>
           </div>
@@ -179,7 +179,7 @@ function syncAlgoliaWithURL() {
     .setQueryParameter('facetFilters', [
       ...opportunitiesFacetFilters,
       ...tagsFacetFilters,
-      'remote_or_in_person:Remote',
+      'remote_or_in_person:Online',
     ])
     .search();
 }

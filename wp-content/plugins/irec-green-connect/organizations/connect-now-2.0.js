@@ -224,7 +224,6 @@ function removeFiltersAndSearch() {
   // Update the URL with the modified search parameters
   url.search = searchParams.toString();
 
-  console.log('here');
   window.history.replaceState({ path: url.toString() }, '', url.toString());
   console.log(url.toString());
 

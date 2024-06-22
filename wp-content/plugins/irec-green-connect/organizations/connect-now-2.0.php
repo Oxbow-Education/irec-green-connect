@@ -82,7 +82,7 @@
       <div id="resultsHits" class="results__hits"></div>
       <div class="results__meta results__meta--remote">
 
-        <h2>Remote Organizations</h2>
+        <h2>Online Organizations</h2>
         <div id="metaInfoRemote" class="meta__info">
           <p class="results__count"></p>
         </div>
