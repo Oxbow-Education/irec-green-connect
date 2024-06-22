@@ -22,9 +22,9 @@ function initializeAlgolia() {
       templates: {
         item: (item) => {
           if (item.is_internal_resource) {
-            return genereateInternalResourceHTML(item);
+            return generateInternalResourceHTML(item);
           }
-          return `<p>external resource</p>`;
+          return generateExternalResourceHTML(item);
         },
         empty: `<p>No resources found. .</p>`,
       },
@@ -35,7 +35,7 @@ function initializeAlgolia() {
   resourcesSearch.start();
 }
 
-function genereateInternalResourceHTML(item) {
+function generateInternalResourceHTML(item) {
   const tagsHtml = Array.isArray(item.resource_type)
     ? item.resource_type
         .map((tag) => `<div class="resource-tag">${tag}</div>`)
@@ -61,4 +61,31 @@ function genereateInternalResourceHTML(item) {
  </a>
 </button>
 </div>`;
+}
+
+function generateExternalResourceHTML(item) {
+  // Generate HTML for tags
+  const tagsHtml = Array.isArray(item.resource_type)
+    ? item.resource_type
+        .map((tag) => `<div class="resource-tag">${tag}</div>`)
+        .join('')
+    : '';
+
+  const html = `
+      <div onclick="sendExternalEvent('${item.title.replace(/'/g, "\\'")}')"
+          class="external-resource-tile resource-tile"
+          data-tag="${item.id}">
+        <div class="resource-tile-text">
+          <h5 class="resource-title clamp-2">${item.title}</h5>
+          <div>
+            ${tagsHtml}
+          </div>
+        </div>
+        <button class="external-resource-button" data-tag="${item.id}">
+          <span class="dashicons dashicons-plus-alt2"></span>
+        </button>
+      </div>
+  `;
+
+  return html;
 }
