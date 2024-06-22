@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   handleOpportunityCheckboxesFunctionality();
   handleTagsButtonSelection();
   handleSearchInput();
+  handleResetFilters();
 });
 
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
@@ -211,4 +212,29 @@ function handleSearchInput() {
 
 function isMobileScreen() {
   return window.innerWidth <= 768;
+}
+
+function removeFiltersAndSearch() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  searchParams.delete('opportunities');
+  searchParams.delete('tags');
+  searchParams.delete('query');
+
+  // Update the URL with the modified search parameters
+  url.search = searchParams.toString();
+
+  console.log('here');
+  window.history.replaceState({ path: url.toString() }, '', url.toString());
+  console.log(url.toString());
+
+  // Ensure this is called after the URL update
+  sendEvent(URL_UPDATED);
+}
+
+function handleResetFilters() {
+  const footerReset = document.querySelector('.footer__reset');
+  footerReset.addEventListener('click', () => {
+    removeFiltersAndSearch();
+  });
 }
