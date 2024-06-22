@@ -51,12 +51,12 @@ function generateInternalResourceHTML(item) {
   }">
  <div class="resource-tile-text">
    <h5 class="resource-title clamp-2">${item.title}</h5>
-   <div>${tagsHtml}</div>
+   <div class="resource-tags-container">${tagsHtml}</div>
    <p class="resource-description clamp-2">${item.short_description}</p>
  </div>
 </div>
 <button class="read-more-button" data-tag="${item.id}">
- <a class="read-more-button" href="${item.permalink}">
+ <a class="read-more-button" href="${item.link}">
    Read More
  </a>
 </button>
@@ -77,7 +77,7 @@ function generateExternalResourceHTML(item) {
           data-tag="${item.id}">
         <div class="resource-tile-text">
           <h5 class="resource-title clamp-2">${item.title}</h5>
-          <div>
+          <div class="resource-tags-container">
             ${tagsHtml}
           </div>
         </div>

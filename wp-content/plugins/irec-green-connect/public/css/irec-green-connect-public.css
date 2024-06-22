@@ -239,7 +239,15 @@ button.close-modal-btn {
   z-index: 98;
 }
 
+.external-resource-tile {
+  grid-row: span 1;
+  height: 11rem;
+}
 
+.internal-resource-tile {
+  grid-row: span 2;
+  height: 24rem;
+}
 
 .internal-resource-tile:hover,
 .external-resource-tile:hover {
