@@ -261,6 +261,82 @@ function auto_generate_organization_title($post_id, $post, $update)
 }
 add_action('save_post', 'auto_generate_organization_title', 10, 3);
 
+
+// Step 1: Customize the columns
+function set_custom_edit_organizations_new_columns($columns)
+{
+  // Remove unwanted columns
+  unset($columns['description']);
+  unset($columns['tags']);
+  unset($columns['aioseo']);
+
+  // Add custom columns
+  $columns['program_name'] = __('Program Name');
+  $columns['organization_name'] = __('Organization Name');
+  $columns['opportunities'] = __('Opportunities');
+  $columns['general_tags'] = __('General Tags');
+  $columns['address'] = __('Address');
+  $columns['url'] = __('URL');
+  $columns['date'] = __('Date'); // Keep the date column
+
+  return $columns;
+}
+add_filter('manage_edit-organizations-new_columns', 'set_custom_edit_organizations_new_columns');
+
+// Step 2: Populate the columns with data
+function custom_organizations_new_column($column, $post_id)
+{
+  switch ($column) {
+    case 'program_name':
+      echo get_post_meta($post_id, 'program_name', true);
+      break;
+
+    case 'organization_name':
+      echo get_post_meta($post_id, 'organization_name', true);
+      break;
+
+    case 'opportunities':
+      $opportunities = get_post_meta($post_id, 'opportunities', true);
+      if (is_array($opportunities)) {
+        echo implode(', ', $opportunities);
+      } else {
+        echo $opportunities;
+      }
+      break;
+
+    case 'general_tags':
+      $general_tags = get_post_meta($post_id, 'general_tags', true);
+      if (is_array($general_tags)) {
+        echo implode(', ', $general_tags);
+      } else {
+        echo $general_tags;
+      }
+      break;
+
+    case 'address':
+      echo get_post_meta($post_id, 'address', true);
+      break;
+
+    case 'url':
+      echo '<a href="' . esc_url(get_post_meta($post_id, 'url', true)) . '" target="_blank">' . esc_url(get_post_meta($post_id, 'url', true)) . '</a>';
+      break;
+  }
+}
+add_action('manage_organizations-new_posts_custom_column', 'custom_organizations_new_column', 10, 2);
+
+// Step 3: Make columns sortable if necessary
+function sortable_organizations_new_columns($columns)
+{
+  $columns['program_name'] = 'program_name';
+  $columns['organization_name'] = 'organization_name';
+  $columns['address'] = 'address';
+  $columns['url'] = 'url';
+  return $columns;
+}
+add_filter('manage_edit-organizations-new_sortable_columns', 'sortable_organizations_new_columns');
+
+
+
 // Register the shortcode for the connect-now-2.0
 function connect_now_2_0()
 {
