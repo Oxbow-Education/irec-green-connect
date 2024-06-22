@@ -1,0 +1,93 @@
+[2024-03-20 16:34:44.531545] [INFO] Starting migration loop - With allotted time: 26.834155082703 seconds
+[2024-03-20 16:34:44.535240] [DEBUG] Usage reporting data sent to wpsynchro.com server:
+
+Array
+(
+    [version] =&gt; 1
+    [site_hash] =&gt; 018a47bbaa1d160a1d0929fef4b862ea97dab084
+    [lang] =&gt; en_US
+    [is_pro] =&gt; 
+    [migration_count] =&gt; 2
+    [total_migrations] =&gt; 46
+    [features_used_this_sync] =&gt; Array
+        (
+            [success_notification_email] =&gt; 1
+            [error_notification_email] =&gt; 1
+            [clear_cache_on_success] =&gt; 1
+            [sync_preset] =&gt; db_all
+            [sync_database] =&gt; 1
+            [sync_files] =&gt; 
+            [db_make_backup] =&gt; 
+            [db_table_prefix_change] =&gt; 1
+            [db_preserve_options_table_keys] =&gt; Array
+                (
+                    [0] =&gt; active_plugins
+                    [1] =&gt; blog_public
+                )
+
+            [db_preserve_options_custom] =&gt; 
+            [include_all_database_tables] =&gt; 1
+            [only_include_database_table_count] =&gt; 0
+            [searchreplaces_count] =&gt; 7
+            [file_locations_count] =&gt; 0
+            [files_exclude_files_match_count] =&gt; 3
+            [files_ask_user_for_confirm] =&gt; 
+        )
+
+)
+
+[2024-03-20 16:34:45.859372] [INFO] Initating with remote and local host with remaining time:25.506325006485
+[2024-03-20 16:34:45.875436] [DEBUG] Calling initate service for destination: local
+[2024-03-20 16:34:48.134735] [DEBUG] Got initiate token: cd0fb945271d686ef48fc7ed0c782af6192e6fc34c933b7e63aa43f615ced7b0
+[2024-03-20 16:34:48.134828] [DEBUG] Calling initate service for destination: remote
+[2024-03-20 16:34:49.515202] [CRITICAL] Failed initializing - Could not fetch a initiation token from remote -  Response body: 
+[2024-03-20 16:34:49.515587] [CRITICAL] Failed initializing - Could not get a valid token from remote server
+[2024-03-20 16:34:49.515745] [INFO] Initation completed on: 4.9816949367523 seconds
+[2024-03-20 16:34:49.520401] [INFO] Ending migration loop - with remaining time: 21.845309019089
+[2024-03-20 16:34:54.579410] [INFO] User restarted the migration
+[2024-03-20 16:34:54.581078] [INFO] Starting migration loop - With allotted time: 26.859321117401 seconds
+[2024-03-20 16:34:54.582079] [DEBUG] Usage reporting data sent to wpsynchro.com server:
+
+Array
+(
+    [version] =&gt; 1
+    [site_hash] =&gt; 018a47bbaa1d160a1d0929fef4b862ea97dab084
+    [lang] =&gt; en_US
+    [is_pro] =&gt; 
+    [migration_count] =&gt; 2
+    [total_migrations] =&gt; 46
+    [features_used_this_sync] =&gt; Array
+        (
+            [success_notification_email] =&gt; 1
+            [error_notification_email] =&gt; 1
+            [clear_cache_on_success] =&gt; 1
+            [sync_preset] =&gt; db_all
+            [sync_database] =&gt; 1
+            [sync_files] =&gt; 
+            [db_make_backup] =&gt; 
+            [db_table_prefix_change] =&gt; 1
+            [db_preserve_options_table_keys] =&gt; Array
+                (
+                    [0] =&gt; active_plugins
+                    [1] =&gt; blog_public
+                )
+
+            [db_preserve_options_custom] =&gt; 
+            [include_all_database_tables] =&gt; 1
+            [only_include_database_table_count] =&gt; 0
+            [searchreplaces_count] =&gt; 7
+            [file_locations_count] =&gt; 0
+            [files_exclude_files_match_count] =&gt; 3
+            [files_ask_user_for_confirm] =&gt; 
+        )
+
+)
+
+[2024-03-20 16:34:55.538050] [INFO] Initating with remote and local host with remaining time:25.902415990829
+[2024-03-20 16:34:55.556676] [DEBUG] Calling initate service for destination: local
+[2024-03-20 16:34:55.671176] [DEBUG] Got initiate token: 70c438a7856e2dfef5beee84f74fbbdbe7b3a78727d2b6c02b42894aaf51a904
+[2024-03-20 16:34:55.671316] [DEBUG] Calling initate service for destination: remote
+[2024-03-20 16:34:57.079295] [CRITICAL] Failed initializing - Could not fetch a initiation token from remote -  Response body: 
+[2024-03-20 16:34:57.079752] [CRITICAL] Failed initializing - Could not get a valid token from remote server
+[2024-03-20 16:34:57.080283] [INFO] Initation completed on: 2.4988539218903 seconds
+[2024-03-20 16:34:57.090466] [INFO] Ending migration loop - with remaining time: 24.349946975708

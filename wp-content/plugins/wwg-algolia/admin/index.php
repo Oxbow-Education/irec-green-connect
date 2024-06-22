@@ -292,6 +292,8 @@ function algolia_sync_plugin_sync_on_publish($post_id)
     $record['objectID'] = $post_id;
     $record['title'] = $post->post_title;
     $record['link'] = get_permalink($post_id);
+    $record['date_published'] = get_the_date('c', $post_id);
+
     // $record['content'] = substr($post->post_content, 0, 300);
     $post_metas = get_post_custom($post_id);
     foreach ($post_metas as $key => $values) {

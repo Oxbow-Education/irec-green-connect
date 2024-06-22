@@ -6,8 +6,8 @@ function create_post_type_resources()
     'resources',
     array(
       'labels' => array(
-        'name' => __('Resources'),
-        'singular_name' => __('Resource')
+        'name' => __('Resources 2.0'),
+        'singular_name' => __('Resource 2.0')
       ),
       'public' => true,
       'has_archive' => true,
@@ -408,3 +408,20 @@ function custom_resources_column($column, $post_id)
   }
 }
 add_action('manage_resources_posts_custom_column', 'custom_resources_column', 10, 2);
+
+
+// Register shortcode for resources page
+function resources_2_0()
+{
+  ob_start();
+  include __DIR__ . "/resource_hub.php";
+  wp_enqueue_style('shoelace-css', 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css');
+  wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
+  wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
+  wp_enqueue_style('resources-css', "/wp-content/plugins/irec-green-connect/resources/resources.css");
+  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js');
+  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js');
+
+  return ob_get_clean();
+}
+add_shortcode('resources_2_0', 'resources_2_0');

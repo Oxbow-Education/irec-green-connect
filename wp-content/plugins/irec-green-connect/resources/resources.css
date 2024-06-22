@@ -1,0 +1,87 @@
+button,
+button:hover,
+button:focus,
+button[type='button'],
+button[type='submit'],
+button[type='button']:hover,
+button[type='submit']:hover,
+button[type='button']:focus,
+button[type='submit']:focus {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+.resources {
+  padding: 40px 0;
+}
+
+.resources__filters h2 {
+  font-size: 23px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.resources__filters h3 {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 0;
+  margin: 5px 0;
+  color: white;
+}
+
+.resources__filters .filter-button {
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 0.75rem;
+  outline: none;
+  margin: 5px 0;
+}
+
+.resources__filters .filters__user-type__buttons .filter-button {
+  border: #a1d165 2px solid;
+}
+
+.resources__filters .filters__user-type__buttons .filter-button:hover {
+  background-color: #a1d165;
+}
+.resources__filters .filters__resource-type__buttons .filter-button {
+  border: 2px solid #00aeb3;
+}
+.resources__filters .filters__resource-type__buttons .filter-button:hover {
+  background: #00aeb3;
+}
+
+.resources__filters .filters__user-type__buttons .filter-button--all,
+.resources__filters .filters__resource-type__buttons .filter-button--all {
+  border: 2px solid white;
+}
+.resources__filters .filters__user-type__buttons .filter-button--all:hover {
+  color: #a1d165;
+  background: white;
+}
+.resources__filters .filters__resource-type__buttons .filter-button--all:hover {
+  background: white;
+  color: #00aeb3;
+}
+
+.filters__resource-type__buttons,
+.filters__user-type__buttons {
+  display: flex;
+  column-gap: 5px;
+  flex-wrap: wrap;
+}
