@@ -1,6 +1,7 @@
 // Setup Algolia search after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   if (!orgsSearch) setupAlgoliaSearch();
+  syncFilterChipsWithURL();
 });
 
 // Initialize and configure Algolia search
@@ -172,6 +173,41 @@ function syncAlgoliaWithURL() {
     .search();
 }
 
+function syncFilterChipsWithURL() {
+  let activeFiltersHTML = '';
+  const activeFiltersEl = document.querySelector('#activeFilters');
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const opportunities = searchParams.get('opportunities')?.split(',') || [];
+
+  const tags = searchParams.get('tags')?.split(',') || [];
+  const query = searchParams.get('query') || '';
+  [...opportunities, ...tags, query].forEach((value) =>
+    value
+      ? (activeFiltersHTML += `<sl-tag size="medium" removable>${value}</sl-tag>`)
+      : null,
+  );
+  activeFiltersEl.innerHTML = activeFiltersHTML;
+
+  activeFiltersEl.addEventListener('sl-remove', (event) => {
+    const tag = event.target;
+    const value = tag.innerText;
+    const url = new URL(window.location);
+    const searchParams = new URLSearchParams(url.search);
+    const opportunities = searchParams.get('opportunities')?.split(',') || [];
+    const tags = searchParams.get('tags')?.split(',') || [];
+    const query = searchParams.get('query');
+
+    if (opportunities.includes(value)) {
+      updateQueryParam('opportunities', value, true, false);
+    } else if (tags.includes(value)) {
+      updateQueryParam('tags', value, true, false);
+    } else if (query === value) {
+      updateQueryParam('query', value, true, true);
+    }
+  });
+}
+
 function syncNumberOfResults() {
   orgsSearch.on('render', () => {
     const results = orgsSearch.helper.lastResults;
@@ -192,7 +228,10 @@ function syncNumberOfResults() {
 }
 
 // Listen to URL state and update Algolia parameters to match
-window.addEventListener(URL_UPDATED, syncAlgoliaWithURL);
+window.addEventListener(URL_UPDATED, () => {
+  syncAlgoliaWithURL();
+  syncFilterChipsWithURL();
+});
 // Initialize the algolia query to the url parameters when the search is initialized
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
   syncAlgoliaWithURL();

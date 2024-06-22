@@ -71,6 +71,11 @@
         <h2>Organizations Near Your Location</h2>
         <div id="metaInfo" class="meta__info">
           <p class="results__count"></p>
+          <div id="activeFilters" class="tags-removable">
+
+
+          </div>
+
         </div>
       </div>
 
