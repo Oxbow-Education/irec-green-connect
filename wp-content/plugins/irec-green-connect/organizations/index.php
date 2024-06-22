@@ -13,7 +13,7 @@ function create_post_type_organizations()
       'public' => true,
       'has_archive' => true,
       'rewrite' => array('slug' => 'organizations-new'),
-      'supports' => array('title', 'editor', 'thumbnail', 'custom-fields')
+      'supports' => array('custom-fields')
     )
   );
 }
@@ -208,6 +208,71 @@ if (function_exists("register_field_group")) {
   ));
 }
 
+// Hide the title field from the edit screen
+function remove_title_field()
+{
+  remove_post_type_support('organizations-new', 'title');
+}
+add_action('init', 'remove_title_field');
+
+
+
+// Add a JavaScript to hide the title input in the admin area
+function hide_title_input()
+{
+  global $post_type;
+  if ($post_type == 'organizations-new') {
+?>
+    <style type="text/css">
+      #post-body-content #titlediv {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('title').value = ' ';
+      });
+    </script>
+  <?php
+  }
+}
+add_action('admin_head', 'hide_title_input');
+
+// Auto-generate the title field based on other form values
+function auto_generate_organization_title($post_id, $post, $update)
+{
+  if ($post->post_type != 'organizations-new') {
+    return;
+  }
+
+  if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+    return;
+  }
+
+  // Fetch values from ACF fields
+  $program_name = get_field('program_name', $post_id);
+  $organization_name = get_field('organization_name', $post_id);
+
+  // Generate a new title
+  $new_title = $program_name . ' - ' . $organization_name;
+
+  // Update the post title
+  $post_data = array(
+    'ID' => $post_id,
+    'post_title' => $new_title,
+  );
+
+  // Unhook this function to prevent infinite loop
+  remove_action('save_post', 'auto_generate_organization_title', 10);
+
+  // Update the post
+  wp_update_post($post_data);
+
+  // Re-hook this function
+  add_action('save_post', 'auto_generate_organization_title', 10, 3);
+}
+add_action('save_post', 'auto_generate_organization_title', 10, 3);
+
 // Register the shortcode for the connect-now-2.0
 function connect_now_2_0()
 {
@@ -341,7 +406,7 @@ function add_generate_organizations_button()
 {
   $screen = get_current_screen();
   if ($screen->id == "edit-organizations-new") {
-?>
+  ?>
     <script type="text/javascript">
       jQuery(document).ready(function($) {
         $('body').append('<button id="generate-orgs" class="button button-primary" style="margin: 20px;">Generate Fake Organizations</button>');
