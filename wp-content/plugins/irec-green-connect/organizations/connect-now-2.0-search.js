@@ -4,6 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
   syncFilterChipsWithURL();
 });
 
+// Listen to URL state and update Algolia parameters to match
+window.addEventListener(URL_UPDATED, () => {
+  syncAlgoliaWithURL();
+  syncFilterChipsWithURL();
+});
+// Initialize the algolia query to the url parameters when the search is initialized
+window.addEventListener(ALGOLIA_INITIALIZED, () => {
+  syncAlgoliaWithURL();
+  syncNumberOfResults();
+});
+
 // Initialize and configure Algolia search
 function setupAlgoliaSearch() {
   orgsSearch = instantsearch({
@@ -226,14 +237,3 @@ function syncNumberOfResults() {
     resultsCountRemote.innerText = `${results.nbHits} Results`;
   });
 }
-
-// Listen to URL state and update Algolia parameters to match
-window.addEventListener(URL_UPDATED, () => {
-  syncAlgoliaWithURL();
-  syncFilterChipsWithURL();
-});
-// Initialize the algolia query to the url parameters when the search is initialized
-window.addEventListener(ALGOLIA_INITIALIZED, () => {
-  syncAlgoliaWithURL();
-  syncNumberOfResults();
-});

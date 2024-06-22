@@ -1,5 +1,11 @@
 let isProgrammaticChange = false;
 
+document.addEventListener('DOMContentLoaded', () => {
+  handleAutocomplete();
+  syncMapToURL();
+  handleCurrentLocationFunctionality();
+});
+
 // Initialize the map with predefined options and event listeners
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'));
@@ -275,9 +281,3 @@ function getCityFromCoordinates(center) {
     }
   });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  handleAutocomplete();
-  syncMapToURL();
-  handleCurrentLocationFunctionality();
-});
