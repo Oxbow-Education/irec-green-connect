@@ -9,6 +9,8 @@ function filtered_resources_shortcode()
 {
   ob_start();
   include __DIR__ . '/components/filtered-resources.php';
+  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
+
   return ob_get_clean();
 }
 add_shortcode('filter_resources', 'filtered_resources_shortcode');
@@ -27,7 +29,6 @@ add_shortcode('single_post_tags', 'single_post_tags_shortcode');
 function enqueue_custom_assets()
 {
   wp_enqueue_style('dashicons');
-  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 
