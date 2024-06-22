@@ -81,7 +81,7 @@ if (function_exists("register_field_group")) {
         'name' => 'remote_or_in_person',
         'type' => 'checkbox',
         'choices' => array(
-          'Remote' => 'Remote',
+          'Online' => 'Online',
           'In-Person' => 'In-Person',
           'Hybrid' => 'Hybrid',
         ),
@@ -218,7 +218,7 @@ function hide_title_input()
         document.getElementById('title').value = ' ';
       });
     </script>
-  <?php
+<?php
   }
 }
 add_action('admin_head', 'hide_title_input');
@@ -331,80 +331,6 @@ function get_random_city_state()
   return $locations[array_rand($locations)];
 }
 
-function generate_fake_organizations()
-{
-  $num_organizations = 40; // Number of organizations to generate
-  for ($i = 0; $i < $num_organizations; $i++) {
-    $location = get_random_city_state();  // Get random location data
-
-    // Create post array
-    $postarr = array(
-      'post_title'    => 'Organization ' . wp_generate_password(8, false),
-      'post_status'   => 'publish',
-      'post_type'     => 'organizations-new',
-      'post_content'  => 'This is a sample description for organization in ' . $location['city'] . ', ' . $location['state'] . '.',
-    );
-
-    // Insert the post into the database
-    $post_id = wp_insert_post($postarr);
-
-    // Check if the post was successfully created
-    if ($post_id != 0) {
-      // Update ACF fields for the created post
-      update_post_meta($post_id, 'program_name', 'Program ' . wp_generate_password(8, false));
-      update_post_meta($post_id, 'organization_name', 'Organization ' . wp_generate_password(8, false));
-      update_post_meta($post_id, 'opportunities', ['Hiring', 'Training']);
-      update_post_meta($post_id, 'general_tags', ['Youth Program', 'Solar Energy']);
-      update_post_meta($post_id, 'remote_or_in_person', 'Remote');
-      update_post_meta($post_id, 'description', 'Lorem ipsum dolor sit amet...');
-      update_post_meta($post_id, 'address', $location['city'] . ', ' . $location['state']);
-      update_post_meta($post_id, 'phone', '555-1234');
-      update_post_meta($post_id, 'email', 'info@example.com');
-      update_post_meta($post_id, 'url', 'http://www.example.com');
-      // Assuming $post_id is the ID of the post you're updating
-      $geoloc_value = array(
-        'lat' => $location['lat'],
-        'lng' => $location['lng']
-      );
-
-      // Use ACF's update_field function instead of update_post_meta for compatibility
-      update_field('_geoloc', $geoloc_value, $post_id);
-    }
-  }
-
-  // Redirect to avoid re-submissions on refresh
-  wp_redirect(admin_url('edit.php?post_type=organizations-new'));
-  exit;
-}
-
-
-function add_generate_organizations_button()
-{
-  $screen = get_current_screen();
-  if ($screen->id == "edit-organizations-new") {
-  ?>
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('body').append('<button id="generate-orgs" class="button button-primary" style="margin: 20px;">Generate Fake Organizations</button>');
-        $('#generate-orgs').click(function(e) {
-          e.preventDefault();
-          if (confirm('Are you sure you want to generate 40 fake organizations?')) {
-            window.location.href = '<?php echo admin_url('admin-post.php?action=generate_fake_organizations'); ?>';
-          }
-        });
-      });
-    </script>
-<?php
-  }
-}
-add_action('admin_footer', 'add_generate_organizations_button');
-
-// Hook function to handle the action
-function handle_generate_fake_organizations()
-{
-  generate_fake_organizations(); // call your function here
-}
-add_action('admin_post_generate_fake_organizations', 'handle_generate_fake_organizations');
 
 
 function create_connect_now_page_if_not_exists()
@@ -471,6 +397,9 @@ function create_connect_now_page_if_not_exists()
 //       if ($old_value && !is_array($old_value)) {
 //         // Convert the old single value to an array
 //         $new_value = array($old_value);
+//         if($old_value == 'Remote') {
+//           $old_value = 'Online'
+//         }
 
 //         // Log old and new values for debugging
 //         error_log("Updating post ID: $post_id");
