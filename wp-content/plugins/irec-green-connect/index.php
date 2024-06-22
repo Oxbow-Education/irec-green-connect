@@ -158,18 +158,6 @@ function fix_svg()
 }
 add_action('admin_head', 'fix_svg');
 
-function top_resources_carousel_shortcode()
-{
-  ob_start();
-
-  wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
-  wp_enqueue_style('top-resources-carousel-css', '/wp-content/plugins/irec-green-connect/public/css/top-resources-carousel.css');
-  wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js');
-  wp_enqueue_script('top-resources-carousel', '/wp-content/plugins/irec-green-connect/public/js/top-resources-carousel.js');
-  include __DIR__ . '/components/top-resources-carousel.php';
-  return ob_get_clean();
-}
-add_shortcode('top_resources_carousel', 'top_resources_carousel_shortcode');
 
 function home_page_carousel_shortcode()
 {
@@ -492,5 +480,3 @@ function pif_disable_redirect_canonical($redirect_url)
   if (is_singular()) $redirect_url = false;
   return $redirect_url;
 }
-
-

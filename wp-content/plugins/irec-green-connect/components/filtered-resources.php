@@ -19,9 +19,7 @@ $query = get_load_more_posts_query($page_number, $is_workers, $tags, $posts_per_
 include __DIR__ . '/facet-buttons.php';
 ?>
 
-<!-- <div class="filter-wrapper"> -->
 <?php require __DIR__ . '/resources-loop-grid.php'; ?>
-<!-- </div> -->
 
 <div class="skeleton-grid">
 
