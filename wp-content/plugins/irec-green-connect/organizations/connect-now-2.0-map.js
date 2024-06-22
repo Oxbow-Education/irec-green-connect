@@ -132,7 +132,7 @@ function syncMapToURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const description = searchParams.get('location');
-  if (description != 'Map Bounds') {
+  if (description && description != 'Map Bounds') {
     getBoundsForLocation(description);
     const autocompleteEl = document.getElementById('autocomplete');
     autocompleteEl.value = description;
@@ -218,20 +218,49 @@ function updateBounds(bounds) {
 }
 
 function handleCurrentLocationFunctionality() {
-  const currentLocationButton = document.querySelector('.current__location');
+  const currentLocationButton = document.querySelector('.location__current');
   currentLocationButton.addEventListener('click', () => {
+    const dialog = document.querySelector('.dialog-overview');
+    dialog.show();
     navigator.geolocation.getCurrentPosition((position) => {
       const center = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
 
-      getBoundsForLocation(center);
+      getCityFromCoordinates(center);
+      dialog.hide();
     });
+  });
+}
+
+function getCityFromCoordinates(center) {
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ location: center }, function (results, status) {
+    if (status === 'OK' && results[0]) {
+      let city = null;
+      for (const component of results[0].address_components) {
+        if (component.types.includes('locality')) {
+          city = component.long_name;
+          break;
+        }
+      }
+      if (city) {
+        console.log(`You are in the city: ${city}`);
+        getBoundsForLocation(city);
+      } else {
+        console.log('City not found for this location.');
+      }
+    } else {
+      console.error(
+        'Geocode was not successful for the following reason: ' + status,
+      );
+    }
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   handleAutocomplete();
   syncMapToURL();
+  handleCurrentLocationFunctionality();
 });

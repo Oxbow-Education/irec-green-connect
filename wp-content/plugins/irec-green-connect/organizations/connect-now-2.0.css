@@ -901,3 +901,8 @@ h6 {
 .ais-infinite-hits--showmore:has(.ais-infinite-hits--showmoreButton:disabled) {
   display: none;
 }
+
+sl-spinner {
+  display: block;
+  margin: 0 auto;
+}
