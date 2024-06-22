@@ -7,7 +7,7 @@
       <div class="location">
         <form class="location__form">
           <input id="autocomplete" class="location__input" type="text" placeholder="Enter zip, city, or state">
-          <button class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
+          <button type="button" class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
           <!-- <button type="submit" class="location__submit">Go</button> -->
         </form>
         <!-- <div class="location__remote">
@@ -146,3 +146,6 @@
   </sl-drawer>
 
 </div>
+<sl-dialog label="Finding your current location..." class="dialog-overview">
+  <sl-spinner style="--indicator-color: #236489; --track-color: #23648980;"></sl-spinner>
+</sl-dialog>
