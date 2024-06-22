@@ -122,7 +122,7 @@ function handleAutocomplete() {
     const description = place.formatted_address; // This gets the location's formatted text address
 
     updateQueryParam('location', description, false, true);
-    updateQueryParam('bounds', '', false, true);
+    updateQueryParam('bounds', '', true, true);
 
     getBoundsForLocation(description);
   });
@@ -242,6 +242,12 @@ function getCityFromCoordinates(center) {
       for (const component of results[0].address_components) {
         if (component.types.includes('locality')) {
           city = component.long_name;
+          const autocomplete = document.querySelector('#autocomplete');
+          autocomplete.value = city;
+
+          updateQueryParam('location', city, false, true);
+          updateQueryParam('bounds', '', true, true);
+
           break;
         }
       }
