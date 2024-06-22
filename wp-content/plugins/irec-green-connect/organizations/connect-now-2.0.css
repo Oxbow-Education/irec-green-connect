@@ -136,7 +136,7 @@ h6 {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1140px) {
   .connect-now .location__form,
   .connect-now__left,
   .connect-now .location__input {
@@ -376,7 +376,7 @@ h6 {
   overflow-y: scroll;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width:1140px) {
   .connect-now__main {
     grid-template-columns: 1fr;
   }
@@ -601,7 +601,7 @@ h6 {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1140px) {
   .results {
     z-index: 2
   }
