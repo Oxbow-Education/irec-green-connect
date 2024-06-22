@@ -445,3 +445,43 @@ function create_connect_now_page_if_not_exists()
 }
 
 // add_action('init', 'create_connect_now_page_if_not_exists');
+
+
+// // MIGRATION SCRIPT
+// function migrate_organization_remote_or_in_person()
+// {
+//   error_log("~~~~migrating~~~~");
+
+//   $args = array(
+//     'post_type' => 'organizations-new',
+//     'posts_per_page' => -1,
+//     'post_status' => 'any',
+//   );
+
+//   $query = new WP_Query($args);
+
+//   if ($query->have_posts()) {
+//     while ($query->have_posts()) {
+//       $query->the_post();
+//       $post_id = get_the_ID();
+
+//       $old_value = get_post_meta($post_id, 'remote_or_in_person', true);
+
+//       // Ensure we are dealing with a single string value
+//       if ($old_value && !is_array($old_value)) {
+//         // Convert the old single value to an array
+//         $new_value = array($old_value);
+
+//         // Log old and new values for debugging
+//         error_log("Updating post ID: $post_id");
+//         error_log("Old Value: " . print_r($old_value, true));
+//         error_log("New Value: " . print_r($new_value, true));
+
+//         // Update the field with the new value
+//         update_post_meta($post_id, 'remote_or_in_person', $new_value);
+//       }
+//     }
+//     wp_reset_postdata();
+//   }
+// }
+// add_action('init', 'migrate_organization_remote_or_in_person');
