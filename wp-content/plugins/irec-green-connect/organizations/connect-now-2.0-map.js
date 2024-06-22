@@ -119,26 +119,12 @@ function handleAutocomplete() {
       return;
     }
 
-    // Check if "Remote" is selected
-    if (place.formatted_address.toLowerCase() === 'remote') {
-      handleRemoteSelection();
-      return; // Exit the function early if "Remote" is handled separately
-    }
-
-    const lat = place.geometry.location.lat();
-    const lng = place.geometry.location.lng();
     const description = place.formatted_address; // This gets the location's formatted text address
 
     updateQueryParam('location', description, false, true);
     updateQueryParam('bounds', '', false, true);
 
-    // Check if the selected place is a state
-    if (place.types.includes('administrative_area_level_1')) {
-      getBoundsForLocation(description);
-    } else {
-      const center = { lat: lat, lng: lng };
-      updateCenterZoom(center, 9);
-    }
+    getBoundsForLocation(description);
   });
 }
 
@@ -156,12 +142,12 @@ function syncMapToURL() {
     const bounds = convertBoundsToGoogleMap(searchParams.get('bounds'));
     if (bounds) {
       updateBounds(bounds);
+      const zoom = map.getZoom();
+      map.setZoom(zoom + 1);
     } else {
       updateQueryParam('location', '', true, true);
     }
   }
-  const zoom = map.getZoom();
-  map.setZoom(zoom + 1);
 }
 
 function convertBoundsToGoogleMap(boundsParam) {
@@ -186,28 +172,38 @@ function convertBoundsToGoogleMap(boundsParam) {
 
   return bounds;
 }
-function getBoundsForLocation(locationName) {
+function getBoundsForLocation(location) {
   const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: locationName }, function (results, status) {
-    if (status === 'OK' && results[0]) {
-      const locationTypes = results[0].types;
 
-      if (
-        locationTypes.includes('administrative_area_level_1') &&
-        results[0].geometry.bounds
-      ) {
-        // If the location is a state and has bounds
-        updateBounds(results[0].geometry.bounds);
-      } else if (results[0].geometry.location) {
-        // For all other locations
-        updateCenterZoom(results[0].geometry.location, 12);
-      }
-    } else {
-      console.error(
-        'Geocode was not successful for the following reason: ' + status,
-      );
+  // Check if the location is an address (string) or coordinates (object)
+  if (typeof location === 'string') {
+    geocoder.geocode({ address: location }, function (results, status) {
+      handleGeocodeResults(results, status);
+    });
+  } else if (typeof location === 'object' && location.lat && location.lng) {
+    geocoder.geocode({ location: location }, function (results, status) {
+      handleGeocodeResults(results, status);
+    });
+  } else {
+    console.error(
+      'Invalid location input. Please provide an address or coordinates.',
+    );
+  }
+}
+
+function handleGeocodeResults(results, status) {
+  if (status === 'OK' && results[0]) {
+    if (results[0].geometry.bounds) {
+      console.log(results[0].geometry.bounds);
+      updateBounds(results[0].geometry.bounds);
+    } else if (results[0].geometry.location) {
+      updateCenterZoom(results[0].geometry.location, 12);
     }
-  });
+  } else {
+    console.error(
+      'Geocode was not successful for the following reason: ' + status,
+    );
+  }
 }
 
 function updateCenterZoom(center, zoom) {
@@ -219,6 +215,20 @@ function updateCenterZoom(center, zoom) {
 function updateBounds(bounds) {
   isProgrammaticChange = true;
   map.fitBounds(bounds);
+}
+
+function handleCurrentLocationFunctionality() {
+  const currentLocationButton = document.querySelector('.current__location');
+  currentLocationButton.addEventListener('click', () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      getBoundsForLocation(center);
+    });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
