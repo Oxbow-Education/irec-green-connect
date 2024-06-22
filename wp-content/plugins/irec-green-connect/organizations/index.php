@@ -79,10 +79,11 @@ if (function_exists("register_field_group")) {
         'key' => 'field_5',
         'label' => 'Remote or In-Person',
         'name' => 'remote_or_in_person',
-        'type' => 'select',
+        'type' => 'checkbox',
         'choices' => array(
           'Remote' => 'Remote',
           'In-Person' => 'In-Person',
+          'Hybrid' => 'Hybrid',
         ),
         'required' => 1,
       ),
