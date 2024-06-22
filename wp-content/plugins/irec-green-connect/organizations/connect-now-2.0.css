@@ -528,6 +528,10 @@ h6 {
   flex-wrap: wrap;
   gap: 10px;
 }
+
+@media screen and (max-width: 1140px) {
+  display: none;
+}
 .organization__tag, sl-tag::part(base) {
   background-color: #eeeeee;
   padding: 5px;
@@ -537,6 +541,19 @@ h6 {
   white-space: nowrap;
   box-shadow: none;
   border: none;
+
+}
+
+
+.tag__reset::part(base) {
+  background-color: transparent;
+  cursor: pointer
+
+}
+.tag__reset img {
+  height: 10px;
+  width: 10px;
+  margin-right: 5px;
 }
 
 .organization__quick-links {
