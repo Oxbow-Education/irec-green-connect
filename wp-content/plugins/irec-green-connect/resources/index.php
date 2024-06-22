@@ -195,7 +195,7 @@ function add_resources_migration_button()
         });
       </script>
     </div>
-<?php
+  <?php
   }
 }
 add_action('admin_notices', 'add_resources_migration_button');
@@ -325,3 +325,86 @@ function migrate_old_resources()
     // wp_delete_post($old_post->ID, true);
   }
 }
+
+
+// Step 4: Add filter for 'is_internal_resource'
+function filter_resources_by_is_internal_resource()
+{
+  global $typenow;
+  if ($typenow == 'resources') {
+    $is_internal_resource = isset($_GET['is_internal_resource']) ? $_GET['is_internal_resource'] : '';
+  ?>
+    <select name="is_internal_resource" id="is_internal_resource">
+      <option value=""><?php _e('All Resources', 'textdomain'); ?></option>
+      <option value="1" <?php selected($is_internal_resource, '1'); ?>><?php _e('Internal Resource', 'textdomain'); ?></option>
+      <option value="0" <?php selected($is_internal_resource, '0'); ?>><?php _e('External Resource', 'textdomain'); ?></option>
+    </select>
+<?php
+  }
+}
+add_action('restrict_manage_posts', 'filter_resources_by_is_internal_resource');
+
+// Step 5: Filter query by 'is_internal_resource'
+function filter_resources_query($query)
+{
+  global $pagenow, $typenow;
+  if ($pagenow == 'edit.php' && $typenow == 'resources' && isset($_GET['is_internal_resource']) && $_GET['is_internal_resource'] != '') {
+    $query->query_vars['meta_query'] = array(
+      array(
+        'key' => 'is_internal_resource',
+        'value' => $_GET['is_internal_resource'],
+        'compare' => '='
+      )
+    );
+  }
+}
+add_filter('parse_query', 'filter_resources_query');
+
+// Step 6: Show custom fields as columns
+function set_custom_edit_resources_columns($columns)
+{
+  $columns['user_type'] = __('User Type', 'textdomain');
+  $columns['resource_type'] = __('Resource Type', 'textdomain');
+  $columns['organization_name'] = __('Organization Name', 'textdomain');
+  $columns['short_description'] = __('Short Description', 'textdomain');
+  $columns['is_internal_resource'] = __('Internal Resource', 'textdomain');
+  $columns['url'] = __('URL', 'textdomain');
+  $columns['url_text'] = __('URL Text', 'textdomain');
+  $columns['long_description'] = __('Long Description', 'textdomain');
+  return $columns;
+}
+add_filter('manage_resources_posts_columns', 'set_custom_edit_resources_columns');
+
+function custom_resources_column($column, $post_id)
+{
+  switch ($column) {
+    case 'user_type':
+      $user_type = get_post_meta($post_id, 'user_type', true);
+      echo is_array($user_type) ? implode(', ', $user_type) : $user_type;
+      break;
+    case 'resource_type':
+      $resource_type = get_post_meta($post_id, 'resource_type', true);
+      echo is_array($resource_type) ? implode(', ', $resource_type) : $resource_type;
+      break;
+    case 'organization_name':
+      echo get_post_meta($post_id, 'organization_name', true);
+      break;
+    case 'short_description':
+      echo get_post_meta($post_id, 'short_description', true);
+      break;
+    case 'is_internal_resource':
+      $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
+      echo $is_internal_resource ? __('Yes', 'textdomain') : __('No', 'textdomain');
+      break;
+    case 'url':
+      echo get_post_meta($post_id, 'url', true);
+      break;
+    case 'url_text':
+      echo get_post_meta($post_id, 'url_text', true);
+      break;
+    case 'long_description':
+      echo get_post_meta($post_id, 'long_description', true);
+      break;
+  }
+}
+add_action('manage_resources_posts_custom_column', 'custom_resources_column', 10, 2);
