@@ -26,63 +26,6 @@ function hide_default_editor()
 add_action('admin_init', 'hide_default_editor');
 
 
-// Hide the Posts menu item
-function custom_admin_menu()
-{
-  // Remove the default 'Posts' menu
-  remove_menu_page('edit.php');
-
-  // Create "Internal Resources" menu item
-  add_menu_page(
-    'Internal Resources',
-    'Internal Resources',
-    'edit_posts',
-    'edit.php?post_type=post&filter_by_internal=true',
-    '',
-    'dashicons-format-aside',
-    5
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=true',
-    'All Internal Resources',
-    'All Internal Resources',
-    'manage_options',
-    'edit.php?post_type=post&filter_by_internal=true'
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=true',
-    'Add New',
-    'Add New',
-    'edit_posts',
-    'post-new.php?post_type=post'
-  );
-
-  // Create "External Resources" menu item
-  add_menu_page(
-    'External Resources',
-    'External Resources',
-    'edit_posts',
-    'edit.php?post_type=post&filter_by_internal=false',
-    '',
-    'dashicons-category',
-    6
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=false',
-    'All External Resources',
-    'All External Resources',
-    'manage_options',
-    'edit.php?post_type=post&filter_by_internal=false'
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=false',
-    'Add New',
-    'Add New',
-    'edit_posts',
-    'post-new.php?post_type=post'
-  );
-}
-add_action('admin_menu', 'custom_admin_menu');
 
 
 
@@ -260,54 +203,6 @@ if (!function_exists('http_build_url')) {
 }
 
 add_filter('wp_count_posts', 'custom_post_count', 10, 3);
-function change_post_labels_based_on_query($labels)
-{
-  // Check if 'filter_by_internal' is set in the URL
-  if (isset($_GET['filter_by_internal'])) {
-    $internal = $_GET['filter_by_internal'] === 'true';
-
-    // Define labels based on the 'filter_by_internal' value
-    $resource_type = $internal ? 'Internal Resource' : 'External Resource';
-    $resource_type_plural = $internal ? 'Internal Resources' : 'External Resources';
-
-    // Set the labels
-    $labels->name = $resource_type_plural;
-    $labels->singular_name = $resource_type;
-    $labels->add_new = 'Add New';
-    $labels->add_new_item = 'Add New ' . $resource_type;
-    $labels->edit_item = 'Edit ' . $resource_type;
-    $labels->new_item = 'New ' . $resource_type;
-    $labels->view_item = 'View ' . $resource_type;
-    $labels->view_items = 'View ' . $resource_type_plural;
-    $labels->search_items = 'Search ' . $resource_type_plural;
-    $labels->not_found = 'No ' . strtolower($resource_type_plural) . ' found';
-    $labels->not_found_in_trash = 'No ' . strtolower($resource_type_plural) . ' found in Trash';
-    $labels->parent_item_colon = 'Parent ' . $resource_type . ':';
-    $labels->all_items = 'All ' . $resource_type_plural;
-    $labels->archives = $resource_type . ' Archives';
-    $labels->attributes = $resource_type . ' Attributes';
-    $labels->insert_into_item = 'Insert into ' . strtolower($resource_type);
-    $labels->uploaded_to_this_item = 'Uploaded to this ' . strtolower($resource_type);
-    $labels->featured_image = 'Featured Image for this ' . strtolower($resource_type);
-    $labels->set_featured_image = 'Set featured image for this ' . strtolower($resource_type);
-    $labels->remove_featured_image = 'Remove featured image for this ' . strtolower($resource_type);
-    $labels->use_featured_image = 'Use as featured image for this ' . strtolower($resource_type);
-    $labels->filter_items_list = 'Filter ' . strtolower($resource_type_plural) . ' list';
-    $labels->items_list_navigation = $resource_type_plural . ' list navigation';
-    $labels->items_list = $resource_type_plural . ' list';
-    $labels->item_published = $resource_type . ' published';
-    $labels->item_published_privately = $resource_type . ' published privately';
-    $labels->item_reverted_to_draft = $resource_type . ' reverted to draft';
-    $labels->item_scheduled = $resource_type . ' scheduled';
-    $labels->item_updated = $resource_type . ' updated';
-    $labels->menu_name = $resource_type_plural;
-    $labels->name_admin_bar = $resource_type;
-  }
-
-  return $labels;
-}
-add_filter('post_type_labels_post', 'change_post_labels_based_on_query');
-
 
 
 // Register custom REST API endpoint
@@ -466,61 +361,6 @@ function handle_upload_external_resources()
   require __DIR__ . '/partials/upload-external-resources.php';
 }
 
-add_action('load-edit.php', 'change_post_label');
-
-function change_post_label()
-{
-  // Check if the 'is_internal_resource' query parameter is set to 'true'
-  if (isset($_GET['is_internal_resource']) && $_GET['is_internal_resource'] == 'true') {
-    // Get the current screen
-    $screen = get_current_screen();
-
-    // Check if the current screen is for 'post' post type
-    if ($screen->post_type == 'post') {
-      // Change the label
-      global $wp_post_types;
-      $labels = &$wp_post_types['post']->labels;
-      $labels->name = 'Internal Resources';
-      $labels->singular_name = 'Internal Resource';
-      $labels->add_new = 'Add Internal Resource';
-      $labels->add_new_item = 'Add New Internal Resource';
-      $labels->edit_item = 'Edit Internal Resource';
-      $labels->new_item = 'Internal Resource';
-      $labels->view_item = 'View Internal Resource';
-      $labels->search_items = 'Search Internal Resources';
-      $labels->not_found = 'No Internal Resources found';
-      $labels->not_found_in_trash = 'No Internal Resources found in Trash';
-      $labels->all_items = 'All Internal Resources';
-      $labels->menu_name = 'Internal Resources';
-      $labels->name_admin_bar = 'Internal Resource';
-    }
-  }
-
-  if (isset($_GET['is_internal_resource']) && $_GET['is_internal_resource'] == 'false') {
-    // Get the current screen
-    $screen = get_current_screen();
-
-    // Check if the current screen is for 'post' post type
-    if ($screen->post_type == 'post') {
-      // Change the label
-      global $wp_post_types;
-      $labels = &$wp_post_types['post']->labels;
-      $labels->name = 'External Resources';
-      $labels->singular_name = 'External Resource';
-      $labels->add_new = 'Add External Resource';
-      $labels->add_new_item = 'Add New External Resource';
-      $labels->edit_item = 'Edit External Resource';
-      $labels->new_item = 'External Resource';
-      $labels->view_item = 'View External Resource';
-      $labels->search_items = 'Search External Resources';
-      $labels->not_found = 'No External Resources found';
-      $labels->not_found_in_trash = 'No External Resources found in Trash';
-      $labels->all_items = 'All External Resources';
-      $labels->menu_name = 'External Resources';
-      $labels->name_admin_bar = 'External Resource';
-    }
-  }
-}
 
 // Populates the options for the "Filters to show" custom field
 // on the Worker Resources page
