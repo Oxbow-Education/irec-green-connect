@@ -142,10 +142,15 @@ function syncMapToURL() {
     const bounds = convertBoundsToGoogleMap(searchParams.get('bounds'));
     if (bounds) {
       updateBounds(bounds);
-      const zoom = map.getZoom();
-      map.setZoom(zoom + 1);
+      setTimeout(() => {
+        const zoom = map.getZoom();
+        map.setZoom(zoom + 1);
+      }, 100);
+      const autocomplete = document.querySelector('#autocomplete');
+      autocomplete.value = 'Map Bounds';
     } else {
       updateQueryParam('location', '', true, true);
+      updateQueryParam('bounds', '', true, true);
     }
   }
 }
@@ -194,7 +199,6 @@ function getBoundsForLocation(location) {
 function handleGeocodeResults(results, status) {
   if (status === 'OK' && results[0]) {
     if (results[0].geometry.bounds) {
-      console.log(results[0].geometry.bounds);
       updateBounds(results[0].geometry.bounds);
     } else if (results[0].geometry.location) {
       updateCenterZoom(results[0].geometry.location, 12);
@@ -252,7 +256,6 @@ function getCityFromCoordinates(center) {
         }
       }
       if (city) {
-        console.log(`You are in the city: ${city}`);
         getBoundsForLocation(city);
       } else {
         console.log('City not found for this location.');
