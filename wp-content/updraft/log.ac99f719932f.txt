@@ -857,3 +857,17 @@
 0025.809 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
 0025.812 (0) No email will/can be sent - the user has not configured an email address.
 0025.812 (0) The backup succeeded and is now complete
+0000.000 (1) Opened log file at time: Sat, 22 Jun 2024 16:38:56 +0000 on http://localhost:10004
+0000.001 (1) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.24.3 WP: 6.5.4 PHP: 7.4.30 (fpm-fcgi, Darwin Ninas-MacBook-Pro.local 23.4.0 Darwin Kernel Version 23.4.0: Fri Mar 15 00:10:42 PDT 2024; root:xnu-10063.101.17~1/RELEASE_ARM64_T6000 x86_64) MySQL: 8.0.16 (max packet size=33554432) WPLANG: en_US Server: Apache/2.4.43 (Unix) safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 52.4M | 4.5M) multisite: N openssl: OpenSSL 1.1.1q  5 Jul 2022 mcrypt: N LANG:  ZipArchive::addFile: Y
+0000.002 (1) Free space on disk containing Updraft's temporary directory: 19625.5 MB
+0000.003 (1) Requesting backup semaphore lock (ac99f719932f)
+0000.005 (1) [Debug] Lock option (updraft_lock_ac99f719932f, wp_options) was created in the database
+0000.005 (1) [Info] Lock (updraft_lock_ac99f719932f, wp_options) acquired after initialising the database
+0000.006 (1) This backup task (ac99f719932f) is either complete or began over 2 days ago: ending (1719074336.0044, ) (existing jobdata keys: )
+0000.000 (1) Opened log file at time: Sat, 22 Jun 2024 16:41:59 +0000 on http://localhost:10004
+0000.001 (1) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.24.3 WP: 6.5.4 PHP: 7.4.30 (fpm-fcgi, Darwin Ninas-MacBook-Pro.local 23.4.0 Darwin Kernel Version 23.4.0: Fri Mar 15 00:10:42 PDT 2024; root:xnu-10063.101.17~1/RELEASE_ARM64_T6000 x86_64) MySQL: 8.0.16 (max packet size=33554432) WPLANG: en_US Server: Apache/2.4.43 (Unix) safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 52.4M | 4.5M) multisite: N openssl: OpenSSL 1.1.1q  5 Jul 2022 mcrypt: N LANG:  ZipArchive::addFile: Y
+0000.001 (1) Free space on disk containing Updraft's temporary directory: 19335.5 MB
+0000.002 (1) Requesting backup semaphore lock (ac99f719932f)
+0000.003 (1) [Debug] Lock option (updraft_lock_ac99f719932f, wp_options) was created in the database
+0000.004 (1) [Info] Lock (updraft_lock_ac99f719932f, wp_options) acquired after initialising the database
+0000.005 (1) This backup task (ac99f719932f) is either complete or began over 2 days ago: ending (1719074519.1828, ) (existing jobdata keys: )
