@@ -7,8 +7,8 @@ function create_post_type_organizations()
     'organizations-new',
     array(
       'labels' => array(
-        'name' => __('Organizations 2.0 (DO NOT EDIT)'),
-        'singular_name' => __('Organization (2.0 DO NOT EDIT)')
+        'name' => __('Organizations 2.0'),
+        'singular_name' => __('Organization')
       ),
       'public' => true,
       'has_archive' => true,
