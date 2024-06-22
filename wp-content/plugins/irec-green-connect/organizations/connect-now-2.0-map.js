@@ -226,15 +226,23 @@ function handleCurrentLocationFunctionality() {
   currentLocationButton.addEventListener('click', () => {
     const dialog = document.querySelector('.dialog-overview');
     dialog.show();
-    navigator.geolocation.getCurrentPosition((position) => {
-      const center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
 
-      getCityFromCoordinates(center);
-      dialog.hide();
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+        getCityFromCoordinates(center);
+        dialog.hide();
+      },
+      (error) => {
+        console.error('Geolocation error:', error.message);
+        alert(error.message);
+        dialog.hide();
+      },
+    );
   });
 }
 
