@@ -27,6 +27,11 @@ window.addEventListener(ALGOLIA_INITIALIZED, () => {
   syncTagsButtonsWithURL();
   syncSearchInputWithURL();
 });
+window.addEventListener(URL_UPDATED, () => {
+  syncOpportunityCheckboxesWithURL();
+  syncTagsButtonsWithURL();
+  syncSearchInputWithURL();
+});
 
 // Function definitions
 function handleMapViewLisViewToggle() {
@@ -134,6 +139,8 @@ function syncOpportunityCheckboxesWithURL() {
   opportunityCheckboxes.forEach((cb) => {
     if (opportunities.includes(cb.innerText)) {
       cb.checked = true;
+    } else {
+      cb.checked = false;
     }
   });
 }
@@ -145,6 +152,8 @@ function syncTagsButtonsWithURL() {
   tagsButtons.forEach((tag) => {
     if (tags.includes(tag.innerText)) {
       tag.classList.add('tags__button--selected');
+    } else {
+      tag.classList.remove('tags__button--selected');
     }
   });
 }
@@ -153,12 +162,16 @@ function syncSearchInputWithURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const query = searchParams.get('query');
+  const searchInputs = document.querySelectorAll(
+    'form.search input[type="text"]',
+  );
   if (query) {
-    const searchInputs = document.querySelectorAll(
-      'form.search input[type="text"]',
-    );
     searchInputs.forEach((input) => {
       input.value = query;
+    });
+  } else {
+    searchInputs.forEach((input) => {
+      input.value = '';
     });
   }
 }
@@ -199,5 +212,3 @@ function handleSearchInput() {
 function isMobileScreen() {
   return window.innerWidth <= 768;
 }
-
-

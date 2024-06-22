@@ -404,6 +404,12 @@ h6 {
   text-align: left;
   color: #363636;
 }
+
+.meta__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
 .results .ais-infinite-hits--showmore {
   display: flex;
   padding: 40px 20px;
@@ -517,14 +523,20 @@ h6 {
   column-gap: 20px;
   row-gap: 10px;
 }
-
-.organization__tag {
+#activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.organization__tag, sl-tag::part(base) {
   background-color: #eeeeee;
   padding: 5px;
   color: #606060;
   font-size: 13px;
   font-weight: bold;
   white-space: nowrap;
+  box-shadow: none;
+  border: none;
 }
 
 .organization__quick-links {
