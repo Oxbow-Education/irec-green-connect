@@ -198,6 +198,11 @@ function syncFilterChipsWithURL() {
       ? (activeFiltersHTML += `<sl-tag size="medium" removable>${value}</sl-tag>`)
       : null,
   );
+  if (activeFiltersHTML) {
+    activeFiltersHTML += `<sl-tag class="tag__reset" size="medium">
+    <img src="/wp-content/plugins/irec-green-connect/public/img/reset.png" alt="" />
+    Reset All</sl-tag>`;
+  }
   activeFiltersEl.innerHTML = activeFiltersHTML;
 
   activeFiltersEl.addEventListener('sl-remove', (event) => {
@@ -217,6 +222,9 @@ function syncFilterChipsWithURL() {
       updateQueryParam('query', value, true, true);
     }
   });
+
+  const tagsReset = document.querySelector('.tag__reset');
+  tagsReset.addEventListener('click', removeFiltersAndSearch);
 }
 
 function syncNumberOfResults() {
