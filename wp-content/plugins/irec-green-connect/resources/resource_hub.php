@@ -1,3 +1,5 @@
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"></script>
+
 <div class="resources">
 
   <div class="resources__filters">
@@ -39,3 +41,7 @@
 
   </div>
 </div>
+
+<sl-dialog id="externalResourceModal" class="dialog-width" style="--width: 50vw;">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+</sl-dialog>

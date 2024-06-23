@@ -285,6 +285,9 @@ a.read-more-button {
   outline: none;
   margin: 5px 0;
 }
+.ais-infinite-hits--showmoreButton:disabled {
+  display: none;
+}
 
 .ais-infinite-hits--showmoreButton:hover {
   background-color: #00aeb3;
@@ -297,6 +300,21 @@ a.read-more-button {
   text-decoration: none;
 }
 
+.external-resource-modal-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 40px;
+  width: 45px;
+  padding: 0;
+}
+
+.external-resource-modal-close svg * {
+  fill: #d7a650;
+}
+.external-resource-modal-close:hover svg * {
+  fill: #00aeb3;
+}
 @media and screen and (max-width: 768px) {
   .clamp-2 {
     display: block;
