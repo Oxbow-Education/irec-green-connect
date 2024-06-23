@@ -5,11 +5,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener(ALGOLIA_INITIALIZED, () => {
-  // syncAlgoliaWithURL()
+  syncAlgoliaWithURL([
+    {
+      paramValue: 'userType',
+      facet: 'user_type',
+    },
+    {
+      paramValue: 'resourceType',
+      facet: 'resource_type',
+    },
+  ]);
 });
 
 window.addEventListener(URL_UPDATED, () => {
-  // syncAlgoliaWithURL()
+  syncAlgoliaWithURL([
+    {
+      paramValue: 'userType',
+      facet: 'user_type',
+    },
+    {
+      paramValue: 'resourceType',
+      facet: 'resource_type',
+    },
+  ]);
 });
 function initializeAlgolia() {
   resourcesSearch = instantsearch({
@@ -40,6 +58,7 @@ function initializeAlgolia() {
   ]);
 
   resourcesSearch.start();
+  sendEvent(ALGOLIA_INITIALIZED);
 }
 
 function generateInternalResourceHTML(item) {
@@ -95,4 +114,19 @@ function generateExternalResourceHTML(item) {
   `;
 
   return html;
+}
+
+function syncAlgoliaWithURL(properties) {
+  const url = new URL(window.location);
+  let facetFilters = [];
+  properties.forEach((property) => {
+    const { facet, paramValue } = property;
+    const values = url.searchParams.get(paramValue)?.split(',') || [];
+    const filters = values.map((val) => `${facet}:${val}`);
+    facetFilters.push(...filters);
+  });
+
+  resourcesSearch.helper
+    .setQueryParameter('facetFilters', facetFilters)
+    .search();
 }

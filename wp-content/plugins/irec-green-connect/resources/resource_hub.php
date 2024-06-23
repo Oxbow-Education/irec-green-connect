@@ -18,7 +18,7 @@
       <div class="filters__resource-type__buttons">
         <button class="filter-button" data-value="Apprenticeships">Apprenticeships</button>
         <button class="filter-button" data-value="Career Descriptions">Career Descriptions</button>
-        <button class="filter-button" data-value="Diversity, Equity, and Inclusion">Diversity, Equity, and Inclusion</button>
+        <button class="filter-button" data-value="Diversity Equity and Inclusion">Diversity, Equity, and Inclusion</button>
         <button class="filter-button" data-value="Employment">Employment</button>
         <button class="filter-button" data-value="Energy Efficiency">Energy Efficiency</button>
         <button class="filter-button" data-value="Favorites">Favorites</button>
