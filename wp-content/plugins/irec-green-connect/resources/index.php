@@ -323,6 +323,7 @@ function migrate_old_resources()
 
     // Optionally delete the old post
     // wp_delete_post($old_post->ID, true);
+
   }
 }
 
@@ -425,3 +426,13 @@ function resources_2_0()
   return ob_get_clean();
 }
 add_shortcode('resources_2_0', 'resources_2_0');
+
+
+function single_post_tags_2_0_shortcode()
+{
+  ob_start();
+
+  include __DIR__ . '/single-post-tags.php';
+  return ob_get_clean();
+}
+add_shortcode('single_post_tags_2_0', 'single_post_tags_2_0_shortcode');
