@@ -20,13 +20,23 @@ if (is_string($resource_type_array)) {
   // worker tags if they exist
   if (is_array($user_type_tag_array)) {
     foreach ($user_type_tag_array as $user_type_tag) : ?>
-      <div class="resource-tag org-tag"><?php echo $user_type_tag ?></div>
+      <?php
+      if (isset($user_type_tag) && $user_type_tag != "") {
+      ?>
+        <div class="resource-tag org-tag"><?php echo $user_type_tag ?></div>
+      <?php
+      } ?>
     <?php endforeach;
   }
   // org tags if they exist
   if (is_array($resource_type_array)) {
     foreach ($resource_type_array as $resource_type) : ?>
-      <div class="resource-tag"><?php echo $resource_type ?></div>
+      <?php
+      if (isset($resource_type) && $resource_type != "") {
+      ?>
+        <div class="resource-tag"><?php echo $resource_type ?></div>
+      <?php
+      } ?>
   <?php endforeach;
   }
   ?>
