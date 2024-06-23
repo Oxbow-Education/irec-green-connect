@@ -173,8 +173,13 @@ function handleExternalResourceClick() {
 function generateModalHTML(resource) {
   // Generate tags HTML
   let tagsHTML = '';
-  if (Array.isArray(resource.tags)) {
-    tagsHTML = resource.tags
+  if (Array.isArray(resource.user_type)) {
+    tagsHTML += resource.user_type
+      .map((tag) => `<div class="resource-tag org-tag">${tag}</div>`)
+      .join('');
+  }
+  if (Array.isArray(resource.resource_type)) {
+    tagsHTML += resource.resource_type
       .map((tag) => `<div class="resource-tag">${tag}</div>`)
       .join('');
   }
@@ -189,7 +194,7 @@ function generateModalHTML(resource) {
   
 <div class="modal-content">
     <h5 class="modal-title">${resource.title}</h5>
-    <div>${tagsHTML}</div>
+    <div class="resource-tags-container">${tagsHTML}</div>
     <p>${resource.long_description}</p>
     <p><a target="_blank" href="${resource.url}">${resource.url_text}</a></p>
   </div>
@@ -199,7 +204,7 @@ function generateModalHTML(resource) {
 }
 
 function closeModal() {
-  updateQueryParam('resource', '', true, true);
+  updateQueryParam('resource', '', true, true, true);
   const externalResourceModal = document.getElementById(
     'externalResourceModal',
   );

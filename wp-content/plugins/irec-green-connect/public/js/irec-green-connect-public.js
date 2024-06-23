@@ -5,7 +5,13 @@ function sendEvent(eventName) {
   const event = new Event(eventName);
   window.dispatchEvent(event);
 }
-function updateQueryParam(key, value, removeValue = false, single = false) {
+function updateQueryParam(
+  key,
+  value,
+  removeValue = false,
+  single = false,
+  dontSend = false,
+) {
   const url = new URL(window.location);
   const currentValue = url.searchParams.get(key);
 
@@ -46,5 +52,6 @@ function updateQueryParam(key, value, removeValue = false, single = false) {
 
   // Update the URL in the browser without reloading the page
   window.history.replaceState({ path: url.toString() }, '', url.toString());
+  if (dontSend) return;
   sendEvent(URL_UPDATED);
 }
