@@ -13,7 +13,7 @@ function create_post_type_resources()
       'has_archive' => true,
       'rewrite' => array('slug' => 'resources'),
       'supports' => array('title', 'editor', 'thumbnail', 'custom-fields', 'elementor'),
-      'show_in_rest' => true, // Enable REST API support
+      // 'show_in_rest' => true, // Enable REST API support
     )
   );
 }
