@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeAlgolia();
 });
 
+window.addEventListener(ALGOLIA_INITIALIZED, () => {
+  // syncAlgoliaWithURL()
+});
+
+window.addEventListener(URL_UPDATED, () => {
+  // syncAlgoliaWithURL()
+});
 function initializeAlgolia() {
   resourcesSearch = instantsearch({
     indexName: 'resources_newest',

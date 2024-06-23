@@ -56,13 +56,19 @@ h6 {
   border: #a1d165 2px solid;
 }
 
-.resources__filters .filters__user-type__buttons .filter-button:hover {
+.resources__filters .filters__user-type__buttons .filter-button:hover,
+.resources__filters
+  .filters__user-type__buttons
+  .filter-button.filter-button--selected {
   background-color: #a1d165;
 }
 .resources__filters .filters__resource-type__buttons .filter-button {
   border: 2px solid #00aeb3;
 }
-.resources__filters .filters__resource-type__buttons .filter-button:hover {
+.resources__filters .filters__resource-type__buttons .filter-button:hover,
+.resources__filters
+  .filters__resource-type__buttons
+  .filter-button.filter-button--selected {
   background: #00aeb3;
 }
 
