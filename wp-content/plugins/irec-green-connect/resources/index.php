@@ -436,3 +436,18 @@ function single_post_tags_2_0_shortcode()
   return ob_get_clean();
 }
 add_shortcode('single_post_tags_2_0', 'single_post_tags_2_0_shortcode');
+
+// Handle How It Works Redirects
+function custom_resource_redirect()
+{
+  $uri = $_SERVER['REQUEST_URI'];
+  if (strpos($uri, '/resources/how-it-works-for-individuals') !== false) {
+    wp_redirect(site_url('/how-it-works-for-individuals'), 301);
+    exit;
+  }
+  if (strpos($uri, '/resources/how-it-works-for-contractors') !== false) {
+    wp_redirect(site_url('/how-it-works-for-contractors'), 301);
+    exit;
+  }
+}
+add_action('template_redirect', 'custom_resource_redirect');
