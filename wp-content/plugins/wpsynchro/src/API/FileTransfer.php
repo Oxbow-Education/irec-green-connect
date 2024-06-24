@@ -10,7 +10,6 @@ use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling service "filetransfer" - Receiving files
- * @since 1.0.3
  */
 class FileTransfer extends WPSynchroService
 {

@@ -8,13 +8,11 @@ use WPSynchro\Migration\Job;
 
 /**
  * Action: Send sync error email
- * @since 1.6.0
  */
 class EmailOnSyncFailure implements Action
 {
     /**
      * Initialize
-     * @since 1.6.0
      */
     public function init()
     {
@@ -29,7 +27,6 @@ class EmailOnSyncFailure implements Action
 
     /**
      * Execute action
-     * @since 1.6.0
      */
     public function doAction($params)
     {
@@ -64,7 +61,6 @@ class EmailOnSyncFailure implements Action
 
     /**
      * Get subject
-     * @since 1.6.0
      */
     public function getSubject($to)
     {
@@ -73,7 +69,6 @@ class EmailOnSyncFailure implements Action
 
     /**
      * Get email content
-     * @since 1.6.0
      */
     public function getContent($to)
     {

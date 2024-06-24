@@ -5,7 +5,6 @@ namespace WPSynchro\Transport;
 /**
  * Class to handle the transfer of data, both JSON and binary
  *
- * @since 1.3.0
  */
 class Transfer
 {

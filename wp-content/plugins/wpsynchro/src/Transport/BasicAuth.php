@@ -5,13 +5,11 @@ namespace WPSynchro\Transport;
 /**
  * Class for basic auth stuff
  *
- * @since 1.7.1
  */
 class BasicAuth
 {
     /**
      * Check header for signs of basic auth
-     * @since 1.7.1
      */
     public function checkResponseHeaderForBasicAuth($response)
     {

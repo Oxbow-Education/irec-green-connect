@@ -12,7 +12,6 @@ use WPSynchro\Utilities\Actions\ClearTransients;
 /**
  * Class for handling service "executeaction"
  * Call should already be verified by permissions callback
- * @since 1.6.0
  */
 class ExecuteAction extends WPSynchroService
 {

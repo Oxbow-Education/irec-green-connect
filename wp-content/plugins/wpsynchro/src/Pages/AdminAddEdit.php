@@ -8,7 +8,6 @@ use WPSynchro\Migration\MigrationFactory;
 
 /**
  * Adding or editing a migration in wp-admin
- * @since 1.0.0
  */
 class AdminAddEdit
 {

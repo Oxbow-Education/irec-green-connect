@@ -5,7 +5,6 @@ namespace WPSynchro\Utilities;
 /**
  * Class to represent a single timer
  *
- * @since 1.3.0
  */
 class SyncTimer
 {

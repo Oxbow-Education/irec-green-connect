@@ -7,7 +7,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
 /**
  * Class for handling installing/remove/updating MU plugin
  *
- * @since 1.1.0
  *
  */
 class MUPluginHandler
@@ -21,7 +20,6 @@ class MUPluginHandler
 
     /**
      *  Enable MU Plugin
-     *  @since 1.1.0
      */
     public function enablePlugin()
     {
@@ -37,7 +35,6 @@ class MUPluginHandler
 
     /**
      *  Disable MU plugin
-     *  @since 1.1.0
      */
     public function disablePlugin()
     {
@@ -53,7 +50,6 @@ class MUPluginHandler
 
     /**
      *  Copy and enable MU plugin code
-     *  @since 1.1.0
      */
     private function copyAndEnable()
     {
@@ -91,7 +87,6 @@ class MUPluginHandler
 
     /**
      *  Delete MU plugin
-     *  @since 1.1.0
      */
     private function disableAndDelete()
     {
@@ -109,7 +104,6 @@ class MUPluginHandler
 
     /**
      *  Check if MU plugin needs update and update if needed
-     *  @since 1.1.0
      */
     public function checkNeedsUpdate()
     {

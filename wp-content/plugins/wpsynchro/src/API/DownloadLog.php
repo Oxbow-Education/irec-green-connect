@@ -5,12 +5,12 @@ namespace WPSynchro\API;
 use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Utilities\Licensing\Licensing;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  * Class for handling service to download logs
  * Call should already be verified by permissions callback
  *
- * @since 1.0.0
  */
 class DownloadLog extends WPSynchroService
 {
@@ -35,7 +35,8 @@ class DownloadLog extends WPSynchroService
         $common = new CommonFunctions();
         $migration_factory = MigrationFactory::getInstance();
 
-        $logpath = $common->getLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $logpath = $plugins_dirs->getUploadsFilePath();
         $filename = $common->getLogFilename($job_id);
 
         if (file_exists($logpath . $filename)) {
@@ -78,7 +79,7 @@ class DownloadLog extends WPSynchroService
             header("Content-Type: application/zip");
             header("Content-Disposition: attachment; filename=" . $zipfilename);
 
-            $zipfile = tempnam($common->getLogLocation(), "zip");
+            $zipfile = tempnam($logpath, "zip");
             $zip = new \ZipArchive();
             $zip->open($zipfile, \ZipArchive::OVERWRITE);
             $zip->addFromString($filename, $logcontents);

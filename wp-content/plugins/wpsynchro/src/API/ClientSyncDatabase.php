@@ -10,7 +10,6 @@ use WPSynchro\Transport\TransferAccessKey;
 /**
  * Class for handling service to execute SQL from remote
  * Call should already be verified by permissions callback
- * @since 1.0.0
  */
 class ClientSyncDatabase extends WPSynchroService
 {

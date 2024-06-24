@@ -6,7 +6,6 @@ use WPSynchro\Utilities\SingletonTrait;
 
 /**
  * Factory class for migration objects
- * @since 1.0.0
  */
 
 class MigrationFactory
@@ -20,7 +19,7 @@ class MigrationFactory
 
     /**
      * Function to return all migrations
-     * @since 1.0.0
+     * @return Migration[] Array of migrations
      */
     public function getAllMigrations()
     {
@@ -32,7 +31,7 @@ class MigrationFactory
 
     /**
      * Function to retrieve a single migration by id
-     * @since 1.0.0
+     * @return Migration|false
      */
     public function retrieveMigration($id)
     {
@@ -52,7 +51,6 @@ class MigrationFactory
 
     /**
      * Function to delete a single migration by id
-     * @since 1.0.0
      */
     public function deleteMigration($id)
     {
@@ -73,7 +71,6 @@ class MigrationFactory
 
     /**
      * Function to duplicate a single migration by id
-     * @since 1.3.0
      */
     public function duplicateMigration($id)
     {
@@ -96,7 +93,6 @@ class MigrationFactory
 
     /**
      * Function to save migrations
-     * @since 1.0.0
      */
     public function save()
     {
@@ -114,7 +110,6 @@ class MigrationFactory
 
     /**
      * Function to load migration data from db
-     * @since 1.0.0
      */
     private function loadData()
     {
@@ -149,7 +144,6 @@ class MigrationFactory
 
     /**
      * Function to add a migration
-     * @since 1.0.0
      */
     public function addMigration(migration $migration)
     {
@@ -171,7 +165,6 @@ class MigrationFactory
 
     /**
      * Function to start a migration (if not started)
-     * @since 1.0.0
      */
     public function startMigrationSync($id, $job_id)
     {

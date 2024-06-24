@@ -12,7 +12,6 @@ use WPSynchro\Utilities\SyncTimerList;
  * Class for handling service "FileFinalize"
  * Call should already be verified by permissions callback
  *
- * @since 1.0.0
  */
 class FileFinalize extends WPSynchroService
 {
