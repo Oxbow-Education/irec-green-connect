@@ -13,7 +13,6 @@ function create_post_type_resources()
       'has_archive' => true,
       'rewrite' => array('slug' => 'resources'),
       'supports' => array('title', 'editor', 'thumbnail', 'custom-fields', 'elementor'),
-      // 'show_in_rest' => true, // Enable REST API support
     )
   );
 }
@@ -323,7 +322,6 @@ function migrate_old_resources()
 
     // Optionally delete the old post
     // wp_delete_post($old_post->ID, true);
-
   }
 }
 
@@ -410,7 +408,6 @@ function custom_resources_column($column, $post_id)
 }
 add_action('manage_resources_posts_custom_column', 'custom_resources_column', 10, 2);
 
-
 // Register shortcode for resources page
 function resources_2_0()
 {
@@ -451,3 +448,4 @@ function custom_resource_redirect()
   }
 }
 add_action('template_redirect', 'custom_resource_redirect');
+
