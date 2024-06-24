@@ -4,21 +4,26 @@
 # git clone --mirror url_of_your_repo.git backup_repo.git
 
 # Navigate to the repository directory
-cd url_of_your_repo.git
+# cd backup_repo.git
 
-# List of files to remove
-declare -a files=(
-"wp-content/uploads/2024/04/GWC-Career-Stories-Shorts-Samuel-Mcculloch-1.mp4"
-"wp-content/uploads/2024/04/GWC-Career-Stories-Shorts-Yibniyah-Hawkins-1.mp4"
-"wp-content/uploads/2023/11/GWC-Social-Wayne-Video-50.4.mp4"
-"wp-content/uploads/2024/06/shutterstock_7252911371.jpg"
-"wp-content/uploads/2023/11/GWC-Dusniel-Social-103.mp4"
-"wp-content/uploads/2023/11/shutterstock_1549337843.jpg"
-"wp-content/uploads/2024/04/GWC-Career-Stories-Shorts-Wendy-Melius-1.mp4"
-"wp-content/uploads/2024/04/GWC-Career-Stories-Shorts-Paul-Amos-1.mp4"
-"wp-content/uploads/2023/11/GWC-Social-Salina-Video-116.mp4"
-"wp-content/uploads/2024/04/GWC-Career-Stories-Shorts-Mike-Stevens-1.mp4"
-)
+# Fetch and store the list of large files over 100MB (104857600 bytes)
+declare -a files
+while IFS= read -r line; do
+    files+=("$line")
+done < <(git rev-list --objects --all |
+    git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' |
+    awk '$1=="blob" && $3 > 104857600 {print $4}' |  # Filters blobs larger than 100MB
+    sort -u)  # Removes duplicates
+
+# Check if any large files were found
+if [ ${#files[@]} -eq 0 ]; then
+    echo "No files larger than 100MB found in the repository."
+    exit 0
+fi
+
+# Display the files to be removed
+echo "The following files will be removed for being larger than 100MB:"
+printf '%s\n' "${files[@]}"
 
 # Remove each file using git filter-repo
 for file in "${files[@]}"; do
@@ -27,3 +32,7 @@ done
 
 # Verify the repository and check the log
 echo "Files removed. Please verify the integrity and history of your repository."
+
+# Optional: Clean up unnecessary files and optimize the local repository
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
