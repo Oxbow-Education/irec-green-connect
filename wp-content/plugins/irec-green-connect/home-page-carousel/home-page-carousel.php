@@ -2,71 +2,68 @@
   <div class="carousel">
     <div class="slide active slide-1">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/slide-1.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-job-seekers-1.png" />
         <h2>For Job Seekers</h2>
 
       </div>
       <div class="slide-links">
 
-        <div class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Hiring" class="link link--yellow row-1-4">
           <p>
             Connect with employers who are hiring
           </p>
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--blue row-1-3">
+        <div data-link="/connect-now?opportunities=Training,Information" class="link link--blue row-1-3">
           <p>
-            Explore education, training, and apprenticeship programs
+            Find training and apprenticeship programs
           </p>
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--green row-4-6">
+        <div data-link="/learn-more-for-job-seekers" class="link link--green row-4-6">
           <p>
-            Learn more about career opportunities
-          </p>
+            Get career tips and read success stories </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--light-blue row-2-6">
+        <div data-link='/careers-in-home-energy-performance' class="link link--light-blue row-2-6">
           <p>
-            Explore careers in building performance
-          </p>
+            Explore careers in home energy performance </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
       </div>
     </div>
     <div class="slide left slide-2">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/slide-2.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-employers.png" />
         <h2>For Employers</h2>
 
       </div>
       <div class="slide-links">
 
-        <div class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Training,Information" class="link link--yellow row-1-4">
           <p>
-            Partner with training programs in your area
+            Partner with training programs in your area </p>
+
+          <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
+        </div>
+        <div data-link="/clean-energy-apprenticeships" class="link link--blue row-1-3">
+          <p>
+            Start or join an apprenticeship program
           </p>
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--blue row-1-3">
+        <div data-link='/learn-more-for-employers' class="link link--green row-4-6">
           <p>
-            Start an apprenticeship program
+            Explore hiring and diversity strategies
           </p>
-
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--green row-4-6">
+        <div data-link='/resources?user_type=Employer' class="link link--light-blue row-2-6">
           <p>
             Access workforce development tools and templates
-          </p>
-          <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
-        </div>
-        <div class="link link--light-blue row-2-6">
-          <p>
-            Learn how to hire and retain a diverse workforce
           </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
@@ -74,33 +71,30 @@
     </div>
     <div class="slide back slide-3">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/slide-3.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-education-and-workforce.png" />
         <h2>For Education &
           Workforce Organizations</h2>
 
       </div>
       <div class="slide-links">
 
-        <div class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Hiring,Training" class="link link--yellow row-1-4">
           <p>
-            Connect with employers and training providers in your area
-          </p>
+            Connect with employers and training providers in your area </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--blue row-1-3">
+        <div data-link="/clean-energy-apprenticeships" class="link link--blue row-1-3">
           <p>
-            Start or join an apprenticeship program
-          </p>
+            Start or join an apprenticeship program </p>
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--green row-4-6">
+        <div data-link="/learn-more-for-educators-and-workforce-organizations" class="link link--green row-4-6">
           <p>
-            Help students and clients explore career opportunities
-          </p>
+            Help students and job seekers explore career opportunities </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--light-blue row-2-6">
+        <div data-link="/resources" class="link link--light-blue row-2-6">
           <p>
             Learn about IREC accreditation and certification
           </p>
@@ -110,27 +104,31 @@
     </div>
     <div class="slide right slide-3">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/slide-3.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-contractors.png" />
         <h2>For Contractors</h2>
 
       </div>
       <div class="slide-links">
 
-        <div class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Bids & Contracts" class="link link--yellow row-1-4">
           <p>
-            Connect with organizations seeking contractor
+            Connect with organizations seeking contractors
           </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div class="link link--blue row-1-3">
+        <div data-link="/resources/a-guide-to-success-for-contractors-new-to-the-weatherization-assistance-program/" class="link link--blue row-1-3">
           <p>
-            Access the Weatherization Contractor’s Guide to Success
+            Access the Contractor’s Guide to Success for Home Weatherization
           </p>
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-
-        <div class="link link--light-blue row-2-6">
+        <div data-link="/resources?user_type=Contracto" class="link link--green row-4-6">
+          <p>
+            Browse more resources for contractors </p>
+          <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
+        </div>
+        <div data-link="/contractors-in-building-performance" class="link link--light-blue row-2-6">
           <p>
             Explore opportunities in home energy performance
           </p>
