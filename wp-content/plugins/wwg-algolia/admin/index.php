@@ -291,7 +291,24 @@ function algolia_sync_plugin_sync_on_publish($post_id)
     $record = [];
     $record['objectID'] = $post_id;
     $record['title'] = $post->post_title;
-    $record['link'] = get_permalink($post_id);
+    // Convert the permalink to relative and add it to the record
+    $absolute_url = get_permalink($post_id);
+    $relative_url = wp_make_link_relative($absolute_url);
+    $record['link'] = $relative_url;
+
+    $record['date_published'] = get_the_date('c', $post_id);
+
+    // Fetch the thumbnail URL and add it to the record
+    $thumbnail_id = get_post_thumbnail_id($post_id);
+    $thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'full'); // You can change 'full' to any other image size
+    if ($thumbnail_url) {
+      $thumbnail_url = wp_make_link_relative($thumbnail_url);
+    } else {
+      $thumbnail_url = ''; // Provide a default or empty string if no thumbnail
+    }
+    $record['thumbnail_url'] = $thumbnail_url;
+
+
     // $record['content'] = substr($post->post_content, 0, 300);
     $post_metas = get_post_custom($post_id);
     foreach ($post_metas as $key => $values) {
