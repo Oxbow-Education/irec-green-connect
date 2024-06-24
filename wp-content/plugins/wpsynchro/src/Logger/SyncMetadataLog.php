@@ -4,27 +4,24 @@ namespace WPSynchro\Logger;
 
 use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Migration\Job;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  * Class for handling logging data on sync for use in logs menu (not the logger-logger, but just a log...  :) )
- *
- * @since 1.0.5
  */
 class SyncMetadataLog
 {
     /**
      *  Start a migration entry in the log
-     *  @since 1.0.5
      */
     public function startMigration($job_id, $migration_id, $description)
     {
-
         // Get logs
         $synclog = $this->getAllLogs();
 
         // Create the new one
         $newsync = new \stdClass();
-        $newsync->start_time = current_time('timestamp');
+        $newsync->start_time = time();
         $newsync->state = 'started';
         $newsync->description = $description;
         $newsync->job_id = $job_id;
@@ -43,7 +40,6 @@ class SyncMetadataLog
 
     /**
      *  Mark a migration entry as completed
-     *  @since 1.0.5
      */
     public function stopMigration($job_id, $migration_id)
     {
@@ -60,7 +56,6 @@ class SyncMetadataLog
 
     /**
      *  Mark a migration entry as failed
-     *  @since 1.6.0
      */
     public function setMigrationToFailed($job_id, $migration_id)
     {
@@ -78,7 +73,6 @@ class SyncMetadataLog
 
     /**
      *  Retrieve all log entries
-     *  @since 1.0.5
      */
     public function getAllLogs()
     {
@@ -87,17 +81,41 @@ class SyncMetadataLog
             $synclog = [];
         }
 
+        // Check if any db backups are attached to these and present on the fs
+        $plugins_dirs = new PluginDirs();
+        $log_location = $plugins_dirs->getUploadsFilePath();
+        foreach ($synclog as $log) {
+            $filename = "database_backup_" . $log->job_id . ".sql";
+            if (file_exists($log_location . $filename)) {
+                $log->db_backup_is_on_disk = true;
+            } else {
+                $log->db_backup_is_on_disk = false;
+            }
+        }
+
+        // Format date time according to wp settings
+        $date_format = get_option('date_format');
+        $time_format = get_option('time_format');
+        $timezone_string = wp_timezone_string();
+        foreach ($synclog as $log) {
+            $dt = new \DateTime();
+            $dt->setTimestamp($log->start_time);
+            $dt->setTimezone(new \DateTimeZone($timezone_string));
+            $log->start_time_formatted = $dt->format($date_format . ' ' . $time_format);
+        }
+
         return $synclog;
     }
 
     /**
      *  Remove list of single logs
-     *  @since 1.5.0
      */
     public function removeSingleLogs($logs)
     {
+        $plugins_dirs = new PluginDirs();
+        $log_dir = $plugins_dirs->getUploadsFilePath();
         $common = new CommonFunctions();
-        $log_dir = $common->getLogLocation();
+
         foreach ($logs as $log) {
             // Remove data in db
             $option_to_delete = Job::getJobWPOptionName($log->migration_id, $log->job_id);
@@ -110,8 +128,23 @@ class SyncMetadataLog
     }
 
     /**
+     * Delete single log
+     */
+    public function deleteSingleLog(string $job_id)
+    {
+        $logs = $this->getAllLogs();
+        foreach ($logs as $index => $log) {
+            if ($log->job_id == $job_id) {
+                $this->removeSingleLogs([$log]);
+                array_splice($logs, $index, 1);
+                update_option("wpsynchro_sync_logs", $logs, 'no');
+                break;
+            }
+        }
+    }
+
+    /**
      *  Remove all log entries
-     *  @since 1.5.0
      */
     public function removeAllLogs()
     {
@@ -119,8 +152,8 @@ class SyncMetadataLog
         $logs = $this->getAllLogs();
 
         // Remove all log files from wpsynchro dir
-        $common = new CommonFunctions();
-        $log_dir = $common->getLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $log_dir = $plugins_dirs->getUploadsFilePath();
 
         // Clean files *.log, *.sql and *.txt
         @array_map('unlink', glob("$log_dir*.sql"));
@@ -135,10 +168,10 @@ class SyncMetadataLog
             }
 
             if (count($options_to_delete) > 30) {
-            // @codeCoverageIgnoreStart
+                // @codeCoverageIgnoreStart
                 $this->deleteLogEntriesInDatabase($options_to_delete);
                 $options_to_delete = [];
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             }
         }
         if (count($options_to_delete) > 0) {
@@ -151,7 +184,6 @@ class SyncMetadataLog
 
     /**
      *  Delete log entries in database
-     *  @since 1.5.0
      */
     public function deleteLogEntriesInDatabase($log_options_to_delete)
     {

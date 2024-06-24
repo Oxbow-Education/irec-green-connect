@@ -4,7 +4,6 @@ namespace WPSynchro\Database;
 
 /**
  * Class for a database table column data
- * @since 1.6.0
  */
 class TableColumns
 {

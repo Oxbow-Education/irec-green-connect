@@ -7,13 +7,13 @@ function create_post_type_organizations()
     'organizations-new',
     array(
       'labels' => array(
-        'name' => __('Organizations 2.0 (DO NOT EDIT)'),
-        'singular_name' => __('Organization (2.0 DO NOT EDIT)')
+        'name' => __('Organizations 2.0'),
+        'singular_name' => __('Organization')
       ),
       'public' => true,
       'has_archive' => true,
       'rewrite' => array('slug' => 'organizations-new'),
-      'supports' => array('title', 'editor', 'thumbnail', 'custom-fields')
+      'supports' => array('custom-fields')
     )
   );
 }
@@ -46,11 +46,11 @@ if (function_exists("register_field_group")) {
         'name' => 'opportunities',
         'type' => 'checkbox',
         'choices' => array(
-          'Hiring' => 'Hiring',
-          'Training' => 'Training',
-          'Information' => 'Information',
           'Bids & Contracts' => 'Bids & Contracts',
-          'Create an Apprenticeship Program' => 'Create an Apprenticeship Program',
+          'Hiring' => 'Hiring',
+          'Information' => 'Information',
+          'Registerred Apprenticeships' => 'Registerred Apprenticeships',
+          'Training' => 'Training',
         ),
         'required' => 1,
       ),
@@ -61,16 +61,19 @@ if (function_exists("register_field_group")) {
         'name' => 'general_tags',
         'type' => 'checkbox',
         'choices' => array(
-          'Youth Program' => 'Youth Program',
-          'IREC Accredited' => 'IREC Accredited',
-          'Weatherization Assistance Program Employer' => 'Weatherization Assistance Program Employer',
           'Community Partner' => 'Community Partner',
-          'Training Provider' => 'Training Provider',
-          'Registered Apprenticeship' => 'Registered Apprenticeship',
-          'Wind Energy' => 'Wind Energy',
-          'Solar Energy' => 'Solar Energy',
-          'Energy Efficiency' => 'Energy Efficiency',
           'Electric Vehicles & Battery Storage' => 'Electric Vehicles & Battery Storage',
+          'Energy Efficiency' => 'Energy Efficiency',
+          'Group Apprenticeship Program' => 'Group Apprenticeship Program',
+          'Internship' => 'Internship',
+          'IREC Accredited' => 'IREC Accredited',
+          "Pre-Apprenticeship" => 'Pre-Apprenticeship',
+          'Registered Apprenticeship' => 'Registered Apprenticeship',
+          'Solar Energy' => 'Solar Energy',
+          'Training Provider' => 'Training Provider',
+          'Weatherization Assistance Program Employer' => 'Weatherization Assistance Program Employer',
+          'Wind Energy' => 'Wind Energy',
+          'Youth Program' => 'Youth Program',
         ),
         'multiple' => 1,
         'required' => 1,
@@ -79,10 +82,11 @@ if (function_exists("register_field_group")) {
         'key' => 'field_5',
         'label' => 'Remote or In-Person',
         'name' => 'remote_or_in_person',
-        'type' => 'select',
+        'type' => 'checkbox',
         'choices' => array(
-          'Remote' => 'Remote',
+          'Online' => 'Online',
           'In-Person' => 'In-Person',
+          'Hybrid' => 'Hybrid',
         ),
         'required' => 1,
       ),
@@ -99,80 +103,6 @@ if (function_exists("register_field_group")) {
         'name' => 'address',
         'type' => 'text',
       ),
-      array(
-        'key' => 'field_12',
-        'label' => 'State',
-        'name' => 'state',
-        'type' => 'select',
-        'instructions' => 'Select the state',
-        'required' => 1,
-        'conditional_logic' => 0,
-        'wrapper' => array(
-          'width' => '',
-          'class' => '',
-          'id' => '',
-        ),
-        'choices' => array(
-          'AL' => 'Alabama',
-          'AK' => 'Alaska',
-          'AZ' => 'Arizona',
-          'AR' => 'Arkansas',
-          'CA' => 'California',
-          'CO' => 'Colorado',
-          'CT' => 'Connecticut',
-          'DE' => 'Delaware',
-          'FL' => 'Florida',
-          'GA' => 'Georgia',
-          'HI' => 'Hawaii',
-          'ID' => 'Idaho',
-          'IL' => 'Illinois',
-          'IN' => 'Indiana',
-          'IA' => 'Iowa',
-          'KS' => 'Kansas',
-          'KY' => 'Kentucky',
-          'LA' => 'Louisiana',
-          'ME' => 'Maine',
-          'MD' => 'Maryland',
-          'MA' => 'Massachusetts',
-          'MI' => 'Michigan',
-          'MN' => 'Minnesota',
-          'MS' => 'Mississippi',
-          'MO' => 'Missouri',
-          'MT' => 'Montana',
-          'NE' => 'Nebraska',
-          'NV' => 'Nevada',
-          'NH' => 'New Hampshire',
-          'NJ' => 'New Jersey',
-          'NM' => 'New Mexico',
-          'NY' => 'New York',
-          'NC' => 'North Carolina',
-          'ND' => 'North Dakota',
-          'OH' => 'Ohio',
-          'OK' => 'Oklahoma',
-          'OR' => 'Oregon',
-          'PA' => 'Pennsylvania',
-          'RI' => 'Rhode Island',
-          'SC' => 'South Carolina',
-          'SD' => 'South Dakota',
-          'TN' => 'Tennessee',
-          'TX' => 'Texas',
-          'UT' => 'Utah',
-          'VT' => 'Vermont',
-          'VA' => 'Virginia',
-          'WA' => 'Washington',
-          'WV' => 'West Virginia',
-          'WI' => 'Wisconsin',
-          'WY' => 'Wyoming'
-        ),
-        'default_value' => array(),
-        'allow_null' => 0,
-        'multiple' => 0,
-        'ui' => 1, // To enable a more user-friendly select interface
-        'ajax' => 0,
-        'return_format' => 'value', // Returns the value of the selected choice
-        'placeholder' => '',
-      ),
-
       array(
         'key' => 'field_8',
         'label' => 'Phone',
@@ -241,7 +171,8 @@ if (function_exists("register_field_group")) {
             'step' => '0.00000001', // Precision up to 6 decimal places
           )
         )
-      )
+      ),
+
 
     ),
     'location' => array(
@@ -265,16 +196,161 @@ if (function_exists("register_field_group")) {
   ));
 }
 
+// Hide the title field from the edit screen
+function remove_title_field()
+{
+  remove_post_type_support('organizations-new', 'title');
+}
+add_action('init', 'remove_title_field');
+
+
+
+// Add a JavaScript to hide the title input in the admin area
+function hide_title_input()
+{
+  global $post_type;
+  if ($post_type == 'organizations-new') {
+?>
+    <style type="text/css">
+      #post-body-content #titlediv {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('title').value = ' ';
+      });
+    </script>
+  <?php
+  }
+}
+add_action('admin_head', 'hide_title_input');
+
+// Auto-generate the title field based on other form values
+function auto_generate_organization_title($post_id, $post, $update)
+{
+  if ($post->post_type != 'organizations-new') {
+    return;
+  }
+
+  if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+    return;
+  }
+
+  // Fetch values from ACF fields
+  $program_name = get_field('program_name', $post_id);
+  $organization_name = get_field('organization_name', $post_id);
+
+  // Generate a new title
+  $new_title = $program_name . ' - ' . $organization_name;
+
+  // Update the post title
+  $post_data = array(
+    'ID' => $post_id,
+    'post_title' => $new_title,
+  );
+
+  // Unhook this function to prevent infinite loop
+  remove_action('save_post', 'auto_generate_organization_title', 10);
+
+  // Update the post
+  wp_update_post($post_data);
+
+  // Re-hook this function
+  add_action('save_post', 'auto_generate_organization_title', 10, 3);
+}
+add_action('save_post', 'auto_generate_organization_title', 10, 3);
+
+
+// Step 1: Customize the columns
+function set_custom_edit_organizations_new_columns($columns)
+{
+  // Remove unwanted columns
+  unset($columns['description']);
+  unset($columns['tags']);
+  unset($columns['aioseo']);
+
+  // Add custom columns
+  $columns['program_name'] = __('Program Name');
+  $columns['organization_name'] = __('Organization Name');
+  $columns['opportunities'] = __('Opportunities');
+  $columns['general_tags'] = __('General Tags');
+  $columns['address'] = __('Address');
+  $columns['url'] = __('URL');
+  $columns['date'] = __('Date'); // Keep the date column
+
+  return $columns;
+}
+add_filter('manage_edit-organizations-new_columns', 'set_custom_edit_organizations_new_columns');
+
+// Step 2: Populate the columns with data
+function custom_organizations_new_column($column, $post_id)
+{
+  switch ($column) {
+    case 'program_name':
+      echo get_post_meta($post_id, 'program_name', true);
+      break;
+
+    case 'organization_name':
+      echo get_post_meta($post_id, 'organization_name', true);
+      break;
+
+    case 'opportunities':
+      $opportunities = get_post_meta($post_id, 'opportunities', true);
+      if (is_array($opportunities)) {
+        echo implode(', ', $opportunities);
+      } else {
+        echo $opportunities;
+      }
+      break;
+
+    case 'general_tags':
+      $general_tags = get_post_meta($post_id, 'general_tags', true);
+      if (is_array($general_tags)) {
+        echo implode(', ', $general_tags);
+      } else {
+        echo $general_tags;
+      }
+      break;
+
+    case 'address':
+      echo get_post_meta($post_id, 'address', true);
+      break;
+
+    case 'url':
+      echo '<a href="' . esc_url(get_post_meta($post_id, 'url', true)) . '" target="_blank">' . esc_url(get_post_meta($post_id, 'url', true)) . '</a>';
+      break;
+  }
+}
+add_action('manage_organizations-new_posts_custom_column', 'custom_organizations_new_column', 10, 2);
+
+// Step 3: Make columns sortable if necessary
+function sortable_organizations_new_columns($columns)
+{
+  $columns['program_name'] = 'program_name';
+  $columns['organization_name'] = 'organization_name';
+  $columns['address'] = 'address';
+  $columns['url'] = 'url';
+  return $columns;
+}
+add_filter('manage_edit-organizations-new_sortable_columns', 'sortable_organizations_new_columns');
+
+
+
 // Register the shortcode for the connect-now-2.0
 function connect_now_2_0()
 {
   ob_start();
+  $api_key = 'AIzaSyCsvRzE48uIrgqcw_mFz2yspQJsz9Bl-BQ';
   include __DIR__ . "/connect-now-2.0.php";
-  wp_enqueue_style('connect-now-2.0', "/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.css");
-  wp_enqueue_script('connect-now-2.0-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.js');
+  wp_enqueue_style('shoelace-css', 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css');
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
-  wp_enqueue_script('google-maps-js', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsvRzE48uIrgqcw_mFz2yspQJsz9Bl-BQ&libraries=places&callback=initMap');
+  wp_enqueue_style('connect-now-2.0', "/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.css");
+  wp_enqueue_script('connect-now-2.0-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.js');
+  wp_enqueue_script('connect-now-2.0-map-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-map.js');
+  wp_enqueue_script('connect-now-2.0-search-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-search.js');
+  wp_enqueue_script('google-maps-js', 'https://maps.googleapis.com/maps/api/js?key=' . $api_key . '&libraries=places&callback=initMap');
 
   return ob_get_clean();
 }
@@ -296,16 +372,15 @@ function save_organization_new_lat_lng($post_id, $post, $update)
     return;
   }
 
-  // Assuming you have custom fields for address, city, state, and zip
+  // Assuming you have custom fields for address
   $address_line_1 = get_post_meta($post_id, 'address', true);
 
-  // Check if $latlong is not empty and is an array with 'lat' and 'lng' keys
+  // Check if $geoData is not empty
   $geoData = get_lat_lng_from_address($address_line_1, '', '', '', '');
   if ($geoData) {
     update_field('_geoloc', $geoData, $post_id);
   }
 }
-
 
 
 
@@ -335,80 +410,6 @@ function get_random_city_state()
   return $locations[array_rand($locations)];
 }
 
-function generate_fake_organizations()
-{
-  $num_organizations = 40; // Number of organizations to generate
-  for ($i = 0; $i < $num_organizations; $i++) {
-    $location = get_random_city_state();  // Get random location data
-
-    // Create post array
-    $postarr = array(
-      'post_title'    => 'Organization ' . wp_generate_password(8, false),
-      'post_status'   => 'publish',
-      'post_type'     => 'organizations-new',
-      'post_content'  => 'This is a sample description for organization in ' . $location['city'] . ', ' . $location['state'] . '.',
-    );
-
-    // Insert the post into the database
-    $post_id = wp_insert_post($postarr);
-
-    // Check if the post was successfully created
-    if ($post_id != 0) {
-      // Update ACF fields for the created post
-      update_post_meta($post_id, 'program_name', 'Program ' . wp_generate_password(8, false));
-      update_post_meta($post_id, 'organization_name', 'Organization ' . wp_generate_password(8, false));
-      update_post_meta($post_id, 'opportunities', ['Hiring', 'Training']);
-      update_post_meta($post_id, 'general_tags', ['Youth Program', 'Solar Energy']);
-      update_post_meta($post_id, 'remote_or_in_person', 'Remote');
-      update_post_meta($post_id, 'description', 'Lorem ipsum dolor sit amet...');
-      update_post_meta($post_id, 'address', $location['city'] . ', ' . $location['state']);
-      update_post_meta($post_id, 'phone', '555-1234');
-      update_post_meta($post_id, 'email', 'info@example.com');
-      update_post_meta($post_id, 'url', 'http://www.example.com');
-      // Assuming $post_id is the ID of the post you're updating
-      $geoloc_value = array(
-        'lat' => $location['lat'],
-        'lng' => $location['lng']
-      );
-
-      // Use ACF's update_field function instead of update_post_meta for compatibility
-      update_field('_geoloc', $geoloc_value, $post_id);
-    }
-  }
-
-  // Redirect to avoid re-submissions on refresh
-  wp_redirect(admin_url('edit.php?post_type=organizations-new'));
-  exit;
-}
-
-
-function add_generate_organizations_button()
-{
-  $screen = get_current_screen();
-  if ($screen->id == "edit-organizations-new") {
-?>
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('body').append('<button id="generate-orgs" class="button button-primary" style="margin: 20px;">Generate Fake Organizations</button>');
-        $('#generate-orgs').click(function(e) {
-          e.preventDefault();
-          if (confirm('Are you sure you want to generate 40 fake organizations?')) {
-            window.location.href = '<?php echo admin_url('admin-post.php?action=generate_fake_organizations'); ?>';
-          }
-        });
-      });
-    </script>
-<?php
-  }
-}
-add_action('admin_footer', 'add_generate_organizations_button');
-
-// Hook function to handle the action
-function handle_generate_fake_organizations()
-{
-  generate_fake_organizations(); // call your function here
-}
-add_action('admin_post_generate_fake_organizations', 'handle_generate_fake_organizations');
 
 
 function create_connect_now_page_if_not_exists()
@@ -449,3 +450,78 @@ function create_connect_now_page_if_not_exists()
 }
 
 // add_action('init', 'create_connect_now_page_if_not_exists');
+
+
+// MIGRATION SCRIPT
+function migrate_organization_remote_or_in_person()
+{
+  error_log("~~~~migrating~~~~");
+
+  $args = array(
+    'post_type' => 'organizations-new',
+    'posts_per_page' => -1,
+    'post_status' => 'any',
+  );
+
+  $query = new WP_Query($args);
+
+  if ($query->have_posts()) {
+    while ($query->have_posts()) {
+      $query->the_post();
+      $post_id = get_the_ID();
+
+      $old_value = get_post_meta($post_id, 'remote_or_in_person', true);
+
+      // Ensure we are dealing with a single string value
+      if ($old_value && !is_array($old_value)) {
+        if ($old_value == 'Remote') {
+          $old_value = 'Online';
+        }
+        // Convert the old single value to an array
+        $new_value = array($old_value);
+
+        // Log old and new values for debugging
+        error_log("Updating post ID: $post_id");
+        error_log("Old Value: " . print_r($old_value, true));
+        error_log("New Value: " . print_r($new_value, true));
+
+        // Update the field with the new value
+        update_post_meta($post_id, 'remote_or_in_person', $new_value);
+      }
+    }
+    wp_reset_postdata();
+  }
+}
+function add_migration_button()
+{
+  $screen = get_current_screen();
+  if ($screen->post_type == 'organizations-new' && $screen->base == 'edit') {
+  ?>
+    <div style="padding: 10px;">
+      <button id="migrate-data" class="button button-primary">Migrate Data</button>
+      <script type="text/javascript">
+        document.getElementById('migrate-data').addEventListener('click', function() {
+          if (confirm('Are you sure you want to run the migration?')) {
+            jQuery.post(ajaxurl, {
+              action: 'run_migration'
+            }, function(response) {
+              alert(response.data);
+            });
+          }
+        });
+      </script>
+    </div>
+<?php
+  }
+}
+add_action('admin_notices', 'add_migration_button');
+function run_migration_ajax()
+{
+  if (!current_user_can('manage_options')) {
+    wp_send_json_error('You do not have permission to perform this action.');
+  }
+
+  migrate_organization_remote_or_in_person();
+  wp_send_json_success('Migration completed successfully.');
+}
+add_action('wp_ajax_run_migration', 'run_migration_ajax');

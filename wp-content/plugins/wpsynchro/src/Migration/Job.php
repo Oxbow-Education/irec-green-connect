@@ -5,7 +5,6 @@ namespace WPSynchro\Migration;
 /**
  * Class for handling an instance of a migration (aka. one pull or one push)
  *
- * @since 1.0.0
  */
 #[\AllowDynamicProperties]
 class Job
@@ -166,7 +165,6 @@ class Job
 
     /**
      *  Constructor
-     *  @since 1.6.0
      */
     public function __construct()
     {
@@ -182,7 +180,6 @@ class Job
 
     /**
      *  Load data from DB
-     *  @since 1.0.0
      */
     public function load($migration_id, $job_id)
     {
@@ -202,7 +199,6 @@ class Job
 
     /**
      *  Save job to DB
-     *  @since 1.0.0
      */
     public function save()
     {
@@ -211,7 +207,6 @@ class Job
 
     /**
      * Return the WP option name used for job's
-     * @since 1.0.0
      */
     public static function getJobWPOptionName($migration_id, $job_id)
     {

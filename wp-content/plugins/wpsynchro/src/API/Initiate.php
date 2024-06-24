@@ -2,7 +2,6 @@
 
 /**
  * Class for handling service "initate" - Starting a migration
- * @since 1.0.0
  */
 
 namespace WPSynchro\API;

@@ -9,6 +9,8 @@ function filtered_resources_shortcode()
 {
   ob_start();
   include __DIR__ . '/components/filtered-resources.php';
+  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
+
   return ob_get_clean();
 }
 add_shortcode('filter_resources', 'filtered_resources_shortcode');
@@ -27,7 +29,6 @@ add_shortcode('single_post_tags', 'single_post_tags_shortcode');
 function enqueue_custom_assets()
 {
   wp_enqueue_style('dashicons');
-  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
 
@@ -158,18 +159,6 @@ function fix_svg()
 }
 add_action('admin_head', 'fix_svg');
 
-function top_resources_carousel_shortcode()
-{
-  ob_start();
-
-  wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
-  wp_enqueue_style('top-resources-carousel-css', '/wp-content/plugins/irec-green-connect/public/css/top-resources-carousel.css');
-  wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js');
-  wp_enqueue_script('top-resources-carousel', '/wp-content/plugins/irec-green-connect/public/js/top-resources-carousel.js');
-  include __DIR__ . '/components/top-resources-carousel.php';
-  return ob_get_clean();
-}
-add_shortcode('top_resources_carousel', 'top_resources_carousel_shortcode');
 
 function home_page_carousel_shortcode()
 {
@@ -494,3 +483,16 @@ function pif_disable_redirect_canonical($redirect_url)
 }
 
 
+// DELETE
+function top_resources_carousel_shortcode()
+{
+  ob_start();
+
+  wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
+  wp_enqueue_style('top-resources-carousel-css', '/wp-content/plugins/irec-green-connect/public/css/top-resources-carousel.css');
+  wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js');
+  wp_enqueue_script('top-resources-carousel', '/wp-content/plugins/irec-green-connect/public/js/top-resources-carousel.js');
+  include __DIR__ . '/components/top-resources-carousel.php';
+  return ob_get_clean();
+}
+add_shortcode('top_resources_carousel', 'top_resources_carousel_shortcode');

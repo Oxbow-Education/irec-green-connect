@@ -9,7 +9,6 @@ use WPSynchro\Migration\MigrationFactory;
  * Class for serving migration status to the frontend
  * Called from status service
  *
- * @since 1.2.0
  */
 class MigrateStatus
 {
@@ -28,7 +27,6 @@ class MigrateStatus
 
     /**
      * Setup the data needed for migration status thread
-     * @since 1.2.0
      * @codeCoverageIgnore
      */
     public function setup($migration_id, $job_id)
@@ -49,7 +47,6 @@ class MigrateStatus
 
     /**
      * Get default sync stages
-     * @since 1.2.0
      */
     public function setupStages()
     {
@@ -98,7 +95,6 @@ class MigrateStatus
 
     /**
      * Set status for stage id
-     * @since 1.2.0
      */
     public function setStatus($id, $percent_complete, $status_text)
     {
@@ -113,7 +109,6 @@ class MigrateStatus
 
     /**
      * Get stages
-     * @since 1.2.0
      */
     public function getStages()
     {
@@ -122,7 +117,6 @@ class MigrateStatus
 
     /**
      * Create migration stage object
-     * @since 1.2.0
      */
     public function createMigrationStage($id, $title, $help_text = "")
     {
@@ -137,7 +131,6 @@ class MigrateStatus
 
     /**
      * Get migration status
-     * @since 1.2.0
      */
     public function getMigrationStatus()
     {

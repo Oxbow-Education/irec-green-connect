@@ -107,6 +107,17 @@ class LoadAPI
                 },
                 'class' => '\WPSynchro\API\DownloadLog',
             ],
+            'wpsynchro_frontend_download_db_backup' => [
+                'check_permission' => function ($token) {
+                    // Check nonce
+                    $nonce = $_REQUEST['nonce'] ?? '';
+                    if (!wp_verify_nonce($nonce, 'wpsynchro_download_db_backup')) {
+                        return false;
+                    }
+                    return current_user_can('manage_options');
+                },
+                'class' => '\WPSynchro\API\DownloadLogDBBackup',
+            ],
             'wpsynchro_run_synchronize' => [
                 'check_permission' => function ($token) {
                     if ($this->permissionCheck($token)) {
@@ -152,12 +163,17 @@ class LoadAPI
                 },
                 'class' => '\WPSynchro\API\SaveMigration',
             ],
+            'wpsynchro_scheduled_migration_run' => [
+                'check_permission' => function ($token) {
+                    return true;
+                },
+                'class' => '\WPSynchro\API\RunScheduledMigration',
+            ],
         ];
     }
 
     /**
      * Load and handle API request if it is one
-     * @since 1.8.0
      */
     public function setup()
     {

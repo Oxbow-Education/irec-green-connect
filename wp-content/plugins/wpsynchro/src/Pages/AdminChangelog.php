@@ -2,7 +2,6 @@
 
 /**
  * Show changelog
- * @since 1.8.0
  */
 
 namespace WPSynchro\Pages;
@@ -11,7 +10,6 @@ class AdminChangelog
 {
     /**
      *  Called from WP menu to show changelog
-     *  @since 1.8.0
      */
     public static function render()
     {

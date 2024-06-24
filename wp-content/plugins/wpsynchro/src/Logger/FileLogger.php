@@ -2,15 +2,13 @@
 
 namespace WPSynchro\Logger;
 
-use WPSynchro\Utilities\SingletonTrait;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  *  File Logger - Used to log migration runs
  */
 class FileLogger implements LoggerInterface
 {
-    use SingletonTrait;
-
     public $filename = "";
     public $filename_prefix = "";
     public $filepath = "";
@@ -27,10 +25,14 @@ class FileLogger implements LoggerInterface
     ];
     public $log_level_threshold = "DEBUG";
 
-    private function instanceInit()
+    public function __construct(string $filename = '')
     {
-        $logpath = wp_upload_dir()['basedir'] . "/wpsynchro/";
-        $this->setFilePath($logpath);
+        $plugin_dirs = new PluginDirs();
+        $this->setFilePath($plugin_dirs->getUploadsFilePath());
+
+        if (!empty($filename)) {
+            $this->setFileName($filename);
+        }
     }
 
     public function setFilePath($path)
@@ -53,7 +55,7 @@ class FileLogger implements LoggerInterface
             return;
         }
         if ($this->filename == "" || $this->filepath == "") {
-            return;
+            throw new \LogicException('Filepath or filename for logger is not set');
         }
 
         // Format log msg

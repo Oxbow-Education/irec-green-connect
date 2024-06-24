@@ -6,6 +6,7 @@ use WPSynchro\API\LoadAPI;
 use WPSynchro\Utilities\Upgrade\DatabaseUpgrade;
 use WPSynchro\Updater\PluginUpdater;
 use WPSynchro\CLI\WPCLICommand;
+use WPSynchro\Schedule\ScheduleFactory;
 use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\Compatibility\MUPluginHandler;
 use WPSynchro\Utilities\JSData\DeactivatePluginData;
@@ -17,13 +18,11 @@ use WPSynchro\Utilities\Licensing\Licensing;
  * Primary plugin class
  * Loads all the needed stuff to get the plugin off the ground and make the user a happy panda
  *
- * @since 1.0.0
  */
 class WPSynchroBootstrap
 {
     /**
      *  Initialize plugin, setting some defines for later use
-     *  @since 1.0.0
      */
     public function __construct()
     {
@@ -33,7 +32,6 @@ class WPSynchroBootstrap
 
     /**
      * Run method, that will kickstart all the needed initialization
-     * @since 1.0.0
      */
     public function run()
     {
@@ -49,6 +47,9 @@ class WPSynchroBootstrap
 
         // Load API endpoints
         $this->loadAPI();
+
+        // Load cron
+        $this->loadCron();
 
         // Only load backend stuff when needed
         if (is_admin()) {
@@ -73,7 +74,6 @@ class WPSynchroBootstrap
 
     /**
      *  Load admin related functions (menus,etc)
-     *  @since 1.0.0
      */
     private function loadBackendAdmin()
     {
@@ -83,8 +83,17 @@ class WPSynchroBootstrap
     }
 
     /**
+     * Load cron
+     */
+    private function loadCron()
+    {
+        if (CommonFunctions::isPremiumVersion()) {
+            (ScheduleFactory::getInstance())->setupCron();
+        }
+    }
+
+    /**
      *  Load new API services used by WP Synchro
-     *  @since 1.8.0
      */
     private function loadAPI()
     {
@@ -100,7 +109,6 @@ class WPSynchroBootstrap
 
     /**
      *  Load other actions
-     *  @since 1.0.3
      */
     private function loadActions()
     {
@@ -114,7 +122,6 @@ class WPSynchroBootstrap
 
     /**
      *  Load text domain
-     *  @since 1.0.0
      */
     private function loadTextdomain()
     {
@@ -128,7 +135,6 @@ class WPSynchroBootstrap
 
     /**
      *   Add menu to backend
-     *   @since 1.0.0
      */
     private function addMenusToBackend()
     {
@@ -140,10 +146,11 @@ class WPSynchroBootstrap
                 add_submenu_page('wpsynchro_menu', __('Overview', 'wpsynchro'), __('Overview', 'wpsynchro'), 'manage_options', 'wpsynchro_menu', [__NAMESPACE__ . '\\Pages\AdminOverview', 'render']);
                 add_submenu_page('wpsynchro_menu', __('Logs', 'wpsynchro'), __('Logs', 'wpsynchro'), 'manage_options', 'wpsynchro_log', [new \WPSynchro\Pages\AdminLog(), 'render']);
                 add_submenu_page('wpsynchro_menu', __('Setup', 'wpsynchro'), __('Setup', 'wpsynchro'), 'manage_options', 'wpsynchro_setup', [__NAMESPACE__ . '\\Pages\AdminSetup', 'render']);
-                add_submenu_page('wpsynchro_menu', __('Support', 'wpsynchro'), __('Support', 'wpsynchro'), 'manage_options', 'wpsynchro_support', [__NAMESPACE__ . '\\Pages\AdminSupport', 'render']);
                 if (CommonFunctions::isPremiumVersion()) {
+                    add_submenu_page('wpsynchro_menu', __('Scheduled', 'wpsynchro'), __('Scheduled', 'wpsynchro') . ' [BETA]', 'manage_options', 'wpsynchro_scheduled', [__NAMESPACE__ . '\\Pages\AdminScheduled', 'render']);
                     add_submenu_page('wpsynchro_menu', __('Licensing', 'wpsynchro'), __('Licensing', 'wpsynchro'), 'manage_options', 'wpsynchro_licensing', [__NAMESPACE__ . '\\Pages\AdminLicensing', 'render']);
                 }
+                add_submenu_page('wpsynchro_menu', __('Support', 'wpsynchro'), __('Support', 'wpsynchro'), 'manage_options', 'wpsynchro_support', [__NAMESPACE__ . '\\Pages\AdminSupport', 'render']);
                 add_submenu_page('wpsynchro_menu', __('Changelog', 'wpsynchro'), __('Changelog', 'wpsynchro'), 'manage_options', 'wpsynchro_changelog', [__NAMESPACE__ . '\\Pages\AdminChangelog', 'render']);
 
                 // Run migration page (not in menu)
@@ -156,7 +163,6 @@ class WPSynchroBootstrap
 
     /**
      *   Add CSS and JS to backend
-     *   @since 1.0.0
      */
     private function addStylesAndScripts()
     {

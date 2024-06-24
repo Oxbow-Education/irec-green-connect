@@ -2,7 +2,6 @@
 
 /**
  * Action: Clear caches
- * @since 1.6.0
  */
 
 namespace WPSynchro\Utilities\Actions;
@@ -13,7 +12,6 @@ class ClearCachesOnSuccess implements Action
 {
     /**
      * Initialize
-     * @since 1.6.0
      */
     public function init()
     {
@@ -21,7 +19,6 @@ class ClearCachesOnSuccess implements Action
 
     /**
      * Execute action
-     * @since 1.6.0
      */
     public function doAction($params)
     {

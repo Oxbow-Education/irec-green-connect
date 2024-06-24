@@ -1,15 +1,16 @@
 <?php
 /*
-  Plugin Name: WP Synchro
+  Plugin Name: WP Synchro FREE
   Plugin URI: https://daev.tech/wpsynchro
   Description: Professional migration plugin for WordPress - Migration of database and files made easy
-  Version: 1.11.5
+  Version: 1.12.0
   Author: DAEV.tech
   Author URI: https://daev.tech
   Domain Path: /languages
   Text Domain: wpsynchro
   License: GPLv3
   License URI: http://www.gnu.org/licenses/gpl-3.0
+  Update URI: https://wordpress.org/plugins/wpsynchro/
  */
 
 /**
@@ -33,8 +34,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-define('WPSYNCHRO_VERSION', '1.11.5');
-define('WPSYNCHRO_DB_VERSION', '9');
+define('WPSYNCHRO_VERSION', '1.12.0');
+define('WPSYNCHRO_DB_VERSION', '10');
 define('WPSYNCHRO_NEWEST_MU_COMPATIBILITY_VERSION', '1.0.5');
 
 // Load composer autoloader
@@ -42,7 +43,6 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 /**
  *  On plugin activation
- *  @since 1.0.0
  */
 function wpsynchroActivation($networkwide)
 {
@@ -52,7 +52,6 @@ register_activation_hook(__FILE__, 'wpsynchroActivation');
 
 /**
  *  On plugin deactivation
- *  @since 1.0.0
  */
 function wpsynchroDeactivation()
 {
@@ -62,7 +61,6 @@ register_deactivation_hook(__FILE__, 'wpsynchroDeactivation');
 
 /**
  *  On plugin uninstall
- *  @since 1.6.0
  */
 function wpsynchroUninstall()
 {
@@ -72,8 +70,5 @@ register_uninstall_hook(__FILE__, 'wpsynchroUninstall');
 
 /**
  *  Run WP Synchro
- *  @since 1.0.0
  */
-
-$wpsynchro = new WPSynchro\WPSynchroBootstrap();
-$wpsynchro->run();
+(new \WPSynchro\WPSynchroBootstrap())->run();

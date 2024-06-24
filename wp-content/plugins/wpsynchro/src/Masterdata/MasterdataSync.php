@@ -3,8 +3,7 @@
 namespace WPSynchro\Masterdata;
 
 use WPSynchro\Database\DatabaseSync;
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Utilities\Licensing\Licensing;
@@ -13,7 +12,6 @@ use WPSynchro\Utilities\SyncTimerList;
 /**
  * Class for handling the masterdata of the sync
  *
- * @since 1.0.0
  */
 class MasterdataSync
 {
@@ -29,15 +27,14 @@ class MasterdataSync
     /**
      *  Constructor
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
         $this->timer = SyncTimerList::getInstance();
     }
 
     /**
      *  Handle masterdata step
-     *  @since 1.0.3
      */
     public function runMasterdataStep(&$migration, &$job)
     {
@@ -146,7 +143,6 @@ class MasterdataSync
 
     /**
      *  Masterdata mapping
-     *  @since 1.5.0
      */
     public function handleMasterdataMapping($prefix, $masterdata_content)
     {
@@ -249,7 +245,6 @@ class MasterdataSync
 
     /**
      *  Retrieve masterdata
-     *  @since 1.0.0
      */
     public function retrieveMasterdata(Destination $destination, $slugs_to_retrieve = [])
     {
@@ -273,7 +268,6 @@ class MasterdataSync
 
     /**
      *  Initialize some configurations based on the data retrieved from masterdata
-     *  @since 1.10.0
      */
     public function inititializeConfigurations()
     {
@@ -336,7 +330,6 @@ class MasterdataSync
 
     /**
      *  Clear duplicates for search/replaces
-     *  @since 1.7.2
      */
     public function removeDuplicatesFromSearchReplaces($search_replaces)
     {
@@ -354,7 +347,6 @@ class MasterdataSync
 
     /**
      *  Find needed system search/replaces
-     *  @since 1.6.0
      */
     public function findSystemSearchReplaces()
     {
