@@ -18,3 +18,39 @@ function home_page_carousel_2_0_shortcode_function()
 }
 
 add_shortcode('home_page_carousel_2_0', 'home_page_carousel_2_0_shortcode_function');
+
+function handleRedirects()
+{
+  // Get the current URL path without the domain
+  $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+  // Determine the redirection based on the path
+  switch ($uri) {
+    case '/how-it-works-for-individuals/':
+      header('Location: /careers-in-home-energy-performance');
+      exit;
+    case '/how-it-works-for-contractors/':
+      header('Location: /contracting-in-home-energy-performance');
+      exit;
+    case '/individuals/':
+    case '/organizations/':
+      header('Location: /main-resources-page');
+      exit;
+    case '/connect-now/oklahoma/':
+      header('Location: /oklahoma');
+      exit;
+    case '/connect-now/pennsylvania/':
+      header('Location: /pennsylvania');
+      exit;
+    case '/connect-now/wisconsin/':
+      header('Location: /wisconsin');
+      exit;
+    default:
+      // Optional: Handle cases where no redirection is necessary
+      // You can log this or simply do nothing
+      break;
+  }
+}
+
+// Call the function to handle the redirections
+handleRedirects();
