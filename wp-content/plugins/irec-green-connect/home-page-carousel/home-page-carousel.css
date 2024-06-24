@@ -31,7 +31,6 @@
   position: absolute;
   transform-origin: center center;
   transition: transform 1s ease; /* Adjust timing and easing to suit your design */
-  opacity: 0.5;
 }
 
 .home-page-carousel .slide-image {
@@ -39,6 +38,9 @@
   height: 573px;
   margin: 0 auto;
   display: block;
+}
+.home-page-carousel .slide-image img {
+  opacity: 0.5;
 }
 
 .home-page-carousel .slide-image h2 {
@@ -95,24 +97,26 @@
 .home-page-carousel .link--yellow {
   background-color: #bf8725;
 }
+.home-page-carousel .slide.active .slide-image img {
+  opacity: 0.5;
+}
 .home-page-carousel .slide.active .slide-links {
   display: grid;
 }
 .home-page-carousel .slide.active {
   transform: rotateY(0deg) translateZ(1px);
-  opacity: 1;
 }
 
 .home-page-carousel .slide.left {
-  transform: translateX(-325px) scale(0.25) translateY(-850px);
+  transform: translateX(-350px) scale(0.5) translateY(-350px);
 }
 
 .home-page-carousel .slide.back {
-  transform: translateX(0) scale(0.33) translateY(-771px);
+  transform: translateX(0) scale(0.33) translateY(-971px);
 }
 
 .home-page-carousel .slide.right {
-  transform: translateX(50%) scale(0.5) translateY(-100px);
+  transform: translateX(350px) scale(0.5) translateY(-350px);
 }
 
 .home-page-carousel .carousel__navigation {
