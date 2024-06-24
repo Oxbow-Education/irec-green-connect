@@ -120,7 +120,7 @@
       <sl-divider></sl-divider>
       <sl-checkbox name="opportunities" value="Bids & Contracts" class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
       <sl-divider></sl-divider>
-      <sl-checkbox name="opportunities" value="Create an Apprenticeship Program" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Registered Apprenticeship" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Registered Apprenticeship</sl-checkbox class="checkbox">
     </div>
     <h3>Tags</h3>
     <div class="mobile-filters__tags-container">

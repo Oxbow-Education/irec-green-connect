@@ -83,7 +83,7 @@ function getImageName(opportunities) {
   if (opportunities.includes('Training')) {
     return 'TRAINING';
   }
-  if (opportunities.includes('Create an Apprenticeship Program')) {
+  if (opportunities.includes('Registered Apprenticeship')) {
     return 'APPRENTICESHIP';
   }
 }
