@@ -1,0 +1,71 @@
+.home-page-carousel {
+  margin: 0 auto;
+  position: relative;
+  perspective: 1000px;
+  height: 1000px;
+  width: 1000px;
+  padding: 80px 30px 130px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.home-page-carousel .carousel {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+
+.home-page-carousel .slide {
+  width: 573px;
+  height: 573px;
+  position: absolute;
+  transform-origin: center center;
+  transition: transform 1s ease; /* Adjust timing and easing to suit your design */
+  opacity: 0.5;
+}
+
+.home-page-carousel .slide.active {
+  transform: rotateY(0deg) translateZ(1px);
+  opacity: 1;
+}
+
+.home-page-carousel .slide.left {
+  transform: translateX(-50%) scale(0.5) translateY(-100px);
+}
+
+.home-page-carousel .slide.back {
+  transform: translateX(0) scale(0.33) translateY(-771px);
+}
+
+.home-page-carousel .slide.right {
+  transform: translateX(50%) scale(0.5) translateY(-100px);
+}
+
+.home-page-carousel .carousel__navigation {
+  align-self: flex-end;
+  display: flex;
+  gap: 5px;
+}
+.home-page-carousel .navigation {
+  background-color: #c28c2c;
+  width: 74px;
+  height: 54px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+.home-page-carousel .navigation img {
+  width: 15px;
+}
