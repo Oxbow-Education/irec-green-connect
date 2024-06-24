@@ -2,7 +2,6 @@
 
 /**
  * Class for handling what to show when clicking on the menu in wp-admin
- * @since 1.0.0
  */
 
 namespace WPSynchro\Pages;

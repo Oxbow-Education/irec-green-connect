@@ -1,11 +1,13 @@
 <?php
 
+/**
+ * Represent a migration
+ */
+
 namespace WPSynchro\Migration;
 
-/**
- * Class for handling a migration
- * @since 1.0.0
- */
+use WPSynchro\Schedule\ScheduledMigration;
+
 class Migration
 {
     public $id = '';
@@ -28,6 +30,8 @@ class Migration
     public $sync_preset = "all";
     public $sync_database = false;
     public $sync_files = false;
+    // Scheduling
+    public $schedule_interval = '';
     /*
      * Database
      */
@@ -75,7 +79,6 @@ class Migration
 
     /**
      *  Prepare generated data on object
-     *  @since 1.6.0
      */
     public function prepareGeneratedData()
     {
@@ -85,21 +88,21 @@ class Migration
 
     /**
      *  Get text to show on overview for this migration
-     *  @since 1.0.0
      */
     public function getOverviewDescription()
     {
         $this->checkAndUpdateToPreset();
 
-        $desc = '<u>';
-        $desc .= __("Migrate", "wpsynchro") . " ";
+        $desc = '<b>' . __("Migrate", "wpsynchro") . " ";
         // Type
         if ($this->type == 'push') {
-            $desc .= sprintf(__("from <b>this site</b> to <b>%s</b> ", "wpsynchro"), $this->site_url) . " ";
+            // translators: %s is a site url
+            $desc .= sprintf(__("from this site to %s ", "wpsynchro"), $this->site_url) . " ";
         } else {
-            $desc .= sprintf(__("<b>from %s</b> to <b>this site</b>", "wpsynchro"), $this->site_url) . " ";
+            // translators: %s is a site url
+            $desc .= sprintf(__("from %s to this site", "wpsynchro"), $this->site_url) . " ";
         }
-        $desc .= '</u><br><br>';
+        $desc .= '</b><br><br>';
 
 
         $desc .= '<b>' . __("Migration options", 'wpsynchro') . ':</b><br>';
@@ -123,6 +126,11 @@ class Migration
 
         if (!$this->verify_ssl) {
             $desc .= __("Self-signed and non-valid SSL certificates allowed", "wpsynchro") . '<br>';
+        }
+
+        if ($this->schedule_interval !== '') {
+            $scheduled_migration = new ScheduledMigration();
+            $desc .= __("Cron:", "wpsynchro") . ' ' . $scheduled_migration->getPrettySchedule($this->schedule_interval) . '<br>';
         }
 
         if ($this->connection_type == 'basicauth') {
@@ -193,7 +201,6 @@ class Migration
 
     /**
      *  Check for errors, also taking pro/free into account
-     *  @since 1.0.0
      */
     public function checkErrors()
     {
@@ -213,7 +220,6 @@ class Migration
 
     /**
      *  Check if migration can run, taking PRO/FREE and functionalities into account
-     *  @since 1.0.0
      */
     public function canRun()
     {
@@ -227,7 +233,6 @@ class Migration
 
     /**
      *  Check if a preset is chosen and change the object accordingly
-     *  @since 1.2.0
      */
     public function checkAndUpdateToPreset()
     {
@@ -275,6 +280,7 @@ class Migration
         }
 
         if (!$is_pro) {
+            $this->schedule_interval = '';
             $this->db_make_backup = false;
             $this->sync_files = false;
             $this->success_notification_email_list = "";
@@ -302,7 +308,6 @@ class Migration
 
     /**
      *  Get success email list
-     *  @since 1.6.0
      */
     public function getSuccessEmailList()
     {
@@ -311,7 +316,6 @@ class Migration
 
     /**
      *  Get failure email list
-     *  @since 1.6.0
      */
     public function getFailureEmailList()
     {
@@ -320,7 +324,6 @@ class Migration
 
     /**
      *  Add search/replace
-     *  @since 1.6.0
      */
     public function getSearchReplaceObject($from, $to)
     {
@@ -332,7 +335,6 @@ class Migration
 
     /**
      *  Retrieve a list of emails from a field
-     *  @since 1.6.0
      */
     private function getEmailList($type)
     {
@@ -358,7 +360,6 @@ class Migration
 
     /**
      *  Remove preserve wp_options database key
-     *  @since 1.8.0
      */
     public function removePreserveOptionsKey($key)
     {
@@ -369,7 +370,6 @@ class Migration
 
     /**
      *  Remove preserve wp_options database key
-     *  @since 1.8.0
      */
     public function setPreserveOptionsKey($key)
     {
@@ -381,7 +381,6 @@ class Migration
 
     /**
      *  Sanitize data values
-     *  @since 1.10.0
      */
     public function sanitize()
     {
@@ -410,5 +409,13 @@ class Migration
 
         // Files
         $this->files_exclude_files_match = sanitize_text_field(trim($this->files_exclude_files_match));
+    }
+
+    /**
+     *  Handle cron/async migration environment
+     */
+    public function setAsynCronMode()
+    {
+        $this->files_ask_user_for_confirm = false;
     }
 }

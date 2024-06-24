@@ -2,13 +2,10 @@
 
 /**
  * Class for handling database finalize
- * @since 1.0.0
  */
 
 namespace WPSynchro\Database;
 
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Masterdata\MasterdataSync;
 use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\Destination;
@@ -27,17 +24,15 @@ class DatabaseFinalize
 
     /**
      * Constructor
-     * @since 1.0.0
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
         $this->timer = SyncTimerList::getInstance();
     }
 
     /**
      *  Calculate completion percent
-     *  @since 1.0.0
      */
     public function finalize()
     {
@@ -132,7 +127,6 @@ class DatabaseFinalize
 
     /**
      *  Prepare the list of sql queries to run for finalize
-     *  @since 1.6.0
      */
     public function prepareSQLQueries()
     {
@@ -245,7 +239,6 @@ class DatabaseFinalize
 
     /**
      *  Handle the data to keep (such as WP Synchro data etc.)
-     *  @since 1.2.0
      */
     public function handleDataToKeep()
     {
@@ -293,7 +286,6 @@ class DatabaseFinalize
 
     /**
      *  Add preserve data from options table SQL
-     *  @since 1.8.0
      */
     public function getPreserveOptionsFieldSQL($target_options_table_tempname, $options_key)
     {
@@ -311,7 +303,6 @@ class DatabaseFinalize
 
     /**
      *  Handle data to be renamed inside tables when changing prefix
-     *  @since 1.3.2
      */
     public function handleDataChangeOnPrefixChange($table_name, $table_temp_name)
     {
@@ -341,7 +332,6 @@ class DatabaseFinalize
 
     /**
      *  Retrieve new database data from target
-     *  @since 1.2.0
      */
     public function retrieveDatabaseTables($temp_table = true)
     {
@@ -370,7 +360,6 @@ class DatabaseFinalize
 
     /**
      *  Try to clean up if any temporary tables are left on target
-     *  @since 1.2.0
      */
     public function cleanUpAfterFinalizing()
     {
@@ -389,7 +378,6 @@ class DatabaseFinalize
 
     /**
      *  Check that tables have correct case
-     *  @since 1.3.0
      */
     public function checkTableCasesCorrect($tables_to_be_expected_on_target)
     {
@@ -437,7 +425,6 @@ class DatabaseFinalize
 
     /**
      *  Function to help with finalizing database data and checks if rows are with reasonable limits
-     *  @since 1.0.0
      */
     public function checkRowCountCompare($from_tablename, $from_rows, $to_rows)
     {
@@ -464,7 +451,6 @@ class DatabaseFinalize
 
     /**
      *  Handle the multisite finalize sql
-     *  @since 1.6.0
      */
     public function getMultisiteFinalizeSQL()
     {
@@ -474,7 +460,6 @@ class DatabaseFinalize
 
     /**
      *  Handle which tables to not check for on the target - aka those that might be renamed or removed, such as users table on multisite
-     *  @since 1.6.0
      */
     public function getMultisiteTableExclusions()
     {
@@ -484,7 +469,6 @@ class DatabaseFinalize
 
     /**
      *  Get percentage completed for database finalize
-     *  @since 1.6.0
      */
     public function getPercentCompletedForDatabaseFinalize()
     {

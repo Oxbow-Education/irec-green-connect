@@ -6,7 +6,6 @@ use WPSynchro\Utilities\Compatibility\MUPluginHandler;
 
 /**
  * Load configuration parameters
- * @since 1.6.0
  */
 class PluginConfiguration
 {

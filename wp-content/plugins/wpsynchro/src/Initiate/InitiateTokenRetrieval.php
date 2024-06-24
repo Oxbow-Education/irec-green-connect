@@ -8,7 +8,6 @@ use WPSynchro\Transport\RemoteTransport;
 
 /**
  * Retrieves initiate token from url
- * @since 1.6.0
  */
 class InitiateTokenRetrieval
 {
@@ -32,7 +31,6 @@ class InitiateTokenRetrieval
 
     /**
      *  Set encryption key on request (optional)
-     *  @since 1.6.0
      */
     public function setEncryptionKey($key)
     {
@@ -41,7 +39,6 @@ class InitiateTokenRetrieval
 
     /**
      *  Get initiate token
-     *  @since 1.6.0
      */
     public function getInitiateToken()
     {

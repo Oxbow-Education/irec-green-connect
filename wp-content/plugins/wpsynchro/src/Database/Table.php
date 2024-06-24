@@ -6,7 +6,6 @@ use WPSynchro\Database\TableColumns;
 
 /**
  * Class for a database table returned by masterdata
- * @since 1.6.0
  */
 class Table
 {

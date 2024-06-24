@@ -3,7 +3,6 @@
 /**
  * Class for handling service "PopulateFileList" - Returns file lists
  * Call should already be verified by permissions callback
- * @since 1.0.3
  */
 
 namespace WPSynchro\API;
@@ -120,7 +119,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Get status on populate and initialize if needed
-     * @since 1.6.0
      */
     public function initPopulate($job_id, $section_id)
     {
@@ -171,7 +169,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Handle running phase of section population
-     * @since 1.4.0
      */
     public function handleRunning()
     {
@@ -275,7 +272,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Get file/dir iterator on single dir
-     * @since 1.4.0
      */
     public function getPathIterator($path)
     {
@@ -297,7 +293,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Handle start phase of section population
-     * @since 1.4.0
      */
     public function handleStart($section)
     {
@@ -353,7 +348,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Get standard file structure from data
-     * @since 1.4.0
      */
     public function getFileObject($name, $size, $is_dir, $hash = null)
     {
@@ -386,7 +380,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Insert path to database
-     * @since 1.4.0
      */
     public function insertPathsToDB($pathlist)
     {
@@ -422,7 +415,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      * Set path as expanded in db
-     * @since 1.4.0
      */
     public function setPathExpanded($id)
     {
@@ -442,7 +434,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      *  Add single log
-     *  @since 1.6.1
      */
     public function addLog($type, $msg)
     {
@@ -451,7 +442,6 @@ class PopulateFileList extends WPSynchroService
 
     /**
      *  Add error/debug/other message to database, so it can be picked up by populate status
-     *  @since 1.6.1
      */
     public function addLogs($type, $msgs = [])
     {

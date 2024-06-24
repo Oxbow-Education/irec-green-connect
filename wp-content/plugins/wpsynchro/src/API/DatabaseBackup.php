@@ -2,24 +2,23 @@
 
 namespace WPSynchro\API;
 
-use WPSynchro\Utilities\CommonFunctions;
+use WPSynchro\Database\DatabaseHelperFunctions;
 use WPSynchro\Database\DatabaseSync;
 use WPSynchro\Migration\Job;
 use WPSynchro\Transport\ReturnResult;
 use WPSynchro\Transport\Transfer;
 use WPSynchro\Transport\TransferAccessKey;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  * Class for handling service to backup database
  * Call should already be verified by permissions callback
  *
- * @since 1.2.0
  */
 class DatabaseBackup extends WPSynchroService
 {
     public function service()
     {
-        $common = new CommonFunctions();
         $transfer = new Transfer();
         $transfer->setEncryptionKey(TransferAccessKey::getAccessKey());
         $transfer->populateFromString($this->getRequestBody());
@@ -38,12 +37,18 @@ class DatabaseBackup extends WPSynchroService
 
         if (isset($body->filename)) {
             $filename = $body->filename;
-            $filepath = $common->getLogLocation() . $filename;
+            $plugins_dirs = new PluginDirs();
+            $filepath = $plugins_dirs->getUploadsFilePath() . $filename;
         } else {
             $data_required_errors = true;
         }
         if (isset($body->memory_limit)) {
             $memory_limit = $body->memory_limit;
+        } else {
+            $data_required_errors = true;
+        }
+        if (isset($body->time_limit)) {
+            $time_limit = $body->time_limit;
         } else {
             $data_required_errors = true;
         }
@@ -55,7 +60,6 @@ class DatabaseBackup extends WPSynchroService
             return $returnresult->echoDataFromServiceAndExit();
         }
 
-        global $wpdb;
         $result = new \stdClass();
         $result->errors = [];
         $result->warnings = [];
@@ -75,20 +79,23 @@ class DatabaseBackup extends WPSynchroService
             $rows_per_run = 9900;
         }
 
+        $database_helper_functions = new DatabaseHelperFunctions();
+        $one_mb = 1024 * 1024;
 
-        // Get data from server (to be send to remote)
-        if (strlen($table->primary_key_column) > 0) {
-            $sql_stmt = 'select * from `' . $table->name . '` where `' . $table->primary_key_column . '` > ' . $table->last_primary_key . ' order by `' . $table->primary_key_column . '`  limit ' . $rows_per_run;
-        } else {
-            $sql_stmt = 'select * from `' . $table->name . '` limit ' . $table->completed_rows . ',' . $rows_per_run;
-        }
+        $data_result_from_db = $database_helper_functions->getDataFromDB(
+            $table->name,
+            $table->getColumnNames(),
+            $table->primary_key_column,
+            $table->last_primary_key,
+            $table->completed_rows,
+            $one_mb,
+            $rows_per_run,
+            $time_limit
+        );
 
-        // Execute and check result
-        $data = $wpdb->get_results($sql_stmt);
-        if (strlen($wpdb->last_error) > 0) {
-            $result->errors[] = $wpdb->last_error;
-            $wpdb->last_error = '';
-        }
+        $data = $data_result_from_db->data;
+        $result->has_more_rows_in_table = $data_result_from_db->has_more_rows_in_table;
+        $result->errors = array_merge($result->errors, $data_result_from_db->errors);
 
         // Get databasesync object
         $databasesync = new DatabaseSync();
@@ -106,6 +113,7 @@ class DatabaseBackup extends WPSynchroService
         if ($table->completed_rows == 0) {
             $file_append_create_table = file_put_contents($filepath, PHP_EOL . $table->create_table . ";" . PHP_EOL, FILE_APPEND);
             if ($file_append_create_table === false) {
+                // translators: %s is replaced with file path to database backup
                 $result->errors[] = sprintf(__("Appending create table for database backup to %s failed.", "wpsynchro"), $filepath);
             } else {
                 $result->debugs[] = "Wrote create table data for table " . $table->name;
@@ -113,12 +121,12 @@ class DatabaseBackup extends WPSynchroService
         }
 
         // If rows fetched less than max rows, than mark table as completed
-        $rows_fetched = count($data);
-        if ($rows_fetched < $rows_per_run) {
+        if (!$result->has_more_rows_in_table) {
             $table->completed_rows = $table->rows;
         }
 
         // If any rows, get the insert sql version and insert into file
+        $rows_fetched = count($data);
         if ($rows_fetched > 0) {
             $sql_inserts = ["SET FOREIGN_KEY_CHECKS=0"];
             $sql_inserts = array_merge($sql_inserts, $databasesync->generateSQLInserts($table, $data, (200 * 1024 * 1024)));
@@ -130,6 +138,7 @@ class DatabaseBackup extends WPSynchroService
             // Write to sql file
             $file_append_result = file_put_contents($filepath, $sql_inserts, FILE_APPEND);
             if ($file_append_result === false) {
+                // translators: %s is replaced with file path to database backup
                 $result->errors[] = sprintf(__("Appending databasebackup to %s failed.", "wpsynchro"), $filepath);
             } else {
                 $result->debugs[] = "Wrote data for table " . $table->name;

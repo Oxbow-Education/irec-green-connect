@@ -2,7 +2,6 @@
 
 /**
  * Class for handling the finalization of the sync
- * @since 1.0.0
  */
 
 namespace WPSynchro\Finalize;
@@ -10,8 +9,7 @@ namespace WPSynchro\Finalize;
 use WPSynchro\Files\SyncList;
 use WPSynchro\Database\DatabaseFinalize;
 use WPSynchro\Files\FinalizeFiles;
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Transport\RemoteTransport;
 use WPSynchro\Utilities\SyncTimerList;
@@ -28,15 +26,14 @@ class FinalizeSync
     /**
      *  Constructor
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
         $this->timer = SyncTimerList::getInstance();
     }
 
     /**
      *  Run finalize method
-     *  @since 1.0.0
      */
     public function runFinalize(&$migration, &$job)
     {
@@ -113,7 +110,6 @@ class FinalizeSync
 
     /**
      *  Finalize files
-     *  @since 1.0.3
      */
     private function finalizefiles()
     {
@@ -128,7 +124,6 @@ class FinalizeSync
 
     /**
      *  Finalize actions on target
-     *  @since 1.6.0
      */
     private function finalizeActionsOnTarget()
     {
