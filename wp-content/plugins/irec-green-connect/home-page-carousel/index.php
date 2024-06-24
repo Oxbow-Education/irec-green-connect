@@ -19,38 +19,46 @@ function home_page_carousel_2_0_shortcode_function()
 
 add_shortcode('home_page_carousel_2_0', 'home_page_carousel_2_0_shortcode_function');
 
-function handleRedirects()
+function custom_url_redirects()
 {
-  // Get the current URL path without the domain
-  $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+  // Check if we are on the front-end and it's not the admin or a login page
+  if (!is_admin() && !in_array($GLOBALS['pagenow'], ['wp-login.php', 'wp-register.php'])) {
+    // Get the requested URI
+    $uri = $_SERVER['REQUEST_URI'];
 
-  // Determine the redirection based on the path
-  switch ($uri) {
-    case '/how-it-works-for-individuals/':
-      header('Location: /careers-in-home-energy-performance');
-      exit;
-    case '/how-it-works-for-contractors/':
-      header('Location: /contracting-in-home-energy-performance');
-      exit;
-    case '/individuals/':
-    case '/organizations/':
-      header('Location: /main-resources-page');
-      exit;
-    case '/connect-now/oklahoma/':
-      header('Location: /oklahoma');
-      exit;
-    case '/connect-now/pennsylvania/':
-      header('Location: /pennsylvania');
-      exit;
-    case '/connect-now/wisconsin/':
-      header('Location: /wisconsin');
-      exit;
-    default:
-      // Optional: Handle cases where no redirection is necessary
-      // You can log this or simply do nothing
-      break;
+    // Mapping of old URLs to new page titles
+    $redirects = [
+      // '/how-it-works-for-individuals/' => 'Careers in Home Energy Performance',
+      // '/how-it-works-for-contractors/' => 'Contracting in Home Energy Performance',
+      // '/individuals/' => '/resources',
+      // '/organizations/' => '/resources',
+      // '/connect-now/oklahoma/' => '/oklahoma',
+      // '/connect-now/pennsylvania/' => '/pennsylvania',
+      // '/connect-now/wisconsin/' => '/wisconsin',
+    ];
+
+    // Check if the current URI is in our array of redirects
+    foreach ($redirects as $old_url => $new_title) {
+      if (strpos($uri, $old_url) !== false) {
+        // Perform the redirect to the new URL
+        wp_redirect(home_url('/?s=' . urlencode($new_title)));
+        exit;
+      }
+    }
   }
 }
 
-// Call the function to handle the redirections
-handleRedirects();
+// Hook our custom function into WordPress's template_redirect action
+add_action('template_redirect', 'custom_url_redirects');
+
+
+function remove_aiseo_meta_boxes()
+{
+  $post_types = get_post_types([], 'names'); // This retrieves all post types
+  foreach ($post_types as $post_type) {
+    // Replace 'aiseo_meta_box' with the actual ID of the meta box you want to remove
+    remove_meta_box('aiseo_meta_box', $post_type, 'normal'); // 'normal' is the context it appears in, might be 'side' or 'advanced'
+  }
+}
+
+add_action('do_meta_boxes', 'remove_aiseo_meta_boxes');
