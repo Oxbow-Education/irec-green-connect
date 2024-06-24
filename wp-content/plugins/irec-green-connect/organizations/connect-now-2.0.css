@@ -696,7 +696,7 @@ h6 {
 }
 .info-window h1 {
   color: #363636;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 18px;
   font-weight: 700;
   line-height: 18px;
@@ -705,7 +705,7 @@ h6 {
 }
 
 .info-window p {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
@@ -715,7 +715,7 @@ h6 {
 
 .info-window a {
   color: white;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 700;
   line-height: 14px;
@@ -767,7 +767,7 @@ h6 {
 
 .connect-now .drawer-placement-bottom::part(title) {
   color: #363636;
-  font-family: 'Proxima Nova';
+  font-family: 'proxima-nova';
   font-size: 16px;
   font-weight: 700;
 }
@@ -800,7 +800,7 @@ h6 {
 }
 
 .connect-now .switch::part(label) {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;
@@ -813,7 +813,7 @@ h6 {
   background: #f5f7f8;
   padding: 25px;
   margin: 0px -20px;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 16px;
   font-weight: 700;
   line-height: 16px;
@@ -836,7 +836,7 @@ h6 {
 }
 
 .connect-now .checkbox::part(label) {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;
@@ -845,7 +845,7 @@ h6 {
   margin-top: 2px;
 }
 .connect-now .checkbox::part(form-control-help-text) {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 12px;
   font-weight: 400;
   line-height: 12px;
@@ -859,7 +859,7 @@ h6 {
 .connect-now .tags__button {
   border: 2px solid #dee1e6;
   border-radius: 5px;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 700;
   line-height: 12px;
@@ -889,7 +889,7 @@ h6 {
 }
 
 .connect-now .footer__reset {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 600;
   line-height: 14px;
@@ -901,7 +901,7 @@ h6 {
   background-color: #c28c2c;
   border: 2px solid #c28c2c;
   color: white;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 700;
   line-height: 14px;
