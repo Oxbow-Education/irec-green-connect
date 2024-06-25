@@ -245,15 +245,12 @@ function migrate_old_resources()
     // Map 'worker_tags' and 'organization_tags' to 'resource_type'
     $worker_tags = get_post_meta($old_post->ID, 'worker_tags', true);
     $organization_tags = get_post_meta($old_post->ID, 'organization_tags', true);
-
     $resource_type_map = array(
-      // worker_tags
       'Industry Info' => 'Career Descriptions',
       'Trainings' => 'Training and Certification',
       'Career Info' => 'Career Descriptions',
       'Español' => 'Información en Español',
       'Apprenticeships' => 'Apprenticeships',
-      // organization_tags
       'Outreach' => 'Recruitment and Outreach',
       'DEIA' => 'Diversity, Equity, and Inclusion',
       'Workforce Dev' => 'Workforce Development',
@@ -261,29 +258,22 @@ function migrate_old_resources()
     );
 
     $resource_type = array();
-
     if (!empty($worker_tags)) {
-      if (!is_array($worker_tags)) {
-        $worker_tags = array($worker_tags);
-      }
+      $worker_tags = is_array($worker_tags) ? $worker_tags : array($worker_tags);
       foreach ($worker_tags as $tag) {
         if (isset($resource_type_map[$tag])) {
           $resource_type[] = $resource_type_map[$tag];
         }
       }
     }
-
     if (!empty($organization_tags)) {
-      if (!is_array($organization_tags)) {
-        $organization_tags = array($organization_tags);
-      }
+      $organization_tags = is_array($organization_tags) ? $organization_tags : array($organization_tags);
       foreach ($organization_tags as $tag) {
         if (isset($resource_type_map[$tag])) {
           $resource_type[] = $resource_type_map[$tag];
         }
       }
     }
-
     $resource_type = array_unique($resource_type); // Remove duplicate values
 
     // Insert into resources post type
@@ -296,21 +286,17 @@ function migrate_old_resources()
     ));
 
     if (is_wp_error($new_post_id)) {
-      continue;
+      continue; // Skip to the next post if there's an error
     }
 
-    // Migrate post meta
-    $meta_data = $wpdb->get_results($wpdb->prepare(
-      "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d",
-      $old_post->ID
-    ));
-
-    foreach ($meta_data as $meta) {
-      // Skip migrating fields that have specific mappings
-      if (in_array($meta->meta_key, array('who_is_this_for', 'worker_tags', 'organization_tags'))) {
-        continue;
+    // Migrate all post meta, skipping the fields that have specific mappings
+    $meta_keys_to_skip = array('who_is_this_for', 'worker_tags', 'organization_tags');
+    $meta_data = get_post_meta($old_post->ID);
+    foreach ($meta_data as $key => $values) {
+      if (in_array($key, $meta_keys_to_skip)) continue;
+      foreach ($values as $value) {
+        update_post_meta($new_post_id, $key, $value);
       }
-      update_post_meta($new_post_id, $meta->meta_key, $meta->meta_value);
     }
 
     // Update the new post with the mapped fields
@@ -325,6 +311,7 @@ function migrate_old_resources()
     // wp_delete_post($old_post->ID, true);
   }
 }
+
 
 
 // Step 4: Add filter for 'is_internal_resource'
