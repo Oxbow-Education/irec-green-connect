@@ -221,7 +221,7 @@ function migrate_old_resources()
   global $wpdb;
 
   // Fetch all posts of the type you want to migrate
-  $old_posts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_type = 'post'");
+  $old_posts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_type = 'resource'");
 
   foreach ($old_posts as $old_post) {
     // Map 'who_is_this_for' to 'user_type'
@@ -276,35 +276,19 @@ function migrate_old_resources()
     }
     $resource_type = array_unique($resource_type); // Remove duplicate values
 
-    // Insert into resources post type
-    $new_post_id = wp_insert_post(array(
-      'post_title'    => $old_post->post_title,
-      'post_content'  => $old_post->post_content,
-      'post_status'   => $old_post->post_status,
-      'post_author'   => $old_post->post_author,
-      'post_type'     => 'resources',
-    ));
 
-    if (is_wp_error($new_post_id)) {
+    if (is_wp_error($old_post->ID)) {
       continue; // Skip to the next post if there's an error
     }
 
-    // Migrate all post meta, skipping the fields that have specific mappings
-    $meta_keys_to_skip = array('who_is_this_for', 'worker_tags', 'organization_tags');
-    $meta_data = get_post_meta($old_post->ID);
-    foreach ($meta_data as $key => $values) {
-      if (in_array($key, $meta_keys_to_skip)) continue;
-      foreach ($values as $value) {
-        update_post_meta($new_post_id, $key, $value);
-      }
-    }
+
 
     // Update the new post with the mapped fields
     if (!empty($user_type)) {
-      update_post_meta($new_post_id, 'user_type', $user_type);
+      update_post_meta($old_post->ID, 'user_type', $user_type);
     }
     if (!empty($resource_type)) {
-      update_post_meta($new_post_id, 'resource_type', $resource_type);
+      update_post_meta($old_post->ID, 'resource_type', $resource_type);
     }
 
     // Optionally delete the old post
