@@ -49,7 +49,7 @@ if (function_exists("register_field_group")) {
           'Bids & Contracts' => 'Bids & Contracts',
           'Hiring' => 'Hiring',
           'Information' => 'Information',
-          'Registerred Apprenticeships' => 'Registerred Apprenticeships',
+          'Registered Apprenticeships' => 'Registered Apprenticeships',
           'Training' => 'Training',
         ),
         'required' => 1,
