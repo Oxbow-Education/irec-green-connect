@@ -422,6 +422,10 @@ h6 {
   color: white;
 }
 
+.results .ais-infinite-hits--showmoreButton:hover {
+  background-color: #D7A650;
+}
+
 
 .results__meta--remote  {
   background-color: white
@@ -593,6 +597,9 @@ h6 {
   justify-content: center;
   cursor: pointer;
   margin: 0px auto;
+}
+.organization__connect-now:hover {
+  background-color: #D7A650;
 }
 
 #map,

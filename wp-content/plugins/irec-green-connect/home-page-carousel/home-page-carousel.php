@@ -2,7 +2,7 @@
   <div class="carousel">
     <div class="slide active slide-1">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-job-seekers-1.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/job_seekers_woverlay.png" />
         <h2>For Job Seekers</h2>
 
       </div>
@@ -36,7 +36,7 @@
     </div>
     <div class="slide left slide-2">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-employers.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/employers_woverlay.png" />
         <h2>For Employers</h2>
 
       </div>
@@ -71,7 +71,7 @@
     </div>
     <div class="slide back slide-3">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-education-and-workforce.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/orgs_woverlay.png" />
         <h2>For Education &
           Workforce Organizations</h2>
 
@@ -104,7 +104,7 @@
     </div>
     <div class="slide right slide-3">
       <div class="slide-image">
-        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for-contractors.png" />
+        <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for_contractors_woverlay.png" />
         <h2>For Contractors</h2>
 
       </div>
