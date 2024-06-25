@@ -9,7 +9,7 @@ function filtered_resources_shortcode()
 {
   ob_start();
   include __DIR__ . '/components/filtered-resources.php';
-  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
+  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '2.0.0', 'all');
 
   return ob_get_clean();
 }
