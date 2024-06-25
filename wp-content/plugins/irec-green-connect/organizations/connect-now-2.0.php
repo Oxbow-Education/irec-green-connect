@@ -42,10 +42,11 @@
               <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
             </button>
             <div class="more-filters__tags-container">
-              <button class="tags__button"> Community Partner</button>
+              <button class="tags__button">Community Partner</button>
               <button class="tags__button">Electric Vehicles & Battery Storage</button>
               <button class="tags__button">Energy Efficiency</button>
               <button class="tags__button">Registered Apprenticeship</button>
+              <button class="tags__button">IREC Accredited</button>
               <button class="tags__button">Solar Energy</button>
               <button class="tags__button">Wind Energy</button>
               <button class="tags__button">Training Provider</button>
@@ -125,9 +126,10 @@
     <h3>Tags</h3>
     <div class="mobile-filters__tags-container">
 
-      <button class="tags__button"> Community Partner</button>
+      <button class="tags__button">Community Partner</button>
       <button class="tags__button">Electric Vehicles & Battery Storage</button>
       <button class="tags__button">Energy Efficiency</button>
+      <button class="tags__button">IREC Accredited</button>
       <button class="tags__button">Registered Apprenticeship</button>
       <button class="tags__button">Solar Energy</button>
       <button class="tags__button">Wind Energy</button>

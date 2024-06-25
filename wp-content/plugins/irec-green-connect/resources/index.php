@@ -221,7 +221,7 @@ function migrate_old_resources()
   global $wpdb;
 
   // Fetch all posts of the type you want to migrate
-  $old_posts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_type = 'resource'");
+  $old_posts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_type = 'resources'");
 
   foreach ($old_posts as $old_post) {
     // Map 'who_is_this_for' to 'user_type'
