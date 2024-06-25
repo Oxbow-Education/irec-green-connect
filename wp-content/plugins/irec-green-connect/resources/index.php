@@ -13,6 +13,7 @@ function create_post_type_resources()
       'has_archive' => true,
       'rewrite' => array('slug' => 'resources'),
       'supports' => array('title', 'editor', 'thumbnail', 'custom-fields', 'elementor'),
+      'show_in_rest' => true
     )
   );
 }
@@ -448,4 +449,3 @@ function custom_resource_redirect()
   }
 }
 add_action('template_redirect', 'custom_resource_redirect');
-
