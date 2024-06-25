@@ -66,6 +66,9 @@
   font-weight: 700;
   line-height: 23px;
 }
+.testimonials-block a:hover {
+  background: #d7a650;
+}
 
 .testimonials-block .tab-content-heading {
   font-family: 'proxima-nova';
