@@ -59,7 +59,7 @@
 
       </div>
       <form class="search">
-        <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
+        <input class="search__input" name="query" type="text" placeholder="Search by Program or Organization">
         <div class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></div>
       </form>
     </div>
@@ -142,7 +142,7 @@
 
     <div class="more-filters__footer" slot="footer">
       <form slot="footer" class="search">
-        <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
+        <input class="search__input" name="query" type="text" placeholder="Search by Program or Organization">
         <div class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></div>
       </form>
       <sl-divider></sl-divider>
