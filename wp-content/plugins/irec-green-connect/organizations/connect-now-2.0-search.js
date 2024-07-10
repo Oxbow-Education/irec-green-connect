@@ -46,7 +46,7 @@ function setupAlgoliaSearch() {
         },
         empty: `<p>No results for your location.</p>`,
       },
-      showMoreLabel: 'Load More Results in Your Location',
+      showMoreLabel: 'Load More Results in Map Area',
     }),
   ]);
 
