@@ -372,7 +372,7 @@ h6 {
   grid-template-columns: 3fr 2fr;
   grid-template-rows: 1fr;
   background-color: white;
-  height: calc(100vh - 118px);
+  height: calc(100vh - 250px);
   overflow-y: scroll;
 }
 
@@ -604,7 +604,7 @@ h6 {
 
 #map,
 .results {
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 250px);
   overflow-y: scroll;
 }
 .results {

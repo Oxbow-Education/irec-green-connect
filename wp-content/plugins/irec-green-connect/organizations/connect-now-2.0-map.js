@@ -201,11 +201,33 @@ function getBoundsForLocation(location) {
     );
   }
 }
-
 function handleGeocodeResults(results, status) {
   if (status === 'OK' && results[0]) {
+    const addressComponents = results[0].address_components;
+
+    // Function to get a component of a certain type
+    function getAddressComponent(type) {
+      return addressComponents.find((component) =>
+        component.types.includes(type),
+      );
+    }
+
+    // Get the state component, if any
+    const stateComponent = getAddressComponent('administrative_area_level_1');
+    const cityComponent = getAddressComponent('locality');
+
+    const isState = stateComponent && !cityComponent;
+    const isCity = cityComponent;
+
     if (results[0].geometry.bounds) {
       updateBounds(results[0].geometry.bounds);
+      if (isState) {
+        map.setZoom(6.5);
+      }
+      if (isCity) {
+        alert('The address is a city.');
+        map.setZoom(8);
+      }
     } else if (results[0].geometry.location) {
       updateCenterZoom(results[0].geometry.location, 12);
     }

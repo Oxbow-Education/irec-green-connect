@@ -224,7 +224,7 @@ function syncFilterChipsWithURL() {
   });
 
   const tagsReset = document.querySelector('.tag__reset');
-  tagsReset.addEventListener('click', removeFiltersAndSearch);
+  tagsReset?.addEventListener('click', removeFiltersAndSearch);
 }
 
 function syncNumberOfResults() {
