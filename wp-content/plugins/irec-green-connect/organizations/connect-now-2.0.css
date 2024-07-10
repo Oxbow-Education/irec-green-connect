@@ -349,6 +349,7 @@ h6 {
   position: absolute;
   top: 12px;
   right: 0px;
+  padding: 10px 20px;
 }
 .connect-now .search .search__clear {
   display: none;
@@ -430,6 +431,7 @@ h6 {
 .results__meta--remote  {
   background-color: white
 }
+ 
 .results__hits .ais-infinite-hits {
   padding: 20px;
   display: flex;
@@ -604,7 +606,7 @@ a.organization__link:hover{
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 0px auto;
+  margin: 15px auto 0px;
 }
 .organization__connect-now:hover {
   background-color: #D7A650;

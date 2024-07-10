@@ -60,16 +60,17 @@
       </div>
       <form class="search">
         <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
-        <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
+        <div class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></div>
       </form>
     </div>
   </div>
 
   <div class="connect-now__main">
-    <div class="results">
+    <div id="startOfResults" class="results">
+      <div id="topOfResults" style="visibility: hidden"></div>
       <div class="results__meta">
 
-        <h2>Organizations in Map Area</h2>
+        <h2 id="orgsInMapArea">Organizations in Map Area</h2>
         <div id="metaInfo" class="meta__info">
           <p class="results__count"></p>
           <div id="activeFilters" class="tags-removable">
@@ -142,7 +143,7 @@
     <div class="more-filters__footer" slot="footer">
       <form slot="footer" class="search">
         <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
-        <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
+        <div class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></div>
       </form>
       <sl-divider></sl-divider>
       <div class="footer__button-container">

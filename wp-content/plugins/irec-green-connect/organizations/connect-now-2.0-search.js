@@ -190,6 +190,13 @@ function syncAlgoliaWithURL() {
       ['remote_or_in_person:Online'],
     ])
     .search();
+
+  if (window.innerWidth < 1140) {
+    const resultsHits = document.getElementById('topOfResults');
+    if (resultsHits) {
+      resultsHits.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }
 
 function syncFilterChipsWithURL() {
