@@ -160,26 +160,34 @@ function syncAlgoliaWithURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const opportunities = searchParams.get('opportunities')?.split(',') || [];
+  const tags = searchParams.get('tags')?.split(',') || [];
+  const query = searchParams.get('query');
+
+  // Create OR groups for opportunities and tags
   const opportunitiesFacetFilters = opportunities.map(
     (opp) => `opportunities:${opp}`,
   );
-  const tags = searchParams.get('tags')?.split(',') || [];
   const tagsFacetFilters = tags.map((tag) => `general_tags:${tag}`);
-  const query = searchParams.get('query');
+
+  // Combine facet filters into an array to use OR logic within the same facet and AND logic between facets
+  const combinedFacetFilters = [];
+  if (opportunitiesFacetFilters.length > 0) {
+    combinedFacetFilters.push(opportunitiesFacetFilters);
+  }
+  if (tagsFacetFilters.length > 0) {
+    combinedFacetFilters.push(tagsFacetFilters);
+  }
 
   orgsSearch.helper
     .setQueryParameter('query', query ?? '')
-    .setQueryParameter('facetFilters', [
-      ...opportunitiesFacetFilters,
-      ...tagsFacetFilters,
-    ])
+    .setQueryParameter('facetFilters', combinedFacetFilters)
     .search();
+
   remoteOrgsSearch.helper
     .setQueryParameter('query', query ?? '')
     .setQueryParameter('facetFilters', [
-      ...opportunitiesFacetFilters,
-      ...tagsFacetFilters,
-      'remote_or_in_person:Online',
+      ...combinedFacetFilters,
+      ['remote_or_in_person:Online'],
     ])
     .search();
 }
