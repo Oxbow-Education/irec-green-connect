@@ -581,7 +581,11 @@ h6 {
   gap: 10px;
   font-size: 14px;
   color: inherit;
+}
 
+a.organization__link:hover{
+  text-decoration: underline;
+  color: inherit;
 }
 
 .organization__link img {

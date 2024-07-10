@@ -226,7 +226,6 @@ function handleGeocodeResults(results, status) {
         map.setZoom(6.5);
       }
       if (isCity) {
-        alert('The address is a city.');
         map.setZoom(8);
       }
     } else if (results[0].geometry.location) {
