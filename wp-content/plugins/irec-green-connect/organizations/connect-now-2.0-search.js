@@ -104,7 +104,7 @@ function generateOrgHTML(item) {
             <div class="organization__info-icon">
               <img src="/wp-content/plugins/irec-green-connect/public/img/in-person.svg" alt="In-Person or Online" />
             </div>
-            <p>${item.remote_or_in_person}</p>
+            <p>${item.remote_or_in_person.join(', ')}</p>
           </div>
         </div>
       </div>
