@@ -455,6 +455,7 @@ h6 {
   grid-template-columns: 3fr 2fr;
   cursor: pointer;
   gap: 30px;
+  align-items: start;
 }
 
 .organization__info-img {
@@ -568,19 +569,22 @@ h6 {
   flex-direction: column;
   max-width: 256px;
   width: 256px;
-  max-height: 209px;
+  min-height: 209px;
   margin-left: auto;
   gap: 10px;
+  height: auto;
 }
 
-.organiztion__link {
+.organization__link {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   font-size: 14px;
+  color: inherit;
+
 }
 
-.organiztion__link img {
+.organization__link img {
   margin-top: 5px;
 }
 

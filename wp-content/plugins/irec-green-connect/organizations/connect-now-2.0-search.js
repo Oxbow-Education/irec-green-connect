@@ -123,7 +123,7 @@ function generateOrgHTML(item) {
   <div class="organization__quick-links">
   ${
     item.address
-      ? ` <div class="organiztion__link">
+      ? ` <div class="organization__link">
     <img src="/wp-content/plugins/irec-green-connect/public/img/org-location.svg" />
     ${item.address}
   </div>`
@@ -132,7 +132,7 @@ function generateOrgHTML(item) {
      
       ${
         item.phone
-          ? `<div class="organiztion__link">
+          ? `<div class="organization__link">
             <img src="/wp-content/plugins/irec-green-connect/public/img/phone.svg" />
             ${item.phone}
           </div>`
@@ -140,10 +140,10 @@ function generateOrgHTML(item) {
       }
       ${
         item.email
-          ? `<div class="organiztion__link">
+          ? `<a href="mailto:${item.email}" target="_blank" class="organization__link">
             <img src="/wp-content/plugins/irec-green-connect/public/img/email.svg" />
             ${item.email}
-          </div>`
+          </a>`
           : ''
       }
       
