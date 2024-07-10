@@ -19,7 +19,7 @@ function initMap() {
   map.addListener('bounds_changed', onBoundsChanged);
 }
 
-// Function to handle changes in the map bounds and update Algolia search
+// Function to handle changes in the Map area and update Algolia search
 function onBoundsChanged() {
   if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
   boundsChangeTimeout = setTimeout(() => {
@@ -38,8 +38,8 @@ function onBoundsChanged() {
 
     const autocompleteEl = document.getElementById('autocomplete');
     if (!isProgrammaticChange) {
-      autocompleteEl.value = 'Map Bounds';
-      updateQueryParam('location', 'Map Bounds', false, true);
+      autocompleteEl.value = 'Map area';
+      updateQueryParam('location', 'Map area', false, true);
       updateQueryParam('bounds', algoliaBounds, false, true);
     }
 
@@ -138,13 +138,13 @@ function syncMapToURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
   const description = searchParams.get('location');
-  if (description && description != 'Map Bounds') {
+  if (description && description != 'Map area') {
     getBoundsForLocation(description);
     const autocompleteEl = document.getElementById('autocomplete');
     autocompleteEl.value = description;
   }
 
-  if (description == 'Map Bounds') {
+  if (description == 'Map area') {
     const bounds = convertBoundsToGoogleMap(searchParams.get('bounds'));
     if (bounds) {
       updateBounds(bounds);
@@ -153,7 +153,7 @@ function syncMapToURL() {
         map.setZoom(zoom + 1);
       }, 100);
       const autocomplete = document.querySelector('#autocomplete');
-      autocomplete.value = 'Map Bounds';
+      autocomplete.value = 'Map area';
     } else {
       updateQueryParam('location', '', true, true);
       updateQueryParam('bounds', '', true, true);
