@@ -87,7 +87,8 @@ function handleMarkerClick(marker, infoWindow) {
 function generateInfoWindowContent(item) {
   return `
     <div class="info-window">
-      <h1>${item.title}</h1>
+      <h1>${item.organization_name}</h1>
+      <h2>${item.program_name}</h2>
       <p>${item.description}</p>
       <a target="_blank" href="${item.url}">Connect Now
       <img src="/wp-content/plugins/irec-green-connect/public/img/external-link-white.png" />

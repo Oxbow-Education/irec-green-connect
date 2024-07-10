@@ -712,6 +712,20 @@ h6 {
   line-height: 18px;
   text-align: left;
   align-self: flex-start;
+  white-space: break-spaces;
+  margin-right: 20px;
+}
+
+.info-window h2 {
+  color: #363636;
+  font-family: proxima-nova;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  align-self: flex-start;
+  white-space: break-spaces;
+  margin-right: 20px;
 }
 
 .info-window p {

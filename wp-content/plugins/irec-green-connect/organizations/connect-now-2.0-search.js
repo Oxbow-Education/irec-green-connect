@@ -97,9 +97,9 @@ function generateOrgHTML(item) {
         <img src="/wp-content/plugins/irec-green-connect/public/img/${orgImageName}.png" alt="Organization Image" />  
       </div>
       <div class="organization__info-content">
-        <h6 class="organization__info-title">${item.program_name}</h6>
+        <h6 class="organization__info-title">${item.organization_name}</h6>
         <div class="organization__info-details">
-          <p class="organization__info-org">at ${item.organization_name}</p>
+          <p class="organization__info-org">${item.program_name}</p>
           <div class="organization__info-type">
             <div class="organization__info-icon">
               <img src="/wp-content/plugins/irec-green-connect/public/img/in-person.svg" alt="In-Person or Online" />
