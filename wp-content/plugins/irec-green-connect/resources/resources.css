@@ -99,6 +99,10 @@ h6 {
   grid-auto-rows: 11rem;
 }
 
+a {
+  color: inherit !important;
+}
+
 .resource-tile .post-thumbnail {
   height: 150px;
   object-fit: cover;
