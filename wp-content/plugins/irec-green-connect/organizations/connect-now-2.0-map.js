@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize the map with predefined options and event listeners
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'));
+  map = new google.maps.Map(document.getElementById('map'), {
+    streetViewControl: false, // Disable the Street View control
+  });
 
   const defaultBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(24.5, -125),

@@ -724,6 +724,7 @@ a.organization__link:hover{
   align-self: flex-start;
   white-space: break-spaces;
   margin-right: 20px;
+  margin-left: 0px;
 }
 
 .info-window h2 {

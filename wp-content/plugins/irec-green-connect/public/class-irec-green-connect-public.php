@@ -26,7 +26,7 @@ class Irec_Green_Connect_Public
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    2.0.0
+	 * @since    2.0.1
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
@@ -35,7 +35,7 @@ class Irec_Green_Connect_Public
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    2.0.0
+	 * @since    2.0.1
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
