@@ -368,4 +368,7 @@ a.read-more-button {
     min-height: 24rem;
     height: fit-content;
   }
+  .resource-tile:hover {
+    transform: scale(1);
+  }
 }
