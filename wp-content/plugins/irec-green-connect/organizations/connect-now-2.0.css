@@ -503,6 +503,9 @@ h6 {
   justify-content: center;
 }
 
+.organization__info-type p {
+  white-space: nowrap;
+}
 .organization__divider {
   border: 1px solid #d7d7d7;
   margin: 20px 0 !important;
