@@ -74,10 +74,12 @@ function generateInternalResourceHTML(item) {
         .map((tag) => `<div class="resource-tag">${tag}</div>`)
         .join('')
     : '';
-
-  return `<div onclick="sendEvent('${item.title.replace(/'/g, "\\'")}')"
+  return `<a href="${item.link}"><div onclick="sendEvent('${item.title.replace(
+    /'/g,
+    "\\'",
+  )}')"
   class="internal-resource-tile resource-tile"
-  data-tag="${item.permalink}">
+  >
 <div>
  <img class="post-thumbnail" src="${item.thumbnail_url}" alt="Thumbnail for ${
     item.title
@@ -93,7 +95,7 @@ function generateInternalResourceHTML(item) {
    Read More
  </a>
 </button>
-</div>`;
+</div></a>`;
 }
 
 function generateExternalResourceHTML(item) {
