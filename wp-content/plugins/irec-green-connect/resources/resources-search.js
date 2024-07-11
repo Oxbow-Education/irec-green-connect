@@ -129,11 +129,19 @@ function syncAlgoliaWithURL(properties) {
   const resource = url.searchParams.get('resource');
   if (resource) return;
   let facetFilters = [];
+
   properties.forEach((property) => {
     const { facet, paramValue } = property;
     const values = url.searchParams.get(paramValue)?.split(',') || [];
-    const filters = values.map((val) => `${facet}:${val}`);
-    facetFilters.push(...filters);
+
+    if (values.length > 0) {
+      const filters = values.map((val) => `${facet}:${val}`);
+      if (filters.length > 1) {
+        facetFilters.push(filters); // Group filters for the same facet (OR condition)
+      } else {
+        facetFilters.push(filters[0]); // Single filter for this facet (AND condition)
+      }
+    }
   });
 
   resourcesSearch.helper
