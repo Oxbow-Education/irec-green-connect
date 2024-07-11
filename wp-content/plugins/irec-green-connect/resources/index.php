@@ -388,9 +388,9 @@ function resources_2_0()
   wp_enqueue_style('shoelace-css', 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css');
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
-  wp_enqueue_style('resources-css', "/wp-content/plugins/irec-green-connect/resources/resources.css");
-  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js');
-  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js');
+  wp_enqueue_style('resources-css', "/wp-content/plugins/irec-green-connect/resources/resources.css", array(), '2.0.2');
+  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js', array(), '2.0.2');
+  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js', array(), '2.0.2');
 
   return ob_get_clean();
 }
