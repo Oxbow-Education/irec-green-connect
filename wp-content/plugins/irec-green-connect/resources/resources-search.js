@@ -135,7 +135,7 @@ function syncAlgoliaWithURL(properties) {
     const values = url.searchParams.get(paramValue)?.split(',') || [];
 
     if (values.length > 0) {
-      const filters = values.map((val) => `${facet}:${val}`);
+      const filters = values.map((val) => `${facet}:${formatVal(val)}`);
       if (filters.length > 1) {
         facetFilters.push(filters); // Group filters for the same facet (OR condition)
       } else {
@@ -147,6 +147,15 @@ function syncAlgoliaWithURL(properties) {
   resourcesSearch.helper
     .setQueryParameter('facetFilters', facetFilters)
     .search();
+
+  function formatVal(input) {
+    console.log({ input });
+    if (input === 'Diversity Equity and Inclusion') {
+      console.log('Diversity, Equity, and Inclusion');
+      return 'Diversity, Equity, and Inclusion';
+    }
+    return input;
+  }
 }
 
 async function syncExternalResourceWithURL() {
