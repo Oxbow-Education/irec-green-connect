@@ -105,9 +105,8 @@ function generateExternalResourceHTML(item) {
         .map((tag) => `<div class="resource-tag">${tag}</div>`)
         .join('')
     : '';
-  console.log({ item });
   const html = `
-      <div
+     <div
           class="external-resource-tile resource-tile"
           data-tag="${item.objectID}">
         <div class="resource-tile-text">
@@ -159,15 +158,11 @@ async function syncExternalResourceWithURL() {
 function handleExternalResourceClick() {
   window.addEventListener('click', (event) => {
     const target = event.target;
-    const externalResourceButton = target.closest('.external-resource-button');
+    const externalResource = target.closest('.external-resource-tile');
+    const tag = externalResource.dataset.tag;
 
-    if (Boolean(externalResourceButton)) {
-      updateQueryParam(
-        'resource',
-        externalResourceButton.dataset.tag,
-        false,
-        true,
-      );
+    if (Boolean(externalResource)) {
+      updateQueryParam('resource', tag, false, true);
     }
   });
 }
