@@ -121,7 +121,7 @@ function handleAutocomplete() {
     'types',
   ]);
 
-  autocomplete.addListener('place_changed', function () {
+  autocomplete.addListener('place_changed', function (e) {
     const place = autocomplete.getPlace();
     if (!place.geometry) {
       console.error("Autocomplete's returned place contains no geometry!");
@@ -135,6 +135,8 @@ function handleAutocomplete() {
 
     getBoundsForLocation(description);
   });
+  const locationForm = document.querySelector('.location__form');
+  locationForm.addEventListener('submit', (e) => e.preventDefault());
 }
 
 function syncMapToURL() {

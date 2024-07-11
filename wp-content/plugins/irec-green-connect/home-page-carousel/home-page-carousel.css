@@ -133,6 +133,11 @@
 .home-page-carousel .slide.right {
   transform: translateX(350px) scale(0.5) translateY(-350px);
 }
+.home-page-carousel .slide.right,
+.home-page-carousel .slide.left,
+.home-page-carousel .slide.back {
+  z-index: -1;
+}
 
 .home-page-carousel .carousel__navigation {
   align-self: flex-end;
@@ -215,7 +220,8 @@
 @media screen and (max-width: 768px) {
   .home-page-carousel {
     max-width: 100vw;
-    height: 800px;
+    /* height: 800px; */
+    height: 870px;
   }
   .home-page-carousel .slide.active .slide-links {
     display: flex;
