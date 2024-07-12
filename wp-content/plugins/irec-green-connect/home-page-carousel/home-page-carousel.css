@@ -254,6 +254,9 @@
   .home-page-carousel .slide {
     height: 577px;
   }
+  .home-page-carousel .carousel__navigation {
+    margin-left: -25px;
+  }
 }
 
 @media screen and (max-width: 400px) {
