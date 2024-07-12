@@ -120,7 +120,6 @@ if (function_exists("register_field_group")) {
         'label' => 'URL',
         'name' => 'url',
         'type' => 'url',
-        'required' => 1,
       ),
       array(
         'key' => 'field_11',
