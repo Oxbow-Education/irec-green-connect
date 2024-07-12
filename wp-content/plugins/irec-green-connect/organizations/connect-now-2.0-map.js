@@ -1,18 +1,49 @@
 let isProgrammaticChange = false;
 
+let defaultBounds;
+
 document.addEventListener('DOMContentLoaded', () => {
   handleAutocomplete();
+  handleResetBounds();
   syncMapToURL();
   handleCurrentLocationFunctionality();
+  handleUpdateResetBoundsButton();
 });
+
+window.addEventListener(URL_UPDATED, () => {
+  handleUpdateResetBoundsButton();
+});
+
+function handleUpdateResetBoundsButton() {
+  const resetBoundsButton = document.getElementById('resetBoundsButton');
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const bounds = searchParams.get('bounds');
+  const location = searchParams.get('location');
+  if (location || bounds) {
+    resetBoundsButton.classList.remove('hidden');
+    return;
+  }
+  resetBoundsButton.classList.add('hidden');
+}
+
+function handleResetBounds() {
+  const resetBoundsButton = document.getElementById('resetBoundsButton');
+  resetBoundsButton.addEventListener('click', resetBounds);
+}
+
+function resetBounds() {
+  updateQueryParam('location', '', true, true);
+  updateQueryParam('bounds', '', true, true);
+  updateBounds(defaultBounds);
+}
 
 // Initialize the map with predefined options and event listeners
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    streetViewControl: false, // Disable the Street View control
+    streetViewControl: false,
   });
-
-  const defaultBounds = new google.maps.LatLngBounds(
+  defaultBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(24.5, -125),
     new google.maps.LatLng(49, -66),
   );

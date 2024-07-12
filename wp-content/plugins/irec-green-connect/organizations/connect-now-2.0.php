@@ -8,13 +8,9 @@
         <form class="location__form">
           <input id="autocomplete" class="location__input" type="text" placeholder="Enter zip, city, or state">
           <button type="button" class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
-          <!-- <button type="submit" class="location__submit">Go</button> -->
+          <button type="reset" id="resetBoundsButton">&times;</button>
         </form>
-        <!-- <div class="location__remote">
-          <label>Include Remote
-            <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch"></sl-switch>
-          </label>
-        </div> -->
+
       </div>
     </div>
     <div class="filters">

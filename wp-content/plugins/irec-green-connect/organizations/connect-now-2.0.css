@@ -960,7 +960,15 @@ a.organization__link:hover{
     justify-content: center;
   }
 }
+#resetBoundsButton{
+  position: absolute;
+  right: 45px;
+  top: 19px;
+}
 
+.hidden {
+  display: none !important;
+}
 .hide {
   visibility: hidden;  !important;
 }
