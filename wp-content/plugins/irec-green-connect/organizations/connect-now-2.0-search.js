@@ -44,7 +44,7 @@ function setupAlgoliaSearch() {
           addMarker(item);
           return generateOrgHTML(item);
         },
-        empty: `<p>No results for your location.</p>`,
+        empty: `<p>We're sorry, no search results are coming up for this location. Please expand your search or browse the virtual opportunities below.</p>`,
       },
       showMoreLabel: 'Load More Results in Map Area',
     }),
