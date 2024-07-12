@@ -48,6 +48,13 @@
   color: #a1d165;
 }
 
+.testimonials-block sl-tab .testimonials-block__image {
+  opacity: 0.8;
+}
+.testimonials-block sl-tab[active] .testimonials-block__image {
+  opacity: 1;
+}
+
 .testimonials-block .tab-content {
   display: flex;
   align-items: center;
