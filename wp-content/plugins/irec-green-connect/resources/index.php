@@ -83,12 +83,12 @@ function register_custom_fields_for_resources()
           'choices' => array_combine($resource_type_options, $resource_type_options),
           'layout' => 'vertical',
         ),
-        array(
-          'key' => 'field_organization_name',
-          'label' => 'Organization Name',
-          'name' => 'organization_name',
-          'type' => 'text',
-        ),
+        // array(
+        //   'key' => 'field_organization_name',
+        //   'label' => 'Organization Name',
+        //   'name' => 'organization_name',
+        //   'type' => 'text',
+        // ),
         array(
           'key' => 'field_short_description',
           'label' => 'Short Description',
