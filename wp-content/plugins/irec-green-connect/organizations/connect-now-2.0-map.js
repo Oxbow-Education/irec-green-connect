@@ -152,22 +152,56 @@ function handleAutocomplete() {
     'types',
   ]);
 
-  autocomplete.addListener('place_changed', function (e) {
+  autocomplete.addListener('place_changed', function () {
     const place = autocomplete.getPlace();
+    console.log({ place });
+
     if (!place.geometry) {
       console.error("Autocomplete's returned place contains no geometry!");
-      return;
-    }
 
+      // If the place doesn't have geometry, use the place name to find the first prediction
+      const service = new google.maps.places.PlacesService(
+        document.createElement('div'),
+      );
+
+      const request = {
+        query: place.name,
+        fields: ['name', 'geometry', 'formatted_address', 'place_id'],
+      };
+
+      service.textSearch(request, (results, status) => {
+        if (
+          status === google.maps.places.PlacesServiceStatus.OK &&
+          results.length > 0
+        ) {
+          const firstPrediction = results[0];
+
+          // Update the autocomplete input with the description value for the found place
+          input.value = firstPrediction.formatted_address;
+
+          // Use the firstPrediction which has geometry
+          usePlace(firstPrediction);
+        } else {
+          console.error('No predictions found or error in request:', status);
+        }
+      });
+    } else {
+      // Use the place as it is
+      usePlace(place);
+    }
+  });
+
+  const locationForm = document.querySelector('.location__form');
+  locationForm.addEventListener('submit', (e) => e.preventDefault());
+
+  function usePlace(place) {
     const description = place.formatted_address; // This gets the location's formatted text address
 
     updateQueryParam('location', description, false, true);
     updateQueryParam('bounds', '', true, true);
 
     getBoundsForLocation(description);
-  });
-  const locationForm = document.querySelector('.location__form');
-  locationForm.addEventListener('submit', (e) => e.preventDefault());
+  }
 }
 
 function syncMapToURL() {
