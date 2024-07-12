@@ -29,7 +29,7 @@
 
 .home-page-carousel .slide {
   height: 700px;
-  width: 1000px;
+  width: 1300px;
   position: absolute;
   transform-origin: center center;
   transition: transform 1s ease; /* Adjust timing and easing to suit your design */
