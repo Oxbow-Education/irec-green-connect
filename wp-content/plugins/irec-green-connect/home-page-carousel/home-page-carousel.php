@@ -3,8 +3,18 @@
     <div class="slide active slide-1">
       <div class="slide-image">
         <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/job_seekers_woverlay.png" />
-        <h2>For Job Seekers</h2>
 
+        <div class="image__content">
+          <h2>For Job Seekers</h2>
+          <div class="carousel__navigation">
+            <button class="navigation navigation--left">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-left.png" />
+            </button>
+            <button class="navigation navigation--right">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-right.png" />
+            </button>
+          </div>
+        </div>
       </div>
       <div class="slide-links">
 
@@ -37,7 +47,17 @@
     <div class="slide left slide-2">
       <div class="slide-image">
         <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/employers_woverlay.png" />
-        <h2>For Employers</h2>
+        <div class="image__content">
+          <h2>For Employers</h2>
+          <div class="carousel__navigation">
+            <button class="navigation navigation--left">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-left.png" />
+            </button>
+            <button class="navigation navigation--right">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-right.png" />
+            </button>
+          </div>
+        </div>
 
       </div>
       <div class="slide-links">
@@ -72,8 +92,20 @@
     <div class="slide back slide-3">
       <div class="slide-image">
         <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/orgs_woverlay.png" />
-        <h2>For Education &
-          Workforce Organizations</h2>
+
+        <div class="image__content">
+
+          <h2>For Education &
+            Workforce Organizations</h2>
+          <div class="carousel__navigation">
+            <button class="navigation navigation--left">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-left.png" />
+            </button>
+            <button class="navigation navigation--right">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-right.png" />
+            </button>
+          </div>
+        </div>
 
       </div>
       <div class="slide-links">
@@ -105,7 +137,17 @@
     <div class="slide right slide-3">
       <div class="slide-image">
         <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/for_contractors_woverlay.png" />
-        <h2>For Contractors</h2>
+        <div class="image__content">
+          <h2>For Contractors</h2>
+          <div class="carousel__navigation">
+            <button class="navigation navigation--left">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-left.png" />
+            </button>
+            <button class="navigation navigation--right">
+              <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-circle-right.png" />
+            </button>
+          </div>
+        </div>
 
       </div>
       <div class="slide-links">
@@ -136,14 +178,7 @@
         </div>
       </div>
     </div>
-    <div class="carousel__navigation">
-      <button class="navigation navigation--left">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/chevron-left-sharp-solid.png" />
-      </button>
-      <button class="navigation navigation--right">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/chevron-right-sharp-solid.png" />
-      </button>
-    </div>
+
   </div>
 
 </div>
