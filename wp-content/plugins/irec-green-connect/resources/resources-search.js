@@ -56,7 +56,7 @@ function initializeAlgolia() {
           }
           return generateExternalResourceHTML(item);
         },
-        empty: `<p>No resources found. .</p>`,
+        empty: `<p>No resources found.</p>`,
       },
       showMoreLabel: 'Load More',
     }),
