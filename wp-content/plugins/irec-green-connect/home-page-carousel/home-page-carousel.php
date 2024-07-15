@@ -89,7 +89,7 @@
         </div>
       </div>
     </div>
-    <div class="slide back slide-3">
+    <div class="slide back long slide-3">
       <div class="slide-image">
         <img class="slide-image" src="/wp-content/plugins/irec-green-connect/public/img/orgs_woverlay.png" />
 

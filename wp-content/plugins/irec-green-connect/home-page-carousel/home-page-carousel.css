@@ -93,10 +93,14 @@ button[type='submit']:focus {
   transform: translateY(-310px);
   padding: 0 80px;
 }
+
 .home-page-carousel .slide.active .slide-image .image__content {
   transform: translateY(-340px);
 }
 
+.home-page-carousel .slide.image__content .slide-image .image__content {
+  transform: translateY(-360px);
+}
 .home-page-carousel .slide.active:nth-child(3) .slide-image .image__content {
   transform: translateY(-410px);
 }
@@ -136,6 +140,8 @@ button[type='submit']:focus {
   padding: 0;
   padding-right: 20px;
   text-align: left;
+  font-size: 20px;
+  line-height: 30px;
 }
 .home-page-carousel .link img {
   width: 18px;
@@ -250,6 +256,19 @@ button[type='submit']:focus {
     height: 400px;
     width: 400px;
   }
+  .home-page-carousel .slide-image .image__content h2 {
+    font-size: 30px;
+    line-height: 32px;
+  }
+  .home-page-carousel .slide .slide-image .image__content {
+    transform: translateY(-245px);
+  }
+  .home-page-carousel .slide.active .slide-image .image__content {
+    transform: translateY(-265px);
+  }
+  .home-page-carousel .slide.active:nth-child(3) .slide-image .image__content {
+    transform: translateY(-320px);
+  }
   .home-page-carousel .slide-links {
     transform: translateY(-130px);
     max-width: calc(100vw - 20px);
@@ -257,11 +276,15 @@ button[type='submit']:focus {
   .home-page-carousel .slide-image .image__content {
     transform: translateY(-222px);
   }
+
   .home-page-carousel .slide.left {
     transform: translateX(-241px) scale(0.5) translateY(-350px);
   }
   .home-page-carousel .slide.right {
     transform: translateX(241px) scale(0.5) translateY(-350px);
+  }
+  .home-page-carousel .slide.back {
+    transform: translateX(0) scale(0.33) translateY(-990px);
   }
 }
 @media screen and (max-width: 768px) {
@@ -270,9 +293,7 @@ button[type='submit']:focus {
     height: 870px;
     padding: 0px 30px 130px;
   }
-  .home-page-carousel .carousel {
-    margin-top: -50px;
-  }
+
   .home-page-carousel .slide.active .slide-links {
     display: flex;
     flex-direction: column;
@@ -292,19 +313,59 @@ button[type='submit']:focus {
     line-height: 22px;
   }
   .home-page-carousel .slide.left {
-    transform: translateX(-141px) scale(0.5) translateY(-250px);
+    transform: translateX(-141px) scale(0.6) translateY(-250px);
   }
   .home-page-carousel .slide.right {
-    transform: translateX(141px) scale(0.5) translateY(-250px);
+    transform: translateX(141px) scale(0.6) translateY(-250px);
   }
   .home-page-carousel .slide.back {
-    transform: translateX(0) scale(0.33) translateY(-700px);
+    transform: translateX(0) scale(0.4) translateY(-700px);
   }
   .home-page-carousel .slide {
     height: 577px;
   }
-  .home-page-carousel .carousel__navigation {
-    margin-left: -25px;
+
+  .home-page-carousel .slide .slide-image .image__content {
+    padding: 0;
+  }
+  .home-page-carousel .slide-image .image__content h2 {
+    font-size: 20px;
+    line-height: 22px;
+    margin-bottom: 5px;
+  }
+  .home-page-carousel
+    .slide.active
+    .slide-image
+    .image__content
+    .carousel__navigation {
+    transform: scale(0.75);
+  }
+  .home-page-carousel .slide.active .slide-image .image__content {
+    transform: translateY(-167px);
+  }
+  .home-page-carousel .slide .slide-image .image__content {
+    transform: translateY(-143px);
+  }
+  .home-page-carousel .slide.active:nth-child(3) .slide-image .image__content {
+    transform: translateY(-200px);
+  }
+  .home-page-carousel .slide:nth-child(3) .slide-image .image__content {
+    padding: 0 40px;
+  }
+  .home-page-carousel
+    .slide.active:nth-child(3)
+    .slide-image
+    .image__content
+    h2 {
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .home-page-carousel .slide.back {
+    transform: translateX(0) scale(0.4) translateY(-600px);
+  }
+  .home-page-carousel .link p {
+    font-size: 20px;
+    line-height: 26px;
   }
 }
 
@@ -312,10 +373,8 @@ button[type='submit']:focus {
   .home-page-carousel {
     overflow: visible;
     transform: scale(0.75);
-    margin-bottom: -300px;
   }
   .home-page-carousel .carousel {
     overflow: visible;
-    margin-top: -250px;
   }
 }
