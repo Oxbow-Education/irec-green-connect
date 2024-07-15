@@ -147,7 +147,9 @@ function generateOrgHTML(item) {
           : ''
       }
       
-    <a target="_blank" href="${item.url}" class="organization__connect-now">
+    <a target="_blank" href="${
+      item.url || `mailto:${item.email}`
+    }" class="organization__connect-now">
     Connect Now
     </a>
       
