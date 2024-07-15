@@ -137,6 +137,28 @@ function clearMarkers() {
   infoWindows = [];
 }
 
+function useTextSearch(request) {
+  // If the place doesn't have geometry, use the place name to find the first prediction
+  const service = new google.maps.places.PlacesService(
+    document.createElement('div'),
+  );
+  service.textSearch(request, (results, status) => {
+    if (
+      status === google.maps.places.PlacesServiceStatus.OK &&
+      results.length > 0
+    ) {
+      const firstPrediction = results[0];
+
+      // Update the autocomplete input with the description value for the found place
+      input.value = firstPrediction.formatted_address;
+
+      // Use the firstPrediction which has geometry
+      usePlace(firstPrediction);
+    } else {
+      console.error('No predictions found or error in request:', status);
+    }
+  });
+}
 function handleAutocomplete() {
   const input = document.getElementById('autocomplete');
   const options = {
@@ -154,37 +176,15 @@ function handleAutocomplete() {
 
   autocomplete.addListener('place_changed', function () {
     const place = autocomplete.getPlace();
-    console.log({ place });
 
     if (!place.geometry) {
       console.error("Autocomplete's returned place contains no geometry!");
-
-      // If the place doesn't have geometry, use the place name to find the first prediction
-      const service = new google.maps.places.PlacesService(
-        document.createElement('div'),
-      );
 
       const request = {
         query: place.name,
         fields: ['name', 'geometry', 'formatted_address', 'place_id'],
       };
-
-      service.textSearch(request, (results, status) => {
-        if (
-          status === google.maps.places.PlacesServiceStatus.OK &&
-          results.length > 0
-        ) {
-          const firstPrediction = results[0];
-
-          // Update the autocomplete input with the description value for the found place
-          input.value = firstPrediction.formatted_address;
-
-          // Use the firstPrediction which has geometry
-          usePlace(firstPrediction);
-        } else {
-          console.error('No predictions found or error in request:', status);
-        }
-      });
+      useTextSearch(request);
     } else {
       // Use the place as it is
       usePlace(place);
@@ -255,13 +255,15 @@ function convertBoundsToGoogleMap(boundsParam) {
 }
 function getBoundsForLocation(location) {
   const geocoder = new google.maps.Geocoder();
-
+  console.log({ location });
   // Check if the location is an address (string) or coordinates (object)
   if (typeof location === 'string') {
+    console.log('string');
     geocoder.geocode({ address: location }, function (results, status) {
       handleGeocodeResults(results, status);
     });
   } else if (typeof location === 'object' && location.lat && location.lng) {
+    console.log('object');
     geocoder.geocode({ location: location }, function (results, status) {
       handleGeocodeResults(results, status);
     });
@@ -272,6 +274,7 @@ function getBoundsForLocation(location) {
   }
 }
 function handleGeocodeResults(results, status) {
+  console.log({ results, status });
   if (status === 'OK' && results[0]) {
     const addressComponents = results[0].address_components;
 
@@ -301,6 +304,8 @@ function handleGeocodeResults(results, status) {
       updateCenterZoom(results[0].geometry.location, 12);
     }
   } else {
+    console.log('%HERE');
+
     console.error(
       'Geocode was not successful for the following reason: ' + status,
     );
@@ -348,22 +353,26 @@ function getCityFromCoordinates(center) {
   geocoder.geocode({ location: center }, function (results, status) {
     if (status === 'OK' && results[0]) {
       let city = null;
+      let state = null;
       for (const component of results[0].address_components) {
         if (component.types.includes('locality')) {
           city = component.long_name;
-          const autocomplete = document.querySelector('#autocomplete');
-          autocomplete.value = city;
-
-          updateQueryParam('location', city, false, true);
-          updateQueryParam('bounds', '', true, true);
-
-          break;
+        }
+        if (component.types.includes('administrative_area_level_1')) {
+          state = component.short_name;
         }
       }
-      if (city) {
-        getBoundsForLocation(city);
+      if (city && state) {
+        const location = `${city}, ${state}`;
+        const autocomplete = document.querySelector('#autocomplete');
+        autocomplete.value = location;
+
+        updateQueryParam('location', location, false, true);
+        updateQueryParam('bounds', '', true, true);
+
+        getBoundsForLocation(location);
       } else {
-        console.log('City not found for this location.');
+        console.log('City or state not found for this location.');
       }
     } else {
       console.error(
