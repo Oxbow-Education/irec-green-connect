@@ -140,7 +140,7 @@ function generateOrgHTML(item) {
       }
       ${
         item.email
-          ? `<a href="mailto:${item.email}" target="_blank" class="organization__link">
+          ? `<a href="mailto:${item.email}" target="_blank" class="organization__link organization__link--email">
             <img src="/wp-content/plugins/irec-green-connect/public/img/email.svg" />
             ${item.email}
           </a>`

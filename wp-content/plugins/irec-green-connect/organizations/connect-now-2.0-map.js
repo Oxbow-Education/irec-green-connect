@@ -295,7 +295,7 @@ function handleGeocodeResults(results, status) {
     if (results[0].geometry.bounds) {
       updateBounds(results[0].geometry.bounds);
       if (isState) {
-        map.setZoom(6.5);
+        map.setZoom(6);
       }
       if (isCity) {
         map.setZoom(8);

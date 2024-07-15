@@ -587,7 +587,12 @@ h6 {
   font-size: 14px;
   color: inherit;
 }
-
+a.organization__link.organization__link--email{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
 a.organization__link:hover{
   text-decoration: underline;
   color: inherit;
