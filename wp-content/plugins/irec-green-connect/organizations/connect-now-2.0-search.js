@@ -180,7 +180,10 @@ function syncAlgoliaWithURL() {
 
   orgsSearch.helper
     .setQueryParameter('query', query ?? '')
-    .setQueryParameter('facetFilters', combinedFacetFilters)
+    .setQueryParameter('facetFilters', [
+      ...combinedFacetFilters,
+      ['-remote_or_in_person:Online'],
+    ])
     .search();
 
   remoteOrgsSearch.helper
