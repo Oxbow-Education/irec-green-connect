@@ -182,7 +182,7 @@ function syncAlgoliaWithURL() {
     .setQueryParameter('query', query ?? '')
     .setQueryParameter('facetFilters', [
       ...combinedFacetFilters,
-      ['-remote_or_in_person:Online'],
+      'remote_or_in_person:-Online',
     ])
     .search();
 
