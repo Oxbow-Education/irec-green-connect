@@ -61,8 +61,10 @@ if (function_exists("register_field_group")) {
         'name' => 'general_tags',
         'type' => 'checkbox',
         'choices' => array(
+          'Battery Storage' => 'Battery Storage',
           'Community Partner' => 'Community Partner',
-          'Electric Vehicles & Battery Storage' => 'Electric Vehicles & Battery Storage',
+          'Electric Vehicle Charging' => 'Electric Vehicle Charging',
+          'Electric Vehicles' => 'Electric Vehicles',
           'Energy Efficiency' => 'Energy Efficiency',
           'Group Apprenticeship Program' => 'Group Apprenticeship Program',
           'Internship' => 'Internship',
