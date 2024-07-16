@@ -100,7 +100,8 @@ function syncTagsButtonsWithURL() {
   const tags = searchParams.get('tags')?.split(',') || [];
   const tagsButtons = document.querySelectorAll('.tags__button');
   tagsButtons.forEach((tag) => {
-    if (tags.includes(tag.innerText)) {
+    const tagValue = tag.dataset.tag || tag.innerText;
+    if (tags.includes(tagValue)) {
       tag.classList.add('tags__button--selected');
     } else {
       tag.classList.remove('tags__button--selected');
