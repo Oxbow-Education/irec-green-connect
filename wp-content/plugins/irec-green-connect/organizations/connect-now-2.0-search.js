@@ -111,12 +111,16 @@ function generateOrgHTML(item) {
     </div>
     <hr class="organization__divider"/>
     <div class="organization__opportunities">
-      ${item.opportunities?.map((opp) => `<p>${opp}</p>`).join('')}
+      ${item.opportunities
+        ?.map((opp) => `<p>${opp}</p>`)
+        .sort()
+        .join('')}
     </div>
     <p class="organization__info-description">${item.description}</p>
     <div class="organization__tags">
       ${item.general_tags
-        ?.map((tag) => `<div class="organization__tag">${tag}</div>`)
+        ?.sort()
+        .map((tag) => `<div class="organization__tag">${tag}</div>`)
         .join('')}
     </div>
   </div>
