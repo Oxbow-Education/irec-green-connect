@@ -1,12 +1,12 @@
-button,
-button:hover,
-button:focus,
-button[type='button'],
-button[type='submit'],
-button[type='button']:hover,
-button[type='submit']:hover,
-button[type='button']:focus,
-button[type='submit']:focus {
+.home-page-carousel button:hover,
+.home-page-carousel button,
+.home-page-carousel button:focus,
+.home-page-carousel button[type='button'],
+.home-page-carousel button[type='submit'],
+.home-page-carousel button[type='button']:hover,
+.home-page-carousel button[type='submit']:hover,
+.home-page-carousel button[type='button']:focus,
+.home-page-carousel button[type='submit']:focus {
   background-color: transparent;
   outline: none;
   border: none;
@@ -373,7 +373,9 @@ button[type='submit']:focus {
   .home-page-carousel {
     overflow: visible;
     transform: scale(0.75);
+    margin-left: -10px;
   }
+
   .home-page-carousel .carousel {
     overflow: visible;
   }

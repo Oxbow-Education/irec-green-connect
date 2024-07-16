@@ -1,12 +1,12 @@
-button,
-button:hover,
-button:focus,
-button[type='button'],
-button[type='submit'],
-button[type='button']:hover,
-button[type='submit']:hover,
-button[type='button']:focus,
-button[type='submit']:focus {
+.connect-now button,
+.connect-now button:hover,
+.connect-now button:focus,
+.connect-now button[type='button'],
+.connect-now button[type='submit'],
+.connect-now button[type='button']:hover,
+.connect-now button[type='submit']:hover,
+.connect-now button[type='button']:focus,
+.connect-now button[type='submit']:focus {
   background-color: transparent;
   outline: none;
   border: none;
@@ -14,13 +14,13 @@ button[type='submit']:focus {
   border: none;
   color: inherit;
 }
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.connect-now p,
+.connect-now h1,
+.connect-now h2,
+.connect-now h3,
+.connect-now h4,
+.connect-now h5,
+.connect-now h6 {
   padding: 0;
   margin: 0;
 }
@@ -592,6 +592,8 @@ a.organization__link.organization__link--email{
   overflow: hidden;
   text-overflow: ellipsis;
   width: 200px;
+  display: block;
+  margin-bottom:
 }
 a.organization__link:hover{
   text-decoration: underline;

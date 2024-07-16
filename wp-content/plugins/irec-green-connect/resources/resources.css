@@ -1,12 +1,12 @@
-button,
-button:hover,
-button:focus,
-button[type='button'],
-button[type='submit'],
-button[type='button']:hover,
-button[type='submit']:hover,
-button[type='button']:focus,
-button[type='submit']:focus {
+.resourcesbutton,
+.resourcesbutton:hover,
+.resourcesbutton:focus,
+.resourcesbutton[type='button'],
+.resourcesbutton[type='submit'],
+.resourcesbutton[type='button']:hover,
+.resourcesbutton[type='submit']:hover,
+.resourcesbutton[type='button']:focus,
+.resourcesbutton[type='submit']:focus {
   background-color: transparent;
   outline: none;
   border: none;
@@ -14,13 +14,13 @@ button[type='submit']:focus {
   border: none;
   color: inherit;
 }
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.resources p,
+.resources h1,
+.resources h2,
+.resources h3,
+.resources h4,
+.resources h5,
+.resources h6 {
   padding: 0;
   margin: 0;
 }
