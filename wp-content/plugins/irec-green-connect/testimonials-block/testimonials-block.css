@@ -51,6 +51,9 @@
 .testimonials-block sl-tab .testimonials-block__image {
   opacity: 0.8;
 }
+.testimonials-block sl-tab .testimonials-block__image:nth-child(3) {
+  opacity: 0.6;
+}
 .testimonials-block sl-tab[active] .testimonials-block__image {
   opacity: 1;
 }
