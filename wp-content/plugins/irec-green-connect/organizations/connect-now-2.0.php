@@ -40,9 +40,9 @@
             <div class="more-filters__tags-container">
               <button class="tags__button">Battery Storage</button>
               <button class="tags__button">Community Partner</button>
+              <button class="tags__button" data-tag="Diversity Equity and Inclusion">Diversity, Equity, and Inclusion</button>
               <button class="tags__button">Electric Vehicle Charging</button>
               <button class="tags__button">Electric Vehicles</button>
-
               <button class="tags__button">Energy Efficiency</button>
               <button class="tags__button">IREC Accredited</button>
               <button class="tags__button">Solar Energy</button>
@@ -127,6 +127,7 @@
 
       <button class="tags__button">Battery Storage</button>
       <button class="tags__button">Community Partner</button>
+      <button class="tags__button" data-tag="Diversity Equity and Inclusion">Diversity, Equity, and Inclusion</button>
       <button class="tags__button">Electric Vehicle Charging</button>
       <button class="tags__button">Electric Vehicles</button>
       <button class="tags__button">Energy Efficiency</button>

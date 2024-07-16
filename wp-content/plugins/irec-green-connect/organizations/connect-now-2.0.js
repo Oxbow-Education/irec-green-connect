@@ -133,7 +133,8 @@ function handleTagsButtonSelection() {
       clearMarkers();
       button.classList.toggle('tags__button--selected');
       const shouldRemove = !button.classList.contains('tags__button--selected');
-      updateQueryParam('tags', button.innerText, shouldRemove);
+      const value = button.dataset.tag || button.innerText;
+      updateQueryParam('tags', value, shouldRemove);
     });
   });
 }

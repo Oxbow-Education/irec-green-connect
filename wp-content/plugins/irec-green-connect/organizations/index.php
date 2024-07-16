@@ -63,6 +63,7 @@ if (function_exists("register_field_group")) {
         'choices' => array(
           'Battery Storage' => 'Battery Storage',
           'Community Partner' => 'Community Partner',
+          'Diversity, Equity, and Inclusion' => 'Diversity, Equity, and Inclusion',
           'Electric Vehicle Charging' => 'Electric Vehicle Charging',
           'Electric Vehicles' => 'Electric Vehicles',
           'Energy Efficiency' => 'Energy Efficiency',
@@ -561,32 +562,49 @@ function acf_fields_update_page()
 
 function run_acf_update_script()
 {
-  $old_value = 'Weatherization Assistance Program Employer';
-  $new_value = 'Weatherization Assistance Program';
-
-  $args = array(
-    'post_type' => 'organizations-new',
-    'posts_per_page' => -1,
-    'meta_query' => array(
-      array(
-        'key' => 'general_tags',
-        'value' => $old_value,
-        'compare' => 'LIKE'
-      )
-    )
+  $updates = array(
+    array(
+      'old_value' => 'Weatherization Assistance Program Employer',
+      'new_value' => 'Weatherization Assistance Program',
+      'acf_field_name' => 'general_tags'
+    ),
+    // Add more update definitions here
+    array(
+      'old_value' => 'Electric Vehicles and Battery Storage',
+      'new_value' => '',
+      'acf_field_name' => 'general_tags'
+    ),
   );
 
-  $posts = get_posts($args);
+  foreach ($updates as $update) {
+    $old_value = $update['old_value'];
+    $new_value = $update['new_value'];
+    $acf_field_name = $update['acf_field_name'];
 
-  foreach ($posts as $post) {
-    $field_value = get_field('general_tags', $post->ID);
+    $args = array(
+      'post_type' => 'organizations-new',
+      'posts_per_page' => -1,
+      'meta_query' => array(
+        array(
+          'key' => $acf_field_name,
+          'value' => $old_value,
+          'compare' => 'LIKE'
+        )
+      )
+    );
 
-    if (is_array($field_value) && in_array($old_value, $field_value)) {
-      $new_field_value = array_map(function ($value) use ($old_value, $new_value) {
-        return ($value === $old_value) ? $new_value : $value;
-      }, $field_value);
+    $posts = get_posts($args);
 
-      update_field('general_tags', $new_field_value, $post->ID);
+    foreach ($posts as $post) {
+      $field_value = get_field($acf_field_name, $post->ID);
+
+      if (is_array($field_value) && in_array($old_value, $field_value)) {
+        $new_field_value = array_map(function ($value) use ($old_value, $new_value) {
+          return ($value === $old_value) ? $new_value : $value;
+        }, $field_value);
+
+        update_field($acf_field_name, $new_field_value, $post->ID);
+      }
     }
   }
 

@@ -158,6 +158,12 @@ function generateOrgHTML(item) {
 `;
 }
 
+function formatValue(input) {
+  if (input === 'Diversity Equity and Inclusion') {
+    return 'Diversity, Equity, and Inclusion';
+  }
+  return input;
+}
 function syncAlgoliaWithURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
@@ -169,7 +175,9 @@ function syncAlgoliaWithURL() {
   const opportunitiesFacetFilters = opportunities.map(
     (opp) => `opportunities:${opp}`,
   );
-  const tagsFacetFilters = tags.map((tag) => `general_tags:${tag}`);
+  const tagsFacetFilters = tags.map(
+    (tag) => `general_tags:${formatValue(tag)}`,
+  );
 
   // Combine facet filters into an array to use OR logic within the same facet and AND logic between facets
   const combinedFacetFilters = [];
