@@ -357,7 +357,7 @@ a.read-more-button {
   text-decoration: underline !important;
 }
 
-@media and screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .clamp-2 {
     display: block;
     -webkit-line-clamp: unset;
@@ -374,5 +374,8 @@ a.read-more-button {
   }
   .resource-tile:hover {
     transform: scale(1);
+  }
+  .resources .ais-infinite-hits {
+    grid-template-columns: 1fr;
   }
 }
