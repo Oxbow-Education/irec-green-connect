@@ -71,7 +71,7 @@ if (function_exists("register_field_group")) {
           'Registered Apprenticeship' => 'Registered Apprenticeship',
           'Solar Energy' => 'Solar Energy',
           'Training Provider' => 'Training Provider',
-          'Weatherization Assistance Program Employer' => 'Weatherization Assistance Program Employer',
+          'Weatherization Assistance Program' => 'Weatherization Assistance Program',
           'Wind Energy' => 'Wind Energy',
           'Youth Program' => 'Youth Program',
         ),
@@ -510,7 +510,7 @@ function add_migration_button()
         });
       </script>
     </div>
-<?php
+  <?php
   }
 }
 add_action('admin_notices', 'add_migration_button');
@@ -524,3 +524,70 @@ function run_migration_ajax()
   wp_send_json_success('Migration completed successfully.');
 }
 add_action('wp_ajax_run_migration', 'run_migration_ajax');
+
+// DATA MIGRATION
+add_action('admin_menu', 'register_custom_update_page');
+
+function register_custom_update_page()
+{
+  add_submenu_page(
+    'edit.php?post_type=organizations-new', // Parent slug
+    'Update ACF Fields', // Page title
+    'Update ACF Fields', // Menu title
+    'manage_options', // Capability
+    'update-acf-fields', // Menu slug
+    'acf_fields_update_page' // Callback function
+  );
+}
+
+function acf_fields_update_page()
+{
+  ?>
+  <div class="wrap">
+    <h1>Update ACF Fields</h1>
+    <form method="post" action="">
+      <input type="hidden" name="acf_update_action" value="update_fields">
+      <button type="submit" class="button button-primary">Run Update</button>
+    </form>
+    <?php
+    if (isset($_POST['acf_update_action']) && $_POST['acf_update_action'] === 'update_fields') {
+      run_acf_update_script();
+    }
+    ?>
+  </div>
+<?php
+}
+
+function run_acf_update_script()
+{
+  $old_value = 'Weatherization Assistance Program Employer';
+  $new_value = 'Weatherization Assistance Program';
+
+  $args = array(
+    'post_type' => 'organizations-new',
+    'posts_per_page' => -1,
+    'meta_query' => array(
+      array(
+        'key' => 'general_tags',
+        'value' => $old_value,
+        'compare' => 'LIKE'
+      )
+    )
+  );
+
+  $posts = get_posts($args);
+
+  foreach ($posts as $post) {
+    $field_value = get_field('general_tags', $post->ID);
+
+    if (is_array($field_value) && in_array($old_value, $field_value)) {
+      $new_field_value = array_map(function ($value) use ($old_value, $new_value) {
+        return ($value === $old_value) ? $new_value : $value;
+      }, $field_value);
+
+      update_field('general_tags', $new_field_value, $post->ID);
+    }
+  }
+
+  echo '<div class="updated"><p>Update complete.</p></div>';
+}

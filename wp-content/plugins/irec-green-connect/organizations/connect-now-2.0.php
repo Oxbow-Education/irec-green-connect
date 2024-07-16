@@ -45,7 +45,7 @@
               <button class="tags__button">Registered Apprenticeship</button>
               <button class="tags__button">Solar Energy</button>
               <button class="tags__button">Training Provider</button>
-              <button class="tags__button tags__button--long">Weatherization Assistance Program Employer</button>
+              <button class="tags__button tags__button--long">Weatherization Assistance Program</button>
               <button class="tags__button">Wind Energy</button>
               <button class="tags__button">Youth Program</button>
             </div>
@@ -130,7 +130,7 @@
       <button class="tags__button">Registered Apprenticeship</button>
       <button class="tags__button">Solar Energy</button>
       <button class="tags__button">Training Provider</button>
-      <button class="tags__button">Weatherization Assistance Program Employer</button>
+      <button class="tags__button">Weatherization Assistance Program</button>
       <button class="tags__button">Wind Energy</button>
       <button class="tags__button">Youth Program</button>
     </div>
