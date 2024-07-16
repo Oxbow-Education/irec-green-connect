@@ -68,7 +68,6 @@ if (function_exists("register_field_group")) {
           'Internship' => 'Internship',
           'IREC Accredited' => 'IREC Accredited',
           "Pre-Apprenticeship" => 'Pre-Apprenticeship',
-          'Registered Apprenticeship' => 'Registered Apprenticeship',
           'Solar Energy' => 'Solar Energy',
           'Training Provider' => 'Training Provider',
           'Weatherization Assistance Program' => 'Weatherization Assistance Program',
