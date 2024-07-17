@@ -140,7 +140,7 @@
   padding: 0;
   padding-right: 20px;
   text-align: left;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 30px;
 }
 .home-page-carousel .link img {
@@ -364,7 +364,7 @@
     transform: translateX(0) scale(0.4) translateY(-600px);
   }
   .home-page-carousel .link p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 26px;
   }
 }
