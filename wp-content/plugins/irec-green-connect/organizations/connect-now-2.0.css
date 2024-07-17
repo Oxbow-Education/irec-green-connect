@@ -902,7 +902,9 @@ a.organization__link:hover{
 .connect-now .mobile-filters__tags-container {
   padding: 10px 0;
 }
-.connect-now .tags__button {
+.connect-now button.tags__button,
+.connect-now button.tags__button:hover,
+.connect-now button.tags__button:focus {
   border: 2px solid #dee1e6;
   border-radius: 5px;
   font-family: proxima-nova;
@@ -915,13 +917,15 @@ a.organization__link:hover{
   margin: 5px 5px 5px 0;
 }
 
-.connect-now .tags__button--long {
+.connect-now button.tags__button--long {
   text-align: left;
   white-space: break-spaces;
   line-height: 16px;
 }
 
-.connect-now .tags__button--selected {
+.connect-now button.tags__button--selected,
+.connect-now button.tags__button--selected:focus,
+.connect-now button.tags__button--selected:hover {
   background-color: #06aeb3;
   border-color: #06aeb3;
   color: white;
