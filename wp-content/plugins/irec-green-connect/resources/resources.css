@@ -1,12 +1,12 @@
-.resourcesbutton,
-.resourcesbutton:hover,
-.resourcesbutton:focus,
-.resourcesbutton[type='button'],
-.resourcesbutton[type='submit'],
-.resourcesbutton[type='button']:hover,
-.resourcesbutton[type='submit']:hover,
-.resourcesbutton[type='button']:focus,
-.resourcesbutton[type='submit']:focus {
+.resources button,
+.resources button:hover,
+.resources button:focus,
+.resources button[type='button'],
+.resources button[type='submit'],
+.resources button[type='button']:hover,
+.resources button[type='submit']:hover,
+.resources button[type='button']:focus,
+.resources button[type='submit']:focus {
   background-color: transparent;
   outline: none;
   border: none;
@@ -99,7 +99,7 @@
   grid-auto-rows: 11rem;
 }
 
-a {
+.resources a {
   color: inherit !important;
 }
 
@@ -331,6 +331,7 @@ a.read-more-button {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 800px;
+  max-width: 100%;
   z-index: 99;
 }
 
