@@ -251,7 +251,7 @@
   position: relative;
 }
 
-.connect-now .opportunity__trigger {
+.connect-now .opportunity__trigger, .connect-now .opportunity__trigger:focus, .connect-now .opportunity__trigger:hover {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -425,6 +425,7 @@
 
 .results .ais-infinite-hits--showmoreButton:hover {
   background-color: #D7A650;
+  color: white;
 }
 
 

@@ -51,7 +51,9 @@
   outline: none;
   margin: 5px 0;
 }
-
+.resources__filters .filter-button:hover {
+  color: white;
+}
 .resources__filters .filters__user-type__buttons .filter-button {
   border: #a1d165 2px solid;
 }
@@ -279,7 +281,7 @@ a.read-more-button {
   text-decoration: none;
 }
 
-.ais-infinite-hits--showmoreButton {
+.resources .ais-infinite-hits--showmoreButton {
   display: block;
   margin: 0 auto;
   border: 2px solid #00aeb3;
@@ -289,16 +291,18 @@ a.read-more-button {
   outline: none;
   margin: 5px 0;
 }
-.ais-infinite-hits--showmoreButton:disabled {
+.resources .ais-infinite-hits--showmoreButton:disabled {
   display: none;
 }
 
-.ais-infinite-hits--showmoreButton:hover {
+.resources .ais-infinite-hits--showmoreButton:hover {
   background-color: #00aeb3;
+  color: white;
   outline: none;
 }
-.ais-infinite-hits--showmoreButton:focus {
-  background-color: #236489;
+.resources .ais-infinite-hits--showmoreButton:focus {
+  background-color: #00aeb3;
+  border: 2px solid #00aeb3;
   color: #ffffff;
   outline: none;
   text-decoration: none;
