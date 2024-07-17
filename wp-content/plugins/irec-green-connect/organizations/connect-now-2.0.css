@@ -515,12 +515,15 @@
 .organization__opportunities {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .organization__opportunities p {
   color: #8d2a4f;
   font-size: 16px;
   font-weight: bold;
+  white-space: no-wrap;
 }
 
 .organization__info-description {
