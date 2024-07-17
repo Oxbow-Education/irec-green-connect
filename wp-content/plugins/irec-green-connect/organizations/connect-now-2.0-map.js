@@ -150,6 +150,7 @@ function useTextSearch(request) {
       const firstPrediction = results[0];
 
       // Update the autocomplete input with the description value for the found place
+      const input = document.getElementById('autocomplete');
       input.value = firstPrediction.formatted_address;
 
       // Use the firstPrediction which has geometry
@@ -193,17 +194,15 @@ function handleAutocomplete() {
 
   const locationForm = document.querySelector('.location__form');
   locationForm.addEventListener('submit', (e) => e.preventDefault());
-
-  function usePlace(place) {
-    const description = place.formatted_address; // This gets the location's formatted text address
-
-    updateQueryParam('location', description, false, true);
-    updateQueryParam('bounds', '', true, true);
-
-    getBoundsForLocation(description);
-  }
 }
+function usePlace(place) {
+  const description = place.formatted_address; // This gets the location's formatted text address
+  console.log({ description });
+  updateQueryParam('location', description, false, true);
+  updateQueryParam('bounds', '', true, true);
 
+  getBoundsForLocation(description);
+}
 function syncMapToURL() {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(url.search);
