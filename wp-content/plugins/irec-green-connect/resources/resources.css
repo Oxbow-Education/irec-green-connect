@@ -239,7 +239,7 @@ div .resource-tile:hover .resource-description {
 .external-resource-button,
 .read-more-button,
 a.read-more-button {
-  color: #d7a650;
+  color: #d7a650 !important;
   position: absolute;
 }
 .read-more-button,
@@ -375,12 +375,14 @@ a.read-more-button {
 
   .internal-resource-tile {
     min-height: 24rem;
+    height: auto;
     height: fit-content;
   }
   .resource-tile:hover {
     transform: scale(1);
   }
   .resources .ais-infinite-hits {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
 }
