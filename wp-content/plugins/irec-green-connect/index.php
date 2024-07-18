@@ -322,7 +322,7 @@ function save_internal_resource_to_algolia($post_id)
       // Get the post title, content, and link
       $link = get_permalink($post_id);
     } else {
-      $link = '/resource-hub&resource=' . $post_id;
+      $link = '/resource-hub?resource=' . $post_id;
     }
     // Define the data to be indexed
     $data = [
