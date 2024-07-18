@@ -28,13 +28,14 @@ function custom_url_redirects()
 
     // Mapping of old URLs to new page titles
     $redirects = [
-      // '/how-it-works-for-individuals/' => 'Careers in Home Energy Performance',
-      // '/how-it-works-for-contractors/' => 'Contracting in Home Energy Performance',
-      // '/individuals/' => '/resources',
-      // '/organizations/' => '/resources',
-      // '/connect-now/oklahoma/' => '/oklahoma',
-      // '/connect-now/pennsylvania/' => '/pennsylvania',
-      // '/connect-now/wisconsin/' => '/wisconsin',
+      '/how-it-works-for-individuals' => 'Careers in Home Energy Performance',
+      '/how-it-works-for-contractors' => 'Contracting in Home Energy Performance',
+      '/individuals' => '/resource-hub',
+      '/organizations' => '/resource-hub',
+      '/connect-now/oklahoma/' => '/oklahoma',
+      '/connect-now/pennsylvania/' => '/pennsylvania',
+      '/connect-now/wisconsin/' => '/wisconsin',
+      '/connect-now' => '/connect-now',
     ];
 
     // Check if the current URI is in our array of redirects
