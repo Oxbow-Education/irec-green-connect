@@ -269,12 +269,16 @@ function save_to_algolia_on_publish($post_id)
     $link = get_permalink($post_id);
 
     // Define the data to be indexed
+    $title = str_replace('2.0', '', $title); // Remove the string '2.0'
+    $title = trim($title); // Trim extra whitespace
+
     $record = array(
       'objectID' => $post_id, // Use the post ID as the Algolia objectID
       'title' => $title,
       'content' => $content,
       'link' => $link
     );
+
 
 
     // Save the data to the Algolia index
@@ -368,75 +372,7 @@ function save_external_resource_to_algolia($post_id)
     $title = $post->post_title;
     $content = $post->post_content;
 
-    $who_is_this_for = get_post_meta($post_id, 'who_is_this_for', true);
-
-    $is_worker = false;
-    $page_number = 1;
-
-    if (is_array($who_is_this_for) && in_array('Worker User', $who_is_this_for)) {
-      $is_worker = true;
-
-      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
-      $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-
-        'meta_query' => array(
-          'relation' => 'AND',
-          array(
-            'key' => 'who_is_this_for',
-            'value' => 'Worker User',
-            'compare' => 'LIKE',
-          ),
-        ),
-        'orderby' => 'title', // Order by post title
-        'order' => 'ASC',
-        'posts_per_page' => -1,
-      );
-    } else {
-      $is_worker = false;
-      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
-      $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-        'meta_query' => array(
-          'key' => 'organization_tags',
-          'value' => '',
-          'compare' => '!=',
-        ),
-        'orderby' => 'title',
-        'order' => 'ASC',
-        'posts_per_page' => -1,
-      );
-    }
-
-    $worker_query = new WP_Query($args);
-
-    // Calculate the page number based on the current post's position
-    if ($worker_query->have_posts()) {
-      $current_post_position = 0;
-      while ($worker_query->have_posts()) {
-        $worker_query->the_post();
-
-        $current_post_position++;
-        if ($post_id == get_the_ID()) {
-          $page_number = ceil($current_post_position / 10);
-          // break;
-        }
-      }
-
-      wp_reset_postdata();
-    }
-
-
-    // Generate the link based on the criteria
-    if ($is_worker) {
-
-      $link = '/resource-hub&resource=' . $post_id;
-    } else {
-      $link = '/resource-hub&resource=' . $post_id;
-    }
-
+    $link = '/resource-hub&resource=' . $post_id;
 
     // Define the data to be indexed
     $data = [
