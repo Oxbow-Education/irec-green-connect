@@ -71,20 +71,21 @@ function setupAlgoliaSearch() {
 }
 
 function getImageName(opportunities) {
-  if (opportunities.includes('Hiring')) {
-    return 'HIRING';
-  }
-  if (opportunities.includes('Bids & Contracts')) {
-    return 'BIDS & CONTRACTS';
-  }
-  if (opportunities.includes('Information')) {
-    return 'INFORMATION';
+  if (opportunities.includes('Registered Apprenticeship')) {
+    return 'APPRENTICESHIP';
   }
   if (opportunities.includes('Training')) {
     return 'TRAINING';
   }
-  if (opportunities.includes('Registered Apprenticeship')) {
-    return 'APPRENTICESHIP';
+  if (opportunities.includes('Bids & Contracts')) {
+    return 'BIDS & CONTRACTS';
+  }
+  if (opportunities.includes('Hiring')) {
+    return 'HIRING';
+  }
+
+  if (opportunities.includes('Information')) {
+    return 'INFORMATION';
   }
 }
 function generateOrgHTML(item) {

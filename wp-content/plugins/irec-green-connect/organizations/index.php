@@ -350,7 +350,7 @@ function connect_now_2_0()
   wp_enqueue_style('connect-now-2.0', "/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.css", array(), '2.0.9');
   wp_enqueue_script('connect-now-2.0-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.js', array(), '2.0.6');
   wp_enqueue_script('connect-now-2.0-map-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-map.js', array(), '2.0.6');
-  wp_enqueue_script('connect-now-2.0-search-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-search.js', array(), '2.0.6');
+  wp_enqueue_script('connect-now-2.0-search-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-search.js', array(), '2.0.7');
   wp_enqueue_script('google-maps-js', 'https://maps.googleapis.com/maps/api/js?key=' . $api_key . '&libraries=places&callback=initMap');
 
   return ob_get_clean();

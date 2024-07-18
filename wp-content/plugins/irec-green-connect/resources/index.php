@@ -11,7 +11,7 @@ function create_post_type_resources()
       ),
       'public' => true,
       'has_archive' => true,
-      'rewrite' => array('slug' => 'resources'),
+      'rewrite' => array('slug' => '/', 'with_front' => false),
       'supports' => array('title', 'editor', 'thumbnail', 'custom-fields', 'elementor'),
       'show_in_rest' => true
     )
