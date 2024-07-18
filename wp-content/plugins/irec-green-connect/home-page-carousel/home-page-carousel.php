@@ -25,7 +25,7 @@
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/connect-now?opportunities=Training,Information" class="link link--blue row-1-3">
+        <div data-link="/connect-now?opportunities=Training%2CRegistered+Apprenticeships" class="link link--blue row-1-3">
           <p>
             Find training and apprenticeship programs
           </p>
@@ -62,7 +62,7 @@
       </div>
       <div class="slide-links">
 
-        <div data-link="/connect-now?opportunities=Training,Information" class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Training,Information,Registered+Apprenticeships" class="link link--yellow row-1-4">
           <p>
             Partner with training programs in your area </p>
 
@@ -81,7 +81,7 @@
           </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link='/resource-hub?user_type=Employer' class="link link--light-blue row-2-6">
+        <div data-link='/resource-hub?userType=Employer' class="link link--light-blue row-2-6">
           <p>
             Access workforce development tools and templates
           </p>
@@ -110,7 +110,7 @@
       </div>
       <div class="slide-links">
 
-        <div data-link="/connect-now?opportunities=Hiring,Training" class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Training,Hiring,Registered+Apprenticeships" class="link link--yellow row-1-4">
           <p>
             Connect with employers and training providers in your area </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
@@ -165,7 +165,7 @@
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/resource-hub?user_type=Contractor" class="link link--green row-4-6">
+        <div data-link="/resource-hub?userType=Contractor" class="link link--green row-4-6">
           <p>
             Browse more resources for contractors </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
