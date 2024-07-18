@@ -445,3 +445,39 @@ function change_post_rewrite_slug()
   ));
 }
 add_action('init', 'change_post_rewrite_slug');
+
+function check_and_prepend_resource_hub_shortcode()
+{
+  global $wp;
+  $current_url = home_url(add_query_arg(array(), $wp->request));
+
+  // Stops infinite loop
+  if (strpos($current_url, '/resource-hub/') === 0) {
+    return;
+  }
+
+  // Try prepending /resource-hub to the current URL
+  $new_url = home_url('/resource-hub/' . ltrim($wp->request, '/'));
+
+
+  // Check if the new URL exists
+  $response = wp_remote_get($new_url);
+  if (is_wp_error($response)) {
+    return ''; // Return empty to not affect the page content
+  }
+
+  $response_code = wp_remote_retrieve_response_code($response);
+  var_dump("Response Code: " . $response_code);
+
+  if ($response_code == 200 || $response_code == 503) {
+    // Redirect to the new URL if it exists
+    wp_redirect($new_url, 301);
+    exit;
+  }
+
+  // If the new URL doesn't exist, do nothing and display the current page content
+  return '';
+}
+
+// Register the shortcode
+add_shortcode('check_resource_hub', 'check_and_prepend_resource_hub_shortcode');
