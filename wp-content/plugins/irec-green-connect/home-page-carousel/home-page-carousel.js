@@ -54,7 +54,7 @@ function handleLinkClicks() {
   links.forEach((link) =>
     link.addEventListener('click', () => {
       const url = link.dataset.link;
-      window.open(url);
+      window.location.href = url;
     }),
   );
 }

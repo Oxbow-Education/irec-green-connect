@@ -32,14 +32,14 @@
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/learn-more-for-job-seekers" class="link link--green row-4-6">
+        <div data-link="/for-job-seekers" class="link link--green row-4-6">
           <p>
             Get career tips and read success stories </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link='/careers-in-home-energy-performance' class="link link--light-blue row-2-6">
+        <div data-link='/careers-in-building-performance/' class="link link--light-blue row-2-6">
           <p>
-            Explore careers in home energy performance </p>
+            Explore careers in building performance </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
       </div>
@@ -75,13 +75,13 @@
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link='/learn-more-for-employers' class="link link--green row-4-6">
+        <div data-link='/for-employers' class="link link--green row-4-6">
           <p>
             Explore hiring and diversity strategies
           </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link='/resources?user_type=Employer' class="link link--light-blue row-2-6">
+        <div data-link='/resource-hub?user_type=Employer' class="link link--light-blue row-2-6">
           <p>
             Access workforce development tools and templates
           </p>
@@ -121,12 +121,12 @@
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/learn-more-for-educators-and-workforce-organizations" class="link link--green row-4-6">
+        <div data-link="/for-educators-and-workforce-organizations" class="link link--green row-4-6">
           <p>
             Help students and job seekers explore career opportunities </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/resources" class="link link--light-blue row-2-6">
+        <div data-link="/resource-hub" class="link link--light-blue row-2-6">
           <p>
             Learn about IREC accreditation and certification
           </p>
@@ -152,20 +152,20 @@
       </div>
       <div class="slide-links">
 
-        <div data-link="/connect-now?opportunities=Bids & Contracts" class="link link--yellow row-1-4">
+        <div data-link="/connect-now?opportunities=Bids+%26+Contracts" class="link link--yellow row-1-4">
           <p>
             Connect with organizations seeking contractors
           </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/resources/a-guide-to-success-for-contractors-new-to-the-weatherization-assistance-program/" class="link link--blue row-1-3">
+        <div data-link="/a-guide-to-success-for-contractors-new-to-the-weatherization-assistance-program/" class="link link--blue row-1-3">
           <p>
             Access the Contractor’s Guide to Success for Home Weatherization
           </p>
 
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
         </div>
-        <div data-link="/resources?user_type=Contracto" class="link link--green row-4-6">
+        <div data-link="/resource-hub?user_type=Contractor" class="link link--green row-4-6">
           <p>
             Browse more resources for contractors </p>
           <img src="/wp-content/plugins/irec-green-connect/public/img/arrow-right.png" />
