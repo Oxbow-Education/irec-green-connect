@@ -62,3 +62,13 @@ function remove_aiseo_meta_boxes()
 }
 
 add_action('do_meta_boxes', 'remove_aiseo_meta_boxes');
+
+function hide_aioseo_details_from_edit_tables()
+{
+  // Check if the current user is an admin
+  if (current_user_can('administrator')) {
+    // Enqueue custom JavaScript
+    wp_enqueue_script('hide-aiseo-details', '/wp-content/plugins/irec-green-connect/public/js/hide-aiseo-details.js', array('jquery'), null, true);
+  }
+}
+add_action('admin_enqueue_scripts', 'hide_aioseo_details_from_edit_tables');

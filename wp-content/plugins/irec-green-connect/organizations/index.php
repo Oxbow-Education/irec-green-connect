@@ -347,7 +347,7 @@ function connect_now_2_0()
   wp_enqueue_style('shoelace-css', 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css');
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
-  wp_enqueue_style('connect-now-2.0', "/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.css", array(), '2.0.9');
+  wp_enqueue_style('connect-now-2.0', "/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.css", array(), '2.0.10');
   wp_enqueue_script('connect-now-2.0-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0.js', array(), '2.0.6');
   wp_enqueue_script('connect-now-2.0-map-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-map.js', array(), '2.0.6');
   wp_enqueue_script('connect-now-2.0-search-js', '/wp-content/plugins/irec-green-connect/organizations/connect-now-2.0-search.js', array(), '2.0.7');
@@ -493,29 +493,7 @@ function migrate_organization_remote_or_in_person()
     wp_reset_postdata();
   }
 }
-function add_migration_button()
-{
-  $screen = get_current_screen();
-  if ($screen->post_type == 'organizations-new' && $screen->base == 'edit') {
-  ?>
-    <div style="padding: 10px;">
-      <button id="migrate-data" class="button button-primary">Migrate Data</button>
-      <script type="text/javascript">
-        document.getElementById('migrate-data').addEventListener('click', function() {
-          if (confirm('Are you sure you want to run the migration?')) {
-            jQuery.post(ajaxurl, {
-              action: 'run_migration'
-            }, function(response) {
-              alert(response.data);
-            });
-          }
-        });
-      </script>
-    </div>
-  <?php
-  }
-}
-add_action('admin_notices', 'add_migration_button');
+
 function run_migration_ajax()
 {
   if (!current_user_can('manage_options')) {

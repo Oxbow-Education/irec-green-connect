@@ -370,7 +370,7 @@
 }
 .connect-now__main {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr minmax(0, 500px);
   grid-template-rows: 1fr;
   background-color: white;
   height: calc(100vh - 250px);

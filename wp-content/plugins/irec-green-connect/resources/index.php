@@ -175,30 +175,6 @@ function add_elementor_support_for_custom_post_types()
 }
 add_action('init', 'add_elementor_support_for_custom_post_types');
 
-// Step 1: Add a Button to the Resources Edit Page
-function add_resources_migration_button()
-{
-  $screen = get_current_screen();
-  if ($screen->post_type == 'resources' && $screen->base == 'edit') {
-?>
-    <div style="padding: 10px;">
-      <button id="migrate-old-resources" class="button button-primary">Migrate Old Resources</button>
-      <script type="text/javascript">
-        document.getElementById('migrate-old-resources').addEventListener('click', function() {
-          if (confirm('Are you sure you want to migrate old resources?')) {
-            jQuery.post(ajaxurl, {
-              action: 'migrate_old_resources'
-            }, function(response) {
-              alert(response.data);
-            });
-          }
-        });
-      </script>
-    </div>
-  <?php
-  }
-}
-add_action('admin_notices', 'add_resources_migration_button');
 
 // Step 2: Handle the Button Click
 function handle_migrate_old_resources()
@@ -304,7 +280,7 @@ function filter_resources_by_is_internal_resource()
   global $typenow;
   if ($typenow == 'resources') {
     $is_internal_resource = isset($_GET['is_internal_resource']) ? $_GET['is_internal_resource'] : '';
-  ?>
+?>
     <select name="is_internal_resource" id="is_internal_resource">
       <option value=""><?php _e('All Resources', 'textdomain'); ?></option>
       <option value="1" <?php selected($is_internal_resource, '1'); ?>><?php _e('Internal Resource', 'textdomain'); ?></option>
@@ -453,7 +429,7 @@ function check_and_prepend_resource_hub_shortcode()
 
   // Stops infinite loop
   if (strpos($current_url, '/resource-hub/') === 0) {
-    return;
+    return '';
   }
 
   // Try prepending /resource-hub to the current URL
@@ -481,3 +457,15 @@ function check_and_prepend_resource_hub_shortcode()
 
 // Register the shortcode
 add_shortcode('check_resource_hub', 'check_and_prepend_resource_hub_shortcode');
+function hide_aioseo_details_column()
+{
+  echo '<style>
+      th.column-aioseo-score, 
+      td.column-aioseo-score,
+      th.column-aioseo-details, 
+      td.column-aioseo-details {
+          display: none;
+      }
+  </style>';
+}
+add_action('admin_head', 'hide_aioseo_details_column');
