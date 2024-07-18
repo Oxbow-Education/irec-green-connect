@@ -11,7 +11,7 @@ function create_post_type_resources()
       ),
       'public' => true,
       'has_archive' => true,
-      'rewrite' => array('slug' => '/', 'with_front' => false),
+      'rewrite' => array('slug' => '/resource-hub', 'with_front' => false),
       'supports' => array('title', 'editor', 'thumbnail', 'custom-fields', 'elementor'),
       'show_in_rest' => true
     )
@@ -451,3 +451,32 @@ add_action('init', 'change_post_rewrite_slug');
 //   flush_rewrite_rules();
 // }
 // add_action('after_switch_theme', 'flush_rewrite_rules_on_activation');
+
+
+add_action('template_redirect', 'check_and_prepend_resource_hub');
+
+function check_and_prepend_resource_hub()
+{
+  if (is_404()) {
+    global $wp;
+    $current_url = home_url(add_query_arg(array(), $wp->request));
+
+    // Try prepending /resource-hub to the current URL
+    $new_url = home_url('/resource-hub' . $wp->request);
+
+    // Check if the new URL exists
+    $response = wp_remote_get($new_url);
+    if (is_wp_error($response)) {
+      // There was an error making the request, display the original 404 page
+      return;
+    }
+
+    $response_code = wp_remote_retrieve_response_code($response);
+    if ($response_code == 200) {
+      // Redirect to the new URL if it exists
+      wp_redirect($new_url, 301);
+      exit;
+    }
+    // If the new URL doesn't exist, display the original 404 page
+  }
+}
