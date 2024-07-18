@@ -420,3 +420,34 @@ function custom_resource_redirect()
   }
 }
 add_action('template_redirect', 'custom_resource_redirect');
+
+// Hide current posts and "archive"
+function remove_menus()
+{
+  remove_menu_page('edit.php'); // Removes 'Posts'
+}
+add_action('admin_menu', 'remove_menus');
+function change_post_rewrite_slug()
+{
+  // Unregister the original "post" post type
+  unregister_post_type('post');
+
+  // Re-register the "post" post type with a new rewrite slug
+  register_post_type('post', array(
+    'labels' => array(
+      'name' => __('Posts'),
+      'singular_name' => __('Post')
+    ),
+    'public' => true,
+    'has_archive' => true,
+    'rewrite' => array('slug' => 'archived'),
+    'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+  ));
+}
+add_action('init', 'change_post_rewrite_slug');
+
+// function flush_rewrite_rules_on_activation() {
+//   change_post_rewrite_slug();
+//   flush_rewrite_rules();
+// }
+// add_action('after_switch_theme', 'flush_rewrite_rules_on_activation');
