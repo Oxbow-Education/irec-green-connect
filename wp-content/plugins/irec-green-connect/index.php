@@ -303,9 +303,9 @@ function save_internal_resource_to_algolia($post_id)
   $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
   $index = $client->initIndex('full_site_search');
 
-  // Check if the post type is 'post' and the post is published
+  // Check if the post type is 'resources' and the post is published
   if (
-    get_post_type($post_id) == 'post'
+    get_post_type($post_id) == 'resources'
     && get_post_status($post_id) == 'publish'
     && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
   ) {
@@ -358,7 +358,7 @@ function save_external_resource_to_algolia($post_id)
 
   // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
   if (
-    get_post_type($post_id) == 'post'
+    get_post_type($post_id) == 'resources'
     && get_post_status($post_id) == 'publish'
     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
     && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
@@ -432,9 +432,9 @@ function save_external_resource_to_algolia($post_id)
     // Generate the link based on the criteria
     if ($is_worker) {
 
-      $link = '/individuals?paged=' . $page_number . '&resource=' . $post_id;
+      $link = '/resource-hub&resource=' . $post_id;
     } else {
-      $link = '/organizations?paged=' . $page_number . '&resource=' . $post_id;
+      $link = '/resource-hub&resource=' . $post_id;
     }
 
 
