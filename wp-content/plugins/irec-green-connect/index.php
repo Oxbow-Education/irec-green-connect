@@ -315,65 +315,15 @@ function save_internal_resource_to_algolia($post_id)
   ) {
     // Check if the custom field 'is_internal_resource' is set to 'true'
     $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
-
-    if (boolval($is_internal_resource)) {
-      // Get the post title, content, and link
-
-      $post = get_post($post_id);
-      $title = $post->post_title;
-      $content = $post->post_content;
-      $link = get_permalink($post_id);
-
-      // Define the data to be indexed
-      $data = [
-        'objectID' => $post_id, // Use the post ID as the Algolia objectID
-        'title' => $title,
-        'content' => $content,
-        'link' => $link,
-      ];
-
-      // Save the data to the Algolia index
-      $index->saveObject($data);
-    }
-  } else if (
-    get_post_type($post_id) == 'post'
-  ) {
-    $index->deleteObject($post_id);
-  }
-}
-
-// Hook the function to the 'save_post' action
-add_action('save_post', 'save_internal_resource_to_algolia');
-
-
-function save_external_resource_to_algolia($post_id)
-{
-  // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
-  // Sync post with Algolia
-  $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
-  $algolia_app_id = get_option('algolia_sync_plugin_app_id');
-
-  // Perform the synchronization with Algolia using the Algolia API
-  // Replace this code with your own logic to sync the post with Algolia
-
-  // Example code using the Algolia PHP SDK
-  $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-  $index = $client->initIndex('full_site_search');
-
-  // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
-  if (
-    get_post_type($post_id) == 'resources'
-    && get_post_status($post_id) == 'publish'
-    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
-    && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
-  ) {
-    // Get the post title and content
     $post = get_post($post_id);
     $title = $post->post_title;
     $content = $post->post_content;
-
-    $link = '/resource-hub&resource=' . $post_id;
-
+    if (boolval($is_internal_resource)) {
+      // Get the post title, content, and link
+      $link = get_permalink($post_id);
+    } else {
+      $link = '/resource-hub&resource=' . $post_id;
+    }
     // Define the data to be indexed
     $data = [
       'objectID' => $post_id, // Use the post ID as the Algolia objectID
@@ -385,19 +335,67 @@ function save_external_resource_to_algolia($post_id)
     // Save the data to the Algolia index
     $index->saveObject($data);
   } else if (
-    get_post_type($post_id) == 'post'
-    && (get_post_status($post_id) != 'publish' ||
-      boolval(get_post_meta($post_id, '_hide_from_algolia'))
-    )
-    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
-
+    get_post_type($post_id) == 'resources'
   ) {
     $index->deleteObject($post_id);
   }
 }
 
 // Hook the function to the 'save_post' action
-add_action('save_post', 'save_external_resource_to_algolia');
+add_action('save_post', 'save_internal_resource_to_algolia');
+
+
+// function save_external_resource_to_algolia($post_id)
+// {
+//   // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+//   // Sync post with Algolia
+//   $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+//   $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+//   // Perform the synchronization with Algolia using the Algolia API
+//   // Replace this code with your own logic to sync the post with Algolia
+
+//   // Example code using the Algolia PHP SDK
+//   $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+//   $index = $client->initIndex('full_site_search');
+
+//   // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
+//   if (
+//     get_post_type($post_id) == 'resources'
+//     && get_post_status($post_id) == 'publish'
+//     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+//     && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
+//   ) {
+//     // Get the post title and content
+//     $post = get_post($post_id);
+//     $title = $post->post_title;
+//     $content = $post->post_content;
+
+
+//     // Define the data to be indexed
+//     $data = [
+//       'objectID' => $post_id, // Use the post ID as the Algolia objectID
+//       'title' => $title,
+//       'content' => $content,
+//       'link' => $link,
+//     ];
+
+//     // Save the data to the Algolia index
+//     $index->saveObject($data);
+//   } else if (
+//     get_post_type($post_id) == 'post'
+//     && (get_post_status($post_id) != 'publish' ||
+//       boolval(get_post_meta($post_id, '_hide_from_algolia'))
+//     )
+//     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+
+//   ) {
+//     $index->deleteObject($post_id);
+//   }
+// }
+
+// // Hook the function to the 'save_post' action
+// add_action('save_post', 'save_external_resource_to_algolia');
 
 
 function newsletter_sign_up_shortcode()
