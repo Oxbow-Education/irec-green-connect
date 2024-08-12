@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   handleShowAllButtons();
 });
 window.addEventListener(URL_UPDATED, () => {
-  console.log('here');
   syncTagsWithURL('.filters__user-type__buttons button', 'userType');
   syncTagsWithURL('.filters__resource-type__buttons button', 'resourceType');
 });
@@ -22,6 +21,11 @@ function handleTagsButtons(selector, queryParam) {
       const value = button.dataset.value;
       if (isSelected) {
         updateQueryParam(queryParam, value, false, false);
+        gtag('event', 'filter_click', {
+          category: 'resources',
+          click_label: `resources_filter_click`,
+          title: value,
+        });
       } else {
         updateQueryParam(queryParam, value, true, false);
       }

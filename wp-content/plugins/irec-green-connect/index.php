@@ -268,6 +268,12 @@ function save_to_algolia_on_publish($post_id)
     $content = $post->post_content;
     $link = get_permalink($post_id);
 
+    // Delete pages without titles
+    if (!$title) {
+      $index->deleteObject($post_id);
+      return;
+    }
+
     // Define the data to be indexed
     $title = str_replace('2.0', '', $title); // Remove the string '2.0'
     $title = trim($title); // Trim extra whitespace
@@ -279,18 +285,18 @@ function save_to_algolia_on_publish($post_id)
       'link' => $link
     );
 
-
-
     // Save the data to the Algolia index
     $index->saveObject($record);
   } else if (
     get_post_type($post_id) == 'page'
+    && (get_post_status($post_id) != 'publish'
+      || boolval(get_post_meta($post_id, '_hide_from_algolia', true)))
   ) {
     $index->deleteObject($post_id);
   }
 }
 
-add_action('save_post', 'save_to_algolia_on_publish');
+add_action('save_post', 'save_to_algolia_on_publish', 20);
 
 function save_internal_resource_to_algolia($post_id)
 {
@@ -311,19 +317,21 @@ function save_internal_resource_to_algolia($post_id)
   if (
     get_post_type($post_id) == 'resources'
     && get_post_status($post_id) == 'publish'
-    && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
+    && !boolval(get_post_meta($post_id, '_hide_from_algolia', true))
   ) {
     // Check if the custom field 'is_internal_resource' is set to 'true'
     $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
     $post = get_post($post_id);
     $title = $post->post_title;
     $content = $post->post_content;
+
     if (boolval($is_internal_resource)) {
-      // Get the post title, content, and link
       $link = get_permalink($post_id);
     } else {
       $link = '/resource-hub?resource=' . $post_id;
     }
+
+
     // Define the data to be indexed
     $data = [
       'objectID' => $post_id, // Use the post ID as the Algolia objectID
@@ -336,13 +344,15 @@ function save_internal_resource_to_algolia($post_id)
     $index->saveObject($data);
   } else if (
     get_post_type($post_id) == 'resources'
+    && (get_post_status($post_id) != 'publish'
+      || boolval(get_post_meta($post_id, '_hide_from_algolia')))
   ) {
     $index->deleteObject($post_id);
   }
 }
 
 // Hook the function to the 'save_post' action
-add_action('save_post', 'save_internal_resource_to_algolia');
+add_action('save_post', 'save_internal_resource_to_algolia', 20);
 
 
 // function save_external_resource_to_algolia($post_id)
@@ -430,3 +440,9 @@ function top_resources_carousel_shortcode()
   return ob_get_clean();
 }
 add_shortcode('top_resources_carousel', 'top_resources_carousel_shortcode');
+
+function remove_posts_menu_item()
+{
+  remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'remove_posts_menu_item');

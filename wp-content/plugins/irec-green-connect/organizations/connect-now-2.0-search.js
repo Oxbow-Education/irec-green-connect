@@ -1,19 +1,50 @@
 // Setup Algolia search after the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (!orgsSearch) setupAlgoliaSearch();
   syncFilterChipsWithURL();
+  await fetchAndAddAllHitsToMap();
 });
 
 // Listen to URL state and update Algolia parameters to match
-window.addEventListener(URL_UPDATED, () => {
+window.addEventListener(URL_UPDATED, async () => {
   syncAlgoliaWithURL();
   syncFilterChipsWithURL();
+  await fetchAndAddAllHitsToMap();
 });
 // Initialize the algolia query to the url parameters when the search is initialized
-window.addEventListener(ALGOLIA_INITIALIZED, () => {
+window.addEventListener(ALGOLIA_INITIALIZED, async () => {
   syncAlgoliaWithURL();
   syncNumberOfResults();
+  await fetchAndAddAllHitsToMap();
 });
+
+async function fetchAndAddAllHitsToMap() {
+  if (!orgsSearch) return;
+  const index = orgsSearch.client.initIndex('organizations-new');
+  const query = orgsSearch.helper.state.query;
+  const facetFilters = orgsSearch.helper.state.facetFilters;
+
+  const allHits = await fetchAllHits(index, query, facetFilters);
+  console.log({ facetFilters, allHits });
+  allHits.forEach((hit) => addMarker(hit));
+}
+
+async function fetchAllHits(index, query, facetFilters) {
+  let hits = [];
+  let page = 0;
+  let results;
+
+  do {
+    results = await index.search(query, {
+      page,
+      facetFilters,
+    });
+    hits = hits.concat(results.hits);
+    page++;
+  } while (results.nbHits > hits.length);
+
+  return hits;
+}
 
 // Initialize and configure Algolia search
 function setupAlgoliaSearch() {
@@ -41,7 +72,6 @@ function setupAlgoliaSearch() {
       showMore: true,
       templates: {
         item: (item) => {
-          addMarker(item);
           return generateOrgHTML(item);
         },
         empty: `<p>We're sorry, no search results are coming up for this location. Please expand your search or browse the virtual opportunities below.</p>`,
@@ -91,7 +121,7 @@ function getImageName(opportunities) {
 function generateOrgHTML(item) {
   const orgImageName = getImageName(item.opportunities);
 
-  return `<div class="organization">
+  return `<div  class="organization">
   <div class="organization__container">
     <div class="organization__info">
       <div class="organization__info-img">
@@ -151,10 +181,10 @@ function generateOrgHTML(item) {
           </a>`
           : ''
       }
-      
-    <a target="_blank" href="${
-      item.url || `mailto:${item.email}`
-    }" class="organization__connect-now">
+    
+    <a data-organization="${item.organization}" target="_blank" href="${
+    item.url || `mailto:${item.email}`
+  }" class="organization__connect-now" onclick="saveOrgToGa(this)">
     Connect Now
     </a>
       
@@ -191,6 +221,14 @@ function syncAlgoliaWithURL() {
   }
   if (tagsFacetFilters.length > 0) {
     combinedFacetFilters.push(tagsFacetFilters);
+  }
+
+  console.log({ orgsSearch });
+  if (query && query != orgsSearch.query) {
+    gtag('event', 'search', {
+      category: 'connect_now',
+      query,
+    });
   }
 
   orgsSearch.helper
@@ -276,5 +314,24 @@ function syncNumberOfResults() {
       '#metaInfoRemote .results__count',
     );
     resultsCountRemote.innerText = `${results.nbHits} Results`;
+  });
+}
+
+function saveToGA(value) {
+  if (!gtag) return;
+  gtag('event', 'user_location', {
+    category: 'connect_now', // Custom parameter
+    click_label: 'connect_now_location_input', // Custom parameter
+    value: value, // Assuming 'value' is the variable holding the input data
+  });
+}
+
+function saveOrgToGa(link) {
+  const organization = link.dataset.organization;
+  gtag('event', 'organization_link', {
+    category: 'connect_now', // Custom parameter
+    click_label: 'connect_now_organization_referral', // Custom parameter
+    href: link.getAttribute('href'), // Custom parameter
+    title: organization, // Custom parameter
   });
 }

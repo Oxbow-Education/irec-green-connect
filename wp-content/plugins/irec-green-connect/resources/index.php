@@ -365,8 +365,8 @@ function resources_2_0()
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
   wp_enqueue_style('resources-css', "/wp-content/plugins/irec-green-connect/resources/resources.css", array(), '2.0.10');
-  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js', array(), '2.0.5');
-  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js', array(), '2.0.5');
+  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js', array(), '2.0.6');
+  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js', array(), '2.0.6');
 
   return ob_get_clean();
 }

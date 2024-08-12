@@ -186,9 +186,19 @@ function handleAutocomplete() {
         fields: ['name', 'geometry', 'formatted_address', 'place_id'],
       };
       useTextSearch(request);
+      gtag('event', 'user_location', {
+        category: 'connect_now',
+        click_label: 'connect_now_location_input',
+        value: request,
+      });
     } else {
       // Use the place as it is
       usePlace(place);
+      gtag('event', 'user_location', {
+        category: 'connect_now',
+        click_label: 'connect_now_location_input',
+        value: place,
+      });
     }
   });
 

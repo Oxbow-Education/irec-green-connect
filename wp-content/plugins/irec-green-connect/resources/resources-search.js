@@ -74,7 +74,9 @@ function generateInternalResourceHTML(item) {
         .map((tag) => `<div class="resource-tag">${tag}</div>`)
         .join('')
     : '';
-  return `<a href="${item.link}"><div onclick="sendEvent('${item.title.replace(
+  return `<a href="${
+    item.link
+  }"><div onclick="sendResourceClickToGA(true, '${item.title.replace(
     /'/g,
     "\\'",
   )}')"
@@ -107,6 +109,11 @@ function generateExternalResourceHTML(item) {
     : '';
   const html = `
      <div
+
+     onclick="sendResourceClickToGA(false, '${item.title.replace(
+       /'/g,
+       "\\'",
+     )}')"
           class="external-resource-tile resource-tile"
           data-tag="${item.objectID}">
         <div class="resource-tile-text">
@@ -149,9 +156,7 @@ function syncAlgoliaWithURL(properties) {
     .search();
 
   function formatVal(input) {
-    console.log({ input });
     if (input === 'Diversity Equity and Inclusion') {
-      console.log('Diversity, Equity, and Inclusion');
       return 'Diversity, Equity, and Inclusion';
     }
     return input;
@@ -223,4 +228,14 @@ function closeModal() {
     'externalResourceModal',
   );
   externalResourceModal.hide();
+}
+
+function sendResourceClickToGA(isInternal, title) {
+  gtag('event', 'resource_click', {
+    category: 'resources',
+    click_label: isInternal
+      ? 'user_clicked_internal_resource'
+      : 'user_clicked_external_resource',
+    title: title,
+  });
 }
