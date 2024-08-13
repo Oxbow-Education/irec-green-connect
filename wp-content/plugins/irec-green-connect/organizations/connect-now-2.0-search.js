@@ -1,3 +1,54 @@
+let previousQuery = '';
+let previousFilters = {
+  opportunities: '',
+  tags: '',
+};
+let typingTimeout;
+let filteringTimeout;
+
+function triggerSearchEvent(query) {
+  if (query && query !== previousQuery) {
+    gtag('event', 'search', {
+      category: 'connect_now',
+      query,
+    });
+    previousQuery = query;
+  }
+}
+function triggerFilterEvent(opportunities, tags) {
+  const currentFilters = {
+    opportunities: opportunities.join(','),
+    tags: tags.join(','),
+  };
+
+  if (
+    currentFilters.opportunities !== previousFilters.opportunities ||
+    currentFilters.tags !== previousFilters.tags
+  ) {
+    gtag('event', 'filter_click', {
+      category: 'connect_now_filter_click',
+      opportunities: currentFilters.opportunities,
+      tags: currentFilters.tags,
+    });
+    previousFilters = currentFilters;
+  }
+}
+// Debounce function to delay the execution until the user stops filtering
+function debounceFilter(opportunities, tags) {
+  clearTimeout(filteringTimeout);
+  filteringTimeout = setTimeout(() => {
+    triggerFilterEvent(opportunities, tags);
+  }, 500); // Adjust the delay as needed (500ms is common)
+}
+
+// Debounce function to delay the execution until the user stops typing
+function debounceSearch(query) {
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => {
+    triggerSearchEvent(query);
+  }, 500); // Adjust the delay as needed (500ms is common)
+}
+
 // Setup Algolia search after the DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
   if (!orgsSearch) setupAlgoliaSearch();
@@ -25,7 +76,6 @@ async function fetchAndAddAllHitsToMap() {
   const facetFilters = orgsSearch.helper.state.facetFilters;
 
   const allHits = await fetchAllHits(index, query, facetFilters);
-  console.log({ facetFilters, allHits });
   allHits.forEach((hit) => addMarker(hit));
 }
 
@@ -223,13 +273,11 @@ function syncAlgoliaWithURL() {
     combinedFacetFilters.push(tagsFacetFilters);
   }
 
-  console.log({ orgsSearch });
-  if (query && query != orgsSearch.query) {
-    gtag('event', 'search', {
-      category: 'connect_now',
-      query,
-    });
-  }
+  // Trigger the search event only after the user has stopped typing
+  debounceSearch(query);
+
+  // Trigger the filter event only after the user has stopped changing filters
+  debounceFilter(opportunities, tags);
 
   orgsSearch.helper
     .setQueryParameter('query', query ?? '')

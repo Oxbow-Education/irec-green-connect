@@ -207,7 +207,6 @@ function handleAutocomplete() {
 }
 function usePlace(place) {
   const description = place.formatted_address; // This gets the location's formatted text address
-  console.log({ description });
   updateQueryParam('location', description, false, true);
   updateQueryParam('bounds', '', true, true);
 
@@ -264,15 +263,12 @@ function convertBoundsToGoogleMap(boundsParam) {
 }
 function getBoundsForLocation(location) {
   const geocoder = new google.maps.Geocoder();
-  console.log({ location });
   // Check if the location is an address (string) or coordinates (object)
   if (typeof location === 'string') {
-    console.log('string');
     geocoder.geocode({ address: location }, function (results, status) {
       handleGeocodeResults(results, status);
     });
   } else if (typeof location === 'object' && location.lat && location.lng) {
-    console.log('object');
     geocoder.geocode({ location: location }, function (results, status) {
       handleGeocodeResults(results, status);
     });
@@ -283,7 +279,6 @@ function getBoundsForLocation(location) {
   }
 }
 function handleGeocodeResults(results, status) {
-  console.log({ results, status });
   if (status === 'OK' && results[0]) {
     const addressComponents = results[0].address_components;
 
@@ -313,8 +308,6 @@ function handleGeocodeResults(results, status) {
       updateCenterZoom(results[0].geometry.location, 12);
     }
   } else {
-    console.log('%HERE');
-
     console.error(
       'Geocode was not successful for the following reason: ' + status,
     );

@@ -176,7 +176,6 @@ function removeFiltersAndSearch() {
   url.search = searchParams.toString();
 
   window.history.replaceState({ path: url.toString() }, '', url.toString());
-  console.log(url.toString());
 
   // Ensure this is called after the URL update
   sendEvent(URL_UPDATED);
