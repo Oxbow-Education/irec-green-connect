@@ -232,7 +232,7 @@ function generateOrgHTML(item) {
           : ''
       }
     
-    <a data-organization="${item.organization}" target="_blank" href="${
+    <a data-organization="${item.organization_name}" target="_blank" href="${
     item.url || `mailto:${item.email}`
   }" class="organization__connect-now" onclick="saveOrgToGa(this)">
     Connect Now
