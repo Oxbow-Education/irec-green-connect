@@ -13,7 +13,8 @@ function create_post_type_organizations()
       'public' => true,
       'has_archive' => true,
       'rewrite' => array('slug' => 'organizations-new'),
-      'supports' => array('custom-fields')
+      'supports' => array('custom-fields'),
+      'show_in_rest' => true
     )
   );
 }
