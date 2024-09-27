@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://wherewego.org
- * @since             1.0.0
+ * @since             2.0.4
  * @package           Irec_Green_Connect
  *
  * @wordpress-plugin
  * Plugin Name:       IREC Green Connect
  * Plugin URI:        https://wherewego.org
  * Description:       Applies all of the custom code to the IREC Green Connect website
- * Version:           1.0.0
+ * Version:           2.0.4
  * Author:            WhereWeGo
  * Author URI:        https://wherewego.org
  * License:           GPL-2.0+
@@ -32,10 +32,10 @@ if (!defined('WPINC')) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 2.0.4 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('IREC_GREEN_CONNECT_VERSION', '1.0.0');
+define('IREC_GREEN_CONNECT_VERSION', '2.0.4');
 
 /**
  * The code that runs during plugin activation.
@@ -73,7 +73,7 @@ require plugin_dir_path(__FILE__) . 'includes/class-irec-green-connect.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    2.0.4
  */
 function run_irec_green_connect()
 {
@@ -89,4 +89,3 @@ include   __DIR__ . '/organizations/index.php';
 include   __DIR__ . '/resources/index.php';
 include   __DIR__ . '/testimonials-block/index.php';
 include   __DIR__ . '/home-page-carousel/index.php';
-

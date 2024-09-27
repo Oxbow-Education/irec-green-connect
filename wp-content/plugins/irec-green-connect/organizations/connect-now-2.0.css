@@ -1,12 +1,12 @@
-button,
-button:hover,
-button:focus,
-button[type='button'],
-button[type='submit'],
-button[type='button']:hover,
-button[type='submit']:hover,
-button[type='button']:focus,
-button[type='submit']:focus {
+.connect-now button,
+.connect-now button:hover,
+.connect-now button:focus,
+.connect-now button[type='button'],
+.connect-now button[type='submit'],
+.connect-now button[type='button']:hover,
+.connect-now button[type='submit']:hover,
+.connect-now button[type='button']:focus,
+.connect-now button[type='submit']:focus {
   background-color: transparent;
   outline: none;
   border: none;
@@ -14,13 +14,13 @@ button[type='submit']:focus {
   border: none;
   color: inherit;
 }
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.connect-now p,
+.connect-now h1,
+.connect-now h2,
+.connect-now h3,
+.connect-now h4,
+.connect-now h5,
+.connect-now h6 {
   padding: 0;
   margin: 0;
 }
@@ -251,7 +251,7 @@ h6 {
   position: relative;
 }
 
-.connect-now .opportunity__trigger {
+.connect-now .opportunity__trigger, .connect-now .opportunity__trigger:focus, .connect-now .opportunity__trigger:hover {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -349,6 +349,7 @@ h6 {
   position: absolute;
   top: 12px;
   right: 0px;
+  padding: 10px 20px;
 }
 .connect-now .search .search__clear {
   display: none;
@@ -369,10 +370,10 @@ h6 {
 }
 .connect-now__main {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr minmax(0, 500px);
   grid-template-rows: 1fr;
   background-color: white;
-  height: calc(100vh - 118px);
+  height: calc(100vh - 250px);
   overflow-y: scroll;
 }
 
@@ -422,10 +423,16 @@ h6 {
   color: white;
 }
 
+.results .ais-infinite-hits--showmoreButton:hover {
+  background-color: #D7A650;
+  color: white;
+}
+
 
 .results__meta--remote  {
   background-color: white
 }
+ 
 .results__hits .ais-infinite-hits {
   padding: 20px;
   display: flex;
@@ -451,6 +458,7 @@ h6 {
   grid-template-columns: 3fr 2fr;
   cursor: pointer;
   gap: 30px;
+  align-items: start;
 }
 
 .organization__info-img {
@@ -496,6 +504,9 @@ h6 {
   justify-content: center;
 }
 
+.organization__info-type p {
+  white-space: nowrap;
+}
 .organization__divider {
   border: 1px solid #d7d7d7;
   margin: 20px 0 !important;
@@ -504,12 +515,15 @@ h6 {
 .organization__opportunities {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .organization__opportunities p {
   color: #8d2a4f;
   font-size: 16px;
   font-weight: bold;
+  white-space: no-wrap;
 }
 
 .organization__info-description {
@@ -564,19 +578,33 @@ h6 {
   flex-direction: column;
   max-width: 256px;
   width: 256px;
-  max-height: 209px;
+  min-height: 209px;
   margin-left: auto;
   gap: 10px;
+  height: auto;
 }
 
-.organiztion__link {
+.organization__link {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   font-size: 14px;
+  color: inherit;
+}
+a.organization__link.organization__link--email{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  display: block;
+  margin-bottom:
+}
+a.organization__link:hover{
+  text-decoration: underline;
+  color: inherit;
 }
 
-.organiztion__link img {
+.organization__link img {
   margin-top: 5px;
 }
 
@@ -592,12 +620,15 @@ h6 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 0px auto;
+  margin: 15px auto 0px;
+}
+.organization__connect-now:hover {
+  background-color: #D7A650;
 }
 
 #map,
 .results {
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 250px);
   overflow-y: scroll;
 }
 .results {
@@ -636,6 +667,9 @@ h6 {
   }
   #map {
     width: 100vw;
+    max-width: 100vh;
+    min-height: 100vw;
+    margin: 0 auto;
   }
   #map,
   .results {
@@ -696,16 +730,31 @@ h6 {
 }
 .info-window h1 {
   color: #363636;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 18px;
   font-weight: 700;
   line-height: 18px;
   text-align: left;
   align-self: flex-start;
+  white-space: break-spaces;
+  margin-right: 20px;
+  margin-left: 0px;
+}
+
+.info-window h2 {
+  color: #363636;
+  font-family: proxima-nova;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  align-self: flex-start;
+  white-space: break-spaces;
+  margin-right: 20px;
 }
 
 .info-window p {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
@@ -715,7 +764,7 @@ h6 {
 
 .info-window a {
   color: white;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 700;
   line-height: 14px;
@@ -767,7 +816,7 @@ h6 {
 
 .connect-now .drawer-placement-bottom::part(title) {
   color: #363636;
-  font-family: 'Proxima Nova';
+  font-family: 'proxima-nova';
   font-size: 16px;
   font-weight: 700;
 }
@@ -800,7 +849,7 @@ h6 {
 }
 
 .connect-now .switch::part(label) {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;
@@ -813,7 +862,7 @@ h6 {
   background: #f5f7f8;
   padding: 25px;
   margin: 0px -20px;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 16px;
   font-weight: 700;
   line-height: 16px;
@@ -836,7 +885,7 @@ h6 {
 }
 
 .connect-now .checkbox::part(label) {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;
@@ -845,7 +894,7 @@ h6 {
   margin-top: 2px;
 }
 .connect-now .checkbox::part(form-control-help-text) {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 12px;
   font-weight: 400;
   line-height: 12px;
@@ -856,10 +905,12 @@ h6 {
 .connect-now .mobile-filters__tags-container {
   padding: 10px 0;
 }
-.connect-now .tags__button {
+.connect-now button.tags__button,
+.connect-now button.tags__button:hover,
+.connect-now button.tags__button:focus {
   border: 2px solid #dee1e6;
   border-radius: 5px;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 700;
   line-height: 12px;
@@ -869,13 +920,15 @@ h6 {
   margin: 5px 5px 5px 0;
 }
 
-.connect-now .tags__button--long {
+.connect-now button.tags__button--long {
   text-align: left;
   white-space: break-spaces;
   line-height: 16px;
 }
 
-.connect-now .tags__button--selected {
+.connect-now button.tags__button--selected,
+.connect-now button.tags__button--selected:focus,
+.connect-now button.tags__button--selected:hover {
   background-color: #06aeb3;
   border-color: #06aeb3;
   color: white;
@@ -889,7 +942,7 @@ h6 {
 }
 
 .connect-now .footer__reset {
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 600;
   line-height: 14px;
@@ -901,7 +954,7 @@ h6 {
   background-color: #c28c2c;
   border: 2px solid #c28c2c;
   color: white;
-  font-family: Proxima Nova;
+  font-family: proxima-nova;
   font-size: 14px;
   font-weight: 700;
   line-height: 14px;
@@ -922,7 +975,15 @@ h6 {
     justify-content: center;
   }
 }
+#resetBoundsButton{
+  position: absolute;
+  right: 45px;
+  top: 19px;
+}
 
+.hidden {
+  display: none !important;
+}
 .hide {
   visibility: hidden;  !important;
 }

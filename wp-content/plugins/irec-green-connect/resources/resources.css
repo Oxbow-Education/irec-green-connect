@@ -1,12 +1,12 @@
-button,
-button:hover,
-button:focus,
-button[type='button'],
-button[type='submit'],
-button[type='button']:hover,
-button[type='submit']:hover,
-button[type='button']:focus,
-button[type='submit']:focus {
+.resources button,
+.resources button:hover,
+.resources button:focus,
+.resources button[type='button'],
+.resources button[type='submit'],
+.resources button[type='button']:hover,
+.resources button[type='submit']:hover,
+.resources button[type='button']:focus,
+.resources button[type='submit']:focus {
   background-color: transparent;
   outline: none;
   border: none;
@@ -14,13 +14,13 @@ button[type='submit']:focus {
   border: none;
   color: inherit;
 }
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.resources p,
+.resources h1,
+.resources h2,
+.resources h3,
+.resources h4,
+.resources h5,
+.resources h6 {
   padding: 0;
   margin: 0;
 }
@@ -51,7 +51,9 @@ h6 {
   outline: none;
   margin: 5px 0;
 }
-
+.resources__filters .filter-button:hover {
+  color: white;
+}
 .resources__filters .filters__user-type__buttons .filter-button {
   border: #a1d165 2px solid;
 }
@@ -97,6 +99,10 @@ h6 {
   grid-gap: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   grid-auto-rows: 11rem;
+}
+
+.resources a {
+  color: inherit !important;
 }
 
 .resource-tile .post-thumbnail {
@@ -233,7 +239,7 @@ div .resource-tile:hover .resource-description {
 .external-resource-button,
 .read-more-button,
 a.read-more-button {
-  color: #d7a650;
+  color: #d7a650 !important;
   position: absolute;
 }
 .read-more-button,
@@ -275,7 +281,7 @@ a.read-more-button {
   text-decoration: none;
 }
 
-.ais-infinite-hits--showmoreButton {
+.resources .ais-infinite-hits--showmoreButton {
   display: block;
   margin: 0 auto;
   border: 2px solid #00aeb3;
@@ -285,16 +291,18 @@ a.read-more-button {
   outline: none;
   margin: 5px 0;
 }
-.ais-infinite-hits--showmoreButton:disabled {
+.resources .ais-infinite-hits--showmoreButton:disabled {
   display: none;
 }
 
-.ais-infinite-hits--showmoreButton:hover {
+.resources .ais-infinite-hits--showmoreButton:hover {
   background-color: #00aeb3;
+  color: white;
   outline: none;
 }
-.ais-infinite-hits--showmoreButton:focus {
-  background-color: #236489;
+.resources .ais-infinite-hits--showmoreButton:focus {
+  background-color: #00aeb3;
+  border: 2px solid #00aeb3;
   color: #ffffff;
   outline: none;
   text-decoration: none;
@@ -327,6 +335,7 @@ a.read-more-button {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 800px;
+  max-width: 100%;
   z-index: 99;
 }
 
@@ -353,7 +362,7 @@ a.read-more-button {
   text-decoration: underline !important;
 }
 
-@media and screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .clamp-2 {
     display: block;
     -webkit-line-clamp: unset;
@@ -366,6 +375,14 @@ a.read-more-button {
 
   .internal-resource-tile {
     min-height: 24rem;
+    height: auto;
     height: fit-content;
+  }
+  .resource-tile:hover {
+    transform: scale(1);
+  }
+  .resources .ais-infinite-hits {
+    display: flex;
+    flex-direction: column;
   }
 }

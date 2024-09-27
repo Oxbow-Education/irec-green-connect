@@ -9,7 +9,7 @@ function filtered_resources_shortcode()
 {
   ob_start();
   include __DIR__ . '/components/filtered-resources.php';
-  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '1.0.0', 'all');
+  wp_enqueue_style('irec-green-connect-public-styles', plugin_dir_url(__FILE__) . 'public/css/irec-green-connect-public.css', array(), '2.0.1', 'all');
 
   return ob_get_clean();
 }
@@ -268,7 +268,16 @@ function save_to_algolia_on_publish($post_id)
     $content = $post->post_content;
     $link = get_permalink($post_id);
 
+    // Delete pages without titles
+    if (!$title) {
+      $index->deleteObject($post_id);
+      return;
+    }
+
     // Define the data to be indexed
+    $title = str_replace('2.0', '', $title); // Remove the string '2.0'
+    $title = trim($title); // Trim extra whitespace
+
     $record = array(
       'objectID' => $post_id, // Use the post ID as the Algolia objectID
       'title' => $title,
@@ -276,17 +285,18 @@ function save_to_algolia_on_publish($post_id)
       'link' => $link
     );
 
-
     // Save the data to the Algolia index
     $index->saveObject($record);
   } else if (
     get_post_type($post_id) == 'page'
+    && (get_post_status($post_id) != 'publish'
+      || boolval(get_post_meta($post_id, '_hide_from_algolia', true)))
   ) {
     $index->deleteObject($post_id);
   }
 }
 
-add_action('save_post', 'save_to_algolia_on_publish');
+add_action('save_post', 'save_to_algolia_on_publish', 20);
 
 function save_internal_resource_to_algolia($post_id)
 {
@@ -303,138 +313,22 @@ function save_internal_resource_to_algolia($post_id)
   $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
   $index = $client->initIndex('full_site_search');
 
-  // Check if the post type is 'post' and the post is published
+  // Check if the post type is 'resources' and the post is published
   if (
-    get_post_type($post_id) == 'post'
+    get_post_type($post_id) == 'resources'
     && get_post_status($post_id) == 'publish'
-    && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
+    && !boolval(get_post_meta($post_id, '_hide_from_algolia', true))
   ) {
     // Check if the custom field 'is_internal_resource' is set to 'true'
     $is_internal_resource = get_post_meta($post_id, 'is_internal_resource', true);
-
-    if (boolval($is_internal_resource)) {
-      // Get the post title, content, and link
-
-      $post = get_post($post_id);
-      $title = $post->post_title;
-      $content = $post->post_content;
-      $link = get_permalink($post_id);
-
-      // Define the data to be indexed
-      $data = [
-        'objectID' => $post_id, // Use the post ID as the Algolia objectID
-        'title' => $title,
-        'content' => $content,
-        'link' => $link,
-      ];
-
-      // Save the data to the Algolia index
-      $index->saveObject($data);
-    }
-  } else if (
-    get_post_type($post_id) == 'post'
-  ) {
-    $index->deleteObject($post_id);
-  }
-}
-
-// Hook the function to the 'save_post' action
-add_action('save_post', 'save_internal_resource_to_algolia');
-
-
-function save_external_resource_to_algolia($post_id)
-{
-  // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
-  // Sync post with Algolia
-  $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
-  $algolia_app_id = get_option('algolia_sync_plugin_app_id');
-
-  // Perform the synchronization with Algolia using the Algolia API
-  // Replace this code with your own logic to sync the post with Algolia
-
-  // Example code using the Algolia PHP SDK
-  $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-  $index = $client->initIndex('full_site_search');
-
-  // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
-  if (
-    get_post_type($post_id) == 'post'
-    && get_post_status($post_id) == 'publish'
-    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
-    && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
-  ) {
-    // Get the post title and content
     $post = get_post($post_id);
     $title = $post->post_title;
     $content = $post->post_content;
 
-    $who_is_this_for = get_post_meta($post_id, 'who_is_this_for', true);
-
-    $is_worker = false;
-    $page_number = 1;
-
-    if (is_array($who_is_this_for) && in_array('Worker User', $who_is_this_for)) {
-      $is_worker = true;
-
-      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
-      $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-
-        'meta_query' => array(
-          'relation' => 'AND',
-          array(
-            'key' => 'who_is_this_for',
-            'value' => 'Worker User',
-            'compare' => 'LIKE',
-          ),
-        ),
-        'orderby' => 'title', // Order by post title
-        'order' => 'ASC',
-        'posts_per_page' => -1,
-      );
+    if (boolval($is_internal_resource)) {
+      $link = get_permalink($post_id);
     } else {
-      $is_worker = false;
-      // Count the number of posts that match the criteria (excluding 'is_internal_resource')
-      $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-        'meta_query' => array(
-          'key' => 'organization_tags',
-          'value' => '',
-          'compare' => '!=',
-        ),
-        'orderby' => 'title',
-        'order' => 'ASC',
-        'posts_per_page' => -1,
-      );
-    }
-
-    $worker_query = new WP_Query($args);
-
-    // Calculate the page number based on the current post's position
-    if ($worker_query->have_posts()) {
-      $current_post_position = 0;
-      while ($worker_query->have_posts()) {
-        $worker_query->the_post();
-
-        $current_post_position++;
-        if ($post_id == get_the_ID()) {
-          $page_number = ceil($current_post_position / 10);
-          // break;
-        }
-      }
-
-      wp_reset_postdata();
-    }
-
-
-    // Generate the link based on the criteria
-    if ($is_worker) {
-
-      $link = '/individuals?paged=' . $page_number . '&resource=' . $post_id;
-    } else {
-      $link = '/organizations?paged=' . $page_number . '&resource=' . $post_id;
+      $link = '/resource-hub?resource=' . $post_id;
     }
 
 
@@ -449,19 +343,69 @@ function save_external_resource_to_algolia($post_id)
     // Save the data to the Algolia index
     $index->saveObject($data);
   } else if (
-    get_post_type($post_id) == 'post'
-    && (get_post_status($post_id) != 'publish' ||
-      boolval(get_post_meta($post_id, '_hide_from_algolia'))
-    )
-    && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
-
+    get_post_type($post_id) == 'resources'
+    && (get_post_status($post_id) != 'publish'
+      || boolval(get_post_meta($post_id, '_hide_from_algolia')))
   ) {
     $index->deleteObject($post_id);
   }
 }
 
 // Hook the function to the 'save_post' action
-add_action('save_post', 'save_external_resource_to_algolia');
+add_action('save_post', 'save_internal_resource_to_algolia', 20);
+
+
+// function save_external_resource_to_algolia($post_id)
+// {
+//   // Initialize the Algolia API client (You should replace these with your Algolia API credentials)
+//   // Sync post with Algolia
+//   $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
+//   $algolia_app_id = get_option('algolia_sync_plugin_app_id');
+
+//   // Perform the synchronization with Algolia using the Algolia API
+//   // Replace this code with your own logic to sync the post with Algolia
+
+//   // Example code using the Algolia PHP SDK
+//   $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
+//   $index = $client->initIndex('full_site_search');
+
+//   // Check if the post type is 'post', is_internal_resource is 'false', and the post is published
+//   if (
+//     get_post_type($post_id) == 'resources'
+//     && get_post_status($post_id) == 'publish'
+//     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+//     && !boolval(get_post_meta($post_id, '_hide_from_algolia'))
+//   ) {
+//     // Get the post title and content
+//     $post = get_post($post_id);
+//     $title = $post->post_title;
+//     $content = $post->post_content;
+
+
+//     // Define the data to be indexed
+//     $data = [
+//       'objectID' => $post_id, // Use the post ID as the Algolia objectID
+//       'title' => $title,
+//       'content' => $content,
+//       'link' => $link,
+//     ];
+
+//     // Save the data to the Algolia index
+//     $index->saveObject($data);
+//   } else if (
+//     get_post_type($post_id) == 'post'
+//     && (get_post_status($post_id) != 'publish' ||
+//       boolval(get_post_meta($post_id, '_hide_from_algolia'))
+//     )
+//     && !boolval(get_post_meta($post_id, 'is_internal_resource', true))
+
+//   ) {
+//     $index->deleteObject($post_id);
+//   }
+// }
+
+// // Hook the function to the 'save_post' action
+// add_action('save_post', 'save_external_resource_to_algolia');
 
 
 function newsletter_sign_up_shortcode()
@@ -496,3 +440,9 @@ function top_resources_carousel_shortcode()
   return ob_get_clean();
 }
 add_shortcode('top_resources_carousel', 'top_resources_carousel_shortcode');
+
+function remove_posts_menu_item()
+{
+  remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'remove_posts_menu_item');

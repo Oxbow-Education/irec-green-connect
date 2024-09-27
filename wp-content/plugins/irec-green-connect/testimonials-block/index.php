@@ -23,8 +23,8 @@ function testimonials_block_shortcode_function($atts)
 
   // Enqueue necessary styles and scripts
   wp_enqueue_style('shoelace-css', 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css');
-  wp_enqueue_style('testimonials-css', "/wp-content/plugins/irec-green-connect/testimonials-block/testimonials-block.css");
-  wp_enqueue_script('testimonials-js', '/wp-content/plugins/irec-green-connect/testimonials-block/testimonials-block.js');
+  wp_enqueue_style('testimonials-css', "/wp-content/plugins/irec-green-connect/testimonials-block/testimonials-block.css", array(), '2.0.7');
+  wp_enqueue_script('testimonials-js', '/wp-content/plugins/irec-green-connect/testimonials-block/testimonials-block.js', array(), '2.0.6');
 
   // Return the output
   return ob_get_clean();

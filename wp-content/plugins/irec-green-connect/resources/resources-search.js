@@ -56,7 +56,7 @@ function initializeAlgolia() {
           }
           return generateExternalResourceHTML(item);
         },
-        empty: `<p>No resources found. .</p>`,
+        empty: `<p>No resources found.</p>`,
       },
       showMoreLabel: 'Load More',
     }),
@@ -74,10 +74,14 @@ function generateInternalResourceHTML(item) {
         .map((tag) => `<div class="resource-tag">${tag}</div>`)
         .join('')
     : '';
-
-  return `<div onclick="sendEvent('${item.title.replace(/'/g, "\\'")}')"
+  return `<a href="${
+    item.link
+  }"><div onclick="sendResourceClickToGA(true, '${item.title.replace(
+    /'/g,
+    "\\'",
+  )}')"
   class="internal-resource-tile resource-tile"
-  data-tag="${item.permalink}">
+  >
 <div>
  <img class="post-thumbnail" src="${item.thumbnail_url}" alt="Thumbnail for ${
     item.title
@@ -93,7 +97,7 @@ function generateInternalResourceHTML(item) {
    Read More
  </a>
 </button>
-</div>`;
+</div></a>`;
 }
 
 function generateExternalResourceHTML(item) {
@@ -103,9 +107,13 @@ function generateExternalResourceHTML(item) {
         .map((tag) => `<div class="resource-tag">${tag}</div>`)
         .join('')
     : '';
-  console.log({ item });
   const html = `
-      <div
+     <div
+
+     onclick="sendResourceClickToGA(false, '${item.title.replace(
+       /'/g,
+       "\\'",
+     )}')"
           class="external-resource-tile resource-tile"
           data-tag="${item.objectID}">
         <div class="resource-tile-text">
@@ -128,16 +136,31 @@ function syncAlgoliaWithURL(properties) {
   const resource = url.searchParams.get('resource');
   if (resource) return;
   let facetFilters = [];
+
   properties.forEach((property) => {
     const { facet, paramValue } = property;
     const values = url.searchParams.get(paramValue)?.split(',') || [];
-    const filters = values.map((val) => `${facet}:${val}`);
-    facetFilters.push(...filters);
+
+    if (values.length > 0) {
+      const filters = values.map((val) => `${facet}:${formatVal(val)}`);
+      if (filters.length > 1) {
+        facetFilters.push(filters); // Group filters for the same facet (OR condition)
+      } else {
+        facetFilters.push(filters[0]); // Single filter for this facet (AND condition)
+      }
+    }
   });
 
   resourcesSearch.helper
     .setQueryParameter('facetFilters', facetFilters)
     .search();
+
+  function formatVal(input) {
+    if (input === 'Diversity Equity and Inclusion') {
+      return 'Diversity, Equity, and Inclusion';
+    }
+    return input;
+  }
 }
 
 async function syncExternalResourceWithURL() {
@@ -157,15 +180,11 @@ async function syncExternalResourceWithURL() {
 function handleExternalResourceClick() {
   window.addEventListener('click', (event) => {
     const target = event.target;
-    const externalResourceButton = target.closest('.external-resource-button');
+    const externalResource = target.closest('.external-resource-tile');
+    const tag = externalResource.dataset.tag;
 
-    if (Boolean(externalResourceButton)) {
-      updateQueryParam(
-        'resource',
-        externalResourceButton.dataset.tag,
-        false,
-        true,
-      );
+    if (Boolean(externalResource)) {
+      updateQueryParam('resource', tag, false, true);
     }
   });
 }
@@ -209,4 +228,14 @@ function closeModal() {
     'externalResourceModal',
   );
   externalResourceModal.hide();
+}
+
+function sendResourceClickToGA(isInternal, title) {
+  gtag('event', 'resource_click', {
+    category: 'resources',
+    click_label: isInternal
+      ? 'user_clicked_internal_resource'
+      : 'user_clicked_external_resource',
+    title: title,
+  });
 }
