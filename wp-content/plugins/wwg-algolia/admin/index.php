@@ -156,6 +156,7 @@ function algolia_sync_plugin_post_types_callback()
         $('.update-button').on('click', function(e) {
             e.preventDefault();
             var postType = $(this).data('post-type');
+            console.log({postType});
             var updateButton = $(this);
             var originalButtonText = updateButton.text();
 
@@ -210,6 +211,7 @@ function register_update_posts_endpoint()
 
 function update_posts_callback($request)
 {
+  global $skip_save_custom_meta_data;
   try {
     $post_type = $request->get_param('postType');
     $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
@@ -229,13 +231,21 @@ function update_posts_callback($request)
       error_log("Updating post ID: " . $post->ID);
       $hide_from_algolia = get_post_meta($post->ID, '_hide_from_algolia', true);
 
+      // Directly update the post meta
+      update_post_meta($post->ID, '_hide_from_algolia', $hide_from_algolia);
+
+      // Set the global flag to skip the custom meta data save
+      $skip_save_custom_meta_data = true;
+
       // Trigger save_post by updating the post
       $updated_post = array(
         'ID' => $post->ID,
       );
 
       wp_update_post($updated_post); // This should trigger save_post
-      update_post_meta($post->ID, '_hide_from_algolia', $hide_from_algolia);
+
+      // Unset the global flag
+      $skip_save_custom_meta_data = false;
     }
 
     return new WP_REST_Response(array('message' => 'Posts updated successfully.'), 200);
@@ -243,6 +253,7 @@ function update_posts_callback($request)
     return new WP_REST_Response(array('error' => $e->getMessage()), 500);
   }
 }
+
 
 
 
@@ -366,7 +377,13 @@ function render_custom_meta_box($post)
 
 function save_custom_meta_data($post_id)
 {
+  global $skip_save_custom_meta_data;
+
+  // Check if this is an auto save routine.
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+  // Skip if the global flag is set
+  if ($skip_save_custom_meta_data) return;
 
   if (isset($_POST['hide_from_algolia'])) {
     update_post_meta($post_id, '_hide_from_algolia', 1);
@@ -374,4 +391,4 @@ function save_custom_meta_data($post_id)
     delete_post_meta($post_id, '_hide_from_algolia');
   }
 }
-add_action('save_post', 'save_custom_meta_data');
+add_action('save_post', 'save_custom_meta_data', 10);

@@ -35,7 +35,7 @@ class Irec_Green_Connect_Public
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.5
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */

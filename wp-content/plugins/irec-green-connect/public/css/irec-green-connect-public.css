@@ -7,7 +7,6 @@
   font-family: 'proxima-nova';
 }
 
-
 h1,
 h3,
 h3,
@@ -16,7 +15,7 @@ h4 {
 }
 
 p a {
-  color: inherit !important;
+  color: #c28c2c !important;
   text-decoration: underline !important;
 }
 .facet-buttons,

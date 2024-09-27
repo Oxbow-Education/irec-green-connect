@@ -1,0 +1,464 @@
+[2024-07-29 16:46:12.850289] [INFO] Starting migration loop - With allotted time: 26.852384090424 seconds
+[2024-07-29 16:46:12.853905] [DEBUG] Usage reporting data sent to daev.tech server:
+
+Array
+(
+    [version] =&gt; 1
+    [site_hash] =&gt; 018a47bbaa1d160a1d0929fef4b862ea97dab084
+    [lang] =&gt; en_US
+    [is_pro] =&gt; 
+    [migration_count] =&gt; 2
+    [total_migrations] =&gt; 55
+    [features_used_this_sync] =&gt; Array
+        (
+            [success_notification_email] =&gt; 1
+            [error_notification_email] =&gt; 1
+            [clear_cache_on_success] =&gt; 1
+            [sync_preset] =&gt; db_all
+            [sync_database] =&gt; 1
+            [sync_files] =&gt; 
+            [db_make_backup] =&gt; 
+            [db_table_prefix_change] =&gt; 1
+            [db_preserve_options_table_keys] =&gt; Array
+                (
+                    [0] =&gt; active_plugins
+                    [1] =&gt; blog_public
+                )
+
+            [db_preserve_options_custom] =&gt; 
+            [include_all_database_tables] =&gt; 1
+            [only_include_database_table_count] =&gt; 0
+            [searchreplaces_count] =&gt; 7
+            [file_locations_count] =&gt; 0
+            [files_exclude_files_match_count] =&gt; 3
+            [files_ask_user_for_confirm] =&gt; 
+        )
+
+)
+
+[2024-07-29 16:46:13.451948] [INFO] Initating with remote and local host with remaining time:26.250724077225
+[2024-07-29 16:46:13.458951] [DEBUG] Calling initate service for destination: local
+[2024-07-29 16:46:14.101844] [DEBUG] Got initiate token: 40f140ef0c39f43c41bb2bc2a3fd63fe1b8f0de17c7053165c691cc5e6e0e73f
+[2024-07-29 16:46:14.102071] [DEBUG] Calling initate service for destination: remote
+[2024-07-29 16:46:14.476214] [DEBUG] Got initiate token: a26276256040125fba2040d9d4bf3fa5d9c971e24f1c500945b615a157da3358
+[2024-07-29 16:46:14.477162] [INFO] Initation completed on: 1.6242129802704 seconds
+[2024-07-29 16:46:14.481184] [INFO] Ending migration loop - with remaining time: 25.221501111984
+[2024-07-29 16:46:14.640064] [INFO] Starting migration loop - With allotted time: 26.863941907883 seconds
+[2024-07-29 16:46:14.640780] [INFO] Getting masterdata from source and target with remaining time:26.863219976425
+[2024-07-29 16:46:14.641083] [DEBUG] Calling masterdata service on: https://greenworkforceconnect.org/ with intent to user as 'source'
+[2024-07-29 16:46:15.663177] [DEBUG] Calling masterdata service on: http://localhost:10004/ with intent to user as 'target'
+[2024-07-29 16:46:16.030897] [INFO] Completed masterdata on: 1.3901138305664 seconds
+[2024-07-29 16:46:16.054931] [INFO] Ending migration loop - with remaining time: 25.449069976807
+[2024-07-29 16:46:16.203753] [INFO] Starting migration loop - With allotted time: 26.858379125595 seconds
+[2024-07-29 16:46:16.225790] [INFO] Ending migration loop - with remaining time: 26.836344957352
+[2024-07-29 16:46:16.383989] [INFO] Starting migration loop - With allotted time: 26.846018075943 seconds
+[2024-07-29 16:46:16.385006] [INFO] Starting database migration loop with remaining time: 26.844990968704
+[2024-07-29 16:46:17.075169] [INFO] New table is started: hna_actionscheduler_actions and setting new max response size: 125000
+[2024-07-29 16:46:17.075311] [DEBUG] Getting data from remote DB with data: {"table":"hna_actionscheduler_actions","last_primary_key":0,"primary_key_column":"action_id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":168,"column_names":{"hook":"hook","status":"status","scheduled_date_gmt":"scheduled_date_gmt","scheduled_date_local":"scheduled_date_local","args":"args","schedule":"schedule","last_attempt_gmt":"last_attempt_gmt","last_attempt_local":"last_attempt_local","extended_args":"extended_args","action_id":"action_id","priority":"priority","group_id":"group_id","attempts":"attempts","claim_id":"claim_id"},"time_limit":13.077346444129944}
+[2024-07-29 16:46:17.349201] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 3742
+[2024-07-29 16:46:17.349475] [DEBUG] Got rows: 67
+[2024-07-29 16:46:17.349796] [INFO] Marking table: hna_actionscheduler_actions as completed
+[2024-07-29 16:46:17.379709] [DEBUG] Inserted 67 rows into target database
+[2024-07-29 16:46:17.379891] [DEBUG] Lastrun in : 0.30459403991699 seconds - response size throttle: 131250 and remaining time: 25.850102901459
+[2024-07-29 16:46:17.379982] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 67 / 109,609
+[2024-07-29 16:46:17.455842] [INFO] New table is started: hna_actionscheduler_claims and setting new max response size: 125000
+[2024-07-29 16:46:17.456033] [DEBUG] Getting data from remote DB with data: {"table":"hna_actionscheduler_claims","last_primary_key":0,"primary_key_column":"claim_id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":634,"column_names":{"date_created_gmt":"date_created_gmt","claim_id":"claim_id"},"time_limit":12.886984944343567}
+[2024-07-29 16:46:17.732533] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 1342
+[2024-07-29 16:46:17.732939] [DEBUG] Got rows: 84
+[2024-07-29 16:46:17.733052] [INFO] Marking table: hna_actionscheduler_claims as completed
+[2024-07-29 16:46:17.743727] [DEBUG] Inserted 84 rows into target database
+[2024-07-29 16:46:17.745386] [DEBUG] Lastrun in : 0.28934597969055 seconds - response size throttle: 131250 and remaining time: 25.484613895416
+[2024-07-29 16:46:17.745683] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 151 / 109,609
+[2024-07-29 16:46:17.814366] [INFO] New table is started: hna_actionscheduler_groups and setting new max response size: 125000
+[2024-07-29 16:46:17.814539] [DEBUG] Getting data from remote DB with data: {"table":"hna_actionscheduler_groups","last_primary_key":0,"primary_key_column":"group_id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":22,"column_names":{"slug":"slug","group_id":"group_id"},"time_limit":12.707731962203979}
+[2024-07-29 16:46:18.092597] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 334
+[2024-07-29 16:46:18.092921] [DEBUG] Got rows: 3
+[2024-07-29 16:46:18.093015] [INFO] Marking table: hna_actionscheduler_groups as completed
+[2024-07-29 16:46:18.095588] [DEBUG] Inserted 3 rows into target database
+[2024-07-29 16:46:18.095887] [DEBUG] Lastrun in : 0.2813458442688 seconds - response size throttle: 131250 and remaining time: 25.134108066559
+[2024-07-29 16:46:18.096119] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 154 / 109,609
+[2024-07-29 16:46:18.202013] [INFO] New table is started: hna_actionscheduler_logs and setting new max response size: 125000
+[2024-07-29 16:46:18.202212] [DEBUG] Getting data from remote DB with data: {"table":"hna_actionscheduler_logs","last_primary_key":0,"primary_key_column":"log_id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":1524,"column_names":{"message":"message","log_date_gmt":"log_date_gmt","log_date_local":"log_date_local","log_id":"log_id","action_id":"action_id"},"time_limit":12.513895034790039}
+[2024-07-29 16:46:18.578512] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 3934
+[2024-07-29 16:46:18.578669] [DEBUG] Got rows: 195
+[2024-07-29 16:46:18.578714] [INFO] Marking table: hna_actionscheduler_logs as completed
+[2024-07-29 16:46:18.588411] [DEBUG] Inserted 195 rows into target database
+[2024-07-29 16:46:18.588546] [DEBUG] Lastrun in : 0.38634395599365 seconds - response size throttle: 131250 and remaining time: 24.641447067261
+[2024-07-29 16:46:18.588627] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 349 / 109,609
+[2024-07-29 16:46:18.643207] [INFO] New table is started: hna_aioseo_cache and setting new max response size: 125000
+[2024-07-29 16:46:18.643321] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_cache","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":11,"column_names":{"key":"key","value":"value","expiration":"expiration","created":"created","updated":"updated","id":"id"},"time_limit":12.293339967727661}
+[2024-07-29 16:46:19.005480] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 22830
+[2024-07-29 16:46:19.005890] [DEBUG] Got rows: 19
+[2024-07-29 16:46:19.094448] [DEBUG] Inserted 19 rows into target database
+[2024-07-29 16:46:19.094614] [DEBUG] Lastrun in : 0.45129704475403 seconds - response size throttle: 131250 and remaining time: 24.135379076004
+[2024-07-29 16:46:19.094712] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 368 / 109,609
+[2024-07-29 16:46:19.161782] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_cache","last_primary_key":"896","primary_key_column":"id","completed_rows":19,"max_response_size":131250,"type":"pull","default_rows_per_request":11,"column_names":{"key":"key","value":"value","expiration":"expiration","created":"created","updated":"updated","id":"id"},"time_limit":12.034114003181458}
+[2024-07-29 16:46:19.451066] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 1102
+[2024-07-29 16:46:19.451404] [DEBUG] Got rows: 11
+[2024-07-29 16:46:19.451513] [INFO] Marking table: hna_aioseo_cache as completed
+[2024-07-29 16:46:19.456629] [DEBUG] Inserted 11 rows into target database
+[2024-07-29 16:46:19.456830] [DEBUG] Lastrun in : 0.29505920410156 seconds - response size throttle: 137813 and remaining time: 23.773164987564
+[2024-07-29 16:46:19.457081] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 379 / 109,609
+[2024-07-29 16:46:19.518143] [INFO] New table is started: hna_aioseo_notifications and setting new max response size: 125000
+[2024-07-29 16:46:19.518305] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_notifications","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":16,"column_names":{"slug":"slug","addon":"addon","title":"title","content":"content","type":"type","level":"level","notification_name":"notification_name","start":"start","end":"end","button1_label":"button1_label","button1_action":"button1_action","button2_label":"button2_label","button2_action":"button2_action","created":"created","updated":"updated","id":"id","notification_id":"notification_id","dismissed":"dismissed","new":"new"},"time_limit":11.855849027633667}
+[2024-07-29 16:46:19.900790] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 43278
+[2024-07-29 16:46:19.901158] [DEBUG] Got rows: 15
+[2024-07-29 16:46:19.901326] [INFO] Marking table: hna_aioseo_notifications as completed
+[2024-07-29 16:46:19.924520] [DEBUG] Inserted 15 rows into target database
+[2024-07-29 16:46:19.924664] [DEBUG] Lastrun in : 0.40636706352234 seconds - response size throttle: 131250 and remaining time: 23.305330038071
+[2024-07-29 16:46:19.924751] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 394 / 109,609
+[2024-07-29 16:46:19.944858] [INFO] New table is started: hna_aioseo_posts and setting new max response size: 125000
+[2024-07-29 16:46:19.945004] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_posts","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":77,"column_names":{"title":"title","description":"description","keywords":"keywords","keyphrases":"keyphrases","page_analysis":"page_analysis","primary_term":"primary_term","canonical_url":"canonical_url","og_title":"og_title","og_description":"og_description","og_object_type":"og_object_type","og_image_type":"og_image_type","og_image_url":"og_image_url","og_image_custom_url":"og_image_custom_url","og_image_custom_fields":"og_image_custom_fields","og_video":"og_video","og_custom_url":"og_custom_url","og_article_section":"og_article_section","og_article_tags":"og_article_tags","twitter_card":"twitter_card","twitter_image_type":"twitter_image_type","twitter_image_url":"twitter_image_url","twitter_image_custom_url":"twitter_image_custom_url","twitter_image_custom_fields":"twitter_image_custom_fields","twitter_title":"twitter_title","twitter_description":"twitter_description","schema":"schema","schema_type":"schema_type","schema_type_options":"schema_type_options","robots_max_imagepreview":"robots_max_imagepreview","images":"images","image_scan_date":"image_scan_date","frequency":"frequency","videos":"videos","video_thumbnail":"video_thumbnail","video_scan_date":"video_scan_date","local_seo":"local_seo","options":"options","created":"created","updated":"updated","id":"id","post_id":"post_id","og_image_width":"og_image_width","og_image_height":"og_image_height","twitter_use_og":"twitter_use_og","seo_score":"seo_score","pillar_content":"pillar_content","robots_default":"robots_default","robots_noindex":"robots_noindex","robots_noarchive":"robots_noarchive","robots_nosnippet":"robots_nosnippet","robots_nofollow":"robots_nofollow","robots_noimageindex":"robots_noimageindex","robots_noodp":"robots_noodp","robots_notranslate":"robots_notranslate","robots_max_snippet":"robots_max_snippet","robots_max_videopreview":"robots_max_videopreview","priority":"priority","limit_modified_date":"limit_modified_date"},"time_limit":11.642500996589661}
+[2024-07-29 16:46:20.256634] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 9614
+[2024-07-29 16:46:20.256991] [DEBUG] Got rows: 215
+[2024-07-29 16:46:20.298352] [DEBUG] Inserted 215 rows into target database
+[2024-07-29 16:46:20.298590] [DEBUG] Lastrun in : 0.35359287261963 seconds - response size throttle: 131250 and remaining time: 22.931403875351
+[2024-07-29 16:46:20.298724] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 609 / 109,609
+[2024-07-29 16:46:20.318823] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_posts","last_primary_key":"215","primary_key_column":"id","completed_rows":215,"max_response_size":131250,"type":"pull","default_rows_per_request":77,"column_names":{"title":"title","description":"description","keywords":"keywords","keyphrases":"keyphrases","page_analysis":"page_analysis","primary_term":"primary_term","canonical_url":"canonical_url","og_title":"og_title","og_description":"og_description","og_object_type":"og_object_type","og_image_type":"og_image_type","og_image_url":"og_image_url","og_image_custom_url":"og_image_custom_url","og_image_custom_fields":"og_image_custom_fields","og_video":"og_video","og_custom_url":"og_custom_url","og_article_section":"og_article_section","og_article_tags":"og_article_tags","twitter_card":"twitter_card","twitter_image_type":"twitter_image_type","twitter_image_url":"twitter_image_url","twitter_image_custom_url":"twitter_image_custom_url","twitter_image_custom_fields":"twitter_image_custom_fields","twitter_title":"twitter_title","twitter_description":"twitter_description","schema":"schema","schema_type":"schema_type","schema_type_options":"schema_type_options","robots_max_imagepreview":"robots_max_imagepreview","images":"images","image_scan_date":"image_scan_date","frequency":"frequency","videos":"videos","video_thumbnail":"video_thumbnail","video_scan_date":"video_scan_date","local_seo":"local_seo","options":"options","created":"created","updated":"updated","id":"id","post_id":"post_id","og_image_width":"og_image_width","og_image_height":"og_image_height","twitter_use_og":"twitter_use_og","seo_score":"seo_score","pillar_content":"pillar_content","robots_default":"robots_default","robots_noindex":"robots_noindex","robots_noarchive":"robots_noarchive","robots_nosnippet":"robots_nosnippet","robots_nofollow":"robots_nofollow","robots_noimageindex":"robots_noimageindex","robots_noodp":"robots_noodp","robots_notranslate":"robots_notranslate","robots_max_snippet":"robots_max_snippet","robots_max_videopreview":"robots_max_videopreview","priority":"priority","limit_modified_date":"limit_modified_date"},"time_limit":11.455597519874573}
+[2024-07-29 16:46:20.607491] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 11054
+[2024-07-29 16:46:20.607826] [DEBUG] Got rows: 206
+[2024-07-29 16:46:20.644590] [DEBUG] Inserted 206 rows into target database
+[2024-07-29 16:46:20.644815] [DEBUG] Lastrun in : 0.3260178565979 seconds - response size throttle: 137813 and remaining time: 22.585178852081
+[2024-07-29 16:46:20.644957] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 815 / 109,609
+[2024-07-29 16:46:20.666344] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_posts","last_primary_key":"445","primary_key_column":"id","completed_rows":421,"max_response_size":137813,"type":"pull","default_rows_per_request":77,"column_names":{"title":"title","description":"description","keywords":"keywords","keyphrases":"keyphrases","page_analysis":"page_analysis","primary_term":"primary_term","canonical_url":"canonical_url","og_title":"og_title","og_description":"og_description","og_object_type":"og_object_type","og_image_type":"og_image_type","og_image_url":"og_image_url","og_image_custom_url":"og_image_custom_url","og_image_custom_fields":"og_image_custom_fields","og_video":"og_video","og_custom_url":"og_custom_url","og_article_section":"og_article_section","og_article_tags":"og_article_tags","twitter_card":"twitter_card","twitter_image_type":"twitter_image_type","twitter_image_url":"twitter_image_url","twitter_image_custom_url":"twitter_image_custom_url","twitter_image_custom_fields":"twitter_image_custom_fields","twitter_title":"twitter_title","twitter_description":"twitter_description","schema":"schema","schema_type":"schema_type","schema_type_options":"schema_type_options","robots_max_imagepreview":"robots_max_imagepreview","images":"images","image_scan_date":"image_scan_date","frequency":"frequency","videos":"videos","video_thumbnail":"video_thumbnail","video_scan_date":"video_scan_date","local_seo":"local_seo","options":"options","created":"created","updated":"updated","id":"id","post_id":"post_id","og_image_width":"og_image_width","og_image_height":"og_image_height","twitter_use_og":"twitter_use_og","seo_score":"seo_score","pillar_content":"pillar_content","robots_default":"robots_default","robots_noindex":"robots_noindex","robots_noarchive":"robots_noarchive","robots_nosnippet":"robots_nosnippet","robots_nofollow":"robots_nofollow","robots_noimageindex":"robots_noimageindex","robots_noodp":"robots_noodp","robots_notranslate":"robots_notranslate","robots_max_snippet":"robots_max_snippet","robots_max_videopreview":"robots_max_videopreview","priority":"priority","limit_modified_date":"limit_modified_date"},"time_limit":11.281835436820984}
+[2024-07-29 16:46:20.965899] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 12638
+[2024-07-29 16:46:20.966071] [DEBUG] Got rows: 186
+[2024-07-29 16:46:20.988727] [DEBUG] Inserted 186 rows into target database
+[2024-07-29 16:46:20.988915] [DEBUG] Lastrun in : 0.32259392738342 seconds - response size throttle: 144704 and remaining time: 22.241077899933
+[2024-07-29 16:46:20.988991] [INFO] Database progress update: Data: 0.0MB / 525.4MB - Rows: 1,001 / 109,609
+[2024-07-29 16:46:21.010485] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_posts","last_primary_key":"639","primary_key_column":"id","completed_rows":607,"max_response_size":144704,"type":"pull","default_rows_per_request":77,"column_names":{"title":"title","description":"description","keywords":"keywords","keyphrases":"keyphrases","page_analysis":"page_analysis","primary_term":"primary_term","canonical_url":"canonical_url","og_title":"og_title","og_description":"og_description","og_object_type":"og_object_type","og_image_type":"og_image_type","og_image_url":"og_image_url","og_image_custom_url":"og_image_custom_url","og_image_custom_fields":"og_image_custom_fields","og_video":"og_video","og_custom_url":"og_custom_url","og_article_section":"og_article_section","og_article_tags":"og_article_tags","twitter_card":"twitter_card","twitter_image_type":"twitter_image_type","twitter_image_url":"twitter_image_url","twitter_image_custom_url":"twitter_image_custom_url","twitter_image_custom_fields":"twitter_image_custom_fields","twitter_title":"twitter_title","twitter_description":"twitter_description","schema":"schema","schema_type":"schema_type","schema_type_options":"schema_type_options","robots_max_imagepreview":"robots_max_imagepreview","images":"images","image_scan_date":"image_scan_date","frequency":"frequency","videos":"videos","video_thumbnail":"video_thumbnail","video_scan_date":"video_scan_date","local_seo":"local_seo","options":"options","created":"created","updated":"updated","id":"id","post_id":"post_id","og_image_width":"og_image_width","og_image_height":"og_image_height","twitter_use_og":"twitter_use_og","seo_score":"seo_score","pillar_content":"pillar_content","robots_default":"robots_default","robots_noindex":"robots_noindex","robots_noarchive":"robots_noarchive","robots_nosnippet":"robots_nosnippet","robots_nofollow":"robots_nofollow","robots_noimageindex":"robots_noimageindex","robots_noodp":"robots_noodp","robots_notranslate":"robots_notranslate","robots_max_snippet":"robots_max_snippet","robots_max_videopreview":"robots_max_videopreview","priority":"priority","limit_modified_date":"limit_modified_date"},"time_limit":11.109763503074646}
+[2024-07-29 16:46:21.303761] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 12862
+[2024-07-29 16:46:21.304233] [DEBUG] Got rows: 172
+[2024-07-29 16:46:21.349184] [DEBUG] Inserted 172 rows into target database
+[2024-07-29 16:46:21.349392] [DEBUG] Lastrun in : 0.33892393112183 seconds - response size throttle: 151940 and remaining time: 21.88060092926
+[2024-07-29 16:46:21.349474] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,173 / 109,609
+[2024-07-29 16:46:21.368525] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_posts","last_primary_key":"903","primary_key_column":"id","completed_rows":779,"max_response_size":151940,"type":"pull","default_rows_per_request":77,"column_names":{"title":"title","description":"description","keywords":"keywords","keyphrases":"keyphrases","page_analysis":"page_analysis","primary_term":"primary_term","canonical_url":"canonical_url","og_title":"og_title","og_description":"og_description","og_object_type":"og_object_type","og_image_type":"og_image_type","og_image_url":"og_image_url","og_image_custom_url":"og_image_custom_url","og_image_custom_fields":"og_image_custom_fields","og_video":"og_video","og_custom_url":"og_custom_url","og_article_section":"og_article_section","og_article_tags":"og_article_tags","twitter_card":"twitter_card","twitter_image_type":"twitter_image_type","twitter_image_url":"twitter_image_url","twitter_image_custom_url":"twitter_image_custom_url","twitter_image_custom_fields":"twitter_image_custom_fields","twitter_title":"twitter_title","twitter_description":"twitter_description","schema":"schema","schema_type":"schema_type","schema_type_options":"schema_type_options","robots_max_imagepreview":"robots_max_imagepreview","images":"images","image_scan_date":"image_scan_date","frequency":"frequency","videos":"videos","video_thumbnail":"video_thumbnail","video_scan_date":"video_scan_date","local_seo":"local_seo","options":"options","created":"created","updated":"updated","id":"id","post_id":"post_id","og_image_width":"og_image_width","og_image_height":"og_image_height","twitter_use_og":"twitter_use_og","seo_score":"seo_score","pillar_content":"pillar_content","robots_default":"robots_default","robots_noindex":"robots_noindex","robots_noarchive":"robots_noarchive","robots_nosnippet":"robots_nosnippet","robots_nofollow":"robots_nofollow","robots_noimageindex":"robots_noimageindex","robots_noodp":"robots_noodp","robots_notranslate":"robots_notranslate","robots_max_snippet":"robots_max_snippet","robots_max_videopreview":"robots_max_videopreview","priority":"priority","limit_modified_date":"limit_modified_date"},"time_limit":10.930743455886841}
+[2024-07-29 16:46:21.664937] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 11518
+[2024-07-29 16:46:21.665417] [DEBUG] Got rows: 136
+[2024-07-29 16:46:21.697532] [DEBUG] Inserted 136 rows into target database
+[2024-07-29 16:46:21.697782] [DEBUG] Lastrun in : 0.32927203178406 seconds - response size throttle: 159537 and remaining time: 21.532212972641
+[2024-07-29 16:46:21.698047] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,309 / 109,609
+[2024-07-29 16:46:21.720203] [DEBUG] Getting data from remote DB with data: {"table":"hna_aioseo_posts","last_primary_key":"1142","primary_key_column":"id","completed_rows":915,"max_response_size":159537,"type":"pull","default_rows_per_request":77,"column_names":{"title":"title","description":"description","keywords":"keywords","keyphrases":"keyphrases","page_analysis":"page_analysis","primary_term":"primary_term","canonical_url":"canonical_url","og_title":"og_title","og_description":"og_description","og_object_type":"og_object_type","og_image_type":"og_image_type","og_image_url":"og_image_url","og_image_custom_url":"og_image_custom_url","og_image_custom_fields":"og_image_custom_fields","og_video":"og_video","og_custom_url":"og_custom_url","og_article_section":"og_article_section","og_article_tags":"og_article_tags","twitter_card":"twitter_card","twitter_image_type":"twitter_image_type","twitter_image_url":"twitter_image_url","twitter_image_custom_url":"twitter_image_custom_url","twitter_image_custom_fields":"twitter_image_custom_fields","twitter_title":"twitter_title","twitter_description":"twitter_description","schema":"schema","schema_type":"schema_type","schema_type_options":"schema_type_options","robots_max_imagepreview":"robots_max_imagepreview","images":"images","image_scan_date":"image_scan_date","frequency":"frequency","videos":"videos","video_thumbnail":"video_thumbnail","video_scan_date":"video_scan_date","local_seo":"local_seo","options":"options","created":"created","updated":"updated","id":"id","post_id":"post_id","og_image_width":"og_image_width","og_image_height":"og_image_height","twitter_use_og":"twitter_use_og","seo_score":"seo_score","pillar_content":"pillar_content","robots_default":"robots_default","robots_noindex":"robots_noindex","robots_noarchive":"robots_noarchive","robots_nosnippet":"robots_nosnippet","robots_nofollow":"robots_nofollow","robots_noimageindex":"robots_noimageindex","robots_noodp":"robots_noodp","robots_notranslate":"robots_notranslate","robots_max_snippet":"robots_max_snippet","robots_max_videopreview":"robots_max_videopreview","priority":"priority","limit_modified_date":"limit_modified_date"},"time_limit":10.754902958869934}
+[2024-07-29 16:46:22.014999] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 7278
+[2024-07-29 16:46:22.015271] [DEBUG] Got rows: 92
+[2024-07-29 16:46:22.015363] [INFO] Marking table: hna_aioseo_posts as completed
+[2024-07-29 16:46:22.033822] [DEBUG] Inserted 92 rows into target database
+[2024-07-29 16:46:22.033996] [DEBUG] Lastrun in : 0.31380796432495 seconds - response size throttle: 167514 and remaining time: 21.195996999741
+[2024-07-29 16:46:22.034077] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,401 / 109,609
+[2024-07-29 16:46:22.054645] [INFO] New table is started: hna_comments and setting new max response size: 125000
+[2024-07-29 16:46:22.054818] [DEBUG] Getting data from remote DB with data: {"table":"hna_comments","last_primary_key":0,"primary_key_column":"comment_ID","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":175,"column_names":{"comment_author":"comment_author","comment_author_email":"comment_author_email","comment_author_url":"comment_author_url","comment_author_IP":"comment_author_IP","comment_date":"comment_date","comment_date_gmt":"comment_date_gmt","comment_content":"comment_content","comment_approved":"comment_approved","comment_agent":"comment_agent","comment_type":"comment_type","comment_ID":"comment_ID","comment_post_ID":"comment_post_ID","comment_karma":"comment_karma","comment_parent":"comment_parent","user_id":"user_id"},"time_limit":10.587592959403992}
+[2024-07-29 16:46:22.323487] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 7054
+[2024-07-29 16:46:22.323881] [DEBUG] Got rows: 33
+[2024-07-29 16:46:22.323986] [INFO] Marking table: hna_comments as completed
+[2024-07-29 16:46:22.352024] [DEBUG] Inserted 33 rows into target database
+[2024-07-29 16:46:22.352253] [DEBUG] Lastrun in : 0.29744601249695 seconds - response size throttle: 131250 and remaining time: 20.877739906311
+[2024-07-29 16:46:22.352335] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,434 / 109,609
+[2024-07-29 16:46:22.373859] [INFO] New table is started: hna_duplicator_packages and setting new max response size: 125000
+[2024-07-29 16:46:22.373984] [DEBUG] Getting data from remote DB with data: {"table":"hna_duplicator_packages","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":15,"column_names":{"name":"name","hash":"hash","created":"created","owner":"owner","package":"package","id":"id","status":"status"},"time_limit":10.428009033203125}
+[2024-07-29 16:46:22.653310] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 5198
+[2024-07-29 16:46:22.653698] [DEBUG] Got rows: 1
+[2024-07-29 16:46:22.653838] [INFO] Marking table: hna_duplicator_packages as completed
+[2024-07-29 16:46:22.663375] [DEBUG] Inserted 1 rows into target database
+[2024-07-29 16:46:22.663595] [DEBUG] Lastrun in : 0.2896089553833 seconds - response size throttle: 131250 and remaining time: 20.566400051117
+[2024-07-29 16:46:22.663759] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,435 / 109,609
+[2024-07-29 16:46:22.689465] [INFO] New table is started: hna_e_submissions and setting new max response size: 125000
+[2024-07-29 16:46:22.689619] [DEBUG] Getting data from remote DB with data: {"table":"hna_e_submissions","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":109,"column_names":{"type":"type","hash_id":"hash_id","referer":"referer","referer_title":"referer_title","element_id":"element_id","form_name":"form_name","user_ip":"user_ip","user_agent":"user_agent","status":"status","meta":"meta","created_at_gmt":"created_at_gmt","updated_at_gmt":"updated_at_gmt","created_at":"created_at","updated_at":"updated_at","id":"id","main_meta_id":"main_meta_id","post_id":"post_id","campaign_id":"campaign_id","user_id":"user_id","actions_count":"actions_count","actions_succeeded_count":"actions_succeeded_count","is_read":"is_read"},"time_limit":10.270192503929138}
+[2024-07-29 16:46:22.972768] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 4734
+[2024-07-29 16:46:22.973213] [DEBUG] Got rows: 46
+[2024-07-29 16:46:22.973374] [INFO] Marking table: hna_e_submissions as completed
+[2024-07-29 16:46:22.994593] [DEBUG] Inserted 46 rows into target database
+[2024-07-29 16:46:22.994783] [DEBUG] Lastrun in : 0.30517482757568 seconds - response size throttle: 131250 and remaining time: 20.235210895538
+[2024-07-29 16:46:22.994870] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,481 / 109,609
+[2024-07-29 16:46:23.019374] [INFO] New table is started: hna_e_submissions_actions_log and setting new max response size: 125000
+[2024-07-29 16:46:23.019507] [DEBUG] Getting data from remote DB with data: {"table":"hna_e_submissions_actions_log","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":252,"column_names":{"action_name":"action_name","action_label":"action_label","status":"status","log":"log","created_at_gmt":"created_at_gmt","updated_at_gmt":"updated_at_gmt","created_at":"created_at","updated_at":"updated_at","id":"id","submission_id":"submission_id"},"time_limit":10.105250000953674}
+[2024-07-29 16:46:23.255880] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 1758
+[2024-07-29 16:46:23.256314] [DEBUG] Got rows: 46
+[2024-07-29 16:46:23.256509] [INFO] Marking table: hna_e_submissions_actions_log as completed
+[2024-07-29 16:46:23.268147] [DEBUG] Inserted 46 rows into target database
+[2024-07-29 16:46:23.268988] [DEBUG] Lastrun in : 0.24947810173035 seconds - response size throttle: 131250 and remaining time: 19.961009979248
+[2024-07-29 16:46:23.269604] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,527 / 109,609
+[2024-07-29 16:46:23.294709] [INFO] New table is started: hna_e_submissions_values and setting new max response size: 125000
+[2024-07-29 16:46:23.294838] [DEBUG] Getting data from remote DB with data: {"table":"hna_e_submissions_values","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":1262,"column_names":{"key":"key","value":"value","id":"id","submission_id":"submission_id"},"time_limit":9.9675815105438232}
+[2024-07-29 16:46:23.577669] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 9022
+[2024-07-29 16:46:23.577968] [DEBUG] Got rows: 243
+[2024-07-29 16:46:23.578056] [INFO] Marking table: hna_e_submissions_values as completed
+[2024-07-29 16:46:23.599415] [DEBUG] Inserted 243 rows into target database
+[2024-07-29 16:46:23.599584] [DEBUG] Lastrun in : 0.30475306510925 seconds - response size throttle: 131250 and remaining time: 19.630409002304
+[2024-07-29 16:46:23.599660] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,770 / 109,609
+[2024-07-29 16:46:23.618661] [INFO] New table is started: hna_jet_search_suggestions and setting new max response size: 125000
+[2024-07-29 16:46:23.618780] [DEBUG] Getting data from remote DB with data: {"table":"hna_jet_search_suggestions","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":15,"column_names":{"name":"name","parent":"parent","term":"term","id":"id","weight":"weight"},"time_limit":9.8056105375289917}
+[2024-07-29 16:46:23.892348] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 318
+[2024-07-29 16:46:23.892740] [DEBUG] Got rows: 1
+[2024-07-29 16:46:23.892928] [INFO] Marking table: hna_jet_search_suggestions as completed
+[2024-07-29 16:46:23.897648] [DEBUG] Inserted 1 rows into target database
+[2024-07-29 16:46:23.897860] [DEBUG] Lastrun in : 0.27907395362854 seconds - response size throttle: 131250 and remaining time: 19.332135915756
+[2024-07-29 16:46:23.898045] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,771 / 109,609
+[2024-07-29 16:46:23.929617] [INFO] New table is started: hna_local_sync_local_site_new_attachments and setting new max response size: 125000
+[2024-07-29 16:46:23.929743] [DEBUG] Getting data from remote DB with data: {"table":"hna_local_sync_local_site_new_attachments","last_primary_key":0,"primary_key_column":"id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":565,"column_names":{"url":"url","name":"name","relative_file_path":"relative_file_path","id":"id"},"time_limit":9.6501294374465942}
+[2024-07-29 16:46:24.221146] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 3022
+[2024-07-29 16:46:24.221590] [DEBUG] Got rows: 74
+[2024-07-29 16:46:24.221715] [INFO] Marking table: hna_local_sync_local_site_new_attachments as completed
+[2024-07-29 16:46:24.233541] [DEBUG] Inserted 74 rows into target database
+[2024-07-29 16:46:24.234145] [DEBUG] Lastrun in : 0.3044011592865 seconds - response size throttle: 131250 and remaining time: 18.995851039886
+[2024-07-29 16:46:24.234333] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,845 / 109,609
+[2024-07-29 16:46:24.254930] [INFO] New table is started: hna_local_sync_options and setting new max response size: 125000
+[2024-07-29 16:46:24.255106] [DEBUG] Getting data from remote DB with data: {"table":"hna_local_sync_options","last_primary_key":0,"primary_key_column":"","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":152,"column_names":{"name":"name","value":"value"},"time_limit":9.4874489307403564}
+[2024-07-29 16:46:24.527826] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 926
+[2024-07-29 16:46:24.528218] [DEBUG] Got rows: 20
+[2024-07-29 16:46:24.528347] [INFO] Marking table: hna_local_sync_options as completed
+[2024-07-29 16:46:24.532364] [DEBUG] Inserted 20 rows into target database
+[2024-07-29 16:46:24.532809] [DEBUG] Lastrun in : 0.27770090103149 seconds - response size throttle: 131250 and remaining time: 18.697187900543
+[2024-07-29 16:46:24.533074] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 1,865 / 109,609
+[2024-07-29 16:46:24.565540] [INFO] New table is started: hna_options and setting new max response size: 125000
+[2024-07-29 16:46:24.565711] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":0,"primary_key_column":"option_id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":9.3321454524993896}
+[2024-07-29 16:46:24.988176] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 62158
+[2024-07-29 16:46:24.988600] [DEBUG] Got rows: 151
+[2024-07-29 16:46:25.150149] [DEBUG] Inserted 151 rows into target database
+[2024-07-29 16:46:25.150338] [DEBUG] Lastrun in : 0.58463597297668 seconds - response size throttle: 131250 and remaining time: 18.079655885696
+[2024-07-29 16:46:25.150420] [INFO] Database progress update: Data: 5.3MB / 525.4MB - Rows: 2,016 / 109,609
+[2024-07-29 16:46:25.172718] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":"222","primary_key_column":"option_id","completed_rows":151,"max_response_size":131250,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":9.0286499261856079}
+[2024-07-29 16:46:25.525428] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 24414
+[2024-07-29 16:46:25.525804] [DEBUG] Got rows: 260
+[2024-07-29 16:46:25.535556] [ERROR] Skipping serialized value that is broken, so no search/replaces could be done in this value.
+s:348:&quot;O:26:&quot;Account\AccountDataFactory&quot;:1:{s:11:&quot; * accounts&quot;;a:1:{i:0;O:19:&quot;Account\AccountData&quot;:7:{s:5:&quot; * id&quot;;s:124:&quot;/Users/s:124:&quot;/home/customer/www/greenworkforceconnect.org/public_html/wp-content/plugins/http-https-remover/http-https-remover.php&quot;;s:14:&quot; * isInstalled&quot;;b:0;s:12:&quot; * isOptedIn&quot;;b:0;s:11:&quot; * isSigned&quot;;b:0;s:20:&quot; * isInstallResolved&quot;;N;}}}&quot;;
+[2024-07-29 16:46:25.607644] [DEBUG] Inserted 260 rows into target database
+[2024-07-29 16:46:25.607830] [DEBUG] Lastrun in : 0.43513607978821 seconds - response size throttle: 137813 and remaining time: 17.622163057327
+[2024-07-29 16:46:25.607932] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,276 / 109,609
+[2024-07-29 16:46:25.628588] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":"7008","primary_key_column":"option_id","completed_rows":411,"max_response_size":137813,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":8.8007099628448486}
+[2024-07-29 16:46:26.093896] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 83838
+[2024-07-29 16:46:26.094591] [DEBUG] Got rows: 31
+[2024-07-29 16:46:26.153100] [DEBUG] Inserted 31 rows into target database
+[2024-07-29 16:46:26.153247] [DEBUG] Lastrun in : 0.52467203140259 seconds - response size throttle: 144704 and remaining time: 17.076746940613
+[2024-07-29 16:46:26.153329] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,307 / 109,609
+[2024-07-29 16:46:26.173116] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":"7757","primary_key_column":"option_id","completed_rows":442,"max_response_size":144704,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":8.5284454822540283}
+[2024-07-29 16:46:26.528652] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 17886
+[2024-07-29 16:46:26.529051] [DEBUG] Got rows: 80
+[2024-07-29 16:46:26.571747] [DEBUG] Inserted 80 rows into target database
+[2024-07-29 16:46:26.571914] [DEBUG] Lastrun in : 0.39881086349487 seconds - response size throttle: 151940 and remaining time: 16.658081054688
+[2024-07-29 16:46:26.571998] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,387 / 109,609
+[2024-07-29 16:46:26.593215] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":"8549","primary_key_column":"option_id","completed_rows":522,"max_response_size":151940,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":8.3183964490890503}
+[2024-07-29 16:46:26.978362] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 48302
+[2024-07-29 16:46:26.979300] [DEBUG] Got rows: 19
+[2024-07-29 16:46:27.135289] [DEBUG] Inserted 19 rows into target database
+[2024-07-29 16:46:27.135460] [DEBUG] Lastrun in : 0.54225516319275 seconds - response size throttle: 159537 and remaining time: 16.094534873962
+[2024-07-29 16:46:27.135590] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,406 / 109,609
+[2024-07-29 16:46:27.158720] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":"17326","primary_key_column":"option_id","completed_rows":541,"max_response_size":159537,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":8.0356519222259521}
+[2024-07-29 16:46:27.575795] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 74126
+[2024-07-29 16:46:27.576223] [DEBUG] Got rows: 102
+[2024-07-29 16:46:27.659755] [DEBUG] Inserted 102 rows into target database
+[2024-07-29 16:46:27.659931] [DEBUG] Lastrun in : 0.50125408172607 seconds - response size throttle: 167514 and remaining time: 15.570061922073
+[2024-07-29 16:46:27.660029] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,508 / 109,609
+[2024-07-29 16:46:27.680483] [DEBUG] Getting data from remote DB with data: {"table":"hna_options","last_primary_key":"59346","primary_key_column":"option_id","completed_rows":643,"max_response_size":167514,"type":"pull","default_rows_per_request":10,"column_names":{"option_name":"option_name","option_value":"option_value","autoload":"autoload","option_id":"option_id"},"time_limit":7.7747629880905151}
+[2024-07-29 16:46:27.946972] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 3422
+[2024-07-29 16:46:27.947377] [DEBUG] Got rows: 6
+[2024-07-29 16:46:27.947585] [INFO] Marking table: hna_options as completed
+[2024-07-29 16:46:27.957485] [DEBUG] Inserted 6 rows into target database
+[2024-07-29 16:46:27.957694] [DEBUG] Lastrun in : 0.27721691131592 seconds - response size throttle: 175890 and remaining time: 15.272300004959
+[2024-07-29 16:46:27.957874] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,514 / 109,609
+[2024-07-29 16:46:27.975882] [INFO] New table is started: hna_postmeta and setting new max response size: 125000
+[2024-07-29 16:46:27.976024] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":0,"primary_key_column":"meta_id","completed_rows":0,"max_response_size":125000,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":7.6269879341125488}
+[2024-07-29 16:46:28.276381] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 14126
+[2024-07-29 16:46:28.276812] [DEBUG] Got rows: 442
+[2024-07-29 16:46:28.337283] [DEBUG] Inserted 442 rows into target database
+[2024-07-29 16:46:28.337502] [DEBUG] Lastrun in : 0.36148190498352 seconds - response size throttle: 131250 and remaining time: 14.892492055893
+[2024-07-29 16:46:28.339354] [INFO] Database progress update: Data: 10.5MB / 525.4MB - Rows: 2,956 / 109,609
+[2024-07-29 16:46:28.357479] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"2943","primary_key_column":"meta_id","completed_rows":442,"max_response_size":131250,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":7.4362645149230957}
+[2024-07-29 16:46:28.646349] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 11694
+[2024-07-29 16:46:28.646914] [DEBUG] Got rows: 455
+[2024-07-29 16:46:28.731631] [DEBUG] Inserted 455 rows into target database
+[2024-07-29 16:46:28.731839] [DEBUG] Lastrun in : 0.37437605857849 seconds - response size throttle: 137813 and remaining time: 14.498153924942
+[2024-07-29 16:46:28.731925] [INFO] Database progress update: Data: 15.8MB / 525.4MB - Rows: 3,411 / 109,609
+[2024-07-29 16:46:28.751914] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"3754","primary_key_column":"meta_id","completed_rows":897,"max_response_size":137813,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":7.2390464544296265}
+[2024-07-29 16:46:29.094656] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 20510
+[2024-07-29 16:46:29.095131] [DEBUG] Got rows: 290
+[2024-07-29 16:46:29.149987] [DEBUG] Inserted 290 rows into target database
+[2024-07-29 16:46:29.150179] [DEBUG] Lastrun in : 0.39827799797058 seconds - response size throttle: 144704 and remaining time: 14.079813957214
+[2024-07-29 16:46:29.150269] [INFO] Database progress update: Data: 15.8MB / 525.4MB - Rows: 3,701 / 109,609
+[2024-07-29 16:46:29.167596] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"4649","primary_key_column":"meta_id","completed_rows":1187,"max_response_size":144704,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":7.0312069654464722}
+[2024-07-29 16:46:29.435991] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 7742
+[2024-07-29 16:46:29.436566] [DEBUG] Got rows: 338
+[2024-07-29 16:46:29.490179] [DEBUG] Inserted 338 rows into target database
+[2024-07-29 16:46:29.490385] [DEBUG] Lastrun in : 0.32280707359314 seconds - response size throttle: 151940 and remaining time: 13.739609003067
+[2024-07-29 16:46:29.490478] [INFO] Database progress update: Data: 15.8MB / 525.4MB - Rows: 4,039 / 109,609
+[2024-07-29 16:46:29.511396] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5058","primary_key_column":"meta_id","completed_rows":1525,"max_response_size":151940,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":6.8593055009841919}
+[2024-07-29 16:46:29.798810] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 5998
+[2024-07-29 16:46:29.799447] [DEBUG] Got rows: 160
+[2024-07-29 16:46:29.830051] [DEBUG] Inserted 160 rows into target database
+[2024-07-29 16:46:29.830220] [DEBUG] Lastrun in : 0.31883788108826 seconds - response size throttle: 159537 and remaining time: 13.399772882462
+[2024-07-29 16:46:29.830310] [INFO] Database progress update: Data: 15.8MB / 525.4MB - Rows: 4,199 / 109,609
+[2024-07-29 16:46:29.852282] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5249","primary_key_column":"meta_id","completed_rows":1685,"max_response_size":159537,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":6.6888619661331177}
+[2024-07-29 16:46:30.145755] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 5614
+[2024-07-29 16:46:30.146526] [DEBUG] Got rows: 82
+[2024-07-29 16:46:30.174136] [DEBUG] Inserted 82 rows into target database
+[2024-07-29 16:46:30.174289] [DEBUG] Lastrun in : 0.322016954422 seconds - response size throttle: 167514 and remaining time: 13.055703878403
+[2024-07-29 16:46:30.174364] [INFO] Database progress update: Data: 15.8MB / 525.4MB - Rows: 4,281 / 109,609
+[2024-07-29 16:46:30.194025] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5351","primary_key_column":"meta_id","completed_rows":1767,"max_response_size":167514,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":6.5179909467697144}
+[2024-07-29 16:46:30.486628] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 7726
+[2024-07-29 16:46:30.487061] [DEBUG] Got rows: 66
+[2024-07-29 16:46:30.516682] [DEBUG] Inserted 66 rows into target database
+[2024-07-29 16:46:30.516833] [DEBUG] Lastrun in : 0.32281899452209 seconds - response size throttle: 175890 and remaining time: 12.713160037994
+[2024-07-29 16:46:30.516910] [INFO] Database progress update: Data: 15.8MB / 525.4MB - Rows: 4,347 / 109,609
+[2024-07-29 16:46:30.535747] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5432","primary_key_column":"meta_id","completed_rows":1833,"max_response_size":175890,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":6.3471285104751587}
+[2024-07-29 16:46:30.794929] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 12654
+[2024-07-29 16:46:30.795286] [DEBUG] Got rows: 48
+[2024-07-29 16:46:30.821663] [DEBUG] Inserted 48 rows into target database
+[2024-07-29 16:46:30.821813] [DEBUG] Lastrun in : 0.28607511520386 seconds - response size throttle: 184685 and remaining time: 12.408179998398
+[2024-07-29 16:46:30.821890] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,395 / 109,609
+[2024-07-29 16:46:30.839175] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5490","primary_key_column":"meta_id","completed_rows":1881,"max_response_size":184685,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":6.1954154968261719}
+[2024-07-29 16:46:31.192731] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 15230
+[2024-07-29 16:46:31.193058] [DEBUG] Got rows: 48
+[2024-07-29 16:46:31.224650] [DEBUG] Inserted 48 rows into target database
+[2024-07-29 16:46:31.224816] [DEBUG] Lastrun in : 0.3856520652771 seconds - response size throttle: 193920 and remaining time: 12.005177974701
+[2024-07-29 16:46:31.224896] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,443 / 109,609
+[2024-07-29 16:46:31.244205] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5548","primary_key_column":"meta_id","completed_rows":1929,"max_response_size":193920,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":5.9929019212722778}
+[2024-07-29 16:46:31.553397] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 15406
+[2024-07-29 16:46:31.553788] [DEBUG] Got rows: 48
+[2024-07-29 16:46:31.583340] [DEBUG] Inserted 48 rows into target database
+[2024-07-29 16:46:31.583472] [DEBUG] Lastrun in : 0.33928298950195 seconds - response size throttle: 203616 and remaining time: 11.646520853043
+[2024-07-29 16:46:31.583548] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,491 / 109,609
+[2024-07-29 16:46:31.602504] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5606","primary_key_column":"meta_id","completed_rows":1977,"max_response_size":203616,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":5.8137505054473877}
+[2024-07-29 16:46:31.914590] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 15694
+[2024-07-29 16:46:31.915243] [DEBUG] Got rows: 48
+[2024-07-29 16:46:31.943799] [DEBUG] Inserted 48 rows into target database
+[2024-07-29 16:46:31.943948] [DEBUG] Lastrun in : 0.34145402908325 seconds - response size throttle: 213797 and remaining time: 11.286045074463
+[2024-07-29 16:46:31.944029] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,539 / 109,609
+[2024-07-29 16:46:31.964651] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5660","primary_key_column":"meta_id","completed_rows":2025,"max_response_size":213797,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":5.6326805353164673}
+[2024-07-29 16:46:32.303797] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 18494
+[2024-07-29 16:46:32.304192] [DEBUG] Got rows: 83
+[2024-07-29 16:46:32.340614] [DEBUG] Inserted 83 rows into target database
+[2024-07-29 16:46:32.340795] [DEBUG] Lastrun in : 0.37616300582886 seconds - response size throttle: 224487 and remaining time: 10.889198064804
+[2024-07-29 16:46:32.341005] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,622 / 109,609
+[2024-07-29 16:46:32.362642] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5760","primary_key_column":"meta_id","completed_rows":2108,"max_response_size":224487,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":5.4336869716644287}
+[2024-07-29 16:46:32.713083] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 20334
+[2024-07-29 16:46:32.713275] [DEBUG] Got rows: 121
+[2024-07-29 16:46:32.782002] [DEBUG] Inserted 121 rows into target database
+[2024-07-29 16:46:32.782213] [DEBUG] Lastrun in : 0.41959404945374 seconds - response size throttle: 235712 and remaining time: 10.447780847549
+[2024-07-29 16:46:32.782341] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,743 / 109,609
+[2024-07-29 16:46:32.806113] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5923","primary_key_column":"meta_id","completed_rows":2229,"max_response_size":235712,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":5.2119489908218384}
+[2024-07-29 16:46:33.192373] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 18846
+[2024-07-29 16:46:33.192674] [DEBUG] Got rows: 48
+[2024-07-29 16:46:33.289812] [DEBUG] Inserted 48 rows into target database
+[2024-07-29 16:46:33.290180] [DEBUG] Lastrun in : 0.48406481742859 seconds - response size throttle: 247498 and remaining time: 9.9398200511932
+[2024-07-29 16:46:33.290468] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,791 / 109,609
+[2024-07-29 16:46:33.313759] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"5978","primary_key_column":"meta_id","completed_rows":2277,"max_response_size":247498,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":4.9581325054168701}
+[2024-07-29 16:46:33.691658] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 22206
+[2024-07-29 16:46:33.691962] [DEBUG] Got rows: 56
+[2024-07-29 16:46:33.729663] [DEBUG] Inserted 56 rows into target database
+[2024-07-29 16:46:33.729813] [DEBUG] Lastrun in : 0.41610383987427 seconds - response size throttle: 259873 and remaining time: 9.5001809597015
+[2024-07-29 16:46:33.729941] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,847 / 109,609
+[2024-07-29 16:46:33.754160] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6046","primary_key_column":"meta_id","completed_rows":2333,"max_response_size":259873,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":4.7379255294799805}
+[2024-07-29 16:46:34.085468] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 22750
+[2024-07-29 16:46:34.085863] [DEBUG] Got rows: 57
+[2024-07-29 16:46:34.129897] [DEBUG] Inserted 57 rows into target database
+[2024-07-29 16:46:34.130082] [DEBUG] Lastrun in : 0.3759400844574 seconds - response size throttle: 272867 and remaining time: 9.0999109745026
+[2024-07-29 16:46:34.130173] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,904 / 109,609
+[2024-07-29 16:46:34.150864] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6114","primary_key_column":"meta_id","completed_rows":2390,"max_response_size":272867,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":4.5395724773406982}
+[2024-07-29 16:46:34.504144] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 22622
+[2024-07-29 16:46:34.504525] [DEBUG] Got rows: 56
+[2024-07-29 16:46:34.542311] [DEBUG] Inserted 56 rows into target database
+[2024-07-29 16:46:34.542467] [DEBUG] Lastrun in : 0.39161515235901 seconds - response size throttle: 286511 and remaining time: 8.6875278949738
+[2024-07-29 16:46:34.542551] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 4,960 / 109,609
+[2024-07-29 16:46:34.563647] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6181","primary_key_column":"meta_id","completed_rows":2446,"max_response_size":286511,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":4.3331815004348755}
+[2024-07-29 16:46:34.888940] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 25934
+[2024-07-29 16:46:34.889477] [DEBUG] Got rows: 64
+[2024-07-29 16:46:34.969745] [DEBUG] Inserted 64 rows into target database
+[2024-07-29 16:46:34.969917] [DEBUG] Lastrun in : 0.40628695487976 seconds - response size throttle: 300837 and remaining time: 8.2600769996643
+[2024-07-29 16:46:34.970003] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,024 / 109,609
+[2024-07-29 16:46:34.992201] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6257","primary_key_column":"meta_id","completed_rows":2510,"max_response_size":300837,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":4.1189035177230835}
+[2024-07-29 16:46:35.408356] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 26350
+[2024-07-29 16:46:35.409020] [DEBUG] Got rows: 64
+[2024-07-29 16:46:35.463944] [DEBUG] Inserted 64 rows into target database
+[2024-07-29 16:46:35.464180] [DEBUG] Lastrun in : 0.47197890281677 seconds - response size throttle: 315879 and remaining time: 7.7658140659332
+[2024-07-29 16:46:35.464351] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,088 / 109,609
+[2024-07-29 16:46:35.495720] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6333","primary_key_column":"meta_id","completed_rows":2574,"max_response_size":315879,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":3.8671494722366333}
+[2024-07-29 16:46:35.920824] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 26414
+[2024-07-29 16:46:35.921253] [DEBUG] Got rows: 64
+[2024-07-29 16:46:35.961583] [DEBUG] Inserted 64 rows into target database
+[2024-07-29 16:46:35.961780] [DEBUG] Lastrun in : 0.4660861492157 seconds - response size throttle: 331673 and remaining time: 7.2682139873505
+[2024-07-29 16:46:35.961909] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,152 / 109,609
+[2024-07-29 16:46:35.984986] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6409","primary_key_column":"meta_id","completed_rows":2638,"max_response_size":331673,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":3.6225124597549438}
+[2024-07-29 16:46:36.365609] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 29598
+[2024-07-29 16:46:36.365948] [DEBUG] Got rows: 72
+[2024-07-29 16:46:36.411521] [DEBUG] Inserted 72 rows into target database
+[2024-07-29 16:46:36.411696] [DEBUG] Lastrun in : 0.42672896385193 seconds - response size throttle: 348257 and remaining time: 6.8182969093323
+[2024-07-29 16:46:36.411812] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,224 / 109,609
+[2024-07-29 16:46:36.431583] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6496","primary_key_column":"meta_id","completed_rows":2710,"max_response_size":348257,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":3.399213433265686}
+[2024-07-29 16:46:36.839118] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 29630
+[2024-07-29 16:46:36.839487] [DEBUG] Got rows: 72
+[2024-07-29 16:46:36.888839] [DEBUG] Inserted 72 rows into target database
+[2024-07-29 16:46:36.889073] [DEBUG] Lastrun in : 0.45750904083252 seconds - response size throttle: 365670 and remaining time: 6.3409199714661
+[2024-07-29 16:46:36.889172] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,296 / 109,609
+[2024-07-29 16:46:36.909914] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6583","primary_key_column":"meta_id","completed_rows":2782,"max_response_size":365670,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":3.1600480079650879}
+[2024-07-29 16:46:37.450211] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 31310
+[2024-07-29 16:46:37.450698] [DEBUG] Got rows: 72
+[2024-07-29 16:46:37.560330] [DEBUG] Inserted 72 rows into target database
+[2024-07-29 16:46:37.560529] [DEBUG] Lastrun in : 0.65062499046326 seconds - response size throttle: 383954 and remaining time: 5.6694650650024
+[2024-07-29 16:46:37.560711] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,368 / 109,609
+[2024-07-29 16:46:37.580133] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6670","primary_key_column":"meta_id","completed_rows":2854,"max_response_size":383954,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":2.8249385356903076}
+[2024-07-29 16:46:37.944712] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 35118
+[2024-07-29 16:46:37.946252] [DEBUG] Got rows: 80
+[2024-07-29 16:46:38.006657] [DEBUG] Inserted 80 rows into target database
+[2024-07-29 16:46:38.006844] [DEBUG] Lastrun in : 0.4267270565033 seconds - response size throttle: 403152 and remaining time: 5.2231500148773
+[2024-07-29 16:46:38.006940] [INFO] Database progress update: Data: 21.0MB / 525.4MB - Rows: 5,448 / 109,609
+[2024-07-29 16:46:38.026089] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6760","primary_key_column":"meta_id","completed_rows":2934,"max_response_size":403152,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":2.6019610166549683}
+[2024-07-29 16:46:38.368824] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 35198
+[2024-07-29 16:46:38.369011] [DEBUG] Got rows: 80
+[2024-07-29 16:46:38.408821] [DEBUG] Inserted 80 rows into target database
+[2024-07-29 16:46:38.408970] [DEBUG] Lastrun in : 0.38290095329285 seconds - response size throttle: 423310 and remaining time: 4.8210229873657
+[2024-07-29 16:46:38.409048] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 5,528 / 109,609
+[2024-07-29 16:46:38.426994] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6852","primary_key_column":"meta_id","completed_rows":3014,"max_response_size":423310,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":2.4015064239501953}
+[2024-07-29 16:46:38.791636] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 35998
+[2024-07-29 16:46:38.792026] [DEBUG] Got rows: 80
+[2024-07-29 16:46:38.849113] [DEBUG] Inserted 80 rows into target database
+[2024-07-29 16:46:38.849281] [DEBUG] Lastrun in : 0.42230105400085 seconds - response size throttle: 444476 and remaining time: 4.3807129859924
+[2024-07-29 16:46:38.849369] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 5,608 / 109,609
+[2024-07-29 16:46:38.869299] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"6944","primary_key_column":"meta_id","completed_rows":3094,"max_response_size":444476,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":2.180355429649353}
+[2024-07-29 16:46:39.265219] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 39214
+[2024-07-29 16:46:39.265644] [DEBUG] Got rows: 88
+[2024-07-29 16:46:39.321838] [DEBUG] Inserted 88 rows into target database
+[2024-07-29 16:46:39.322269] [DEBUG] Lastrun in : 0.45298099517822 seconds - response size throttle: 466700 and remaining time: 3.9077248573303
+[2024-07-29 16:46:39.322375] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 5,696 / 109,609
+[2024-07-29 16:46:39.347432] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"7043","primary_key_column":"meta_id","completed_rows":3182,"max_response_size":466700,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":1.941288948059082}
+[2024-07-29 16:46:39.734658] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 38190
+[2024-07-29 16:46:39.735045] [DEBUG] Got rows: 89
+[2024-07-29 16:46:39.788552] [DEBUG] Inserted 89 rows into target database
+[2024-07-29 16:46:39.788725] [DEBUG] Lastrun in : 0.44130992889404 seconds - response size throttle: 490035 and remaining time: 3.4412689208984
+[2024-07-29 16:46:39.788822] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 5,785 / 109,609
+[2024-07-29 16:46:39.807277] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"7154","primary_key_column":"meta_id","completed_rows":3271,"max_response_size":490035,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":1.7113620042800903}
+[2024-07-29 16:46:40.152901] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 40254
+[2024-07-29 16:46:40.153327] [DEBUG] Got rows: 128
+[2024-07-29 16:46:40.214720] [DEBUG] Inserted 128 rows into target database
+[2024-07-29 16:46:40.214899] [DEBUG] Lastrun in : 0.40762615203857 seconds - response size throttle: 514537 and remaining time: 3.0150949954987
+[2024-07-29 16:46:40.215534] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 5,913 / 109,609
+[2024-07-29 16:46:40.234416] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"7312","primary_key_column":"meta_id","completed_rows":3399,"max_response_size":514537,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":1.4977949857711792}
+[2024-07-29 16:46:40.602300] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 24126
+[2024-07-29 16:46:40.602855] [DEBUG] Got rows: 227
+[2024-07-29 16:46:40.673071] [DEBUG] Inserted 227 rows into target database
+[2024-07-29 16:46:40.673263] [DEBUG] Lastrun in : 0.43885612487793 seconds - response size throttle: 540264 and remaining time: 2.5567300319672
+[2024-07-29 16:46:40.673353] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 6,140 / 109,609
+[2024-07-29 16:46:40.694115] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"11721","primary_key_column":"meta_id","completed_rows":3626,"max_response_size":540264,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":1.2679474353790283}
+[2024-07-29 16:46:41.126205] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 49774
+[2024-07-29 16:46:41.126591] [DEBUG] Got rows: 121
+[2024-07-29 16:46:41.182102] [DEBUG] Inserted 121 rows into target database
+[2024-07-29 16:46:41.182282] [DEBUG] Lastrun in : 0.48818397521973 seconds - response size throttle: 567278 and remaining time: 2.0477108955383
+[2024-07-29 16:46:41.182365] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 6,261 / 109,609
+[2024-07-29 16:46:41.201956] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"12427","primary_key_column":"meta_id","completed_rows":3747,"max_response_size":567278,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":1.0140254497528076}
+[2024-07-29 16:46:41.620012] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 59134
+[2024-07-29 16:46:41.620554] [DEBUG] Got rows: 150
+[2024-07-29 16:46:41.694876] [DEBUG] Inserted 150 rows into target database
+[2024-07-29 16:46:41.695066] [DEBUG] Lastrun in : 0.49311900138855 seconds - response size throttle: 595642 and remaining time: 1.5349268913269
+[2024-07-29 16:46:41.695162] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 6,411 / 109,609
+[2024-07-29 16:46:41.715850] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"12631","primary_key_column":"meta_id","completed_rows":3897,"max_response_size":595642,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":0.75707948207855225}
+[2024-07-29 16:46:42.132860] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 62430
+[2024-07-29 16:46:42.133317] [DEBUG] Got rows: 58
+[2024-07-29 16:46:42.195586] [DEBUG] Inserted 58 rows into target database
+[2024-07-29 16:46:42.195783] [DEBUG] Lastrun in : 0.47995018959045 seconds - response size throttle: 625425 and remaining time: 1.0342109203339
+[2024-07-29 16:46:42.195876] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 6,469 / 109,609
+[2024-07-29 16:46:42.225588] [DEBUG] Getting data from remote DB with data: {"table":"hna_postmeta","last_primary_key":"12704","primary_key_column":"meta_id","completed_rows":3955,"max_response_size":625425,"type":"pull","default_rows_per_request":28,"column_names":{"meta_key":"meta_key","meta_value":"meta_value","meta_id":"meta_id","post_id":"post_id"},"time_limit":0.50221049785614014}
+[2024-07-29 16:46:42.610266] [DEBUG] Got a proper response from 'clientsyncdatabase' with response length: 57038
+[2024-07-29 16:46:42.611042] [DEBUG] Got rows: 48
+[2024-07-29 16:46:42.664571] [DEBUG] Inserted 48 rows into target database
+[2024-07-29 16:46:42.664717] [DEBUG] Lastrun in : 0.43914580345154 seconds - response size throttle: 656697 and remaining time: 0.56527590751648
+[2024-07-29 16:46:42.664796] [INFO] Database progress update: Data: 26.3MB / 525.4MB - Rows: 6,517 / 109,609
+[2024-07-29 16:46:42.682920] [INFO] Ending database migration loop with remaining time: 0.5470860004425 seconds
+[2024-07-29 16:46:42.715429] [INFO] Ending migration loop - with remaining time: 0.51457786560059

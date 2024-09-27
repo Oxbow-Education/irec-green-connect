@@ -575,18 +575,18 @@ function wage_data_filter_query($query)
 }
 add_filter('parse_query', 'wage_data_filter_query');
 // Add custom main menu page
-function add_upload_external_resources_menu()
-{
-  add_menu_page(
-    'Upload External Resources',           // Page title
-    'Upload External Resources',           // Menu title
-    'edit_posts',                          // Capability
-    'upload-external-resources',           // Menu slug
-    'handle_upload_external_resources',    // Callback function
-    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
-  );
-}
-add_action('admin_menu', 'add_upload_external_resources_menu');
+// function add_upload_external_resources_menu()
+// {
+//   add_menu_page(
+//     'Upload External Resources',           // Page title
+//     'Upload External Resources',           // Menu title
+//     'edit_posts',                          // Capability
+//     'upload-external-resources',           // Menu slug
+//     'handle_upload_external_resources',    // Callback function
+//     'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+//   );
+// }
+// add_action('admin_menu', 'add_upload_external_resources_menu');
 
 function add_upload_wage_data_page()
 {
@@ -602,19 +602,19 @@ function add_upload_wage_data_page()
 }
 add_action('admin_menu', 'add_upload_wage_data_page');
 
-function add_upload_organization_page()
-{
-  add_menu_page(
-    'Upload Organization Data',          // Page title
-    'Upload Organization Data',          // Menu title
-    'edit_posts',            // Capability - determines who can access. 'manage_options' is typically for admins.
-    'upload-organization-data',          // Menu slug
-    'load_upload_organization_page', // Callback function to display the content of the page
-    'dashicons-upload',
+// function add_upload_organization_page()
+// {
+//   add_menu_page(
+//     'Upload Organization Data',          // Page title
+//     'Upload Organization Data',          // Menu title
+//     'edit_posts',            // Capability - determines who can access. 'manage_options' is typically for admins.
+//     'upload-organization-data',          // Menu slug
+//     'load_upload_organization_page', // Callback function to display the content of the page
+//     'dashicons-upload',
 
-  );
-}
-add_action('admin_menu', 'add_upload_organization_page');
+//   );
+// }
+// add_action('admin_menu', 'add_upload_organization_page');
 
 
 function load_upload_wage_data_page()
@@ -1022,3 +1022,91 @@ function custom_reorder_posts_columns($columns)
   return $columns;
 }
 add_filter('manage_posts_columns', 'custom_reorder_posts_columns');
+
+function custom_menu_order($menu_order)
+{
+  if (!$menu_order) return true;
+
+  // Desired new order of menu items
+  $new_order = array(
+    'index.php', // Dashboard
+    'upload.php', // Media
+    'edit.php?post_type=page', // Pages
+    'edit.php?post_type=organizations-new', // Organizations
+    'edit.php?post_type=resources', // Resources
+    'edit.php', // Posts
+    'edit.php?post_type=testimonial-blocks', // Testimonial Block
+    'edit.php?post_type=users', // Users
+    'edit.php?post_type=testimonial-blocks',
+    'edit.php?post_type=contractor-careers', // Testimonial Block
+    'edit.php?post_type=careers',
+    'edit.php?post_type=wage-data',
+
+  );
+
+  // Rearrange the menu order
+  $menu_order = array_merge(array_intersect($new_order, $menu_order), array_diff($menu_order, $new_order));
+
+  return $menu_order;
+}
+add_filter('custom_menu_order', '__return_true');
+add_filter('menu_order', 'custom_menu_order');
+
+function add_admin_menu_separator($position)
+{
+  global $menu;
+  $index = 0;
+  foreach ($menu as $offset => $section) {
+    if (substr($section[2], 0, 9) == 'separator')
+      $index++;
+    if ($offset >= $position) {
+      $menu[$position] = array('', 'read', "separator{$index}", '', 'wp-menu-separator');
+      break;
+    }
+  }
+  ksort($menu);
+}
+
+
+function add_admin_menu_divider()
+{
+  add_admin_menu_separator(11);
+}
+add_action('admin_menu', 'add_admin_menu_divider');
+
+// add_action('admin_init', 'dump_admin_menu');
+function dump_admin_menu()
+{
+  if (is_admin()) {
+    header('Content-Type:text/plain');
+    var_dump($GLOBALS['menu']);
+    exit;
+  }
+}
+
+function add_admin_menu_divider_style()
+{
+  echo '<style>
+      .wp-menu-separator {
+          height: 1px;
+          margin: 0.5em 0;
+          background: #ccc;
+      }
+  </style>';
+}
+add_action('admin_head', 'add_admin_menu_divider_style');
+function remove_admin_menu_separators()
+{
+  global $menu;
+
+  // Positions of the separators you want to remove
+  $separators_to_remove = array(7); // Adjust these positions as needed
+
+  // Remove the separators
+  foreach ($separators_to_remove as $position) {
+    if (isset($menu[$position])) {
+      unset($menu[$position]);
+    }
+  }
+}
+add_action('admin_menu', 'remove_admin_menu_separators', 999);

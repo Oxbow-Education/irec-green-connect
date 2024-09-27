@@ -1,0 +1,51 @@
+name: Run Cypress Tests
+
+on:
+  schedule:
+    # Runs every Monday at midnight (00:00 UTC)
+    - cron: '0 0 * * MON'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn
+
+      # Start the local server or make sure the WordPress site is accessible
+      # If you're using Docker or another setup for local WordPress, you can add that here.
+
+      # Run Cypress tests
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          headless: true
+          spec: cypress/e2e/organizationsRedirect.cy.js
+
+      # Optionally, upload test results (useful for debugging)
+      - name: Upload Cypress screenshots
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
