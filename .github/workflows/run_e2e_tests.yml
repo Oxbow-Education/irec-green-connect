@@ -32,7 +32,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          headless: true
           spec: cypress/e2e/**/*.cy.js
 
       # Optionally, upload test results (useful for debugging)
