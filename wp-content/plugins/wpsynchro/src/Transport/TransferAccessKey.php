@@ -4,13 +4,11 @@ namespace WPSynchro\Transport;
 
 /**
  * Transfer access key
- * @since 1.6.0
  */
 class TransferAccessKey
 {
     /**
      * Return this migration access key
-     * @since 1.0.0
      */
     public static function getAccessKey()
     {
@@ -19,7 +17,6 @@ class TransferAccessKey
 
     /**
      * Generate access key
-     * @since 1.0.0
      */
     public static function generateAccesskey()
     {

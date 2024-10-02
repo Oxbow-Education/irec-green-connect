@@ -8,13 +8,11 @@ use WPSynchro\Utilities\Actions\ClearCachesOnSuccess;
 
 /**
  * Class for handling actions for WP Synchro
- * @since 1.6.0
  */
 class Actions
 {
     /**
      *  Load all the actions
-     *  @since 1.6.0
      */
     public function loadActions()
     {
@@ -25,7 +23,6 @@ class Actions
 
     /**
      *  Load all the internal actions used by WP Synchro
-     *  @since 1.6.0
      */
     private function loadInternalWPSynchroActions()
     {

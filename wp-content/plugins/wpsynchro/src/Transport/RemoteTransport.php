@@ -3,15 +3,12 @@
 namespace WPSynchro\Transport;
 
 use WPSynchro\Migration\Job;
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Migration\MigrationController;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 use WPSynchro\Utilities\SyncTimerList;
 
 /**
  * Class for handling transport of data between sites in WP Synchro
- * @since 1.3.0
  */
 class RemoteTransport implements RemoteConnection
 {
@@ -37,14 +34,13 @@ class RemoteTransport implements RemoteConnection
     /**
      *  Constructor
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
     }
 
     /**
      *  Set request destination
-     *  @since 1.7.2
      */
     public function setDestination(Destination $destination = null)
     {
@@ -55,7 +51,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set Job
-     *  @since 1.6.0
      */
     public function setJob(Job $job = null)
     {
@@ -66,7 +61,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set no retries
-     *  @since 1.6.0
      */
     public function setNoRetries()
     {
@@ -75,7 +69,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set no redirection
-     *  @since 1.6.0
      */
     public function setNoRedirection()
     {
@@ -84,7 +77,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Initialize request object
-     *  @since 1.3.0
      */
     public function init()
     {
@@ -125,7 +117,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set URL on request
-     *  @since 1.3.0
      */
     public function setUrl($url)
     {
@@ -134,7 +125,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set max size on request
-     *  @since 1.3.0
      */
     public function setMaxRequestSize($maxsize)
     {
@@ -143,7 +133,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Add data to request
-     *  @since 1.3.0
      */
     public function setDataObject($object)
     {
@@ -152,7 +141,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set token on request
-     *  @since 1.6.0
      */
     public function setToken($token)
     {
@@ -161,7 +149,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set encryption key on request
-     *  @since 1.6.0
      */
     public function setEncryptionKey($key)
     {
@@ -170,7 +157,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Send data as JSON
-     *  @since 1.3.0
      */
     public function setSendDataAsJSON()
     {
@@ -180,7 +166,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set basic authentication on request
-     *  @since 1.6.0
      */
     public function setBasicAuthentication($username, $password)
     {
@@ -189,7 +174,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Set request as non-blocking
-     *  @since 1.6.0
      */
     public function setNonBlocking()
     {
@@ -200,7 +184,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Add file to request
-     *  @since 1.3.0
      */
     public function addFiledata(\WPSynchro\Transport\TransferFile $file)
     {
@@ -274,7 +257,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Handle all POST requests to services
-     *  @since 1.3.0
      */
     public function remotePOST()
     {
@@ -319,7 +301,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Check which token, if any, to add to request
-     *  @since 1.3.0
      */
     public function addTokenToRequest()
     {
@@ -357,7 +338,6 @@ class RemoteTransport implements RemoteConnection
 
     /**
      *  Handle retries of HTTP requests
-     *  @since 1.3.0
      */
     public function handleRetries($type, &$wpremoteresult)
     {

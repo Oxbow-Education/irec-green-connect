@@ -2,7 +2,6 @@
 
 /**
  * Class for handling what to show when clicking on setup in the menu in wp-admin
- * @since 1.0.0
  */
 
 namespace WPSynchro\Pages;
@@ -17,7 +16,6 @@ class AdminSetup
 
     /**
      *  Called from WP menu to show setup
-     *  @since 1.0.0
      */
     public static function render()
     {
@@ -31,7 +29,6 @@ class AdminSetup
 
     /**
      *  Handle the update of data from setup screen
-     *  @since 1.0.0
      */
     private function handlePOST()
     {
@@ -77,7 +74,6 @@ class AdminSetup
 
     /**
      *  Show WP Synchro setup screen
-     *  @since 1.0.0
      */
     private function handleGET()
     {

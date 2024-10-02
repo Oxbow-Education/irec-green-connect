@@ -1,3 +1,10 @@
+= 1.12.0 =
+ * Improvement: Extend cron scheduling system, so migrations can be run with intervals automatically without user intervention and without WP CLI
+ * Improvement: Prevent unwanted background update from PRO version to FREE version for some users
+ * Improvement: Make it possible to only delete a single log from the "Logs" menu, instead of all or nothing
+ * Improvement: Make it possible to download the database backup from a pull migration in "Logs" menu
+ * Bugfix: No longer use ini_restore() native php function, because some hosting does not allow it
+
 = 1.11.5 =
  * Bugfix: Fix links for usage reporting dialog, leading to a non-existing page
 

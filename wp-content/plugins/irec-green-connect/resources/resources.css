@@ -1,0 +1,388 @@
+.resources button,
+.resources button:hover,
+.resources button:focus,
+.resources button[type='button'],
+.resources button[type='submit'],
+.resources button[type='button']:hover,
+.resources button[type='submit']:hover,
+.resources button[type='button']:focus,
+.resources button[type='submit']:focus {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+}
+.resources p,
+.resources h1,
+.resources h2,
+.resources h3,
+.resources h4,
+.resources h5,
+.resources h6 {
+  padding: 0;
+  margin: 0;
+}
+.resources {
+  padding: 40px 0;
+}
+
+.resources__filters h2 {
+  font-size: 23px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.resources__filters h3 {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 0;
+  margin: 5px 0;
+  color: white;
+}
+
+.resources__filters .filter-button {
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 0.75rem;
+  outline: none;
+  margin: 5px 0;
+}
+.resources__filters .filter-button:hover {
+  color: white;
+}
+.resources__filters .filters__user-type__buttons .filter-button {
+  border: #a1d165 2px solid;
+}
+
+.resources__filters .filters__user-type__buttons .filter-button:hover,
+.resources__filters
+  .filters__user-type__buttons
+  .filter-button.filter-button--selected {
+  background-color: #a1d165;
+}
+.resources__filters .filters__resource-type__buttons .filter-button {
+  border: 2px solid #00aeb3;
+}
+.resources__filters .filters__resource-type__buttons .filter-button:hover,
+.resources__filters
+  .filters__resource-type__buttons
+  .filter-button.filter-button--selected {
+  background: #00aeb3;
+}
+
+.resources__filters .filters__user-type__buttons .filter-button--all,
+.resources__filters .filters__resource-type__buttons .filter-button--all {
+  border: 2px solid white;
+}
+.resources__filters .filters__user-type__buttons .filter-button--all:hover {
+  color: #a1d165;
+  background: white;
+}
+.resources__filters .filters__resource-type__buttons .filter-button--all:hover {
+  background: white;
+  color: #00aeb3;
+}
+
+.filters__resource-type__buttons,
+.filters__user-type__buttons {
+  display: flex;
+  column-gap: 5px;
+  flex-wrap: wrap;
+}
+.resources .ais-infinite-hits {
+  padding: 20px 0;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  grid-auto-rows: 11rem;
+}
+
+.resources a {
+  color: inherit !important;
+}
+
+.resource-tile .post-thumbnail {
+  height: 150px;
+  object-fit: cover;
+  object-position: top;
+  width: 100%;
+  border-radius: 0.625rem 0.625rem 0 0;
+}
+.resources .ais-infinite-hits--item:has(.external-resource-tile) {
+  grid-row: span 1;
+  height: 11rem;
+}
+
+.resources .ais-infinite-hits--item:has(.internal-resource-tile) {
+  grid-row: span 2;
+  height: 24rem;
+}
+
+.resources .resource-tile {
+  background-color: #ffffff;
+  border-radius: 0.625rem;
+  color: #363636;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  height: 100%;
+}
+
+.ais-infinite-hits > .resource-tile {
+  margin: 1rem 0;
+}
+
+.external-resource-button:hover,
+.external-resource-button:focus,
+.read-more-button:hover,
+.read-more-button:focus,
+.external-resource-tile:hover .external-resource-button,
+.external-resource-tile.hover .external-resource-button,
+.internal-resource-tile:hover .read-more-button,
+.internal-resource-tile.hover .read-more-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 0.625rem;
+  color: #00aeb3;
+  outline: none;
+  text-decoration: none;
+}
+
+.internal-resource-tile:hover,
+.external-resource-tile:hover {
+  cursor: pointer;
+}
+
+.internal-resource-tile .resource-tile-text {
+  padding: 0.825rem 1.25rem 2.5rem 1.25rem;
+}
+
+.resource-tile:hover {
+  transform: scale(1.1);
+  transition: transform 100ms ease-in-out;
+  z-index: 10;
+  height: fit-content;
+}
+.internal-resource-tile:hover {
+  min-height: 24rem;
+}
+.external-resource-tile:hover {
+  min-height: 12rem;
+}
+
+.resource-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.resource-tile-text {
+  padding: 1.25rem;
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  whitespace: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+div .resource-tile:hover .resource-title,
+div .resource-tile:hover .resource-description {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  -webkit-box-orient: unset;
+}
+.resource-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  gap: 2px;
+  height: 40px;
+}
+
+.resource-tag {
+  border: 2px solid #00aeb3;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 0.75rem;
+  outline: none;
+  margin: 5px 0;
+}
+.resource-tag {
+  background-color: #00aeb3;
+  outline: none;
+}
+.resource-tag {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.resource-description {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.external-resource-button,
+.read-more-button,
+a.read-more-button {
+  color: #d7a650 !important;
+  position: absolute;
+}
+.read-more-button,
+a.read-more-button {
+  bottom: 0;
+  padding: 1rem;
+  right: 0;
+}
+.read-more-button {
+  border: none;
+  width: fit-content;
+  font-weight: bold;
+}
+
+.external-resource-button,
+.external-resource-button:hover,
+.external-resource-tile:hover .external-resource-button,
+.external-resource-tile.hover .external-resource-button {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  bottom: 0.625rem;
+  padding: 0;
+  right: 0.625rem;
+}
+
+.external-resource-button:hover,
+.external-resource-button:focus,
+.read-more-button:hover,
+.read-more-button:focus,
+.external-resource-tile:hover .external-resource-button,
+.external-resource-tile.hover .external-resource-button,
+.internal-resource-tile:hover .read-more-button,
+.internal-resource-tile.hover .read-more-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 0.625rem;
+  color: #00aeb3;
+  outline: none;
+  text-decoration: none;
+}
+
+.resources .ais-infinite-hits--showmoreButton {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #00aeb3;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 0.75rem;
+  outline: none;
+  margin: 5px 0;
+}
+.resources .ais-infinite-hits--showmoreButton:disabled {
+  display: none;
+}
+
+.resources .ais-infinite-hits--showmoreButton:hover {
+  background-color: #00aeb3;
+  color: white;
+  outline: none;
+}
+.resources .ais-infinite-hits--showmoreButton:focus {
+  background-color: #00aeb3;
+  border: 2px solid #00aeb3;
+  color: #ffffff;
+  outline: none;
+  text-decoration: none;
+}
+
+.external-resource-modal-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 40px;
+  width: 45px;
+  padding: 0;
+}
+
+.external-resource-modal-close svg * {
+  fill: #d7a650;
+}
+.external-resource-modal-close:hover svg * {
+  fill: #00aeb3;
+}
+
+.external-resource-modal {
+  background-color: #ffffff;
+  color: #777777;
+  display: none;
+  left: 50%;
+  max-height: 80vh;
+  overflow: auto;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  max-width: 100%;
+  z-index: 99;
+}
+
+.external-resource-modal.active,
+.external-resource-modal-bg.active {
+  display: block;
+}
+
+.external-resource-modal h5 {
+  color: #385275;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.external-resource-modal p {
+  font-size: 18px;
+  padding-top: 1rem;
+}
+
+.external-resource-modal a {
+  color: #d7a650 !important;
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+
+@media screen and (max-width: 768px) {
+  .clamp-2 {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    -webkit-box-orient: unset;
+  }
+
+  .internal-resource-tile {
+    min-height: 24rem;
+    height: auto;
+    height: fit-content;
+  }
+  .resource-tile:hover {
+    transform: scale(1);
+  }
+  .resources .ais-infinite-hits {
+    display: flex;
+    flex-direction: column;
+  }
+}

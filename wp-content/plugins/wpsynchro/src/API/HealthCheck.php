@@ -13,12 +13,12 @@ use WPSynchro\Transport\BasicAuth;
 use WPSynchro\Transport\Destination;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
 use WPSynchro\Utilities\Licensing\Licensing;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  * Class for handling service to do healthcheck
  * Call should already be verified by permissions callback
  *
- * @since 1.1
  */
 class HealthCheck extends WPSynchroService
 {
@@ -149,6 +149,7 @@ class HealthCheck extends WPSynchroService
             }
         }
         if (count($missing_extensions) > 0) {
+            // translators: %s is replaced with comma separated list of PHP extensions
             $this->healthcheck->errors[] = sprintf(__("Missing PHP extensions for WP Synchro to work. Enable extension(s) '%s' to php.ini and reload.", "wpsynchro"), implode(", ", $missing_extensions));
         }
     }
@@ -162,6 +163,7 @@ class HealthCheck extends WPSynchroService
         $max_allowed_packet = (int) $wpdb->get_row("SHOW VARIABLES LIKE 'max_allowed_packet'")->Value;
         if ($max_allowed_packet < 1024) {
             $this->healthcheck->errors[] = sprintf(
+                // translators: %d is replaced with number
                 __("Your database server is misconfigured - The setting 'max_allowed_packet' is too low. It is currently set to: %d. Check out the documentation for the SQL server you are using and correct this setting.", "wpsynchro"),
                 $max_allowed_packet
             );
@@ -232,6 +234,7 @@ class HealthCheck extends WPSynchroService
         }
         if (count($error_runs) > 0) {
             $this->healthcheck->errors[] = sprintf(
+                // translators: 1%d is replaced with simple number, 2%s is replaced with HTTP return code, like 200, 3%d er replaced by simple number
                 __("Service test error - Tried making %d consecutive requests (with HTTP %s) to a test service on this site - %d of them failed.", "wpsynchro"),
                 $tests_per_http_type,
                 'GET',
@@ -332,9 +335,8 @@ class HealthCheck extends WPSynchroService
      */
     public function checkWritableLogDir()
     {
-        $commonfunctions = new CommonFunctions();
-        $commonfunctions->createLogLocation();
-        $log_location = $commonfunctions->getLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $log_location = $plugins_dirs->getUploadsFilePath();
         $log_dir = realpath($log_location);
         if (!is_writable($log_dir)) {
             $this->healthcheck->errors[] = sprintf(__("WP Synchro log dir is not writable for PHP - Path: %s ", "wpsynchro"), $log_dir);

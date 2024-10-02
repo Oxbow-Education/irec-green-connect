@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.21.0 - 30-04-2024 */
+/*! elementor-pro - v3.22.0 - 16-06-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 

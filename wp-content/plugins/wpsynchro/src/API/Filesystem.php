@@ -4,7 +4,6 @@
  * Class for handling service to get data from file system to frontend
  * Call should already be verified by permissions callback
  *
- * @since 1.2.0
  */
 
 namespace WPSynchro\API;
@@ -15,6 +14,7 @@ use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Transport\RemoteTransport;
 use WPSynchro\Migration\Migration;
 use WPSynchro\Transport\Destination;
+use WPSynchro\Utilities\PluginDirs;
 
 class Filesystem extends WPSynchroService
 {
@@ -72,10 +72,12 @@ class Filesystem extends WPSynchroService
         }
 
         $common = new CommonFunctions();
+        $plugins_dirs = new PluginDirs();
+        $log_path = $plugins_dirs->getUploadsFilePath();
 
         // Paths that should NOT be syncable
         $locked_paths = [];
-        $locked_paths[] = $common->fixPath(trim($common->getLogLocation(), '/'));
+        $locked_paths[] = $common->fixPath(trim($log_path, '/'));
         $locked_paths[] = $common->fixPath(trim(WPSYNCHRO_PLUGIN_DIR, '/'));
         $locked_paths[] = $common->fixPath(ABSPATH . "wp-admin");
         $locked_paths[] = $common->fixPath(ABSPATH . "wp-includes");

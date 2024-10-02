@@ -26,63 +26,6 @@ function hide_default_editor()
 add_action('admin_init', 'hide_default_editor');
 
 
-// Hide the Posts menu item
-function custom_admin_menu()
-{
-  // Remove the default 'Posts' menu
-  remove_menu_page('edit.php');
-
-  // Create "Internal Resources" menu item
-  add_menu_page(
-    'Internal Resources',
-    'Internal Resources',
-    'edit_posts',
-    'edit.php?post_type=post&filter_by_internal=true',
-    '',
-    'dashicons-format-aside',
-    5
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=true',
-    'All Internal Resources',
-    'All Internal Resources',
-    'manage_options',
-    'edit.php?post_type=post&filter_by_internal=true'
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=true',
-    'Add New',
-    'Add New',
-    'edit_posts',
-    'post-new.php?post_type=post'
-  );
-
-  // Create "External Resources" menu item
-  add_menu_page(
-    'External Resources',
-    'External Resources',
-    'edit_posts',
-    'edit.php?post_type=post&filter_by_internal=false',
-    '',
-    'dashicons-category',
-    6
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=false',
-    'All External Resources',
-    'All External Resources',
-    'manage_options',
-    'edit.php?post_type=post&filter_by_internal=false'
-  );
-  add_submenu_page(
-    'edit.php?post_type=post&filter_by_internal=false',
-    'Add New',
-    'Add New',
-    'edit_posts',
-    'post-new.php?post_type=post'
-  );
-}
-add_action('admin_menu', 'custom_admin_menu');
 
 
 
@@ -260,54 +203,6 @@ if (!function_exists('http_build_url')) {
 }
 
 add_filter('wp_count_posts', 'custom_post_count', 10, 3);
-function change_post_labels_based_on_query($labels)
-{
-  // Check if 'filter_by_internal' is set in the URL
-  if (isset($_GET['filter_by_internal'])) {
-    $internal = $_GET['filter_by_internal'] === 'true';
-
-    // Define labels based on the 'filter_by_internal' value
-    $resource_type = $internal ? 'Internal Resource' : 'External Resource';
-    $resource_type_plural = $internal ? 'Internal Resources' : 'External Resources';
-
-    // Set the labels
-    $labels->name = $resource_type_plural;
-    $labels->singular_name = $resource_type;
-    $labels->add_new = 'Add New';
-    $labels->add_new_item = 'Add New ' . $resource_type;
-    $labels->edit_item = 'Edit ' . $resource_type;
-    $labels->new_item = 'New ' . $resource_type;
-    $labels->view_item = 'View ' . $resource_type;
-    $labels->view_items = 'View ' . $resource_type_plural;
-    $labels->search_items = 'Search ' . $resource_type_plural;
-    $labels->not_found = 'No ' . strtolower($resource_type_plural) . ' found';
-    $labels->not_found_in_trash = 'No ' . strtolower($resource_type_plural) . ' found in Trash';
-    $labels->parent_item_colon = 'Parent ' . $resource_type . ':';
-    $labels->all_items = 'All ' . $resource_type_plural;
-    $labels->archives = $resource_type . ' Archives';
-    $labels->attributes = $resource_type . ' Attributes';
-    $labels->insert_into_item = 'Insert into ' . strtolower($resource_type);
-    $labels->uploaded_to_this_item = 'Uploaded to this ' . strtolower($resource_type);
-    $labels->featured_image = 'Featured Image for this ' . strtolower($resource_type);
-    $labels->set_featured_image = 'Set featured image for this ' . strtolower($resource_type);
-    $labels->remove_featured_image = 'Remove featured image for this ' . strtolower($resource_type);
-    $labels->use_featured_image = 'Use as featured image for this ' . strtolower($resource_type);
-    $labels->filter_items_list = 'Filter ' . strtolower($resource_type_plural) . ' list';
-    $labels->items_list_navigation = $resource_type_plural . ' list navigation';
-    $labels->items_list = $resource_type_plural . ' list';
-    $labels->item_published = $resource_type . ' published';
-    $labels->item_published_privately = $resource_type . ' published privately';
-    $labels->item_reverted_to_draft = $resource_type . ' reverted to draft';
-    $labels->item_scheduled = $resource_type . ' scheduled';
-    $labels->item_updated = $resource_type . ' updated';
-    $labels->menu_name = $resource_type_plural;
-    $labels->name_admin_bar = $resource_type;
-  }
-
-  return $labels;
-}
-add_filter('post_type_labels_post', 'change_post_labels_based_on_query');
-
 
 
 // Register custom REST API endpoint
@@ -466,61 +361,6 @@ function handle_upload_external_resources()
   require __DIR__ . '/partials/upload-external-resources.php';
 }
 
-add_action('load-edit.php', 'change_post_label');
-
-function change_post_label()
-{
-  // Check if the 'is_internal_resource' query parameter is set to 'true'
-  if (isset($_GET['is_internal_resource']) && $_GET['is_internal_resource'] == 'true') {
-    // Get the current screen
-    $screen = get_current_screen();
-
-    // Check if the current screen is for 'post' post type
-    if ($screen->post_type == 'post') {
-      // Change the label
-      global $wp_post_types;
-      $labels = &$wp_post_types['post']->labels;
-      $labels->name = 'Internal Resources';
-      $labels->singular_name = 'Internal Resource';
-      $labels->add_new = 'Add Internal Resource';
-      $labels->add_new_item = 'Add New Internal Resource';
-      $labels->edit_item = 'Edit Internal Resource';
-      $labels->new_item = 'Internal Resource';
-      $labels->view_item = 'View Internal Resource';
-      $labels->search_items = 'Search Internal Resources';
-      $labels->not_found = 'No Internal Resources found';
-      $labels->not_found_in_trash = 'No Internal Resources found in Trash';
-      $labels->all_items = 'All Internal Resources';
-      $labels->menu_name = 'Internal Resources';
-      $labels->name_admin_bar = 'Internal Resource';
-    }
-  }
-
-  if (isset($_GET['is_internal_resource']) && $_GET['is_internal_resource'] == 'false') {
-    // Get the current screen
-    $screen = get_current_screen();
-
-    // Check if the current screen is for 'post' post type
-    if ($screen->post_type == 'post') {
-      // Change the label
-      global $wp_post_types;
-      $labels = &$wp_post_types['post']->labels;
-      $labels->name = 'External Resources';
-      $labels->singular_name = 'External Resource';
-      $labels->add_new = 'Add External Resource';
-      $labels->add_new_item = 'Add New External Resource';
-      $labels->edit_item = 'Edit External Resource';
-      $labels->new_item = 'External Resource';
-      $labels->view_item = 'View External Resource';
-      $labels->search_items = 'Search External Resources';
-      $labels->not_found = 'No External Resources found';
-      $labels->not_found_in_trash = 'No External Resources found in Trash';
-      $labels->all_items = 'All External Resources';
-      $labels->menu_name = 'External Resources';
-      $labels->name_admin_bar = 'External Resource';
-    }
-  }
-}
 
 // Populates the options for the "Filters to show" custom field
 // on the Worker Resources page
@@ -735,18 +575,18 @@ function wage_data_filter_query($query)
 }
 add_filter('parse_query', 'wage_data_filter_query');
 // Add custom main menu page
-function add_upload_external_resources_menu()
-{
-  add_menu_page(
-    'Upload External Resources',           // Page title
-    'Upload External Resources',           // Menu title
-    'edit_posts',                          // Capability
-    'upload-external-resources',           // Menu slug
-    'handle_upload_external_resources',    // Callback function
-    'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
-  );
-}
-add_action('admin_menu', 'add_upload_external_resources_menu');
+// function add_upload_external_resources_menu()
+// {
+//   add_menu_page(
+//     'Upload External Resources',           // Page title
+//     'Upload External Resources',           // Menu title
+//     'edit_posts',                          // Capability
+//     'upload-external-resources',           // Menu slug
+//     'handle_upload_external_resources',    // Callback function
+//     'dashicons-upload',                    // Icon (optional, using the upload dashicon here)
+//   );
+// }
+// add_action('admin_menu', 'add_upload_external_resources_menu');
 
 function add_upload_wage_data_page()
 {
@@ -762,19 +602,19 @@ function add_upload_wage_data_page()
 }
 add_action('admin_menu', 'add_upload_wage_data_page');
 
-function add_upload_organization_page()
-{
-  add_menu_page(
-    'Upload Organization Data',          // Page title
-    'Upload Organization Data',          // Menu title
-    'edit_posts',            // Capability - determines who can access. 'manage_options' is typically for admins.
-    'upload-organization-data',          // Menu slug
-    'load_upload_organization_page', // Callback function to display the content of the page
-    'dashicons-upload',
+// function add_upload_organization_page()
+// {
+//   add_menu_page(
+//     'Upload Organization Data',          // Page title
+//     'Upload Organization Data',          // Menu title
+//     'edit_posts',            // Capability - determines who can access. 'manage_options' is typically for admins.
+//     'upload-organization-data',          // Menu slug
+//     'load_upload_organization_page', // Callback function to display the content of the page
+//     'dashicons-upload',
 
-  );
-}
-add_action('admin_menu', 'add_upload_organization_page');
+//   );
+// }
+// add_action('admin_menu', 'add_upload_organization_page');
 
 
 function load_upload_wage_data_page()
@@ -1183,63 +1023,90 @@ function custom_reorder_posts_columns($columns)
 }
 add_filter('manage_posts_columns', 'custom_reorder_posts_columns');
 
-// Adds temp page that inserts 40 fake orgs
-// function add_my_custom_menu()
-// {
-//   add_menu_page('Insert Fake Organizations', 'Insert Orgs', 'manage_options', 'insert-fake-orgs', 'insert_fake_organizations', 'dashicons-welcome-add-page', 6);
-// }
-// add_action('admin_menu', 'add_my_custom_menu');
+function custom_menu_order($menu_order)
+{
+  if (!$menu_order) return true;
 
-// function insert_fake_organizations()
-// {
-//   if (!current_user_can('manage_options')) {
-//     wp_die('You do not have sufficient permissions to access this page.');
-//   }
+  // Desired new order of menu items
+  $new_order = array(
+    'index.php', // Dashboard
+    'upload.php', // Media
+    'edit.php?post_type=page', // Pages
+    'edit.php?post_type=organizations-new', // Organizations
+    'edit.php?post_type=resources', // Resources
+    'edit.php', // Posts
+    'edit.php?post_type=testimonial-blocks', // Testimonial Block
+    'edit.php?post_type=users', // Users
+    'edit.php?post_type=testimonial-blocks',
+    'edit.php?post_type=contractor-careers', // Testimonial Block
+    'edit.php?post_type=careers',
+    'edit.php?post_type=wage-data',
 
-//   for ($i = 1; $i <= 40; $i++) {
-//     $post_id = wp_insert_post(array(
-//       'post_type'    => 'organizations-new',
-//       'post_title'   => "Organization $i",
-//       'post_content' => "Description for Organization $i",
-//       'post_status'  => 'publish',
-//     ));
+  );
 
-//     // Ensure the post was created
-//     if ($post_id) {
-//       // Update custom fields for the newly created post
-//       update_post_meta($post_id, 'program_name', "Program Name $i");
-//       update_post_meta($post_id, 'organization_name', "Organization Name $i");
+  // Rearrange the menu order
+  $menu_order = array_merge(array_intersect($new_order, $menu_order), array_diff($menu_order, $new_order));
 
-//       // Opportunities: Assuming random selection for simplicity
-//       $opportunities = array('Hiring', 'Training', 'Information', 'Bids & Contracts', 'Create an Apprenticeship Program');
-//       $random_opportunities = array_rand(array_flip($opportunities), mt_rand(1, count($opportunities))); // Select 1 or more randomly
-//       update_field('opportunities', $random_opportunities, $post_id);
+  return $menu_order;
+}
+add_filter('custom_menu_order', '__return_true');
+add_filter('menu_order', 'custom_menu_order');
 
-//       // General Tags: Random selection as well
-//       $tags = array('Youth Program', 'IREC Accredited', 'Weatherization Assistance Program Employer', 'Community Partner', 'Training Provider', 'Registered Apprenticeship', 'Wind Energy', 'Solar Energy', 'Energy Efficiency', 'Electric Vehicles & Battery Storage');
-//       $random_tags = array_rand(array_flip($tags), mt_rand(1, count($tags))); // Select 1 or more randomly
-//       update_field('general_tags', $random_tags, $post_id);
+function add_admin_menu_separator($position)
+{
+  global $menu;
+  $index = 0;
+  foreach ($menu as $offset => $section) {
+    if (substr($section[2], 0, 9) == 'separator')
+      $index++;
+    if ($offset >= $position) {
+      $menu[$position] = array('', 'read', "separator{$index}", '', 'wp-menu-separator');
+      break;
+    }
+  }
+  ksort($menu);
+}
 
-//       // Remote or In-Person
-//       $remote_or_in_person = mt_rand(0, 1) ? 'Remote' : 'In-Person';
-//       update_post_meta($post_id, 'remote_or_in_person', $remote_or_in_person);
 
-//       // Description: Here using a simple description plus the index
-//       update_post_meta($post_id, 'description', "Description of Organization $i, providing multiple services.");
+function add_admin_menu_divider()
+{
+  add_admin_menu_separator(11);
+}
+add_action('admin_menu', 'add_admin_menu_divider');
 
-//       // Address: Assuming a fictional address
-//       update_post_meta($post_id, 'address', "123 Fake St, City$i, State, Zip$i");
+// add_action('admin_init', 'dump_admin_menu');
+function dump_admin_menu()
+{
+  if (is_admin()) {
+    header('Content-Type:text/plain');
+    var_dump($GLOBALS['menu']);
+    exit;
+  }
+}
 
-//       // Phone
-//       update_post_meta($post_id, 'phone', "555-000$i");
+function add_admin_menu_divider_style()
+{
+  echo '<style>
+      .wp-menu-separator {
+          height: 1px;
+          margin: 0.5em 0;
+          background: #ccc;
+      }
+  </style>';
+}
+add_action('admin_head', 'add_admin_menu_divider_style');
+function remove_admin_menu_separators()
+{
+  global $menu;
 
-//       // Email
-//       update_post_meta($post_id, 'email', "contact$i@example.com");
+  // Positions of the separators you want to remove
+  $separators_to_remove = array(7); // Adjust these positions as needed
 
-//       // URL
-//       update_post_meta($post_id, 'url', "http://example$i.com");
-//     }
-//   }
-
-//   echo '<div>Inserted 40 fake organizations.</div>';
-// }
+  // Remove the separators
+  foreach ($separators_to_remove as $position) {
+    if (isset($menu[$position])) {
+      unset($menu[$position]);
+    }
+  }
+}
+add_action('admin_menu', 'remove_admin_menu_separators', 999);

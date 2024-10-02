@@ -1,162 +1,189 @@
+// Global variables
 let geocoder;
 let map;
 let markers = [];
+let infoWindows = [];
 let bounds;
 let orgsSearch;
+let remoteOrgsSearch;
 let initialSetup = true;
 let boundsChangeTimeout;
+let currentFacetFilters = [];
+let isListView = true;
 
-function onBoundsChanged() {
-  if (boundsChangeTimeout) clearTimeout(boundsChangeTimeout);
-
-  boundsChangeTimeout = setTimeout(() => {
-    const bounds = map.getBounds();
-    const ne = bounds.getNorthEast(); // North East corner
-    const sw = bounds.getSouthWest(); // South West corner
-
-    // Convert bounds to the format expected by Algolia
-    const algoliaBounds = [sw.lat(), sw.lng(), ne.lat(), ne.lng()].join();
-
-    // Update Algolia search to only show results within the current map bounds
-    orgsSearch.helper
-      .setQueryParameter('insideBoundingBox', algoliaBounds)
-      .search();
-  }, 500);
-}
-
-function initMap() {
-  const options = {
-    zoom: 9, // Initial zoom level; may adjust later based on bounds
-    center: { lat: 30.9843, lng: -91.9623 }, // Initial center; will adjust based on markers
-  };
-  map = new google.maps.Map(document.getElementById('map'), options);
-  bounds = new google.maps.LatLngBounds();
-  setupAlgoliaSearch(); // Initialize the Algolia Search setup
-  map.addListener('bounds_changed', onBoundsChanged);
-}
-
-function addMarker(item) {
-  const position = new google.maps.LatLng(item._geoloc.lat, item._geoloc.lng);
-  const marker = new google.maps.Marker({
-    position: position,
-    map: map,
-    icon: {
-      url: '/wp-content/plugins/irec-green-connect/public/img/marker.svg',
-      scaledSize: new google.maps.Size(50, 50),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(25, 50),
-    },
-  });
-
-  const infoWindow = new google.maps.InfoWindow({
-    content: item.organization,
-  });
-
-  marker.addListener('click', function () {
-    infoWindow.open(map, marker);
-  });
-
-  markers.push(marker);
-  bounds.extend(position);
-}
-
-function clearMarkers() {
-  for (let marker of markers) {
-    marker.setMap(null); // Remove marker from the map
-  }
-  markers = []; // Clear the markers array
-  bounds = new google.maps.LatLngBounds(); // Reset the bounds
-}
-
-function generateOrgHTML(item) {
-  return `<div class="organization">
-  <div class="organization__container">
-    <div class="organization__info">
-      <div class="organization__info-img">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/org-1.png" alt="Organization Image" />  
-      </div>
-      <div class="organization__info-content">
-        <h6 class="organization__info-title">${item.program_name}</h6>
-        <div class="organization__info-details">
-          <p class="organization__info-org">at ${item.organization_name}</p>
-          <div class="organization__info-type">
-            <div class="organization__info-icon">
-              <img src="/wp-content/plugins/irec-green-connect/public/img/in-person.svg" alt="In-Person or Remote" />
-            </div>
-            <p>${item.remote_or_in_person}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr class="organization__divider"/>
-    <div class="organization__opportunities">
-      ${item.opportunities?.map((opp) => `<p>${opp}</p>`).join('')}
-    </div>
-    <p class="organization__info-description">${item.description}</p>
-    <div class="organization__tags">
-      ${item.general_tags
-        ?.map((tag) => `<div class="organization__tag">${tag}</div>`)
-        .join('')}
-    </div>
-  </div>
-  <div class="organization__quick-links">
-      <div class="organiztion__link">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/org-location.svg" />
-        ${item.address}
-      </div>
-      <div class="organiztion__link">
-        <img src="/wp-content/plugins/irec-green-connect/public/img/phone.svg" />
-        ${item.phone}
-      </div>
-      <div class="organiztion__link">
-      <img src="/wp-content/plugins/irec-green-connect/public/img/email.svg" />
-      ${item.email}
-    </div>
-
-    <a target="_blank" src="${item.url}" class="organization__connect-now">
-    Connect Now
-    </a>
-      
-  </div>
-</div>
-`;
-}
+// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-  setupAlgoliaSearch(); // Ensure Algolia is set up after the DOM is loaded if not already called in initMap
+  handleMapViewLisViewToggle();
+  handleDrawerFunctionality();
+  handleOpportunityCheckboxesFunctionality();
+  handleTagsButtonSelection();
+  handleSearchInput();
+  handleResetFilters();
 });
 
-function setupAlgoliaSearch() {
-  orgsSearch = instantsearch({
-    indexName: 'organizations-new',
-    searchClient: algoliasearch(
-      'QVXOOP4L7N',
-      'b589196885c2c6d140833e9cb83c4fa0',
-    ),
+window.addEventListener(ALGOLIA_INITIALIZED, () => {
+  syncOpportunityCheckboxesWithURL();
+  syncTagsButtonsWithURL();
+  syncSearchInputWithURL();
+});
+window.addEventListener(URL_UPDATED, () => {
+  syncOpportunityCheckboxesWithURL();
+  syncTagsButtonsWithURL();
+  syncSearchInputWithURL();
+});
+
+// Function definitions
+function handleMapViewLisViewToggle() {
+  const mapViewButton = document.getElementById('mapView');
+  mapViewButton.addEventListener('click', () => {
+    const results = document.querySelector('.results');
+    results.classList.add('hide');
+    mapViewButton.classList.add('hide');
+    listViewButton.classList.remove('hide');
+    isListView = true;
   });
 
-  orgsSearch.addWidgets([
-    instantsearch.widgets.configure({
-      hitsPerPage: 12,
-    }),
-    instantsearch.widgets.infiniteHits({
-      container: '.results__hits',
-      showPrevious: false,
-      templates: {
-        item: (item) => {
-          addMarker(item);
-          return generateOrgHTML(item); // A function to handle HTML generation
-        },
-        empty: '<p>No organizations found in this area.</p>',
-      },
-    }),
-  ]);
+  const listViewButton = document.getElementById('listView');
+  listViewButton.addEventListener('click', () => {
+    const results = document.querySelector('.results');
+    results.classList.remove('hide');
+    mapViewButton.classList.remove('hide');
+    listViewButton.classList.add('hide');
+    isListView = false;
+  });
+}
+function handleDrawerFunctionality() {
+  const drawer = document.getElementById('drawer');
+  const openButton = document.getElementById('drawerButton');
 
-  orgsSearch.on('render', () => {
-    if (markers.length > 0 && initialSetup) {
-      map.fitBounds(bounds);
-      initialSetup = false;
+  const closeButtons = [drawer.querySelector('.footer__see-results')];
+
+  openButton.addEventListener('click', () => drawer.show());
+  closeButtons.forEach((button) =>
+    button.addEventListener('click', () => drawer.hide()),
+  );
+}
+function handleOpportunityCheckboxesFunctionality() {
+  const opportunityCheckboxes = document.querySelectorAll(
+    '.checkbox[name="opportunities"]',
+  );
+
+  opportunityCheckboxes.forEach((cb) => {
+    cb.addEventListener('sl-change', (e) => {
+      clearMarkers();
+      const isChecked = e.target.checked;
+      const value = e.target.value;
+      const name = e.target.name;
+      updateQueryParam(name, value, !isChecked);
+    });
+  });
+}
+
+function syncOpportunityCheckboxesWithURL() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const opportunities = searchParams.get('opportunities')?.split(',') || [];
+  const opportunityCheckboxes = document.querySelectorAll(
+    '.checkbox[name="opportunities"]',
+  );
+  opportunityCheckboxes.forEach((cb) => {
+    if (opportunities.includes(cb.innerText)) {
+      cb.checked = true;
+    } else {
+      cb.checked = false;
     }
   });
+}
+function syncTagsButtonsWithURL() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const tags = searchParams.get('tags')?.split(',') || [];
+  const tagsButtons = document.querySelectorAll('.tags__button');
+  tagsButtons.forEach((tag) => {
+    const tagValue = tag.dataset.tag || tag.innerText;
+    if (tags.includes(tagValue)) {
+      tag.classList.add('tags__button--selected');
+    } else {
+      tag.classList.remove('tags__button--selected');
+    }
+  });
+}
 
-  orgsSearch.start();
+function syncSearchInputWithURL() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  const query = searchParams.get('query');
+  const searchInputs = document.querySelectorAll(
+    'form.search input[type="text"]',
+  );
+  if (query) {
+    searchInputs.forEach((input) => {
+      input.value = query;
+    });
+  } else {
+    searchInputs.forEach((input) => {
+      input.value = '';
+    });
+  }
+}
+
+function handleTagsButtonSelection() {
+  const tagsButtons = document.querySelectorAll('.tags__button');
+  tagsButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      clearMarkers();
+      button.classList.toggle('tags__button--selected');
+      const shouldRemove = !button.classList.contains('tags__button--selected');
+      const value = button.dataset.tag || button.innerText;
+      updateQueryParam('tags', value, shouldRemove);
+    });
+  });
+}
+
+function handleSearchInput() {
+  const searchForms = document.querySelectorAll('form.search');
+  const searchInputs = document.querySelectorAll(
+    'form.search input[type="text"]',
+  );
+  searchForms.forEach((form) => {
+    const input = form.querySelector('input[type="text"]');
+    input.addEventListener('input', () => {
+      searchInputs.forEach((otherInput) => {
+        if (otherInput.value === input.value) return;
+        otherInput.value = input.value;
+      });
+      clearMarkers();
+      updateQueryParam('query', input.value, !Boolean(input.value), true);
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+  });
+}
+
+function isMobileScreen() {
+  return window.innerWidth <= 768;
+}
+
+function removeFiltersAndSearch() {
+  const url = new URL(window.location);
+  const searchParams = new URLSearchParams(url.search);
+  searchParams.delete('opportunities');
+  searchParams.delete('tags');
+  searchParams.delete('query');
+
+  // Update the URL with the modified search parameters
+  url.search = searchParams.toString();
+
+  window.history.replaceState({ path: url.toString() }, '', url.toString());
+
+  // Ensure this is called after the URL update
+  sendEvent(URL_UPDATED);
+}
+
+function handleResetFilters() {
+  const footerReset = document.querySelector('.footer__reset');
+  footerReset.addEventListener('click', () => {
+    removeFiltersAndSearch();
+  });
 }

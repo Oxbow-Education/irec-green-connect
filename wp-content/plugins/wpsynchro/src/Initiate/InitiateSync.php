@@ -2,9 +2,8 @@
 
 namespace WPSynchro\Initiate;
 
-use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Logger\SyncMetadataLog;
+use WPSynchro\Migration\MigrationController;
 use WPSynchro\Transport\TransferToken;
 use WPSynchro\Transport\TransferAccessKey;
 use WPSynchro\Transport\Destination;
@@ -14,7 +13,6 @@ use WPSynchro\Utilities\UsageReporting;
 /**
  * Class for handling the initiate of the sync
  *
- * @since 1.0.0
  */
 class InitiateSync
 {
@@ -27,15 +25,14 @@ class InitiateSync
     /**
      *  Constructor
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger ?? FileLogger::getInstance();
+        $this->logger = MigrationController::getInstance()->getLogger();
         $this->timer = SyncTimerList::getInstance();
     }
 
     /**
      *  Initiate sync
-     *  @since 1.0.0
      */
     public function initiateMigration(&$migration, &$job)
     {
@@ -105,7 +102,6 @@ class InitiateSync
 
     /**
      *  Retrieve initate transfer token
-     *  @since 1.6.0
      */
     public function getInitiateTransferToken(Destination $destination)
     {

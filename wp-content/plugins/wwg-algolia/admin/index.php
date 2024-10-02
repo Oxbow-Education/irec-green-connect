@@ -156,6 +156,7 @@ function algolia_sync_plugin_post_types_callback()
         $('.update-button').on('click', function(e) {
             e.preventDefault();
             var postType = $(this).data('post-type');
+            console.log({postType});
             var updateButton = $(this);
             var originalButtonText = updateButton.text();
 
@@ -210,16 +211,14 @@ function register_update_posts_endpoint()
 
 function update_posts_callback($request)
 {
-
+  global $skip_save_custom_meta_data;
   try {
-
     $post_type = $request->get_param('postType');
     $algolia_api_key = get_option('algolia_sync_plugin_admin_api_key');
     $algolia_app_id = get_option('algolia_sync_plugin_app_id');
     $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
     $index = $client->initIndex($post_type);
     $index->clearObjects()->wait();
-
 
     $args = array(
       'post_type' => $post_type,
@@ -229,21 +228,33 @@ function update_posts_callback($request)
     $posts = get_posts($args);
 
     foreach ($posts as $post) {
+      error_log("Updating post ID: " . $post->ID);
       $hide_from_algolia = get_post_meta($post->ID, '_hide_from_algolia', true);
-      // Example: Update post content
+
+      // Directly update the post meta
+      update_post_meta($post->ID, '_hide_from_algolia', $hide_from_algolia);
+
+      // Set the global flag to skip the custom meta data save
+      $skip_save_custom_meta_data = true;
+
+      // Trigger save_post by updating the post
       $updated_post = array(
         'ID' => $post->ID,
-
       );
-      wp_update_post($updated_post);
-      update_post_meta($post->ID, '_hide_from_algolia', $hide_from_algolia);
+
+      wp_update_post($updated_post); // This should trigger save_post
+
+      // Unset the global flag
+      $skip_save_custom_meta_data = false;
     }
 
     return new WP_REST_Response(array('message' => 'Posts updated successfully.'), 200);
   } catch (Exception $e) {
-    return json_encode(array("error" => $e->getMessage()));
+    return new WP_REST_Response(array('error' => $e->getMessage()), 500);
   }
 }
+
+
 
 
 // Sync posts with Algolia on publish
@@ -291,7 +302,24 @@ function algolia_sync_plugin_sync_on_publish($post_id)
     $record = [];
     $record['objectID'] = $post_id;
     $record['title'] = $post->post_title;
-    $record['link'] = get_permalink($post_id);
+    // Convert the permalink to relative and add it to the record
+    $absolute_url = get_permalink($post_id);
+    $relative_url = wp_make_link_relative($absolute_url);
+    $record['link'] = $relative_url;
+
+    $record['date_published'] = get_the_date('c', $post_id);
+
+    // Fetch the thumbnail URL and add it to the record
+    $thumbnail_id = get_post_thumbnail_id($post_id);
+    $thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'full'); // You can change 'full' to any other image size
+    if ($thumbnail_url) {
+      $thumbnail_url = wp_make_link_relative($thumbnail_url);
+    } else {
+      $thumbnail_url = ''; // Provide a default or empty string if no thumbnail
+    }
+    $record['thumbnail_url'] = $thumbnail_url;
+
+
     // $record['content'] = substr($post->post_content, 0, 300);
     $post_metas = get_post_custom($post_id);
     foreach ($post_metas as $key => $values) {
@@ -349,7 +377,13 @@ function render_custom_meta_box($post)
 
 function save_custom_meta_data($post_id)
 {
+  global $skip_save_custom_meta_data;
+
+  // Check if this is an auto save routine.
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+  // Skip if the global flag is set
+  if ($skip_save_custom_meta_data) return;
 
   if (isset($_POST['hide_from_algolia'])) {
     update_post_meta($post_id, '_hide_from_algolia', 1);
@@ -357,4 +391,4 @@ function save_custom_meta_data($post_id)
     delete_post_meta($post_id, '_hide_from_algolia');
   }
 }
-add_action('save_post', 'save_custom_meta_data');
+add_action('save_post', 'save_custom_meta_data', 10);

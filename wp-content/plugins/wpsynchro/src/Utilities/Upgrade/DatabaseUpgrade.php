@@ -4,16 +4,15 @@ namespace WPSynchro\Utilities\Upgrade;
 
 use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Utilities\Configuration\PluginConfiguration;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  * Handle database upgrades
- * @since 1.6.0
  */
 class DatabaseUpgrade
 {
     /**
      *  Check WP Synchro database version and compare with current
-     *  @since 1.0.3
      */
     public static function checkDBVersion()
     {
@@ -21,7 +20,8 @@ class DatabaseUpgrade
 
         // If not set yet, just set it and continue with life
         if (!$dbversion || $dbversion == "") {
-            $dbversion = 0;
+            $dbversion = WPSYNCHRO_DB_VERSION;
+            update_option('wpsynchro_dbversion', WPSYNCHRO_DB_VERSION, true);
         }
 
         // Check if it is same as current
@@ -42,7 +42,6 @@ class DatabaseUpgrade
 
     /**
      *  Handle upgrading of DB versions
-     *  @since 1.0.3
      */
     public static function handleDBUpgrade($current_version)
     {
@@ -148,6 +147,23 @@ class DatabaseUpgrade
                 }
             }
             $migration_factory->save();
+        }
+
+        // Version 9 > 10 (1.11.5 > 1.12.0) - Move log files to a new location
+        if ($current_version < 10) {
+            $old_log_dir = wp_upload_dir()['basedir'] . "/wpsynchro/";
+            $plugin_dirs = new PluginDirs();
+            $new_log_dir = $plugin_dirs->getUploadsFilePath();
+            if (file_exists($old_log_dir)) {
+                $filelist = scandir($old_log_dir);
+                foreach ($filelist as $file) {
+                    if ($file == '.' || $file == '..') {
+                        continue;
+                    }
+                    @rename($old_log_dir . $file, $new_log_dir . $file);
+                }
+                @rmdir($old_log_dir);
+            }
         }
 
         // Set to the db version for this release

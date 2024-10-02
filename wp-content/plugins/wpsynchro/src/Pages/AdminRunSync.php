@@ -5,11 +5,11 @@ namespace WPSynchro\Pages;
 use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Status\MigrateStatus;
+use WPSynchro\Utilities\PluginDirs;
 
 /**
  * Class for handling when running a sync
  *
- * @since 1.0.0
  */
 class AdminRunSync
 {
@@ -51,7 +51,8 @@ class AdminRunSync
         }
 
         // Create log dir if needed
-        $commonfunctions->createLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $plugins_dirs->getUploadsFilePath();
 
         // Create new job with this sync
         $migration_factory = MigrationFactory::getInstance();

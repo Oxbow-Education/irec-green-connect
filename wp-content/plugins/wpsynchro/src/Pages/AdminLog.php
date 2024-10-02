@@ -2,7 +2,6 @@
 
 /**
  * Class for handling what to show when clicking on log in the menu in wp-admin
- * @since 1.0.0
  */
 
 namespace WPSynchro\Pages;
@@ -11,12 +10,12 @@ use WPSynchro\Utilities\CommonFunctions;
 use WPSynchro\Logger\SyncMetadataLog;
 use WPSynchro\Migration\MigrationFactory;
 use WPSynchro\Utilities\Licensing\Licensing;
+use WPSynchro\Utilities\PluginDirs;
 
 class AdminLog
 {
     /**
      *  Called from WP menu to show setup
-     *  @since 1.0.0
      */
     public function render()
     {
@@ -25,6 +24,20 @@ class AdminLog
             $job_id = sanitize_key($_REQUEST['showlog']);
             $migration_id = sanitize_key($_REQUEST['migration_id']);
             $this->showLog($job_id, $migration_id);
+            return;
+        }
+
+        // Remove single log
+        if (isset($_REQUEST['delete_log'])) {
+            $nonce = $_GET['nonce'] ?? '';
+            if (!wp_verify_nonce($nonce, 'wpsynchro_frontend_delete_log')) {
+                echo "<div class='notice wpsynchro-notice'><p>" . __('Security token is no longer valid - Go back and try again.', 'wpsynchro') . '</p></div>';
+                return;
+            }
+            $job_id = sanitize_key($_REQUEST['delete_log']);
+            $meta_log = new SyncMetadataLog();
+            $meta_log->deleteSingleLog($job_id);
+            echo "<script>window.location='" . menu_page_url('wpsynchro_log', false) . "';</script>";
             return;
         }
 
@@ -67,6 +80,19 @@ class AdminLog
             ],
             get_home_url()
         );
+        $delete_log_url = add_query_arg(
+            [
+                'nonce' => wp_create_nonce('wpsynchro_frontend_delete_log')
+            ],
+            menu_page_url('wpsynchro_log', false)
+        );
+        $download_db_backup_url = add_query_arg(
+            [
+                'action' => 'wpsynchro_frontend_download_db_backup',
+                'nonce' => wp_create_nonce('wpsynchro_download_db_backup')
+            ],
+            get_home_url()
+        );
 
         // Data for JS
         $data_for_js = [
@@ -74,6 +100,8 @@ class AdminLog
             "removeAllLogs" => $remove_logs_link,
             "showLogUrl" => $show_log_url,
             "downloadLogUrl" => $download_log_url,
+            "deleteLogUrl" => $delete_log_url,
+            'downloadDBBackupUrl' => $download_db_backup_url,
         ];
         wp_localize_script('wpsynchro_admin_js', 'wpsynchro_logs_data', $data_for_js);
 
@@ -83,7 +111,6 @@ class AdminLog
 
     /**
      *  Show the log file for job
-     *  @since 1.0.5
      */
     public function showLog($job_id, $migration_id)
     {
@@ -97,7 +124,8 @@ class AdminLog
         $common = new CommonFunctions();
         $migration_factory = MigrationFactory::getInstance();
 
-        $logpath = $common->getLogLocation();
+        $plugins_dirs = new PluginDirs();
+        $logpath = $plugins_dirs->getUploadsFilePath();
         $filename = $common->getLogFilename($job_id);
 
         $job_obj = get_option("wpsynchro_" . $migration_id . "_" . $job_id, "");

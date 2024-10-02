@@ -7,15 +7,16 @@
   font-family: 'proxima-nova';
 }
 
-main {
-  background-color: #236489;
-}
-
 h1,
 h3,
 h3,
 h4 {
   font-weight: bold;
+}
+
+p a {
+  color: #c28c2c !important;
+  text-decoration: underline !important;
 }
 .facet-buttons,
 .load-more-wrapper,

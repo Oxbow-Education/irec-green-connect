@@ -5,7 +5,6 @@ namespace WPSynchro\Compatibility;
 /**
  * Class for handling compatibility
  *
- * @since 1.1.0
  *
  * BEWARE: This is referenced from MU plugin, so handle that if moving it or changing filename etc.
  *

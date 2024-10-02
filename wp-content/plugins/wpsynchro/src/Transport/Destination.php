@@ -10,7 +10,6 @@ use WPSynchro\Utilities\Configuration\PluginConfiguration;
 /**
  * Class for basic auth stuff
  *
- * @since 1.7.2
  */
 class Destination
 {
@@ -46,7 +45,6 @@ class Destination
 
     /**
      * Set migration, to use it out of migration context
-     * @since 1.7.2
      */
     public function setMigration(Migration $migration)
     {
@@ -58,7 +56,6 @@ class Destination
 
     /**
      * Set job
-     * @since 1.7.2
      */
     public function setJob(Job $job)
     {
@@ -67,7 +64,6 @@ class Destination
 
     /**
      * Get migration
-     * @since 1.7.2
      */
     public function getmigration()
     {
@@ -76,7 +72,6 @@ class Destination
 
     /**
      * Get destination
-     * @since 1.7.2
      */
     public function getDestination()
     {
@@ -85,7 +80,6 @@ class Destination
 
     /**
      * Get full url, given a url path without trailing slash
-     * @since 1.7.2
      */
     public function getFullURL($url_path = "")
     {
@@ -121,7 +115,6 @@ class Destination
 
     /**
      * Get accesskey for destination
-     * @since 1.7.2
      */
     public function getAccessKey()
     {
@@ -147,7 +140,6 @@ class Destination
 
     /**
      * Whether to verify SSL
-     * @since 1.7.2
      */
     public function shouldVerifySSL()
     {
@@ -173,7 +165,6 @@ class Destination
 
     /**
      * Whether to use basic auth
-     * @since 1.7.2
      */
     public function getBasicAuthentication()
     {
@@ -200,7 +191,6 @@ class Destination
 
     /**
      * Determine if the destination is the source
-     * @since 1.7.2
      */
     public function isSource()
     {
@@ -226,7 +216,6 @@ class Destination
 
     /**
      * Get remote basic auth
-     * @since 1.7.2
      */
     private function getRemoteBasicAuth()
     {
@@ -242,7 +231,6 @@ class Destination
 
     /**
      * Get local basic auth
-     * @since 1.7.2
      */
     private function getLocalBasicAuth()
     {

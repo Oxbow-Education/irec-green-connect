@@ -4,7 +4,7 @@ Donate link: https://daev.tech/wpsynchro/?utm_source=wordpress.org&utm_medium=re
 Tags: migrate,clone,files,database,migration
 Requires at least: 5.8
 Tested up to: 6.5
-Stable tag: 1.11.5
+Stable tag: 1.12.0
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0
@@ -15,8 +15,8 @@ WordPress migration plugin that migrates files, database, media, plugins, themes
 
 **Complete Migration Plugin for WP professionals**
 
-The only migration tool you will ever need as a professional WordPress developer.
-WP Synchro was created to be the migration plugin for developers, with a need to do customized migrations or just full migrations.
+The only migration tool you will ever need as a WP professional.
+WP Synchro was created to be the preferred migration plugin, for user with a need to do customized migrations or just full migrations.
 You need it done in a fast and easy way, that can be re-run very quickly without any further manual steps, like after a code update.
 You can fully customize which database tables you want to move and in PRO version, which files/dirs you want to migrate.
 
@@ -113,6 +113,13 @@ It is currently planned for one of the next releases to support it.
 
 == Changelog ==
 
+= 1.12.0 =
+ * Improvement: Extend cron scheduling system, so migrations can be run with intervals automatically without user intervention and without WP CLI
+ * Improvement: Prevent unwanted background update from PRO version to FREE version for some users
+ * Improvement: Make it possible to only delete a single log from the "Logs" menu, instead of all or nothing
+ * Improvement: Make it possible to download the database backup from a pull migration in "Logs" menu
+ * Bugfix: No longer use ini_restore() native php function, because some hosting does not allow it
+
 = 1.11.5 =
  * Bugfix: Fix links for usage reporting dialog, leading to a non-existing page
 
@@ -135,28 +142,5 @@ It is currently planned for one of the next releases to support it.
  * Bugfix: Fix PHP timeout issue caused by serialized string search/replace handler, that goes into endless loop for defective serialized strings
  * Bugfix: Fix issue with some tables not being migrated when source database is MariaDB and when table does not have a primary key
  * Improvement: Improve the error reporting when database server gives errors
-
-= 1.11.0 =
- * Bugfix: No longer have problems with migration of WordFence database tables
- * Bugfix: Make it possible to resume migrations again, as it was disabled as a mistake
- * Bugfix: No longer block connections to remote sites that do redirects, but instead just give a warning
- * Bugfix: Fix health check where PHP function get_headers() was being blocked by ModSecurity on some sites
- * Bugfix: Give error when trying to migrate "json" data type to MySQL before version 5.7, where it is not supported
- * Bugfix: Fix licensing code, that was giving PHP notices on PHP 8.2
- * Bugfix: Improve database migration, so timeouts should be much less likely to happen
- * Improvement: Improve licensing code to use database option instead of transient, to prevent license server from being overrun by requests
- * Improvement: Bump support for WP 6.4
-
-= 1.10.0 =
- * Improvement: Support for WP 6.3
- * Improvement: Bump PHP support to minimum 7.0, instead of 5.6. Like WP core did at long last.
- * Improvement: Support for PHP 8.2 without deprecation notices
- * Improvement: Bump MariaDB version support to minimum 10.0, from 5.5
- * Improvement: Added WordPress nonces to all actions for added security
- * Improvement: Support for restrictive CSP header (Content Security Policy)
- * Improvement: Handle when remote site redirects to another location, such as WPML redirecting to a specific language subdir
- * Improvement: Handle when migrating database from MySQL 8 with collation utf8mb4_0900_ai_ci to an older version MySQL server
- * Improvement: Improve search/replace in very large serialized data, to prevent out of memory errors and vastly improved performance
- * Improvement: Optimize the way database migration was done to better handle large datasets in rows
 
 ** Only showing the last few releases - See rest of changelog in changelog.txt or in menu "Changelog" **

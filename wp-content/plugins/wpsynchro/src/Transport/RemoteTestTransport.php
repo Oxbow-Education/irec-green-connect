@@ -4,7 +4,6 @@ namespace WPSynchro\Transport;
 
 /**
  * Class for handling transport of data between sites in WP Synchro for Unit/Integration testing
- * @since 1.3.0
  */
 class RemoteTestTransport implements RemoteConnection
 {

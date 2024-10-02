@@ -1,0 +1,11 @@
+{
+  "name": "irec-green-connect",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Oxbow-Education/irec-green-connect.git",
+  "author": "Nina Horne <nina@wherewego.org>",
+  "license": "MIT",
+  "dependencies": {
+    "cypress": "^13.15.0"
+  }
+}

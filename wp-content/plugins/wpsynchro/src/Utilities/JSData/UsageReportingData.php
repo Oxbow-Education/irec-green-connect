@@ -2,7 +2,6 @@
 
 /**
  * Class for providing data for usage reporting component
- * @since 1.7.0
  */
 
 namespace WPSynchro\Utilities\JSData;

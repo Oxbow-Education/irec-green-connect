@@ -9,7 +9,6 @@ use WPSynchro\Files\FilesSync;
 use WPSynchro\Finalize\FinalizeSync;
 use WPSynchro\Initiate\InitiateSync;
 use WPSynchro\Logger\FileLogger;
-use WPSynchro\Logger\LoggerInterface;
 use WPSynchro\Logger\SyncMetadataLog;
 use WPSynchro\Masterdata\MasterdataSync;
 use WPSynchro\Utilities\Actions;
@@ -19,8 +18,6 @@ use WPSynchro\Utilities\SyncTimerList;
 /**
  * Class for controlling the migration flow (main controller)
  * Called from API service, for both the worker thread and the status thread
- *
- * @since 1.0.0
  */
 class MigrationController
 {
@@ -44,9 +41,8 @@ class MigrationController
 
     /**
      * Setup the data needed for migration, needed for both worker and status thread
-     * @since 1.0.0
      */
-    public function setup($migration_id, $job_id, LoggerInterface $logger = null)
+    public function setup($migration_id, $job_id)
     {
         // Get sync timer
         $this->timer = SyncTimerList::getInstance();
@@ -60,8 +56,7 @@ class MigrationController
         $this->common = new CommonFunctions();
 
         // Init logging
-        $this->logger = $logger ?? FileLogger::getInstance();
-        $this->logger->setFileName($this->common->getLogFilename($this->job_id));
+        $this->logger = new FileLogger($this->common->getLogFilename($this->job_id));
 
         // Get job data
         $this->job = new Job();
@@ -78,7 +73,6 @@ class MigrationController
 
     /**
      * Run migration
-     * @since 1.0.0
      */
     public function runMigration()
     {
@@ -89,6 +83,8 @@ class MigrationController
         }
 
         // Handle job locking
+        $this->common->updateLastRunning();
+
         if (isset($this->job->run_lock) && $this->job->run_lock === true) {
             // Ohhh noes, already running
             $errormsg = __('Job is already running or error has happened - Check PHP error logs', 'wpsynchro');
@@ -209,7 +205,6 @@ class MigrationController
 
     /**
      *  Try to resume a migration that had errors
-     *  @since 1.9.0
      */
     public function attemptMigrationResume()
     {
@@ -224,7 +219,6 @@ class MigrationController
 
     /**
      *  Get migration result
-     *  @since 1.6.1
      */
     public function getResult()
     {
@@ -239,7 +233,6 @@ class MigrationController
 
     /**
      * Handle initiation step
-     * @since 1.0.0
      */
     private function handleInitiationStep()
     {
@@ -249,7 +242,6 @@ class MigrationController
 
     /**
      * Handle masterdata step
-     * @since 1.0.0
      */
     private function handleStepMasterdata()
     {
@@ -259,7 +251,6 @@ class MigrationController
 
     /**
      * Handle database backup step
-     * @since 1.2.0
      */
     private function handleStepDatabaseBackup()
     {
@@ -269,7 +260,6 @@ class MigrationController
 
     /**
      * Handle database step
-     * @since 1.0.0
      */
     private function handleStepDatabase()
     {
@@ -279,7 +269,6 @@ class MigrationController
 
     /**
      * Handle files step
-     * @since 1.0.0
      */
     private function handleStepFiles()
     {
@@ -291,7 +280,6 @@ class MigrationController
 
     /**
      * Handle finalize step
-     * @since 1.0.0
      */
     private function handleStepFinalize()
     {
@@ -301,7 +289,6 @@ class MigrationController
 
     /**
      * Updated completed status
-     * @since 1.0.0
      */
     private function updateCompletedState()
     {
@@ -327,5 +314,17 @@ class MigrationController
             $metadatalog = new SyncMetadataLog();
             $metadatalog->stopMigration($this->job_id, $this->migration_id);
         }
+    }
+
+    /**
+     * Get the logger used for this migration
+     */
+    public function getLogger(): ?FileLogger
+    {
+        if (is_null($this->logger)) {
+            $common = new CommonFunctions();
+            $this->logger = new FileLogger($common->getLogFilename($this->job_id));
+        }
+        return $this->logger;
     }
 }
