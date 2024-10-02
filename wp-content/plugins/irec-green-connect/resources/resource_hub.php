@@ -40,8 +40,6 @@
   <div id="hits">
 
   </div>
+  <sl-dialog id="externalResourceModal" class="dialog-width" style="--width: 50vw;">
+  </sl-dialog>
 </div>
-
-<sl-dialog id="externalResourceModal" class="dialog-width" style="--width: 50vw;">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-</sl-dialog>

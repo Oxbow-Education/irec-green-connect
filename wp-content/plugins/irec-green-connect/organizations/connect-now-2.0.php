@@ -8,13 +8,9 @@
         <form class="location__form">
           <input id="autocomplete" class="location__input" type="text" placeholder="Enter zip, city, or state">
           <button type="button" class="location__current"><img src="/wp-content/plugins/irec-green-connect/public/img/crosshairs-regular.svg" alt="Use current location" /></button>
-          <!-- <button type="submit" class="location__submit">Go</button> -->
+          <button type="reset" id="resetBoundsButton">&times;</button>
         </form>
-        <!-- <div class="location__remote">
-          <label>Include Remote
-            <sl-switch style="--height: 23.81px; --width: 35.72px;" class="switch"></sl-switch>
-          </label>
-        </div> -->
+
       </div>
     </div>
     <div class="filters">
@@ -30,7 +26,7 @@
           <sl-divider></sl-divider>
           <sl-checkbox name="opportunities" value="Bids & Contracts" class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
           <sl-divider></sl-divider>
-          <sl-checkbox name="opportunities" value="Create an Apprenticeship Program" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+          <sl-checkbox name="opportunities" value="Registered Apprenticeships" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Registered Apprenticeships</sl-checkbox class="checkbox">
         </sl-dropdown>
 
 
@@ -42,14 +38,17 @@
               <img src="/wp-content/plugins/irec-green-connect/public/img/caret-down-solid.svg" alt="" /> </button>
             </button>
             <div class="more-filters__tags-container">
-              <button class="tags__button"> Community Partner</button>
-              <button class="tags__button">Electric Vehicles & Battery Storage</button>
+              <button class="tags__button">Battery Storage</button>
+              <button class="tags__button">Community Partner</button>
+              <button class="tags__button" data-tag="Diversity Equity and Inclusion">Diversity, Equity, and Inclusion</button>
+              <button class="tags__button">Electric Vehicle Charging</button>
+              <button class="tags__button">Electric Vehicles</button>
               <button class="tags__button">Energy Efficiency</button>
-              <button class="tags__button">Registered Apprenticeship</button>
+              <button class="tags__button">IREC Accredited</button>
               <button class="tags__button">Solar Energy</button>
-              <button class="tags__button">Wind Energy</button>
               <button class="tags__button">Training Provider</button>
-              <button class="tags__button tags__button--long">Weatherization Assistance Program Employer</button>
+              <button class="tags__button tags__button--long">Weatherization Assistance Program</button>
+              <button class="tags__button">Wind Energy</button>
               <button class="tags__button">Youth Program</button>
             </div>
 
@@ -58,17 +57,18 @@
 
       </div>
       <form class="search">
-        <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
-        <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
+        <input class="search__input" name="query" type="text" placeholder="Search by Program or Organization">
+        <div class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></div>
       </form>
     </div>
   </div>
 
   <div class="connect-now__main">
-    <div class="results">
+    <div id="startOfResults" class="results">
+      <div id="topOfResults" style="visibility: hidden"></div>
       <div class="results__meta">
 
-        <h2>Organizations Near Your Location</h2>
+        <h2 id="orgsInMapArea">Organizations in Map Area</h2>
         <div id="metaInfo" class="meta__info">
           <p class="results__count"></p>
           <div id="activeFilters" class="tags-removable">
@@ -120,27 +120,31 @@
       <sl-divider></sl-divider>
       <sl-checkbox name="opportunities" value="Bids & Contracts" class="checkbox" help-text="If you’re a contractor, you can find potential customers.">Bids & Contracts</sl-checkbox class="checkbox">
       <sl-divider></sl-divider>
-      <sl-checkbox name="opportunities" value="Create an Apprenticeship Program" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Create an Apprenticeship Program</sl-checkbox class="checkbox">
+      <sl-checkbox name="opportunities" value="Registered Apprenticeship" class="checkbox" help-text="If you’re an employer, you can find potential partners.">Registered Apprenticeship</sl-checkbox class="checkbox">
     </div>
     <h3>Tags</h3>
     <div class="mobile-filters__tags-container">
 
-      <button class="tags__button"> Community Partner</button>
-      <button class="tags__button">Electric Vehicles & Battery Storage</button>
+      <button class="tags__button">Battery Storage</button>
+      <button class="tags__button">Community Partner</button>
+      <button class="tags__button" data-tag="Diversity Equity and Inclusion">Diversity, Equity, and Inclusion</button>
+      <button class="tags__button">Electric Vehicle Charging</button>
+      <button class="tags__button">Electric Vehicles</button>
       <button class="tags__button">Energy Efficiency</button>
+      <button class="tags__button">IREC Accredited</button>
       <button class="tags__button">Registered Apprenticeship</button>
       <button class="tags__button">Solar Energy</button>
-      <button class="tags__button">Wind Energy</button>
       <button class="tags__button">Training Provider</button>
-      <button class="tags__button">Weatherization Assistance Program Employer</button>
+      <button class="tags__button">Weatherization Assistance Program</button>
+      <button class="tags__button">Wind Energy</button>
       <button class="tags__button">Youth Program</button>
     </div>
 
 
     <div class="more-filters__footer" slot="footer">
       <form slot="footer" class="search">
-        <input class="search__input" name="query" type="text" placeholder="Search by Program or Oragnization">
-        <button type="submit" class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></button>
+        <input class="search__input" name="query" type="text" placeholder="Search by Program or Organization">
+        <div class="search__icon"><img src="/wp-content/plugins/irec-green-connect/public/img/magnifying-glass.svg" alt="submit search"></div>
       </form>
       <sl-divider></sl-divider>
       <div class="footer__button-container">

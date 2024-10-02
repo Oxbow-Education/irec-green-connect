@@ -11,9 +11,9 @@ function create_post_type_resources()
       ),
       'public' => true,
       'has_archive' => true,
-      'rewrite' => array('slug' => 'resources'),
+      'rewrite' => array('slug' => '/resource-hub', 'with_front' => false),
       'supports' => array('title', 'editor', 'thumbnail', 'custom-fields', 'elementor'),
-      // 'show_in_rest' => true, // Enable REST API support
+      'show_in_rest' => true
     )
   );
 }
@@ -83,12 +83,12 @@ function register_custom_fields_for_resources()
           'choices' => array_combine($resource_type_options, $resource_type_options),
           'layout' => 'vertical',
         ),
-        array(
-          'key' => 'field_organization_name',
-          'label' => 'Organization Name',
-          'name' => 'organization_name',
-          'type' => 'text',
-        ),
+        // array(
+        //   'key' => 'field_organization_name',
+        //   'label' => 'Organization Name',
+        //   'name' => 'organization_name',
+        //   'type' => 'text',
+        // ),
         array(
           'key' => 'field_short_description',
           'label' => 'Short Description',
@@ -175,30 +175,6 @@ function add_elementor_support_for_custom_post_types()
 }
 add_action('init', 'add_elementor_support_for_custom_post_types');
 
-// Step 1: Add a Button to the Resources Edit Page
-function add_resources_migration_button()
-{
-  $screen = get_current_screen();
-  if ($screen->post_type == 'resources' && $screen->base == 'edit') {
-?>
-    <div style="padding: 10px;">
-      <button id="migrate-old-resources" class="button button-primary">Migrate Old Resources</button>
-      <script type="text/javascript">
-        document.getElementById('migrate-old-resources').addEventListener('click', function() {
-          if (confirm('Are you sure you want to migrate old resources?')) {
-            jQuery.post(ajaxurl, {
-              action: 'migrate_old_resources'
-            }, function(response) {
-              alert(response.data);
-            });
-          }
-        });
-      </script>
-    </div>
-  <?php
-  }
-}
-add_action('admin_notices', 'add_resources_migration_button');
 
 // Step 2: Handle the Button Click
 function handle_migrate_old_resources()
@@ -221,7 +197,7 @@ function migrate_old_resources()
   global $wpdb;
 
   // Fetch all posts of the type you want to migrate
-  $old_posts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_type = 'post'");
+  $old_posts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_type = 'resources'");
 
   foreach ($old_posts as $old_post) {
     // Map 'who_is_this_for' to 'user_type'
@@ -245,15 +221,12 @@ function migrate_old_resources()
     // Map 'worker_tags' and 'organization_tags' to 'resource_type'
     $worker_tags = get_post_meta($old_post->ID, 'worker_tags', true);
     $organization_tags = get_post_meta($old_post->ID, 'organization_tags', true);
-
     $resource_type_map = array(
-      // worker_tags
       'Industry Info' => 'Career Descriptions',
       'Trainings' => 'Training and Certification',
       'Career Info' => 'Career Descriptions',
       'Español' => 'Información en Español',
       'Apprenticeships' => 'Apprenticeships',
-      // organization_tags
       'Outreach' => 'Recruitment and Outreach',
       'DEIA' => 'Diversity, Equity, and Inclusion',
       'Workforce Dev' => 'Workforce Development',
@@ -261,71 +234,44 @@ function migrate_old_resources()
     );
 
     $resource_type = array();
-
     if (!empty($worker_tags)) {
-      if (!is_array($worker_tags)) {
-        $worker_tags = array($worker_tags);
-      }
+      $worker_tags = is_array($worker_tags) ? $worker_tags : array($worker_tags);
       foreach ($worker_tags as $tag) {
         if (isset($resource_type_map[$tag])) {
           $resource_type[] = $resource_type_map[$tag];
         }
       }
     }
-
     if (!empty($organization_tags)) {
-      if (!is_array($organization_tags)) {
-        $organization_tags = array($organization_tags);
-      }
+      $organization_tags = is_array($organization_tags) ? $organization_tags : array($organization_tags);
       foreach ($organization_tags as $tag) {
         if (isset($resource_type_map[$tag])) {
           $resource_type[] = $resource_type_map[$tag];
         }
       }
     }
-
     $resource_type = array_unique($resource_type); // Remove duplicate values
 
-    // Insert into resources post type
-    $new_post_id = wp_insert_post(array(
-      'post_title'    => $old_post->post_title,
-      'post_content'  => $old_post->post_content,
-      'post_status'   => $old_post->post_status,
-      'post_author'   => $old_post->post_author,
-      'post_type'     => 'resources',
-    ));
 
-    if (is_wp_error($new_post_id)) {
-      continue;
+    if (is_wp_error($old_post->ID)) {
+      continue; // Skip to the next post if there's an error
     }
 
-    // Migrate post meta
-    $meta_data = $wpdb->get_results($wpdb->prepare(
-      "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d",
-      $old_post->ID
-    ));
 
-    foreach ($meta_data as $meta) {
-      // Skip migrating fields that have specific mappings
-      if (in_array($meta->meta_key, array('who_is_this_for', 'worker_tags', 'organization_tags'))) {
-        continue;
-      }
-      update_post_meta($new_post_id, $meta->meta_key, $meta->meta_value);
-    }
 
     // Update the new post with the mapped fields
     if (!empty($user_type)) {
-      update_post_meta($new_post_id, 'user_type', $user_type);
+      update_post_meta($old_post->ID, 'user_type', $user_type);
     }
     if (!empty($resource_type)) {
-      update_post_meta($new_post_id, 'resource_type', $resource_type);
+      update_post_meta($old_post->ID, 'resource_type', $resource_type);
     }
 
     // Optionally delete the old post
     // wp_delete_post($old_post->ID, true);
-
   }
 }
+
 
 
 // Step 4: Add filter for 'is_internal_resource'
@@ -334,7 +280,7 @@ function filter_resources_by_is_internal_resource()
   global $typenow;
   if ($typenow == 'resources') {
     $is_internal_resource = isset($_GET['is_internal_resource']) ? $_GET['is_internal_resource'] : '';
-  ?>
+?>
     <select name="is_internal_resource" id="is_internal_resource">
       <option value=""><?php _e('All Resources', 'textdomain'); ?></option>
       <option value="1" <?php selected($is_internal_resource, '1'); ?>><?php _e('Internal Resource', 'textdomain'); ?></option>
@@ -410,7 +356,6 @@ function custom_resources_column($column, $post_id)
 }
 add_action('manage_resources_posts_custom_column', 'custom_resources_column', 10, 2);
 
-
 // Register shortcode for resources page
 function resources_2_0()
 {
@@ -419,9 +364,9 @@ function resources_2_0()
   wp_enqueue_style('shoelace-css', 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css');
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
-  wp_enqueue_style('resources-css', "/wp-content/plugins/irec-green-connect/resources/resources.css");
-  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js');
-  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js');
+  wp_enqueue_style('resources-css', "/wp-content/plugins/irec-green-connect/resources/resources.css", array(), '2.0.10');
+  wp_enqueue_script('resources-js', '/wp-content/plugins/irec-green-connect/resources/resources.js', array(), '2.0.6');
+  wp_enqueue_script('resources-search-js', '/wp-content/plugins/irec-green-connect/resources/resources-search.js', array(), '2.0.6');
 
   return ob_get_clean();
 }
@@ -451,3 +396,76 @@ function custom_resource_redirect()
   }
 }
 add_action('template_redirect', 'custom_resource_redirect');
+
+// Hide current posts and "archive"
+function remove_menus()
+{
+  remove_menu_page('edit.php'); // Removes 'Posts'
+}
+add_action('admin_menu', 'remove_menus');
+function change_post_rewrite_slug()
+{
+  // Unregister the original "post" post type
+  unregister_post_type('post');
+
+  // Re-register the "post" post type with a new rewrite slug
+  register_post_type('post', array(
+    'labels' => array(
+      'name' => __('Posts'),
+      'singular_name' => __('Post')
+    ),
+    'public' => true,
+    'has_archive' => true,
+    'rewrite' => array('slug' => 'archived'),
+    'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+  ));
+}
+add_action('init', 'change_post_rewrite_slug');
+
+function check_and_prepend_resource_hub_shortcode()
+{
+  global $wp;
+  $current_url = home_url(add_query_arg(array(), $wp->request));
+
+  // Stops infinite loop
+  if (strpos($current_url, '/resource-hub/') === 0) {
+    return '';
+  }
+
+  // Try prepending /resource-hub to the current URL
+  $new_url = home_url('/resource-hub/' . ltrim($wp->request, '/'));
+
+
+  // Check if the new URL exists
+  $response = wp_remote_get($new_url);
+  if (is_wp_error($response)) {
+    return ''; // Return empty to not affect the page content
+  }
+
+  $response_code = wp_remote_retrieve_response_code($response);
+  var_dump("Response Code: " . $response_code);
+
+  if ($response_code == 200 || $response_code == 503) {
+    // Redirect to the new URL if it exists
+    wp_redirect($new_url, 301);
+    exit;
+  }
+
+  // If the new URL doesn't exist, do nothing and display the current page content
+  return '';
+}
+
+// Register the shortcode
+add_shortcode('check_resource_hub', 'check_and_prepend_resource_hub_shortcode');
+function hide_aioseo_details_column()
+{
+  echo '<style>
+      th.column-aioseo-score, 
+      td.column-aioseo-score,
+      th.column-aioseo-details, 
+      td.column-aioseo-details {
+          display: none;
+      }
+  </style>';
+}
+add_action('admin_head', 'hide_aioseo_details_column');

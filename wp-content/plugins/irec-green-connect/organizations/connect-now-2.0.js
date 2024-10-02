@@ -100,7 +100,8 @@ function syncTagsButtonsWithURL() {
   const tags = searchParams.get('tags')?.split(',') || [];
   const tagsButtons = document.querySelectorAll('.tags__button');
   tagsButtons.forEach((tag) => {
-    if (tags.includes(tag.innerText)) {
+    const tagValue = tag.dataset.tag || tag.innerText;
+    if (tags.includes(tagValue)) {
       tag.classList.add('tags__button--selected');
     } else {
       tag.classList.remove('tags__button--selected');
@@ -133,7 +134,8 @@ function handleTagsButtonSelection() {
       clearMarkers();
       button.classList.toggle('tags__button--selected');
       const shouldRemove = !button.classList.contains('tags__button--selected');
-      updateQueryParam('tags', button.innerText, shouldRemove);
+      const value = button.dataset.tag || button.innerText;
+      updateQueryParam('tags', value, shouldRemove);
     });
   });
 }
@@ -174,7 +176,6 @@ function removeFiltersAndSearch() {
   url.search = searchParams.toString();
 
   window.history.replaceState({ path: url.toString() }, '', url.toString());
-  console.log(url.toString());
 
   // Ensure this is called after the URL update
   sendEvent(URL_UPDATED);

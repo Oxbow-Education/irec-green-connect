@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       templates: {
         item: (item) => {
           return `<div class="organization-card">
-          <h6 class="organization-tite">${item.organization}</h6>
+          <h6 class="organization-tite">${item.organization_name}</h6>
           <div class="organization-image">
             <img src="${
               !item.is_training_provider

@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   handleCarouselNavigation();
+  handleLinkClicks();
 });
 
 function handleCarouselNavigation() {
@@ -46,4 +47,14 @@ function rotateSlides(direction) {
   slides.forEach((slide, index) => {
     slide.className = `slide ${newState[index]}`;
   });
+}
+
+function handleLinkClicks() {
+  const links = document.querySelectorAll('.link');
+  links.forEach((link) =>
+    link.addEventListener('click', () => {
+      const url = link.dataset.link;
+      window.location.href = url;
+    }),
+  );
 }
