@@ -7,9 +7,9 @@
 
   // Check if the state value is "National" and display accordingly
   if ($state_value === 'National') {
-    echo '<h1>Be a Home Energy Professional in <span>the United States</span></h1>';
+    echo '<h1>Be a Energy Professional in <span>the United States</span></h1>';
   } else {
-    echo '<h1>Be a Home Energy Professional in <span>' . esc_html($state_value) . '</span></h1>';
+    echo '<h1>Be a Energy Professional in <span>' . esc_html($state_value) . '</span></h1>';
   }
   ?>
 
