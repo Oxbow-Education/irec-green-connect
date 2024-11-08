@@ -4,10 +4,16 @@ on:
   schedule:
     # Runs every Monday at midnight (00:00 UTC)
     - cron: '0 0 * * MON'
+  # Optional: Add manual trigger
+  workflow_dispatch:
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
+    env:
+      CYPRESS_AUTH_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+      CYPRESS_AUTH_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
 
     steps:
       # Check out the repository
@@ -19,13 +25,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'yarn' # Enable caching for faster installations
 
       # Install dependencies
       - name: Install dependencies
-        run: yarn
-
-      # Start the local server or make sure the WordPress site is accessible
-      # If you're using Docker or another setup for local WordPress, you can add that here.
+        run: |
+          yarn install --frozen-lockfile
+          yarn cypress verify
 
       # Run Cypress tests
       - name: Run Cypress Tests
@@ -34,18 +40,38 @@ jobs:
           browser: chrome
           headless: true
           spec: cypress/e2e/**/*.cy.js
+        env:
+          # Pass any additional environment variables needed for tests
+          CYPRESS_BASE_URL: 'https://greenworkforceconnect.org'
+          CYPRESS_AUTH_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          CYPRESS_AUTH_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
 
-      # Optionally, upload test results (useful for debugging)
+      # Upload test results (only if tests fail)
       - name: Upload Cypress screenshots
-        if: always()
         uses: actions/upload-artifact@v3
+        if: failure() # Only upload on failure
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+          retention-days: 7 # Keep for 7 days
 
       - name: Upload Cypress videos
-        if: always()
         uses: actions/upload-artifact@v3
+        if: failure() # Only upload on failure
         with:
           name: cypress-videos
           path: cypress/videos
+          retention-days: 7 # Keep for 7 days
+
+      # Optional: Add notification on failure
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Cypress Tests Failed',
+              body: `Cypress tests failed in run ${context.runId}. [View run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+            })

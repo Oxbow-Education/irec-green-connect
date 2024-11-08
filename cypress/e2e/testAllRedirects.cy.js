@@ -1,8 +1,15 @@
 describe('301 Redirects Test', () => {
   // Helper function to test redirection for a specific URL
   const testRedirection = (fromUrl, toUrl) => {
-    cy.visit(fromUrl, { failOnStatusCode: false }); // Visit the old URL
-    cy.url().should('equal', `https://greenworkforceconnect.org${toUrl}`); // Ensure the redirection URL is correct
+    cy.visit(fromUrl, {
+      failOnStatusCode: false,
+      auth: {
+        username: Cypress.env('AUTH_USERNAME'),
+        password: Cypress.env('AUTH_PASSWORD'),
+      },
+    });
+
+    cy.url().should('equal', `https://greenworkforceconnect.org${toUrl}`);
   };
 
   it('should check redirects from specified URLs to the correct destinations', () => {
