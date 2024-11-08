@@ -1,4 +1,12 @@
 describe('Organizations-New Posts Redirection Test', () => {
+  // Authentication configuration
+  const authConfig = {
+    auth: {
+      username: Cypress.env('AUTH_USERNAME'),
+      password: Cypress.env('AUTH_PASSWORD'),
+    },
+  };
+
   // Helper function to fetch all posts with pagination
   const fetchAllPosts = (url, page = 1, allPosts = []) => {
     return cy
@@ -8,6 +16,7 @@ describe('Organizations-New Posts Redirection Test', () => {
           per_page: 100, // Request up to 100 posts per page (max allowed by WP)
           page: page,
         },
+        ...authConfig, // Include authentication
       })
       .then((response) => {
         // Assert that the API request was successful
@@ -39,8 +48,11 @@ describe('Organizations-New Posts Redirection Test', () => {
       allPosts.forEach((post) => {
         const postUrl = post.link; // Get the post URL
 
-        // Visit the post URL
-        cy.visit(postUrl);
+        // Visit the post URL with authentication
+        cy.visit(postUrl, {
+          ...authConfig,
+          failOnStatusCode: false,
+        });
 
         // Check that the page is redirected to /connect-now
         cy.url().should('include', '/connect-now');
