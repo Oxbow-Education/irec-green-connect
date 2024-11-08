@@ -44,6 +44,7 @@
               <button class="tags__button">Electric Vehicle Charging</button>
               <button class="tags__button">Electric Vehicles</button>
               <button class="tags__button">Energy Efficiency</button>
+              <button class="tags__button">Group Apprenticeship Program</button>
               <button class="tags__button">IREC Accredited</button>
               <button class="tags__button">Solar Energy</button>
               <button class="tags__button">Training Provider</button>
