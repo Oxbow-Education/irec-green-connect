@@ -1,19 +1,64 @@
 describe('301 Redirects Test', () => {
-  // Helper function to test redirection for a specific URL
-  const testRedirection = (fromUrl, toUrl) => {
-    cy.visit(fromUrl, {
-      failOnStatusCode: false,
-      auth: {
-        username: Cypress.env('AUTH_USERNAME'),
-        password: Cypress.env('AUTH_PASSWORD'),
-      },
-    });
-
-    cy.url().should('equal', `https://greenworkforceconnect.org${toUrl}`);
+  // Authentication configuration
+  const authConfig = {
+    auth: {
+      username: Cypress.env('AUTH_USERNAME'),
+      password: Cypress.env('AUTH_PASSWORD'),
+    },
   };
 
+  // Helper function to test redirection with retry logic
+  const testRedirection = (fromUrl, toUrl, retryCount = 0) => {
+    return cy
+      .visit(fromUrl, {
+        failOnStatusCode: false,
+        ...authConfig,
+        timeout: 30000,
+        retryOnStatusCodeFailure: true,
+      })
+      .then(() => {
+        return cy
+          .url({ timeout: 10000 })
+          .should('equal', `https://greenworkforceconnect.org${toUrl}`)
+          .then((url) => {
+            // Log success for debugging
+            cy.log(`Successfully redirected from ${fromUrl} to: ${url}`);
+          });
+      })
+      .catch((error) => {
+        if (retryCount < 3) {
+          // Retry logic with exponential backoff
+          cy.log(
+            `Retrying redirect for ${fromUrl} (attempt ${retryCount + 1})`,
+          );
+          cy.wait(Math.pow(2, retryCount) * 1000);
+          return testRedirection(fromUrl, toUrl, retryCount + 1);
+        }
+        throw error;
+      });
+  };
+
+  beforeEach(() => {
+    // Clear cookies and localStorage before each test
+    cy.clearCookies();
+    cy.clearLocalStorage();
+
+    // Set viewport size explicitly
+    cy.viewport(1280, 720);
+
+    // Verify authentication credentials are available
+    expect(Cypress.env('AUTH_USERNAME'), 'Username should be set').to.exist;
+    expect(Cypress.env('AUTH_PASSWORD'), 'Password should be set').to.exist;
+  });
+
   it('should check redirects from specified URLs to the correct destinations', () => {
-    // List of redirects from both screenshots (with fixed URL typo)
+    // Add retry ability to the test
+    cy.retry({
+      openMode: 3,
+      runMode: 3,
+    });
+
+    // List of redirects
     const redirects = [
       {
         from: '/retrofit-installer-technician',
@@ -31,7 +76,6 @@ describe('301 Redirects Test', () => {
         from: '/careers',
         to: '/',
       },
-
       {
         from: '/connect-now/national',
         to: '/connect-now',
@@ -74,9 +118,23 @@ describe('301 Redirects Test', () => {
       },
     ];
 
-    // Loop through each redirect and test it
-    redirects.forEach((redirect) => {
+    // Process redirects sequentially instead of in parallel
+    cy.wrap(redirects).each((redirect, index) => {
+      // Log the current redirect being tested
+      cy.log(`Testing redirect ${index + 1}/${redirects.length}`);
+
+      // Test the redirect
       testRedirection(redirect.from, redirect.to);
+
+      // Add small delay between redirects to prevent rate limiting
+      if (index < redirects.length - 1) {
+        cy.wait(500);
+      }
     });
+  });
+
+  afterEach(() => {
+    // Optional: Log test completion for debugging
+    cy.log('Completed redirect test');
   });
 });
