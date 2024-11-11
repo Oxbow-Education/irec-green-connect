@@ -7,34 +7,38 @@ describe('Organizations-New Posts Redirection Test', () => {
     },
   };
 
-  // Helper function to fetch all posts with pagination
-  const fetchAllPosts = (url, page = 1, allPosts = []) => {
+  // Helper function to fetch all posts with pagination and retry logic
+  const fetchAllPosts = (url, page = 1, allPosts = [], retryCount = 0) => {
     return cy
       .request({
         url: url,
         qs: {
-          per_page: 100, // Request up to 100 posts per page (max allowed by WP)
+          per_page: 100,
           page: page,
         },
-        ...authConfig, // Include authentication
+        ...authConfig,
+        timeout: 30000, // Increased timeout for API requests
+        retryOnStatusCodeFailure: true,
       })
       .then((response) => {
-        // Assert that the API request was successful
         expect(response.status).to.eq(200);
-
-        // Combine the new posts with the previously fetched ones
         const combinedPosts = allPosts.concat(response.body);
-
-        // Check if there are more pages (WordPress sends a total pages header)
-        const totalPages = response.headers['x-wp-totalpages'];
+        const totalPages = parseInt(response.headers['x-wp-totalpages']);
 
         if (page < totalPages) {
-          // If more pages exist, recursively fetch the next page
+          // Add delay between pagination requests to prevent rate limiting
+          cy.wait(1000);
           return fetchAllPosts(url, page + 1, combinedPosts);
         }
-
-        // Return all combined posts once all pages are fetched
         return combinedPosts;
+      })
+      .catch((error) => {
+        if (retryCount < 3) {
+          // Retry logic with exponential backoff
+          cy.wait(Math.pow(2, retryCount) * 1000);
+          return fetchAllPosts(url, page, allPosts, retryCount + 1);
+        }
+        throw error;
       });
   };
 
@@ -42,21 +46,54 @@ describe('Organizations-New Posts Redirection Test', () => {
     const apiUrl =
       'https://greenworkforceconnect.org/wp-json/wp/v2/organizations-new';
 
-    // Fetch all posts by recursively handling pagination
-    fetchAllPosts(apiUrl).then((allPosts) => {
-      // Loop through each post
-      allPosts.forEach((post) => {
-        const postUrl = post.link; // Get the post URL
+    // Add retry ability to the test
+    cy.retry({
+      openMode: 3,
+      runMode: 3,
+    });
 
-        // Visit the post URL with authentication
+    // Verify authentication credentials are available
+    expect(Cypress.env('AUTH_USERNAME')).to.exist;
+    expect(Cypress.env('AUTH_PASSWORD')).to.exist;
+
+    // Fetch all posts with improved error handling
+    fetchAllPosts(apiUrl).then((allPosts) => {
+      // Verify we received posts
+      expect(allPosts).to.be.an('array');
+      expect(allPosts.length).to.be.greaterThan(0);
+
+      // Process posts sequentially instead of in parallel
+      cy.wrap(allPosts).each((post) => {
+        const postUrl = post.link;
+
+        // Visit the post URL with additional options
         cy.visit(postUrl, {
           ...authConfig,
           failOnStatusCode: false,
+          timeout: 30000,
+          retryOnStatusCodeFailure: true,
         });
 
-        // Check that the page is redirected to /connect-now
-        cy.url().should('include', '/connect-now');
+        // Add more specific assertions and timeout
+        cy.url({ timeout: 10000 })
+          .should('include', '/connect-now')
+          .then((url) => {
+            // Log success for debugging
+            cy.log(`Successfully redirected to: ${url}`);
+          });
+
+        // Add small delay between posts to prevent rate limiting
+        cy.wait(500);
       });
     });
+  });
+
+  beforeEach(() => {
+    // Clear cookies and localStorage before each test
+    cy.clearCookies();
+    cy.clearLocalStorage();
+
+    // Set viewport size explicitly
+    cy.viewport(1280, 720);
   });
 });
