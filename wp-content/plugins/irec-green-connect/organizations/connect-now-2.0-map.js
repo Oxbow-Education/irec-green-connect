@@ -180,27 +180,42 @@ function handleAutocomplete() {
 
     if (!place.geometry) {
       console.error("Autocomplete's returned place contains no geometry!");
-
       const request = {
         query: place.name,
         fields: ['name', 'geometry', 'formatted_address', 'place_id'],
       };
       useTextSearch(request);
-      gtag('event', 'user_location', {
-        category: 'connect_now',
-        click_label: 'connect_now_location_input',
-        value: request,
-      });
+      handleGtagEvent(place);
     } else {
-      // Use the place as it is
       usePlace(place);
-      gtag('event', 'user_location', {
-        category: 'connect_now',
-        click_label: 'connect_now_location_input',
-        value: place,
-      });
+      handleGtagEvent(place);
     }
   });
+
+  function handleGtagEvent(place) {
+    const zipcode =
+      place.address_components?.find((component) =>
+        component.types.includes('postal_code'),
+      )?.short_name || '';
+
+    const city =
+      place.address_components?.find((component) =>
+        component.types.includes('locality'),
+      )?.long_name || '';
+
+    const state =
+      place.address_components?.find((component) =>
+        component.types.includes('administrative_area_level_1'),
+      )?.short_name || '';
+
+    gtag('event', 'user_location', {
+      category: 'connect_now',
+      click_label: 'connect_now_location_input',
+      zipcode,
+      city,
+      state,
+    });
+  }
 
   const locationForm = document.querySelector('.location__form');
   locationForm.addEventListener('submit', (e) => e.preventDefault());
@@ -356,6 +371,8 @@ function getCityFromCoordinates(center) {
     if (status === 'OK' && results[0]) {
       let city = null;
       let state = null;
+      let zipcode = null;
+
       for (const component of results[0].address_components) {
         if (component.types.includes('locality')) {
           city = component.long_name;
@@ -363,23 +380,28 @@ function getCityFromCoordinates(center) {
         if (component.types.includes('administrative_area_level_1')) {
           state = component.short_name;
         }
+        if (component.types.includes('postal_code')) {
+          zipcode = component.short_name;
+        }
       }
+
       if (city && state) {
         const location = `${city}, ${state}`;
         const autocomplete = document.querySelector('#autocomplete');
         autocomplete.value = location;
 
+        gtag('event', 'user_location', {
+          category: 'connect_now',
+          click_label: 'connect_now_current_location',
+          city,
+          state,
+          zipcode: zipcode || '',
+        });
+
         updateQueryParam('location', location, false, true);
         updateQueryParam('bounds', '', true, true);
-
         getBoundsForLocation(location);
-      } else {
-        console.log('City or state not found for this location.');
       }
-    } else {
-      console.error(
-        'Geocode was not successful for the following reason: ' + status,
-      );
     }
   });
 }
