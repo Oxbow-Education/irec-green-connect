@@ -279,11 +279,12 @@ function syncAlgoliaWithURL() {
   // Trigger the filter event only after the user has stopped changing filters
   debounceFilter(opportunities, tags);
 
+  alert('update');
   orgsSearch.helper
     .setQueryParameter('query', query ?? '')
     .setQueryParameter('facetFilters', [
       ...combinedFacetFilters,
-      'remote_or_in_person:-Online',
+      'remote_or_in_person:In-Person',
     ])
     .search();
 
