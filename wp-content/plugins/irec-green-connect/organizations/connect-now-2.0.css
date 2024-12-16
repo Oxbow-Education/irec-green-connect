@@ -432,6 +432,10 @@
 .results__meta--remote  {
   background-color: white
 }
+.results__meta--remote  h4 {
+ font-size: 16px; 
+}
+ 
  
 .results__hits .ais-infinite-hits {
   padding: 20px;

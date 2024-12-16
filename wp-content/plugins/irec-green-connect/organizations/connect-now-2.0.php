@@ -86,6 +86,7 @@
       <div class="results__meta results__meta--remote">
 
         <h2>Online Organizations</h2>
+        <h4>The following organizations provide online opportunities for training, information, or partnership.</h4>
         <div id="metaInfoRemote" class="meta__info">
           <p class="results__count"></p>
         </div>
