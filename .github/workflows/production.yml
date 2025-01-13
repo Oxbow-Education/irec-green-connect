@@ -1,24 +1,22 @@
 name: Production Deployment
+
 on:
   push:
     branches:
       - main
 
 jobs:
-  # FTP Deploy
-  deploy:
-    name: 🚀 Deploy via FTP
+  Fast-FTP-Action:
+    name: Fast FTP Action
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: SFTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Fast FTP Action
+        uses: anvil-solutions/Fast-FTP-Action@2.1.0
         with:
           server: gvam1064.siteground.biz
-          username: nina@greenworkforceconnect.org
-          password: ${{ secrets.FTP_PROD_PASSWORD }}
-          server-dir: greenworkforceconnect.org/public_html/
           port: 21
+          username: nina_home@greenworkforceconnect.org
+          password: ${{ secrets.FTP_PASSWORD }}
