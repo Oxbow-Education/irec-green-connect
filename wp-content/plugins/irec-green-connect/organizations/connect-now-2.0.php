@@ -45,7 +45,9 @@
               <button class="tags__button">Electric Vehicles</button>
               <button class="tags__button">Energy Efficiency</button>
               <button class="tags__button">Group Apprenticeship Program</button>
+              <button class="tags__button">Internship</button>
               <button class="tags__button">IREC Accredited</button>
+              <button class="tags__button">Pre-Apprenticeship</button>
               <button class="tags__button">Solar Energy</button>
               <button class="tags__button">Training Provider</button>
               <button class="tags__button tags__button--long">Weatherization Assistance Program</button>
@@ -84,6 +86,7 @@
       <div class="results__meta results__meta--remote">
 
         <h2>Online Organizations</h2>
+        <h4>The following organizations provide online opportunities for training, information, or partnership.</h4>
         <div id="metaInfoRemote" class="meta__info">
           <p class="results__count"></p>
         </div>
@@ -132,11 +135,13 @@
       <button class="tags__button">Electric Vehicle Charging</button>
       <button class="tags__button">Electric Vehicles</button>
       <button class="tags__button">Energy Efficiency</button>
+      <button class="tags__button">Group Apprenticeship Program</button>
+      <button class="tags__button">Internship</button>
       <button class="tags__button">IREC Accredited</button>
-      <button class="tags__button">Registered Apprenticeship</button>
+      <button class="tags__button">Pre-Apprenticeship</button>
       <button class="tags__button">Solar Energy</button>
       <button class="tags__button">Training Provider</button>
-      <button class="tags__button">Weatherization Assistance Program</button>
+      <button class="tags__button tags__button--long">Weatherization Assistance Program</button>
       <button class="tags__button">Wind Energy</button>
       <button class="tags__button">Youth Program</button>
     </div>

@@ -2,6 +2,21 @@ let isProgrammaticChange = false;
 
 let defaultBounds;
 
+function getAddressString(city = '', state = '', zipcode = '') {
+  if (city && state && zipcode) {
+    return `${city}, ${state} ${zipcode}`;
+  }
+  if (city && state) {
+    return `${city}, ${state}`;
+  }
+  if (city) {
+    return city;
+  }
+  if (state) {
+    return state;
+  }
+  return '';
+}
 document.addEventListener('DOMContentLoaded', () => {
   handleAutocomplete();
   handleResetBounds();
@@ -214,6 +229,7 @@ function handleAutocomplete() {
       zipcode,
       city,
       state,
+      full_address: getAddressString(city, state, zipcode),
     });
   }
 
@@ -396,6 +412,7 @@ function getCityFromCoordinates(center) {
           city,
           state,
           zipcode: zipcode || '',
+          full_address: getAddressString(city, state, zipcode),
         });
 
         updateQueryParam('location', location, false, true);
