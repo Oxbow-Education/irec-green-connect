@@ -908,6 +908,7 @@ a.organization__link:hover{
 
 .connect-now .mobile-filters__tags-container {
   padding: 10px 0;
+
 }
 .connect-now button.tags__button,
 .connect-now button.tags__button:hover,
@@ -964,6 +965,11 @@ a.organization__link:hover{
   line-height: 14px;
   text-align: left;
 }
+.connect-now .more-filters__tags-container{
+  overflow-y: scroll;
+  max-height: calc(100vh - 250px);
+}
+
 .connect-now .more-filters__footer .search {
   width: 100%;
 }
