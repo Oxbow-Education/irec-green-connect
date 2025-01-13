@@ -36,6 +36,7 @@ function register_custom_fields_for_resources()
     // Define options for resource_type
     $resource_type_options = array(
       'Apprenticeships',
+      'Battery Storage',
       'Career Descriptions',
       'Diversity, Equity, and Inclusion',
       'Employment',
@@ -45,10 +46,13 @@ function register_custom_fields_for_resources()
       'Information Technology',
       'Recruitment and Outreach',
       'Renewable Energy',
+      'Solar Energy',
       'Training and Certification',
       'Veterans',
       'Weatherization Assistance Program',
       'Workforce Development'
+
+
     );
 
     // Sort options alphabetically
