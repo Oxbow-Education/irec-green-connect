@@ -20,3 +20,5 @@ jobs:
           port: 21
           username: nina_home@greenworkforceconnect.org
           password: ${{ secrets.FTP_PASSWORD }}
+          local_dir: wp-content/plugins/irec-green-connect
+          remote_dir: public_html/wp-content/plugins/irec-green-connect
