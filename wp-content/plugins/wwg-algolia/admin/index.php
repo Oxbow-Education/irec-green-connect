@@ -246,6 +246,17 @@ function update_posts_callback($request)
 
       // Unset the global flag
       $skip_save_custom_meta_data = false;
+
+      // Get menu_order directly from the post object
+      $menu_order = $post->menu_order;
+
+      // Log the menu_order for debugging
+      error_log("Post ID: {$post->ID}, Menu Order: $menu_order");
+
+      $index->partialUpdateObject([
+        'objectID' => $post->ID,
+        'menu_order' => intval($menu_order)
+      ]);
     }
 
     return new WP_REST_Response(array('message' => 'Posts updated successfully.'), 200);
@@ -340,14 +351,70 @@ function algolia_sync_plugin_sync_on_publish($post_id)
       $record['_geoloc']['lat'] = floatval($geoloc['lat']);
       $record['_geoloc']['lng'] = floatval($geoloc['lng']);
     }
+
+    // Fetch the entire post object
+    $post = get_post($post_id);
+
+    if ($post) {
+      $menu_order = $post->menu_order;
+      $record['menu_order'] = intval($menu_order);
+
+      // Log the menu_order for debugging
+      error_log("Post ID: $post_id, Menu Order: $menu_order");
+    } else {
+      error_log("Failed to get post object for ID: $post_id");
+    }
+
     $index->saveObject($record);
-  } else {;
+  } else {
     delete_object_from_algolia_2($post_id, $post_type);
   }
 }
 add_action('save_post', 'algolia_sync_plugin_sync_on_publish');
+add_action('wp_update_post', 'algolia_sync_plugin_sync_on_publish');
+// Enqueue the script only on the specific Post Type Order admin page
+function add_custom_reorder_js()
+{
+  // Check if the page parameter exists and matches the target page
+  if (isset($_GET['page']) && $_GET['page'] === 'order-post-types-resources') {
+    wp_enqueue_script('custom-reorder-script', plugins_url('js/post-type-order-support.js', __FILE__), array('jquery'));
+    wp_localize_script('custom-reorder-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+  }
+}
+add_action('admin_enqueue_scripts', 'add_custom_reorder_js');
+// Updates the posts after reordering in the Post Types Order plugin
+add_action('wp_ajax_trigger_save_post_on_reorder', 'trigger_save_post_on_reorder_callback');
+function trigger_save_post_on_reorder_callback()
+{
+  $post_type = sanitize_text_field($_POST['post_type']);
 
+  if ($post_type) {
+    // Fetch the reordered posts
+    $args = array(
+      'post_type' => $post_type,
+      'orderby' => 'menu_order',   // Ordered by the menu order after reordering
+      'order' => 'ASC',
+      'posts_per_page' => -1
+    );
 
+    $posts = get_posts($args);
+
+    // Loop through each post and trigger the save_post action
+    foreach ($posts as $post) {
+      do_action('save_post', $post->ID, $post, true);
+
+      // Optional: Log for debugging purposes
+      error_log("save_post hook triggered for post ID: {$post->ID}");
+    }
+
+    // Respond with a success message
+    wp_send_json_success('All posts have been saved.');
+  } else {
+    wp_send_json_error('Post type is missing.');
+  }
+
+  wp_die(); // This is required to terminate immediately and return a proper response
+}
 function add_custom_meta_box()
 {
   $post_types_to_sync = get_option('algolia_sync_plugin_post_types', array());

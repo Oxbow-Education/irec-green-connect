@@ -38,7 +38,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          headless: true
           spec: cypress/e2e/**/*.cy.js
         env:
           # Pass any additional environment variables needed for tests
