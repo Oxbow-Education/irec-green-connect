@@ -18,7 +18,7 @@ jobs:
           username: nina_home@greenworkforceconnect.org
           password: ${{ secrets.FTP_PASSWORD }}
           commands: |
-            put ./wp-content/irec-green-connect ./wp-content/irec-green-gconnect.new
-            rename ./public_html/wp-content/irec-green-connect ./public_html/wp-content/irec-green-connect.old
-            rename ./wp-content/irec-green-gconnect.new ./wp-content/irec-green-gconnect
-            delete /public_html/wp-content/irec-green-connect.old
+            put wp-content/irec-green-connect /public_html/wp-content/irec-green-gconnect.new
+            rename public_html/wp-content/irec-green-connect public_html/wp-content/irec-green-connect.old
+            rename public_html/wp-content/irec-green-gconnect.new public_html/wp-content/irec-green-gconnect
+            delete public_html/wp-content/irec-green-connect.old
