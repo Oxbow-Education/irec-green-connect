@@ -19,8 +19,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           commands: |
             ls
-            get ./public_html/wp-content/irec-green-connect ./wp-content/irec-green-connect 
-            put ./wp-content/irec-green-connect ./public_html/wp-content/irec-green-gconnect.new
-            rename ./public_html/wp-content/irec-green-connect ./public_html/wp-content/irec-green-connect.old
-            rename ./public_html/wp-content/irec-green-gconnect.new ./public_html/wp-content/irec-green-gconnect
-            delete ./public_html/wp-content/irec-green-connect.old
+            get ./public_html/wp-content/plugins/irec-green-connect ./wp-content/plugins/irec-green-connect 
+            put ./wp-content/plugins/irec-green-connect ./public_html/wp-content/plugins/irec-green-gconnect.new
+            rename ./public_html/plugins/wp-content/irec-green-connect ./public_html/plugins/wp-content/irec-green-connect.old
+            rename ./public_html/plugins/wp-content/irec-green-gconnect.new ./public_html/plugins/wp-content/irec-green-gconnect
+            delete ./public_html/wp-content/plugins/irec-green-connect.old
