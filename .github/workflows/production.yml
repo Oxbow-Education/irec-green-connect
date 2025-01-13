@@ -6,19 +6,19 @@ on:
       - main
 
 jobs:
-  Fast-FTP-Action:
-    name: Fast FTP Action
+  FTP-Transfer:
+    name: Tranfer files via FTP
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Fast FTP Action
-        uses: anvil-solutions/Fast-FTP-Action@2.1.3
+      - uses: joutvhu/ftp-transfer@v1
         with:
-          server: gvam1064.siteground.biz
+          host: gvam1064.siteground.biz
           port: 21
           username: nina_home@greenworkforceconnect.org
           password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: wp-content/plugins/irec-green-connect
-          remote_dir: public_html/wp-content/plugins/irec-green-connect
+          commands: |
+            put ./wp-content/irec-green-connect ./wp-content/irec-green-gconnect.new
+            rename ./public_html/wp-content/irec-green-connect ./public_html/wp-content/irec-green-connect.old
+            rename ./wp-content/irec-green-gconnect.new ./wp-content/irec-green-gconnect
+            delete /public_html/wp-content/irec-green-connect.old
