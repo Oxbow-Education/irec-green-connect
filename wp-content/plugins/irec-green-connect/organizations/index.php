@@ -7,7 +7,7 @@ function create_post_type_organizations()
     'organizations-new',
     array(
       'labels' => array(
-        'name' => __('Organizations 2.0'),
+        'name' => __('[Arvhived] Organizations 2.0'),
         'singular_name' => __('Organization')
       ),
       'public' => true,

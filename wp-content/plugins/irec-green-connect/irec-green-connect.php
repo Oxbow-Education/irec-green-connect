@@ -86,6 +86,8 @@ run_irec_green_connect();
 require_once __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/index.php';
 include   __DIR__ . '/organizations/index.php';
+include   __DIR__ . '/organizations_3/index.php';
 include   __DIR__ . '/resources/index.php';
 include   __DIR__ . '/testimonials-block/index.php';
 include   __DIR__ . '/home-page-carousel/index.php';
+include   __DIR__ . '/home-page-carousel_3/index.php';
