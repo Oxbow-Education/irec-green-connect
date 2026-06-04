@@ -6,7 +6,7 @@ function create_post_type_resources()
     'resources',
     array(
       'labels' => array(
-        'name' => __('Resources 2.0'),
+        'name' => __('[Archived] Resources 2.0'),
         'singular_name' => __('Resource 2.0')
       ),
       'public' => true,

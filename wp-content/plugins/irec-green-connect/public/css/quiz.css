@@ -277,7 +277,6 @@ label.selected {
 .quiz-cta,
 #quizButton {
   background-color: #dfa43c;
-  border-radius: 5px !important;
   border: none;
   color: white;
   font-family: 'proxima-nova';
@@ -290,6 +289,7 @@ label.selected {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  border-radius: 100px;
 }
 .quiz-cta img {
   width: 27px;

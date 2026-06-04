@@ -178,7 +178,7 @@ function quiz_shortcode()
 {
   ob_start();
 
-  wp_enqueue_style('quiz-css', '/wp-content/plugins/irec-green-connect/public/css/quiz.css');
+  wp_enqueue_style('quiz-css', '/wp-content/plugins/irec-green-connect/public/css/quiz.css', array(), '2.0.1');
   wp_enqueue_script('quiz-js', '/wp-content/plugins/irec-green-connect/public/js/quiz.js');
   include __DIR__ . '/components/quiz.php';
   return ob_get_clean();
@@ -229,7 +229,7 @@ function full_site_search()
   ob_start();
 
   wp_enqueue_style('full-site-css', '/wp-content/plugins/irec-green-connect/public/css/full-site-search.css');
-  wp_enqueue_script('full-site-js', '/wp-content/plugins/irec-green-connect/public/js/full-site-search.js');
+  wp_enqueue_script('full-site-js', '/wp-content/plugins/irec-green-connect/public/js/full-site-search.js', array(), '2.0.3');
   wp_enqueue_script('algolia-search-v3-js', 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js');
   wp_enqueue_script('algolia-search-js', 'https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js');
 
@@ -254,7 +254,8 @@ function save_to_algolia_on_publish($post_id)
 
   // Example code using the Algolia PHP SDK
   $client = Algolia\AlgoliaSearch\SearchClient::create($algolia_app_id, $algolia_api_key);
-  $index = $client->initIndex('full_site_search');
+  // $index = $client->initIndex('full_site_search');
+  $index = $client->initIndex('split_site_search');
 
   // Check if the post type is 'page' and post status is 'publish'
   if (

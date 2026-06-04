@@ -3,7 +3,8 @@ let search;
 document.addEventListener('DOMContentLoaded', () => {
   // Init search
   search = instantsearch({
-    indexName: 'full_site_search',
+    // indexName: 'full_site_search',
+    indexName: 'split_site_search',
     searchClient: algoliasearch(
       'QVXOOP4L7N',
       'b589196885c2c6d140833e9cb83c4fa0',

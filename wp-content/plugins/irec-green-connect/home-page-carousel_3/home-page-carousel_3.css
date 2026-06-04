@@ -1,0 +1,223 @@
+.home-page-carousel {
+  height: 100%;
+}
+
+.home-page-carousel h1 {
+  font-family: Proxima Nova;
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 73.08px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: white;
+  margin-top: 5rem;
+}
+
+.home-page-carousel h2 {
+  font-family: Proxima Nova;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 36.54px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #16577B;
+}
+
+.home-page-carousel__container {
+  position: relative;
+  margin: 5rem;
+}
+
+.container--left {
+  max-width: 65vw;
+}
+
+/* Typography */
+.home-page-carousel h1 {
+  font-family: Proxima Nova;
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 73.08px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+/* Carousel buttons */
+.home-page-carousel .carousel__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.home-page-carousel .carousel__button {
+  color: #d7a650;
+  text-transform: uppercase;
+  border-radius: 100px;
+  padding: 0.75rem 1rem;
+  background-color: transparent;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease,
+    color 0.2s ease;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.home-page-carousel .carousel__button.selected:focus,
+.home-page-carousel .carousel__button.selected,
+.home-page-carousel .carousel__button:hover {
+  border-color: #d7a650;
+  background-color: transparent;
+}
+
+.home-page-carousel .carousel__button.selected:hover {
+  background-color: #d7a650;
+  color: #fff;
+}
+
+/* Banner buttons */
+.home-page-carousel .banner-buttons {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-out, visibility 0.3s;
+  font-size: 18px;
+  flex-wrap: wrap;
+  max-width: 65vw;
+}
+
+.home-page-carousel .banner-buttons.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.home-page-carousel .banner-buttons a,
+.home-page-carousel .banner-buttons a:focus,
+.home-page-carousel .banner-buttons a:hover {
+  font-family: Proxima Nova;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.92px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+}
+
+.banner-buttons a img {
+  transition: transform 0.2s ease;
+  height: 18px;
+}
+
+.banner-buttons a:hover img {
+  transform: translateX(5px);
+}
+
+/* Banner image */
+.banner-image {
+  overflow: hidden;
+}
+.banner-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.banner-image div {
+  height: 389px;
+  width: 389px;
+  border-radius: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-out, visibility 0.3s;
+  position: absolute;
+}
+
+.banner-image div.active {
+  right: 6rem;
+  top: 25vh;
+}
+
+.banner-image div.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.banner-image div.top {
+  right: -10rem;
+  top: -9rem;
+}
+
+.banner-image div.bottom {
+  right: -10rem;
+  top: 34rem;
+}
+
+/* Media queries */
+@media screen and (max-width: 1635px) {
+  .home-page-carousel .carousel__button {
+    font-size: 16px;
+  }
+
+  .banner-buttons a {
+    font-size: 16px;
+  }
+
+  .banner-image div {
+    height: 289px;
+    width: 289px;
+  }
+
+  .banner-image div.top {
+    right: -10rem;
+    top: -4rem;
+  }
+
+  .banner-image div.bottom {
+    right: -10rem;
+    top: 27rem;
+  }
+}
+
+@media screen and (max-width: 1360px) {
+  .home-page-carousel__container {
+    margin: 3rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .banner-image {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-page-carousel__container {
+    position: relative;
+    margin: 3rem 0rem 3rem 3rem;
+  }
+  .container--left {
+    max-width: 100%;a
+  }
+  .home-page-carousel .carousel__buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    overflow-x: scroll;
+  }
+  .home-page-carousel .banner-buttons {
+    flex-direction: column;
+  }
+  .home-page-carousel {
+    overflow: visible;
+  }
+}

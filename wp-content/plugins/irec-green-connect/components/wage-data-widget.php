@@ -1,14 +1,17 @@
 <?php
 // Assuming you're in the loop
 $state_value = get_post_meta(get_the_ID(), 'state', true);
-function format_number($num)
-{
-  if ($num < 1000) {
-    return '$' . $num; // Simply return the number if it's less than 1000
-  } else if ($num < 1000000) {
-    return '$' . round($num / 1000) . 'k'; // Return the number in thousands (k) if it's less than a million
-  } // You can continue with more conditions for millions, billions, etc. if needed
+if (!function_exists('format_number')) {
+  function format_number($num)
+  {
+    if ($num < 1000) {
+      return '$' . $num; // Simply return the number if it's less than 1000
+    } else if ($num < 1000000) {
+      return '$' . round($num / 1000) . 'k'; // Return the number in thousands (k) if it's less than a million
+    } // You can continue with more conditions for millions, billions, etc. if needed
+  }
 }
+
 
 
 
